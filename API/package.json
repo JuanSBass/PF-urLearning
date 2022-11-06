@@ -1,0 +1,22 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Back/Server",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanSBass/PF-urLearning.git"
+  },
+  "author": "FT30a_pf_grupo11",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuanSBass/PF-urLearning/issues"
+  },
+  "homepage": "https://github.com/JuanSBass/PF-urLearning#readme"
+}
