@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 const axios = require("axios");
 const { Course, User } = require("../db");
 
+/////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 const userController = {
   getApiUsers: async function (email) {
     try {
@@ -62,4 +63,40 @@ const userController = {
   },
 };
 
+/////////////////////////////////////////  COURSE  ////////////////////////////////////////////////////////////
+const courseController = {
+  getDbInfoCourses: async function (title) {
+    const courseDb = title
+      ? await Course.findAll({
+          where: {
+            title: { title },
+          },
+        })
+      : await Course.findAll();
+    console.log(courseDb);
+
+    const newCourseDb = await courseDb.map((e) => {
+      return {
+        title: e.title,
+        image: e.image,
+        category: e.category,
+        subCategory: e.subcategory,
+        duration: e.duration,
+        description: e.description,
+        language: e.language,
+        price: e.price,
+        level: e.level,
+      };
+    });
+    console.log(newCourseDb);
+    return newCourseDb;
+  },
+
+  allInfoCourses: async function (title) {
+    const dbInfoCourses = await courseController.getDbInfoCourses(title);
+    const allInfoCourses = dbInfoCourses;
+    return allInfoCourses;
+  },
+};
 module.exports = userController;
+module.exports = courseController;

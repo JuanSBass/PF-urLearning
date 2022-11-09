@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { User, Course } = require("../db");
-const { allInfo } = require("../controllers/controllers");
+const { allInfo, allInfoCourses } = require("../controllers/controllers");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -18,7 +18,7 @@ router.post("/user", async (req, res) => {
       email,
       password,
     });
-    console.log(newUser);
+    //console.log(newUser);
 
     res.status(200).send("Usuario creado correctamente");
   } catch (error) {
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
 
   try {
     const allUsers = await allInfo(email);
-    console.log(allUsers);
+    //console.log(allUsers);
     return allUsers
       ? res.status(200).send(allUsers)
       : res.status(404).send("No existe el usuario buscado");
@@ -77,8 +77,9 @@ router.post("/course", async (req, res) => {
 });
 
 router.get("/course", async (req, res) => {
+  const { title } = req.query;
   try {
-    const allCourses = await Course.findAll();
+    const allCourses = await allInfoCourses(title);
     //console.log(allCourses);
     return allCourses
       ? res.status(200).send(allCourses)
