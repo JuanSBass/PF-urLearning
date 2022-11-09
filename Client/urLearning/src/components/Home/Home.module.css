@@ -1,11 +1,16 @@
-main{
+main {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-main h1{
+main h1 {
   font-size: 40px;
-  color: #6D6AEE;
+  color: #6d6aee;
   font-weight: 700;
+}
+
+.toallcourses {
+  width: 276px;
+  height: 52px;
 }
