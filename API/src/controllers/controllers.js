@@ -98,5 +98,4 @@ const courseController = {
     return allInfoCourses;
   },
 };
-module.exports = userController;
-module.exports = courseController;
+module.exports = [userController, courseController];
