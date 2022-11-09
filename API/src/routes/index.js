@@ -4,6 +4,7 @@ const {
   allInfo,
   allInfoCourses,
   getCourseById,
+  updateRating,
 } = require("../controllers/controllers");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -101,6 +102,17 @@ router.get("/course/:id", async (req, res) => {
     return res.send(await getCourseById(id)); //envia la info (id recibida) a la funcion getById y la devuelve
   } catch (error) {
     console.log(error + "error del get /course/id");
+  }
+});
+
+router.put("/course/:id", async (req, res) => {
+  const { id } = req.params;
+  const rating = req.body;
+  try {
+    let change = await Course.update(rating, { where: { id: id } });
+    return res.status(200).send("Cambio exitoso");
+  } catch (error) {
+    console.log("error");
   }
 });
 

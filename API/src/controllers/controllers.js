@@ -103,6 +103,7 @@ const getCourseById = async (id) => {
   if (id.includes("-")) {
     const coursejson = (await Course.findByPk(id)).toJSON(); //convierte a json para manejarlo
     return {
+      id: coursejson.id,
       title: coursejson.title,
       image: coursejson.image,
       name_prof: coursejson.name_prof,
@@ -112,5 +113,7 @@ const getCourseById = async (id) => {
     };
   }
 };
+
+///////// Route Course Modify Rating by ID /////////
 
 module.exports = { allInfo, allInfoCourses, getCourseById };
