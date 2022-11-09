@@ -98,4 +98,4 @@ const courseController = {
     return allInfoCourses;
   },
 };
-module.exports = [userController, courseController];
+(module.exports = userController), courseController;
