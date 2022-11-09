@@ -1,0 +1,92 @@
+.main{
+    background: linear-gradient(90deg,#999293,#fcf9f2);
+    color: #fcf9f2;
+}
+
+
+.landingLeft{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
+    width: 50%;
+    color: #fff;
+    font-size: 20px;
+    background: white;
+    justify-content: center;
+    align-items: center;
+}
+.landingRight{
+    display: flex;
+    height: 100%;
+    min-height: 100vh;
+    width: 50%;
+    flex-direction: column;
+    background: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing{
+    display: flex;
+    flex-direction: row-reverse;
+    background: white;
+}
+
+.labe{
+    font-size: 20px;
+    font-weight: bold;
+    color: #3a3738;
+}
+
+
+
+.imagen{
+    height: 700px;
+    width: 700px;
+    padding-right: 10%;
+    
+}
+.logo{
+    height: 35px;
+    width: 325px;
+    padding-right: 20%;
+}
+.head{
+background:white;
+width: 85%;
+
+}
+.sub{
+
+    font-weight: bold;
+    color: #d0cdcd;
+
+}
+.form{
+   
+    width: 85%;
+    padding-top: 10%;
+}
+.email{
+   
+    padding-bottom: 10%;
+}
+
+.password{
+   
+    padding-bottom: 10%;
+}
+
+.login{
+    display: flex;
+  
+    padding-bottom: 10%;
+    justify-content: center;
+}
+
+.google{
+    display: flex;
+    justify-content: center;
+   
+}

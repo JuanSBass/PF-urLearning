@@ -1,4 +1,4 @@
-import Register from "./components/Landing/Register.jsx";
+import Register from "./components/Register/Register.jsx";
 import Home from "./components/Home/Home.jsx";
 import Form from "./components/Form/Form.jsx";
 import { Route, BrowserRouter } from "react-router-dom";
