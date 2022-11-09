@@ -1,15 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-import { Home } from './components/Home'
+import Register from "./components/Landing/Register.jsx";
+import Home from "./components/Home/Home.jsx";
+import Form from "./components/Form/Form.jsx";
+import { Route, BrowserRouter } from "react-router-dom";
+import Detail from "./components/Detail/Detail.jsx";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <div className="app">
-      <Home />
+    <BrowserRouter>
+    <div className="App">
+
+      <Route exact path="/register" component={Register}/>
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/form" component={Form}/>
+      <Route exact path="/course:id" component={Detail}/>
+
     </div>
+    </BrowserRouter>
   )
 }
 
