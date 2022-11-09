@@ -110,4 +110,4 @@ dist
 package-lock.json
 
 #vscode configs
-.vscode
+**/.vscode/
