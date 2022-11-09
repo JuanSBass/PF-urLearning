@@ -6,8 +6,8 @@ const CardsCourses = () => {
   return (
     <section className={styles.cardscontainer}>
       {pruebaData.map((card) => (
-        <Link to={`/course/${card.id}`}>
-          <div className={styles.card} key={card.teacher}>
+        <Link to={`/course/${card.id}`} key={card.id}>
+          <div className={styles.card}>
             <img src={peiton} alt="miniatura" />
             <h3>{card.title}</h3>
             <p>{card.teacher}</p>
@@ -65,7 +65,7 @@ const pruebaData = [
     rating: 4,
   },
   {
-    id:8,
+    id: 8,
     title: "Aprende programación en Phyton",
     teacher: "Lupil López Pepa",
     rating: 4,
