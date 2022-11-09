@@ -90,3 +90,7 @@ width: 85%;
     justify-content: center;
    
 }
+.errors{
+    color: rgb(219, 61, 61);
+    font-size: small;
+}
