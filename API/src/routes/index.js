@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { User, Course } = require("../db");
+const { allInfo } = require("../controllers/controllers");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -27,9 +28,11 @@ router.post("/user", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
+  const { email } = req.query;
+
   try {
-    const allUsers = await User.findAll();
-    //console.log(allUsers);
+    const allUsers = await allInfo(email);
+    console.log(allUsers);
     return allUsers
       ? res.status(200).send(allUsers)
       : res.status(404).send("No existe el usuario buscado");
