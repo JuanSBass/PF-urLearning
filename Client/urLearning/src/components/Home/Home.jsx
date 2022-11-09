@@ -8,7 +8,7 @@ import { getCourses } from "../../redux/actions";
 
 
 const Home=(props)=>{
-    const dispatch=useDispatch();
+const dispatch=useDispatch();
 useEffect(()=>{
     dispatch(getCourses())
 
@@ -17,7 +17,7 @@ useEffect(()=>{
 const courses=useSelector((state)=>state.courses);
 console.log(courses)
     return(<div>
-        <h1>{courses[0].name}</h1>
+        {courses.map(u=>{<h1>{u.name}</h1>})}
     </div>)
 }
 export default Home

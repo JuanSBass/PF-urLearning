@@ -1,4 +1,4 @@
-import Landing from "./components/Landing/Landing.jsx";
+import Register from "./components/Landing/Register.jsx";
 import Home from "./components/Home/Home.jsx";
 import Form from "./components/Form/Form.jsx";
 import { Route, BrowserRouter } from "react-router-dom";
@@ -11,8 +11,9 @@ function App() {
   return (
     <BrowserRouter>
     <div className="App">
-      <Route exact path="/" component={Landing}/>
-      <Route exact path="/home" component={Home}/>
+
+      <Route exact path="/register" component={Register}/>
+      <Route exact path="/" component={Home}/>
       <Route exact path="/form" component={Form}/>
       <Route exact path="/course:id" component={Detail}/>
 
