@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { User, Course } = require("../db");
 const { allInfo } = require("../controllers/controllers");
+const user = require("./user.js")
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -87,5 +88,7 @@ router.get("/course", async (req, res) => {
     console.log(error + "error del get /course");
   }
 });
+
+router.use('/user', user);
 
 module.exports = router;
