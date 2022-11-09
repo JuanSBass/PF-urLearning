@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const { User, Course } = require("../db");
-const { allInfo, allInfoCourses } = require("../controllers/controllers");
+const {
+  allInfo,
+  allInfoCourses,
+  getCourseById,
+} = require("../controllers/controllers");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -53,6 +57,7 @@ router.post("/course", async (req, res) => {
     language,
     price,
     level,
+    name_prof,
   } = req.body;
 
   try {
@@ -66,6 +71,7 @@ router.post("/course", async (req, res) => {
       language,
       price,
       level,
+      name_prof,
     });
     //console.log(newCourse);
 
@@ -86,6 +92,15 @@ router.get("/course", async (req, res) => {
       : res.status(404).send("No existe el curso buscado");
   } catch (error) {
     console.log(error + "error del get /course");
+  }
+});
+
+router.get("/course/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    return res.send(await getCourseById(id)); //envia la info (id recibida) a la funcion getById y la devuelve
+  } catch (error) {
+    console.log(error + "error del get /course/id");
   }
 });
 

@@ -60,6 +60,10 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM(...LEVEL),
         allowNull: false,
       },
+      name_prof: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       // here would be the idProf reference and students
     },
     {
