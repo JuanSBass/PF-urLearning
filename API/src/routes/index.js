@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { User, Course } = require("../db");
-const { allInfo } = require("../controllers/controllers");
+const { allInfo, courseController } = require("../controllers/controllers");
+const { Op } = require("sequelize");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -18,7 +19,6 @@ router.post("/user", async (req, res) => {
       email,
       password,
     });
-    console.log(newUser);
 
     res.status(200).send("Usuario creado correctamente");
   } catch (error) {
@@ -27,12 +27,11 @@ router.post("/user", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/user", async (req, res) => {
   const { email } = req.query;
 
   try {
     const allUsers = await allInfo(email);
-    console.log(allUsers);
     return allUsers
       ? res.status(200).send(allUsers)
       : res.status(404).send("No existe el usuario buscado");
@@ -77,12 +76,21 @@ router.post("/course", async (req, res) => {
 });
 
 router.get("/course", async (req, res) => {
+  const { title } = req.query;
   try {
-    const allCourses = await Course.findAll();
-    //console.log(allCourses);
-    return allCourses
-      ? res.status(200).send(allCourses)
-      : res.status(404).send("No existe el curso buscado");
+    if (!title) {
+      const allCourses = await Course.findAll();
+      return allCourses
+        ? res.status(200).send(allCourses)
+        : res.status(404).send("No existe el curso buscado");
+    } else {
+      const courses = await Course.findAll({
+        where: {
+          title: { [Op.iLike]: `%${title}%` },
+        },
+      });
+      res.status(200).send(courses);
+    }
   } catch (error) {
     console.log(error + "error del get /course");
   }

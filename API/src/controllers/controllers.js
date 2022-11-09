@@ -32,7 +32,7 @@ const userController = {
     }
   },
 
-  getDbInfo: async function (email) {
+  getDbUsers: async function (email) {
     //busco por email
     const userDb = email
       ? await User.findAll({
@@ -41,7 +41,6 @@ const userController = {
           },
         })
       : await User.findAll();
-    console.log(userDb);
 
     //carga los users en la DB para guardarlos
     const newUserDb = await userDb.map((e) => {
@@ -50,13 +49,12 @@ const userController = {
         password: e.password,
       };
     });
-    console.log(newUserDb);
     return newUserDb;
   },
 
   allInfo: async function (email) {
     const apiInfo = await userController.getApiUsers(email); //trae la info de la API luego de cargarse (por eso el await)
-    const dbInfo = await userController.getDbInfo(email); //trae la info de la BBDD luego de cargarse (por eso el await)
+    const dbInfo = await userController.getDbUsers(email); //trae la info de la BBDD luego de cargarse (por eso el await)
     const allInfo = dbInfo.concat(apiInfo);
     return allInfo;
   },
