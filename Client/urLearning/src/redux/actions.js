@@ -1,6 +1,7 @@
 import axios from "axios";
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
+export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
 
 export const getCourses = () => {
@@ -22,9 +23,19 @@ export function postCourse(dataCourse) {
   };
 }
 
+export function getChildCategory(idCategory) {
+  return async function (dispatch) {
+    const json = await axios.get("/childCategoriesFrom", idCategory);
+    return dispatch({
+      type: GET_CHILD_CATEGORY,
+      payload: json.data,
+    });
+  };
+}
+
 export function getCategory() {
   return async function (dispatch) {
-    const json = await axios.get("/?");
+    const json = await axios.get("/allCategories");
     return dispatch({
       type: GET_CATEGORY,
       payload: json.data,

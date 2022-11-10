@@ -1,10 +1,10 @@
 import React from "react";
 // import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Label, Select, TextInput, Textarea, Button } from "flowbite-react";
 import style from "../Form/Form.module.css";
-import { postCourse } from "../../redux/actions";
+import { getChildCategory, postCourse, getCategory } from "../../redux/actions";
 
 const CATEGORY = ["science", "trades", "arts"];
 const SUB_CATEGORY = [
@@ -19,11 +19,14 @@ const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
 
 const Form = () => {
+  const category = useSelector((state) => state.category);
+  const subcategory = useSelector((state) => state.subcategory);
   const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     title: "",
     image: "",
-    category: "",
+    category: [],
     subCategory: "",
     duration: "",
     description: "",
