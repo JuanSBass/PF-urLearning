@@ -4,7 +4,6 @@ const { Category, SubCategory } = require("../db");
 
 router.post("/category", async (req, res) => {
   const { name } = req.body;
-
   try {
     let newCategory = await Category.create({
       name,
@@ -33,6 +32,7 @@ router.post("/subCategory", async (req, res) => {
     res.status(404).send("no se creo la SUBcategory");
   }
 });
+
 router.get("/childCategoriesFrom", async (req, res) => {
   let { categoryId } = req.body;
   console.log(categoryId);
