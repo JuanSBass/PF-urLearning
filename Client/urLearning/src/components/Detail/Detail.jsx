@@ -16,7 +16,7 @@ const Detail=(props)=>{
   useEffect(()=>{
     dispatch(getDetail(id));
   },[dispatch,id])
- 
+ console.log(course)
     return (
         <div >
         
@@ -29,20 +29,21 @@ const Detail=(props)=>{
         
         <div className={s.conatiner1}>
         <div className={s.head }>
-        <h1>{course.name}</h1>
+        <h1>{course.title}</h1>
   
         </div>
 
         <div className={s.name}>
         
-            <h2>NOMBRE PROFESOR</h2>
+            <h2>{course.name_prof}</h2>
 
         </div>
         <div className={s.im}>
-        <img alt="img" className={s.imagen} src={image} />
+        <img alt="img" className={s.imagen} src={course.image} />
         </div>
         <div className={s.rating}>
         <Rating size="md">
+      
           <Rating.Star />
           <Rating.Star />
           <Rating.Star />
@@ -64,7 +65,7 @@ const Detail=(props)=>{
           <h2> Qué aprenderás en este curso</h2>
           </div>
           <div className={s.parrafo}>
-          <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+          <p>{course.description}</p>
           </div>
       </div>
 
@@ -74,7 +75,7 @@ const Detail=(props)=>{
             <h2>¡Comienza a aprender!</h2>
         </div>
         <div className={s.num}>
-          <p>16,544 US$</p>
+          <p>{course.price} US$</p>
         </div>
         
         <div className={s.add}>

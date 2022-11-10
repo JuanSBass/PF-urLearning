@@ -45,10 +45,10 @@
 .conatinerf{
     background: white;
     border-radius: 10px;
-    max-width: 75vh;
+    max-width: 80vh;
     min-width: 60vh;
-    
-    min-height: 60vh;
+    max-height: 70vh;
+    min-height: 65vh;
     margin-right: 20%;
    
 
@@ -121,6 +121,9 @@
     padding-left: 15%;
     padding-right: 15%;
     padding-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
 }
 
