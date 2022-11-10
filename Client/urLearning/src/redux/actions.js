@@ -3,6 +3,9 @@ export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
 export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
+export const POST_USER = "POST_USER";
+export const GET_DETAIL = "GET_DETAIL";
+
 
 export const getCourses = () => {
   try {
@@ -23,6 +26,7 @@ export function postCourse(dataCourse) {
   };
 }
 
+
 export function getChildCategory(idCategory) {
   return async function (dispatch) {
     const json = await axios.get("/childCategoriesFrom", idCategory);
@@ -33,6 +37,29 @@ export function getChildCategory(idCategory) {
   };
 }
 
+export const postUser = (payload) => {
+  try {
+    return async function (dispatch) {
+      await axios.post("/user", payload);
+      dispatch({ type: POST_USER });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getDetail = (id) => {
+  try {
+    return async function (dispatch) {
+      const response = await axios.get(`/course/${id}`);
+      dispatch({ type: GET_DETAIL, payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
 export function getCategory() {
   return async function (dispatch) {
     const json = await axios.get("/allCategories");
@@ -42,3 +69,4 @@ export function getCategory() {
     });
   };
 }
+
