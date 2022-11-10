@@ -51,6 +51,7 @@ module.exports = (sequelize) => {
       rating: {
         type: DataTypes.DECIMAL,
         allowNull: true,
+        defaultValue: 1,
       },
       price: {
         type: DataTypes.DECIMAL,
@@ -58,6 +59,10 @@ module.exports = (sequelize) => {
       },
       level: {
         type: DataTypes.ENUM(...LEVEL),
+        allowNull: false,
+      },
+      name_prof: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       // here would be the idProf reference and students
