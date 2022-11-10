@@ -1,7 +1,8 @@
-import { GET_COURSES, POST_COURSE } from "./actions";
+import { GET_CATEGORY, GET_COURSES, POST_COURSE } from "./actions";
 
 const initialState = {
   courses: [],
+  category: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -12,6 +13,12 @@ function rootReducer(state = initialState, action) {
     case POST_COURSE:
       return {
         ...state,
+      };
+
+    case GET_CATEGORY:
+      return {
+        ...state,
+        category: action.payload,
       };
 
     default:
