@@ -1,0 +1,43 @@
+.contenedorGeneral {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.contenedorFormulario {
+  background-color: #fafafa;
+  width: 70%;
+  min-height: 420px;
+  border-radius: 25px;
+}
+
+.formulario {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  font-weight: 200;
+  font-size: 15px;
+  gap: 1rem;
+}
+
+.izq {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.der {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.mitadInputs {
+  width: 50%;
+}
+
+.categoriasJuntas {
+  display: flex;
+  width: 100%;
+  gap: 1.3rem;
+}
