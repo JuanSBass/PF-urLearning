@@ -43,7 +43,7 @@ const { User, Course, Category, SubCategory } = sequelize.models;
 // Product.hasMany(Reviews);
 Category.hasMany(SubCategory, { as: "childCategory" });
 SubCategory.belongsTo(Category, {
-  foreignKey: "categoryID",
+  foreignKey: "categoryId",
   as: "childCategory",
 });
 

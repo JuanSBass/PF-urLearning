@@ -1,10 +1,11 @@
 const { Router } = require("express");
-const { User, Course } = require("../db");
+const { User, Course, Category, SubCategory } = require("../db");
 const {
   allInfo,
   allInfoCourses,
   getCourseById,
 } = require("../controllers/controllers");
+
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -27,6 +28,38 @@ router.post("/user", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(404).send(error + "error del /Post User");
+  }
+});
+
+router.post("/category", async (req, res) => {
+  const { name } = req.body;
+
+  try {
+    let newCategory = await Category.create({
+      name,
+    });
+
+    res.status(200).send("category creado correctamente");
+  } catch (error) {
+    console.log(error);
+    res.status(404).send("no se creo la category");
+  }
+});
+
+router.post("/subCategory/:categoryId", async (req, res) => {
+  const { categoryId } = req.query;
+  const { name } = req.body;
+
+  try {
+    let newSubCategory = await SubCategory.create({
+      name: name,
+      categoryId: categoryId,
+    });
+
+    res.status(200).send("SUBcategory creado correctamente");
+  } catch (error) {
+    console.log(error.message);
+    res.status(404).send("no se creo la SUBcategory");
   }
 });
 
