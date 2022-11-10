@@ -1,0 +1,22 @@
+.cardscontainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 1200px;
+  gap: 2rem;
+  margin: 4rem auto;
+}
+
+.card {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  width: 283px;
+  height: 286px;
+  border-radius: 34px 34px 10px 10px;
+  padding: 1rem;
+}
+
+.card h3 {
+  font-weight: 700;
+  font-size: 18px;
+}
