@@ -153,7 +153,7 @@ const Form = () => {
                     onChange={(e) => handleSelect(e)}
                     name="subCategory"
                   >
-                    {SUB_CATEGORY.map((c) => {
+                    {subcategory.map((c) => {
                       return (
                         <option value={c} key={c}>
                           {c}
