@@ -1,10 +1,12 @@
 const { Router } = require("express");
-const { User, Course } = require("../db");
+const { User, Course, Category, SubCategory } = require("../db");
 const {
   allInfo,
   allInfoCourses,
   getCourseById,
 } = require("../controllers/controllers");
+const cat = require("./category.js");
+
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -12,6 +14,7 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+router.use("/category", cat);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
