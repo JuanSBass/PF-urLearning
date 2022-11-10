@@ -1,20 +1,20 @@
 import React from "react";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Label, Select, TextInput, Textarea, Button } from "flowbite-react";
 import style from "../Form/Form.module.css";
 import { getChildCategory, postCourse, getCategory } from "../../redux/actions";
 
-const CATEGORY = ["science", "trades", "arts"];
-const SUB_CATEGORY = [
-  "math",
-  "chemistry",
-  "welder",
-  "smith",
-  "visual",
-  "plastic",
-];
+// const CATEGORY = ["science", "trades", "arts"];
+// const SUB_CATEGORY = [
+//   "math",
+//   "chemistry",
+//   "welder",
+//   "smith",
+//   "visual",
+//   "plastic",
+// ];
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
 
@@ -38,6 +38,10 @@ const Form = () => {
   // const prueba = () => {
   //   console.log(import.meta.env.VITE_API);
   // };
+
+  useEffect(() => {
+    dispatch(getCategory());
+  });
 
   const handleChange = (ev) => {
     setInput({
