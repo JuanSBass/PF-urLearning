@@ -15,8 +15,6 @@ const Home = (props) => {
     dispatch(getCourses());
   }, [dispatch]);
 
-  const courses = useSelector((state) => state.courses);
-  console.log(courses);
   return (
     <main className={styles}>
       <HeaderHome />

@@ -1,31 +1,34 @@
 import React from "react";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Label, Select, TextInput, Textarea, Button } from "flowbite-react";
 import style from "../Form/Form.module.css";
-import { postCourse } from "../../redux/actions";
+import { getChildCategory, postCourse, getCategory } from "../../redux/actions";
 
-const CATEGORY = ["science", "trades", "arts"];
-const SUB_CATEGORY = [
-  "math",
-  "chemistry",
-  "welder",
-  "smith",
-  "visual",
-  "plastic",
-];
+// const CATEGORY = ["science", "trades", "arts"];
+// const SUB_CATEGORY = [
+//   "math",
+//   "chemistry",
+//   "welder",
+//   "smith",
+//   "visual",
+//   "plastic",
+// ];
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
 
 const Form = () => {
+  const category = useSelector((state) => state.category);
+  const subcategory = useSelector((state) => state.subcategory);
   const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     title: "",
     image: "",
-    category: "",
+    category: [],
     subCategory: "",
-    duration: 60,
+    duration: "",
     description: "",
     language: "",
     price: "",
@@ -35,6 +38,10 @@ const Form = () => {
   // const prueba = () => {
   //   console.log(import.meta.env.VITE_API);
   // };
+
+  useEffect(() => {
+    dispatch(getCategory());
+  });
 
   const handleChange = (ev) => {
     setInput({
@@ -75,7 +82,7 @@ const Form = () => {
       image: "",
       category: "",
       subCategory: "",
-      duration: 0,
+      duration: "",
       description: "",
       language: "",
       price: "",
@@ -115,7 +122,7 @@ const Form = () => {
                     onChange={(e) => handleSelect(e)}
                     name="category"
                   >
-                    {CATEGORY.map((c) => {
+                    {category.map((c) => {
                       return (
                         <option value={c} key={c}>
                           {c}
@@ -138,7 +145,7 @@ const Form = () => {
                     onChange={(e) => handleSelect(e)}
                     name="subCategory"
                   >
-                    {SUB_CATEGORY.map((c) => {
+                    {subcategory.map((c) => {
                       return (
                         <option value={c} key={c}>
                           {c}

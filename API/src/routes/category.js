@@ -33,6 +33,17 @@ router.post("/subCategory", async (req, res) => {
   }
 });
 
+router.get("/allCategories", async (req, res) => {
+  let { categoryId } = req.body;
+  console.log(categoryId);
+  try {
+    let allCategories = await Category.findAll({});
+    res.status(200).send(allCategories);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.get("/childCategoriesFrom", async (req, res) => {
   let { categoryId } = req.body;
   console.log(categoryId);
