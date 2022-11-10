@@ -1,9 +1,11 @@
-import React from "react";
+import styles from "./Courses.module.css";
+import CardsCourses from "../Home/Cards/CardsCourses";
 
 const Courses = () => {
   return (
-    <main>
-      <h1>holi, acá van cards cursos :P</h1>
+    <main className={styles.coursescontainer}>
+      <section className={styles.sidebar}></section>
+      <CardsCourses />
     </main>
   );
 };
