@@ -61,34 +61,32 @@ const allInfo = async (email) => {
 
 /////////////////////////////////////////  COURSE  ////////////////////////////////////////////////////////////
 
-const getDbInfoCourses = async (info) => {
-  // const courseDb =
-  //   title || name_prof
-  //     ? await Course.findAll({
-  //         where: {
-  //           title: { [Op.iLike]: `%${title}%` }
-  //           },
-  //         },
-  //       )
-  //     : await Course.findAll();
-
-  if() {
-  const courseDb = info
-    ? await Course.findAll({
-        where: {
-          title: { [Op.iLike]: `%${info}%` },
-        },
-      })
-    : await Course.findAll();
-  //console.log(courseDb);
+const getDbInfoCourses = async (title) => {
+  // const courseDb = title
+  //   ? await Course.findAll({
+  //       where: {
+  //         title: { [Op.iLike]: `%${title}%` },
+  //       },
+  //     })
+  //   : await Course.findAll();
+  if (title) {
+    let courseDb = title
+      ? await Course.findAll({
+          where: {
+            title: { [Op.iLike]: `%${title}%` },
+          },
+        })
+      : await Course.findAll();
+    console.log("bbbbbbbbbbbbb");
+    console.log(Course[0].title);
   } else {
-    const courseDb = info
-    ? await Course.findAll({
-        where: {
-          name_prof: { [Op.iLike]: `%${info}%` },
-        },
-      })
-    : await Course.findAll();
+    let courseDb = title
+      ? await Course.findAll({
+          where: {
+            name_prof: { [Op.iLike]: `%${name_prof}%` },
+          },
+        })
+      : await Course.findAll();
   }
 
   const newCourseDb = await courseDb.map((e) => {

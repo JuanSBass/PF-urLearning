@@ -84,12 +84,12 @@ router.post("/course", async (req, res) => {
 ///////// Route Course /////////
 
 router.get("/course", async (req, res) => {
-  const { info } = req.query;
-  console.log(info);
+  const { title } = req.query;
+  console.log(title);
   try {
     console.log("aaaaaaaaaaaaaa");
-    const allCourses = await allInfoCourses(info);
-    console.log(allCourses);
+    const allCourses = await allInfoCourses(title);
+    //console.log(allCourses);
     return allCourses
       ? res.status(200).send(allCourses)
       : res.status(404).send("No existe el curso o prof buscado");
