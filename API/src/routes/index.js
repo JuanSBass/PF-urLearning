@@ -1,7 +1,10 @@
 const { Router } = require("express");
 const { User, Course } = require("../db");
-const { allInfo, courseController } = require("../controllers/controllers");
-const { Op } = require("sequelize");
+const {
+  allInfo,
+  allInfoCourses,
+  getCourseById,
+} = require("../controllers/controllers");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -52,6 +55,7 @@ router.post("/course", async (req, res) => {
     language,
     price,
     level,
+    name_prof,
   } = req.body;
 
   try {
@@ -65,6 +69,7 @@ router.post("/course", async (req, res) => {
       language,
       price,
       level,
+      name_prof,
     });
     //console.log(newCourse);
 
@@ -78,21 +83,33 @@ router.post("/course", async (req, res) => {
 router.get("/course", async (req, res) => {
   const { title } = req.query;
   try {
-    if (!title) {
-      const allCourses = await Course.findAll();
-      return allCourses
-        ? res.status(200).send(allCourses)
-        : res.status(404).send("No existe el curso buscado");
-    } else {
-      const courses = await Course.findAll({
-        where: {
-          title: { [Op.iLike]: `%${title}%` },
-        },
-      });
-      res.status(200).send(courses);
-    }
+    const allCourses = await allInfoCourses(title);
+    return allCourses
+      ? res.status(200).send(allCourses)
+      : res.status(404).send("No existe el curso buscado");
   } catch (error) {
     console.log(error + "error del get /course");
+  }
+});
+
+router.get("/course/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    return res.send(await getCourseById(id)); //envia la info (id recibida) a la funcion getById y la devuelve
+  } catch (error) {
+    console.log(error + "error del get /course/id");
+  }
+});
+
+router.put("/course/:id", async (req, res) => {
+  const { id } = req.params;
+  const rating = req.body;
+
+  try {
+    let change = await Course.update(rating, { where: { id: id } });
+    return res.status(200).send("Cambio exitoso");
+  } catch (error) {
+    console.log("error");
   }
 });
 
