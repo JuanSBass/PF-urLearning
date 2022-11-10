@@ -18,7 +18,7 @@ router.post("/category", async (req, res) => {
 });
 
 router.post("/subCategory", async (req, res) => {
-  const { name, categoryId } = req.body;
+  let { name, categoryId } = req.body;
   console.log(categoryId);
 
   try {
@@ -31,6 +31,18 @@ router.post("/subCategory", async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(404).send("no se creo la SUBcategory");
+  }
+});
+router.get("/childCategoriesFrom", async (req, res) => {
+  let { categoryId } = req.body;
+  console.log(categoryId);
+  try {
+    let childCategories = await SubCategory.findAll({
+      where: { categoryId },
+    });
+    res.status(200).send(childCategories);
+  } catch (error) {
+    console.log(error);
   }
 });
 
