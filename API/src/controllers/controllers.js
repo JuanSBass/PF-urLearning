@@ -61,15 +61,35 @@ const allInfo = async (email) => {
 
 /////////////////////////////////////////  COURSE  ////////////////////////////////////////////////////////////
 
-const getDbInfoCourses = async (title) => {
-  const courseDb = title
+const getDbInfoCourses = async (info) => {
+  // const courseDb =
+  //   title || name_prof
+  //     ? await Course.findAll({
+  //         where: {
+  //           title: { [Op.iLike]: `%${title}%` }
+  //           },
+  //         },
+  //       )
+  //     : await Course.findAll();
+
+  if() {
+  const courseDb = info
     ? await Course.findAll({
         where: {
-          title: { [Op.iLike]: `%${title}%` },
+          title: { [Op.iLike]: `%${info}%` },
         },
       })
     : await Course.findAll();
   //console.log(courseDb);
+  } else {
+    const courseDb = info
+    ? await Course.findAll({
+        where: {
+          name_prof: { [Op.iLike]: `%${info}%` },
+        },
+      })
+    : await Course.findAll();
+  }
 
   const newCourseDb = await courseDb.map((e) => {
     return {
@@ -101,7 +121,7 @@ const allInfoCourses = async (title) => {
 
 const getCourseById = async (id) => {
   if (id.includes("-")) {
-    const coursejson = await Course.findByPk(id); //convierte a json para manejarlo
+    const coursejson = await Course.findByPk(id);
     return {
       id: coursejson.id,
       title: coursejson.title,
@@ -116,4 +136,15 @@ const getCourseById = async (id) => {
 
 ///////// Route Course Modify Rating by ID /////////
 
-module.exports = { allInfo, allInfoCourses, getCourseById };
+const changeCourseById = async (id) => {
+  const rating = req.body;
+
+  if (id.includes("-")) {
+    let changeRating = await Course.update(rating, { where: { id: id } });
+    return {
+      changeRating,
+    };
+  }
+};
+
+module.exports = { allInfo, allInfoCourses, getCourseById, changeCourseById };

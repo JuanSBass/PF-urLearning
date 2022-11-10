@@ -4,6 +4,7 @@ const {
   allInfo,
   allInfoCourses,
   getCourseById,
+  changeCourseById,
 } = require("../controllers/controllers");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -80,17 +81,24 @@ router.post("/course", async (req, res) => {
   }
 });
 
+///////// Route Course /////////
+
 router.get("/course", async (req, res) => {
-  const { title } = req.query;
+  const { info } = req.query;
+  console.log(info);
   try {
-    const allCourses = await allInfoCourses(title);
+    console.log("aaaaaaaaaaaaaa");
+    const allCourses = await allInfoCourses(info);
+    console.log(allCourses);
     return allCourses
       ? res.status(200).send(allCourses)
-      : res.status(404).send("No existe el curso buscado");
+      : res.status(404).send("No existe el curso o prof buscado");
   } catch (error) {
     console.log(error + "error del get /course");
   }
 });
+
+///////// Route Course ID /////////
 
 router.get("/course/:id", async (req, res) => {
   const { id } = req.params;
@@ -101,16 +109,20 @@ router.get("/course/:id", async (req, res) => {
   }
 });
 
+///////// Route Course Modify Rating by ID /////////
+
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
-  const rating = req.body;
 
   try {
-    let change = await Course.update(rating, { where: { id: id } });
-    return res.status(200).send("Cambio exitoso");
+    return res.status(200).send(await changeCourseById(id));
   } catch (error) {
     console.log("error");
   }
 });
+
+///////// Route name_prof /////////
+
+//router.get("/course")
 
 module.exports = router;
