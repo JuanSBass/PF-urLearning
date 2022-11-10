@@ -1,11 +1,14 @@
 const { Router } = require("express");
-const { User, Course } = require("../db");
+const { User, Course, Category, SubCategory } = require("../db");
 const {
   allInfo,
   allInfoCourses,
   getCourseById,
   changeCourseById,
+  getDbInfoCourses,
 } = require("../controllers/controllers");
+const cat = require("./category.js");
+
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -13,6 +16,7 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+router.use("/category", cat);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -84,15 +88,14 @@ router.post("/course", async (req, res) => {
 ///////// Route Course /////////
 
 router.get("/course", async (req, res) => {
-  const { title } = req.query;
-  console.log(title);
+  const { info } = req.query;
+  console.log(info);
+  let allCourses;
   try {
-    console.log("aaaaaaaaaaaaaa");
-    const allCourses = await allInfoCourses(title);
-    //console.log(allCourses);
-    return allCourses
-      ? res.status(200).send(allCourses)
-      : res.status(404).send("No existe el curso o prof buscado");
+    info
+      ? (allCourses = await getDbInfoCourses(info))
+      : (allCourses = await allInfoCourses(info));
+    res.status(200).send(allCourses);
   } catch (error) {
     console.log(error + "error del get /course");
   }
