@@ -23,27 +23,46 @@ const Form = () => {
   const [input, setInput] = useState({
     title: "",
     image: "",
-    category: [],
-    subcategory: [],
-    duration: "",
+    category: "",
+    subCategory: "",
+    duration: 60,
     description: "",
-    language: [],
+    language: "",
     price: "",
-    level: [],
+    level: "",
   });
+
+  // const prueba = () => {
+  //   console.log(import.meta.env.VITE_API);
+  // };
 
   const handleChange = (ev) => {
     setInput({
       ...input,
-      [ev.target.name]: ev.target.value.toLowerCase(),
+      [ev.target.name]: ev.target.value,
     });
   };
 
   const handleSelect = (ev) => {
-    if (!input.category.includes(ev.target.value)) {
+    if (ev.target.name === "subCategory") {
       setInput({
         ...input,
-        category: [...input.category, ev.target.value],
+        subCategory: ev.target.value,
+      });
+    } else if (ev.target.name === "category") {
+      setInput({
+        ...input,
+        category: ev.target.value,
+      });
+    } else if (ev.target.name === "language") {
+      setInput({
+        ...input,
+        language: ev.target.value,
+      });
+    } else if (ev.target.name === "level") {
+      setInput({
+        ...input,
+        level: ev.target.value,
       });
     }
   };
@@ -54,13 +73,14 @@ const Form = () => {
     setInput({
       title: "",
       image: "",
-      category: [],
-      subcategory: [],
-      duration: "",
+      category: "",
+      subCategory: "",
+      duration: 0,
       description: "",
-      language: [],
+      language: "",
       price: "",
-      level: [],
+      level: "",
+      name_prof: "",
     });
   };
 
@@ -93,6 +113,7 @@ const Form = () => {
                     id="category"
                     required={true}
                     onChange={(e) => handleSelect(e)}
+                    name="category"
                   >
                     {CATEGORY.map((c) => {
                       return (
@@ -107,14 +128,15 @@ const Form = () => {
                 <div id="select">
                   <div className="mb-2 block">
                     <Label
-                      htmlFor="subcategory"
-                      value="Select your subcategory"
+                      htmlFor="subCategory"
+                      value="Select your subCategory"
                     />
                   </div>
                   <Select
-                    id="subcategory"
+                    id="subCategory"
                     required={true}
                     onChange={(e) => handleSelect(e)}
+                    name="subCategory"
                   >
                     {SUB_CATEGORY.map((c) => {
                       return (
@@ -151,6 +173,7 @@ const Form = () => {
                     id="language"
                     required={true}
                     onChange={(e) => handleSelect(e)}
+                    name="language"
                   >
                     {LANGUAGE.map((l) => {
                       return (
@@ -170,6 +193,7 @@ const Form = () => {
                     id="level"
                     required={true}
                     onChange={(e) => handleSelect(e)}
+                    name="level"
                   >
                     {LEVEL.map((l) => {
                       return (
@@ -202,7 +226,6 @@ const Form = () => {
                 <TextInput
                   id="duration"
                   type="number"
-                  required={true}
                   onChange={(e) => handleChange(e)}
                   name="duration"
                   className={style.mitadInputs}
@@ -215,8 +238,25 @@ const Form = () => {
                 </div>
                 <TextInput
                   id="price"
+                  type="number"
                   required={true}
                   addon="US$"
+                  className={style.mitadInputs}
+                  name="price"
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="name_prof" value="Name" />
+                </div>
+                <TextInput
+                  id="name_prof"
+                  type="text"
+                  required={true}
+                  onChange={(e) => handleChange(e)}
+                  name="name_prof"
                   className={style.mitadInputs}
                 />
               </div>
@@ -231,6 +271,9 @@ const Form = () => {
             </div>
           </div>
         </form>
+        {/* <Button gradientDuoTone="purpleToBlue" onClick={prueba}>
+          Probar
+        </Button> */}
       </div>
     </div>
   );
