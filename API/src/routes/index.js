@@ -5,6 +5,7 @@ const {
   allInfoCourses,
   getCourseById,
   changeCourseById,
+  getDbInfoCourses,
 } = require("../controllers/controllers");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -86,13 +87,12 @@ router.post("/course", async (req, res) => {
 router.get("/course", async (req, res) => {
   const { info } = req.query;
   console.log(info);
+  let allCourses;
   try {
-    console.log("aaaaaaaaaaaaaa");
-    const allCourses = await allInfoCourses(info);
-    console.log(allCourses);
-    return allCourses
-      ? res.status(200).send(allCourses)
-      : res.status(404).send("No existe el curso o prof buscado");
+    info
+      ? (allCourses = await getDbInfoCourses(info))
+      : (allCourses = await allInfoCourses(info));
+    res.status(200).send(allCourses);
   } catch (error) {
     console.log(error + "error del get /course");
   }

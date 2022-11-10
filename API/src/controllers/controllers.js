@@ -62,59 +62,25 @@ const allInfo = async (email) => {
 /////////////////////////////////////////  COURSE  ////////////////////////////////////////////////////////////
 
 const getDbInfoCourses = async (info) => {
-  // const courseDb =
-  //   title || name_prof
-  //     ? await Course.findAll({
-  //         where: {
-  //           title: { [Op.iLike]: `%${title}%` }
-  //           },
-  //         },
-  //       )
-  //     : await Course.findAll();
-
-  if() {
-  const courseDb = info
-    ? await Course.findAll({
-        where: {
-          title: { [Op.iLike]: `%${info}%` },
-        },
-      })
-    : await Course.findAll();
-  //console.log(courseDb);
-  } else {
-    const courseDb = info
-    ? await Course.findAll({
-        where: {
-          name_prof: { [Op.iLike]: `%${info}%` },
-        },
-      })
-    : await Course.findAll();
-  }
-
-  const newCourseDb = await courseDb.map((e) => {
-    return {
-      id: e.id,
-      title: e.title,
-      image: e.image,
-      category: e.category,
-      subCategory: e.subcategory,
-      duration: e.duration,
-      description: e.description,
-      language: e.language,
-      price: e.price,
-      rating: e.rating,
-      level: e.level,
-      name_prof: e.name_prof,
-    };
+  let respuesta = await Course.findAll({
+    where: {
+      title: { [Op.iLike]: `%${info}%` },
+    },
   });
-  //console.log(newCourseDb);
-  return newCourseDb;
+
+  let respuesta2 = await Course.findAll({
+    where: {
+      name_prof: { [Op.iLike]: `%${info}%` },
+    },
+  });
+
+  return [respuesta, respuesta2];
+  //aca hay que concatenar respuesta con respueta2
 };
 
 const allInfoCourses = async (title) => {
-  const dbInfoCourses = await getDbInfoCourses(title);
-  const allInfoCourses = dbInfoCourses;
-  return allInfoCourses;
+  let respuesta = await Course.findAll({});
+  return respuesta;
 };
 
 ///////// Route Course ID /////////
@@ -147,4 +113,10 @@ const changeCourseById = async (id) => {
   }
 };
 
-module.exports = { allInfo, allInfoCourses, getCourseById, changeCourseById };
+module.exports = {
+  allInfo,
+  allInfoCourses,
+  getCourseById,
+  changeCourseById,
+  getDbInfoCourses,
+};
