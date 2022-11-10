@@ -2,9 +2,21 @@ import React from "react";
 import s from "./Detail.module.css"
 import image from "../../images/register.png"
 import { Rating,Button,Avatar } from "flowbite-react";
+import { useState,useEffect } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { getDetail } from "../../redux/actions";
+
 
 
 const Detail=(props)=>{
+  const id=props.match.params.id;
+  const dispatch=useDispatch();
+  console.log(id)
+  const course=useSelector((state)=>state.course);
+  useEffect(()=>{
+    dispatch(getDetail(id));
+  },[dispatch,id])
+ 
     return (
         <div >
         
@@ -17,7 +29,7 @@ const Detail=(props)=>{
         
         <div className={s.conatiner1}>
         <div className={s.head }>
-        <h1>APRENDE A TOCAR LA GUITARRA</h1>
+        <h1>{course.name}</h1>
   
         </div>
 

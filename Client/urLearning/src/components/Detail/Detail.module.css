@@ -39,14 +39,18 @@
 
 .imagen{
     height: 250px;
-    width: 550px;
+    width: 450px;
     border-radius: 10px;
 }
 .conatinerf{
     background: white;
     border-radius: 10px;
+    max-width: 75vh;
+    min-width: 60vh;
     
-    max-width: 80vh;
+    min-height: 60vh;
+    margin-right: 20%;
+   
 
 }
 .conatiner1{
@@ -54,6 +58,10 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     max-width: 80vh;
+    min-width: 60vh;
+    max-height: 70vh;
+    min-height: 65vh;
+    margin-left: 35%;
 
 }
 .container2{

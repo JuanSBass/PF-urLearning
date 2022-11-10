@@ -15,7 +15,7 @@ function App() {
       <Route exact path="/register" component={Register}/>
       <Route exact path="/" component={Home}/>
       <Route exact path="/form" component={Form}/>
-      <Route exact path="/course/:1" component={Detail}/>
+      <Route exact path="/course/:id" component={Detail}/>
 
     </div>
     </BrowserRouter>
