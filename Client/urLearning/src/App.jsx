@@ -4,8 +4,8 @@ import Form from "./components/Form/Form.jsx";
 import { Route, BrowserRouter } from "react-router-dom";
 import Detail from "./components/Detail/Detail.jsx";
 import Courses from "./components/Courses/Courses.jsx";
-import Nav from "./Components/nav/Nav";
-import Footer from "./Components/footer/Footer";
+//import Nav from "./Components/nav/Nav";
+//import Footer from "./Components/footer/Footer";
 
 function App() {
   return (
