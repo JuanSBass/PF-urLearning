@@ -6,7 +6,6 @@ export const GET_CATEGORY = "GET_CATEGORY";
 export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
 
-
 export const getCourses = () => {
   try {
     return async function (dispatch) {
@@ -25,7 +24,6 @@ export function postCourse(dataCourse) {
     return json;
   };
 }
-
 
 export function getChildCategory(idCategory) {
   return async function (dispatch) {
@@ -59,14 +57,12 @@ export const getDetail = (id) => {
   }
 };
 
-
 export function getCategory() {
   return async function (dispatch) {
-    const json = await axios.get("/allCategories");
+    const json = await axios.get("/category/allCategories");
     return dispatch({
       type: GET_CATEGORY,
       payload: json.data,
     });
   };
 }
-
