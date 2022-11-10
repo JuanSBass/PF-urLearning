@@ -26,7 +26,7 @@ export function postCourse(dataCourse) {
 export const postUser = (payload) => {
   try {
     return async function (dispatch) {
-      await axios.post("http://localhost:3001/user", payload);
+      await axios.post("/user", payload);
       dispatch({ type: POST_USER });
     };
   } catch (error) {
@@ -37,7 +37,7 @@ export const postUser = (payload) => {
 export const getDetail = (id) => {
   try {
     return async function (dispatch) {
-      const response = await axios.get(`http://localhost:3001/course/${id}`);
+      const response = await axios.get(`/course/${id}`);
       dispatch({ type: GET_DETAIL, payload: response.data });
     };
   } catch (error) {
