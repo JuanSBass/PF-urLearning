@@ -3,11 +3,16 @@ import s from "./Register.module.css"
 import image from "../../images/register.png"
 import logo from "../../images/urLearning.png"
 import { useState,useEffect } from "react"
-import {useDispatch,useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import { useHistory } from "react-router-dom";
+import { postUser } from "../../redux/actions"
+import {Button} from "flowbite-react"
+
 const Register=(props)=>{
   const [inputs,setInputs]=useState({email:"",password:""});
   const [errors,setErrors]=useState({});
+  const history=useHistory();
+  const dispatch=useDispatch();
   const validate=(input)=>{
   const errors={};
   const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -25,7 +30,18 @@ const Register=(props)=>{
     setInputs({...inputs,[e.target.name]:e.target.value})
    setErrors(validate({...inputs,[e.target.name]:e.target.value})) 
   }
-console.log(errors);
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    if(errors.email || errors.password)alert("Wrong fields")
+    else{
+      dispatch(postUser(inputs));
+      setInputs({email:"",password:""})
+      alert("Account created");
+      history.push("/");}
+    }
+    
+  
+
     return(
     
         <div >
@@ -42,7 +58,7 @@ console.log(errors);
             </div>
            
             <div className={s.form}>
-              <form>
+              <form onSubmit={(e)=>{handleSubmit(e)}}>
             <div className={s.email}>
             
             <label  className={s.labe} for="email-address-icon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
@@ -61,7 +77,10 @@ console.log(errors);
             </div>
             
             <div className={s.login}>
-            <button  type="button" class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Login</button>
+            <Button type="submit" className={s.loginb} gradientDuoTone="purpleToPink">
+              Login
+            </Button>
+
             </div>
 
             

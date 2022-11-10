@@ -1,5 +1,5 @@
 .main{
-    background: linear-gradient(90deg,#999293,#fcf9f2);
+ 
     color: #fcf9f2;
 }
 
@@ -34,7 +34,8 @@
 }
 
 .labe{
-    font-size: 20px;
+    font-family: 'Montserrat';
+    font-size: 22px;
     font-weight: bold;
     color: #3a3738;
 }
@@ -42,7 +43,7 @@
 
 
 .imagen{
-    height: 700px;
+    height: 650px;
     width: 700px;
     padding-right: 10%;
     
@@ -59,7 +60,8 @@ width: 85%;
 }
 .sub{
 
-    font-weight: bold;
+    font-family: 'Montserrat';
+    font-size: 22px;
     color: #d0cdcd;
 
 }
@@ -79,18 +81,21 @@ width: 85%;
 }
 
 .login{
-    display: flex;
+  
   
     padding-bottom: 10%;
-    justify-content: center;
+   
 }
-
+.loginb{
+    width: 250px;
+}
 .google{
     display: flex;
     justify-content: center;
    
 }
 .errors{
+    font-family: 'Montserrat';
     color: rgb(219, 61, 61);
     font-size: small;
 }
