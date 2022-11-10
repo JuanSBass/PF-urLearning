@@ -20,3 +20,15 @@
   font-weight: 700;
   font-size: 18px;
 }
+.card img {
+  object-fit: cover;
+  width: 238px;
+  height: 129px;
+  border-radius: 34px;
+}
+
+.imgcard {
+  width: 238px;
+  height: 129px;
+  border-radius: 34px;
+}

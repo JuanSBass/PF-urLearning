@@ -7,7 +7,7 @@ export const GET_CATEGORY = "GET_CATEGORY";
 export const getCourses = () => {
   try {
     return async function (dispatch) {
-      const response = await axios.get("/user");
+      const response = await axios.get("/course");
       console.log(response);
       dispatch({ type: GET_COURSES, payload: response.data });
     };
