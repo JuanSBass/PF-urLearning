@@ -5,6 +5,7 @@ const {
   allInfoCourses,
   getCourseById,
 } = require("../controllers/controllers");
+const cat = require("./category.js");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -13,6 +14,7 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+router.use("/category", cat);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -28,38 +30,6 @@ router.post("/user", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(404).send(error + "error del /Post User");
-  }
-});
-
-router.post("/category", async (req, res) => {
-  const { name } = req.body;
-
-  try {
-    let newCategory = await Category.create({
-      name,
-    });
-
-    res.status(200).send("category creado correctamente");
-  } catch (error) {
-    console.log(error);
-    res.status(404).send("no se creo la category");
-  }
-});
-
-router.post("/subCategory", async (req, res) => {
-  const { name, categoryId } = req.body;
-  console.log(categoryId);
-
-  try {
-    let newSubCategory = await SubCategory.create({
-      name,
-      categoryId,
-    });
-
-    res.status(200).send("SUBcategory creado correctamente");
-  } catch (error) {
-    console.log(error.message);
-    res.status(404).send("no se creo la SUBcategory");
   }
 });
 
