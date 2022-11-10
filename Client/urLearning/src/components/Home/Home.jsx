@@ -19,5 +19,6 @@ console.log(courses)
     return(<div>
         {courses.map(u=>{<h1>{u.name}</h1>})}
     </div>)
+    
 }
 export default Home
