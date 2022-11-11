@@ -54,6 +54,7 @@ const Courses = () => {
   return (
     <main className={styles.coursescontainer}>
       <section className={styles.filterscontainer}>
+        <Searchbar />
         <select onChange={filterCategos}>
           <option value="All">Todas</option>
           {categories.map(({ name, id }) => {
@@ -90,7 +91,6 @@ const Courses = () => {
         {/* <SearchBar /> */}
       </section>
       <Paginado />
-      <Searchbar />
     </main>
   );
 };
