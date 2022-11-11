@@ -81,7 +81,7 @@ function Paginado() {
         )}
       </div>
 
-      <div>
+      <div id={styles.paginationcontainer}>
         <ul className={styles.pageNumbers}>
           <li>
             <button onClick={handlePrev}>izq</button>
