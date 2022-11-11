@@ -2,7 +2,14 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Label, Select, TextInput, Textarea, Button } from "flowbite-react";
+import {
+  Label,
+  Select,
+  TextInput,
+  Textarea,
+  Button,
+  Badge,
+} from "flowbite-react";
 import style from "../Form/Form.module.css";
 import {
   getChildCategory,
@@ -91,31 +98,53 @@ const Form = () => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className={style.formulario}>
             <div className={style.izq}>
-              <div>¡Comparte al mundo tu conocimiento!</div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="title" value="Title" />
+              <div className={style.text}>
+                ¡Comparte al mundo tu conocimiento!
+              </div>
+
+              <div className={style.categoriasJuntas}>
+                <div className={style.cate}>
+                  <div className="mb-2 block">
+                    <Label htmlFor="title" value="Title" />
+                  </div>
+                  <TextInput
+                    id="title"
+                    type="text"
+                    required={true}
+                    onChange={(e) => handleChange(e)}
+                    name="title"
+                  />
                 </div>
-                <TextInput
-                  id="title"
-                  type="text"
-                  required={true}
-                  onChange={(e) => handleChange(e)}
-                  name="title"
-                  className={style.mitadInputs}
-                />
+
+                <div className={style.cate}>
+                  <div className="mb-2 block">
+                    <Label htmlFor="name_prof" value="Teacher Name" />
+                  </div>
+                  <TextInput
+                    id="name_prof"
+                    type="text"
+                    required={true}
+                    onChange={(e) => handleChange(e)}
+                    name="name_prof"
+                  />
+                </div>
               </div>
               <div className={style.categoriasJuntas}>
-                <div id="select">
+                <div id="select" className={style.cate}>
                   <div className="mb-2 block">
                     <Label htmlFor="category" value="Select your category" />
                   </div>
+
                   <Select
                     id="category"
                     required={true}
                     onChange={handleSelect}
                     name="category"
+                    defaultValue="title"
                   >
+                    <option value="title" disabled name="Choose category">
+                      Category
+                    </option>
                     {category.map((c) => {
                       return (
                         <option value={c.id} key={c.id}>
@@ -126,19 +155,24 @@ const Form = () => {
                   </Select>
                 </div>
 
-                <div id="select">
+                {/* <Badge color="info" size="sm" className={style.tag}>
+                  {input.category}
+                </Badge> */}
+
+                <div id="select" className={style.cate}>
                   <div className="mb-2 block">
-                    <Label
-                      htmlFor="subCategory"
-                      value="Select your subCategory"
-                    />
+                    <Label htmlFor="subCategory" value="Subcategory" />
                   </div>
                   <Select
                     id="subCategory"
                     required={true}
                     onChange={(e) => handleSelect(e)}
                     name="subCategory"
+                    defaultValue="title"
                   >
+                    <option value="title" disabled name="Choose category">
+                      Subcategory
+                    </option>
                     {subCategories?.map((c) => {
                       return (
                         <option value={c.name} key={c.id}>
@@ -150,7 +184,7 @@ const Form = () => {
                 </div>
               </div>
 
-              <div id="textarea">
+              <div id="textarea" className={style.desc}>
                 <div className="mb-2 block">
                   <Label htmlFor="description" value="Your description" />
                 </div>
@@ -164,9 +198,10 @@ const Form = () => {
                 />
               </div>
             </div>
+
             <div className={style.der}>
               <div className={style.categoriasJuntas}>
-                <div id="select">
+                <div id="select" className={style.cate}>
                   <div className="mb-2 block">
                     <Label htmlFor="language" value="Select your language" />
                   </div>
@@ -175,7 +210,11 @@ const Form = () => {
                     required={true}
                     onChange={(e) => handleSelect(e)}
                     name="language"
+                    defaultValue="title"
                   >
+                    <option value="title" disabled name="Choose category">
+                      Language
+                    </option>
                     {LANGUAGE.map((l) => {
                       return (
                         <option value={l} key={l}>
@@ -186,7 +225,7 @@ const Form = () => {
                   </Select>
                 </div>
 
-                <div id="select">
+                <div id="select" className={style.cate}>
                   <div className="mb-2 block">
                     <Label htmlFor="level" value="Select your level" />
                   </div>
@@ -195,7 +234,11 @@ const Form = () => {
                     required={true}
                     onChange={(e) => handleSelect(e)}
                     name="level"
+                    defaultValue="title"
                   >
+                    <option value="title" disabled name="Choose category">
+                      Level
+                    </option>
                     {LEVEL.map((l) => {
                       return (
                         <option value={l} key={l}>
@@ -245,20 +288,6 @@ const Form = () => {
                   className={style.mitadInputs}
                   name="price"
                   onChange={(e) => handleChange(e)}
-                />
-              </div>
-
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="name_prof" value="Name" />
-                </div>
-                <TextInput
-                  id="name_prof"
-                  type="text"
-                  required={true}
-                  onChange={(e) => handleChange(e)}
-                  name="name_prof"
-                  className={style.mitadInputs}
                 />
               </div>
 
