@@ -45,8 +45,7 @@ router.get("/allCategories", async (req, res) => {
 });
 
 router.get("/childCategoriesFrom", async (req, res) => {
-  let { categoryId } = req.body;
-  console.log(categoryId);
+  let { categoryId } = req.query;
   try {
     let childCategories = await SubCategory.findAll({
       where: { categoryId },

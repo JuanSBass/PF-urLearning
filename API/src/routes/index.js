@@ -69,7 +69,7 @@ router.post("/course", async (req, res) => {
       image,
       category,
       subCategory,
-      duration,
+      duration: Number(duration),
       description,
       language,
       price,

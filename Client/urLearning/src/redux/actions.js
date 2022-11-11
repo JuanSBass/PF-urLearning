@@ -5,7 +5,7 @@ export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
 export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
-
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 export const getCourses = () => {
   try {
@@ -20,30 +20,17 @@ export const getCourses = () => {
 };
 
 export function postCourse(dataCourse) {
-	return async function () {
-		const json = await axios.post("/course", dataCourse);
-		return json;
-	};
+  return async function () {
+    const json = await axios.post("/course", dataCourse);
+    return;
+  };
 }
 
-/*export default function getCoursesByName(title) {
-	return async function (dispatch) {
-		try {
-			var json = await axios.get("/course?name=" + title.charAt(0).toUpperCase() + title.slice(1));
-			return dispatch({
-				type: "GET_COURSES_BY_NAME",
-				payload: json.data,
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	};
-}*/
-
-
-export function getChildCategory(idCategory) {
+export function getChildCategory(categoryId) {
   return async function (dispatch) {
-    const json = await axios.get("/childCategoriesFrom", idCategory);
+    const json = await axios.get(
+      `/category/childCategoriesFrom?categoryId=${categoryId}`
+    );
     return dispatch({
       type: GET_CHILD_CATEGORY,
       payload: json.data,
@@ -73,10 +60,9 @@ export const getDetail = (id) => {
   }
 };
 
-
 export function getCategory() {
   return async function (dispatch) {
-    const json = await axios.get("/allCategories");
+    const json = await axios.get("/category/allCategories");
     return dispatch({
       type: GET_CATEGORY,
       payload: json.data,
@@ -84,3 +70,24 @@ export function getCategory() {
   };
 }
 
+export const cleanDetail = () => {
+  return { type: CLEAN_DETAIL };
+};
+
+
+/* export function getCoursesByname(name){
+  return async function (dispatch) {
+  try{
+    var json = await axios.get("/course?name=" + name.charAt(0).toUpperCase() + name.slice(1))
+    return dispatch ({
+      type: "GET_COURSES_NAME",
+      payload: json.data
+    })
+    } catch (error){
+      console.log(error)
+    }
+  }
+}
+
+
+*/
