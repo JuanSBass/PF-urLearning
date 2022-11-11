@@ -78,7 +78,7 @@ const Register=(props)=>{
             
             <div className={s.login}>
             <Button type="submit" className={s.loginb} gradientDuoTone="purpleToPink">
-              Login
+              Register
             </Button>
 
             </div>

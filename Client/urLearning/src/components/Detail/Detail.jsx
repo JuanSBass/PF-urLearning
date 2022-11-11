@@ -11,17 +11,17 @@ import { getDetail,cleanDetail } from "../../redux/actions";
 const Detail=(props)=>{
   const id=props.match.params.id;
   const dispatch=useDispatch();
-  console.log(id)
+ 
   const course=useSelector((state)=>state.course);
   useEffect(()=>{
     dispatch(getDetail(id))
-    
+    return function (){dispatch(cleanDetail())}
    
   },[dispatch,id])
 
     return (<div>
       
-        {course?<div >
+        {course.title?<div >
         
         
         <div className={s.main}>
@@ -93,10 +93,11 @@ const Detail=(props)=>{
         </div>
 
         </div>
-    </div>:  <Spinner
+    </div>:<div className={s.carga}>
+    <Spinner
     color="purple"
-    aria-label="Purple spinner example"
-  />}
+    aria-label="Purple spinner example"/>
+      </div>}
     </div>
     )
 }
