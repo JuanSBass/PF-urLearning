@@ -6,19 +6,22 @@ import {
   filteredByCategories,
   filteredBySubCategories,
   getCategory,
+  getChildCategory,
   getCourses,
 } from "../../redux/actions";
-import { Select } from "flowbite-react";
+import { Button, Select } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const Courses = () => {
   const dispatch = useDispatch();
   const [orden, setOrden] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const categories = useSelector((state) => state.category);
   let categoriesName = [];
   categories.map((cat) => categoriesName.push(cat.name));
   let catSet = [...new Set(categoriesName)];
 
-  const subCategories = useSelector((state) => state.category);
+  const subCategories = useSelector((state) => state.subCategories);
 
   useEffect(() => {
     dispatch(getCourses());
@@ -27,13 +30,19 @@ const Courses = () => {
 
   const filterCategos = (event) => {
     // setCurrentPage(1);
+    dispatch(getChildCategory(event.target.id));
     dispatch(filteredByCategories(event.target.value));
+    console.log(event.target.id);
+    console.log(event.target.value);
   };
 
   const filterSubCategos = (event) => {
     // setCurrentPage(1);
-    dispatch(filteredBySubCategories(event.target.value));
+    dispatch(filteredBySubCategories(event.target.id));
   };
+
+  const arrIds = [];
+  console.log(arrIds);
   // const handleOrder = (event) => {
   //   event.preventDefault();
   //   // setCurrentPage(1);
@@ -45,8 +54,13 @@ const Courses = () => {
       <section className={styles.filterscontainer}>
         <select onChange={filterCategos}>
           <option value="All">Todas</option>
-          {catSet.map((category) => {
-            return <option value={category}>{category}</option>;
+          {categories.map(({ name, id }) => {
+            arrIds.push(id);
+            return (
+              <option value={name} id="holi">
+                {name}
+              </option>
+            );
           })}
         </select>
 
@@ -72,6 +86,9 @@ const Courses = () => {
           <option value="populationMayor">Población + -</option>
           <option value="populationMenor">Población - +</option>
         </select> */}
+        <Link to="/form">
+          <Button gradientMonochrome="success">Crear curso</Button>
+        </Link>
       </section>
       <Paginado />
     </main>

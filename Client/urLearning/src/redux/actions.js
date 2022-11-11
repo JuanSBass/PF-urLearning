@@ -78,7 +78,7 @@ export function getCategory() {
 
 export function filteredByCategories(category) {
   return {
-    type: FILTER_BY_ACTIVITY,
+    type: FILTER_BY_CATEGORY,
     payload: category,
   };
 }

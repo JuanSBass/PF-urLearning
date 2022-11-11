@@ -8,6 +8,7 @@ import {
   FILTER_BY_CATEGORY,
   SET_CURRENT_PAGE,
   CLEAN_DETAIL,
+  FILTER_BY_SUBCATEGORY,
 } from "./actions";
 
 const initialState = {
@@ -51,14 +52,14 @@ function rootReducer(state = initialState, action) {
         copyCategories: action.payload,
       };
     case FILTER_BY_CATEGORY:
-      const allCategories = state.copyCategories;
+      let allCourses = state.copyCourses;
       const filteredByCategories =
         action.payload === "All"
-          ? allCategories
-          : allCategories.filter((c) => c.name === action.payload);
+          ? allCourses
+          : allCourses.filter((c) => c.category === action.payload);
       return {
         ...state,
-        countries: filteredByCategories,
+        courses: filteredByCategories,
       };
 
     case SET_CURRENT_PAGE:
@@ -78,6 +79,17 @@ function rootReducer(state = initialState, action) {
 			courses: action.payload
 		} 
 	   */
+    case FILTER_BY_SUBCATEGORY:
+      let allCoursesSub = state.copyCourses;
+      const filteredBySubCategories =
+        action.payload === "All"
+          ? allCoursesSub
+          : allCourses.filter((c) => c.subCategory === action.payload);
+      return {
+        ...state,
+        courses: filteredBySubCategories,
+      };
+
     default:
       return { ...state };
   }
