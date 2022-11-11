@@ -9,6 +9,7 @@ import {
   Textarea,
   Button,
   Badge,
+  Modal,
 } from "flowbite-react";
 import style from "../Form/Form.module.css";
 import {
@@ -17,6 +18,7 @@ import {
   getCategory,
   getCourses,
 } from "../../redux/actions";
+import { useHistory } from "react-router-dom";
 
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
@@ -24,7 +26,13 @@ const LEVEL = ["easy", "medium", "advanced"];
 const Form = () => {
   const category = useSelector((state) => state.category);
   const subCategories = useSelector((state) => state.subCategories);
+  const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const showModal = () => {
+    setModal(!modal);
+  };
 
   const [input, setInput] = useState({
     title: "",
@@ -37,6 +45,17 @@ const Form = () => {
     price: "",
     level: "",
   });
+
+  let btnDisabled = !(
+    input.title.length &&
+    input.image.length &&
+    input.category.length &&
+    input.subCategory.length &&
+    input.duration.length &&
+    input.language.length &&
+    input.price.length &&
+    input.level.length
+  );
 
   useEffect(() => {
     dispatch(getCategory());
@@ -90,6 +109,8 @@ const Form = () => {
       level: "",
       name_prof: "",
     });
+    history.push("/");
+    dispatch(getCourses());
   };
 
   return (
@@ -291,19 +312,43 @@ const Form = () => {
                 />
               </div>
 
-              <Button
-                gradientDuoTone="purpleToBlue"
-                type="submit"
-                className={style.buttonSubmit}
-              >
-                Crear el curso
-              </Button>
+              <>
+                <Button
+                  gradientDuoTone="purpleToBlue"
+                  className={style.buttonSubmit}
+                  onClick={showModal}
+                  disabled={btnDisabled}
+                  type="submit"
+                >
+                  Crear el curso
+                </Button>
+
+                <Modal show={modal} size="md" popup={true} onClose={showModal}>
+                  <Modal.Header />
+                  <Modal.Body>
+                    <div className="text-center">
+                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                        Curso creado con exito!
+                      </h3>
+                      {/* <div className="flex justify-center gap-4">
+                        <Button
+                          onClick={showModal}
+                          type="submit"
+                          className={style.btnYes}
+                        >
+                          Yes, I'm sure
+                        </Button>
+                        <Button color="gray" onClick={showModal}>
+                          No, cancel
+                        </Button>
+                      </div> */}
+                    </div>
+                  </Modal.Body>
+                </Modal>
+              </>
             </div>
           </div>
         </form>
-        {/* <Button gradientDuoTone="purpleToBlue" onClick={prueba}>
-          Probar
-        </Button> */}
       </div>
     </div>
   );
