@@ -68,7 +68,7 @@ export function getCategory() {
   return async function (dispatch) {
     const json = await axios.get("/category/allCategories");
     return dispatch({
-      type: GET_CATEGORY,
+      type: GET_CHILD_CATEGORY,
       payload: json.data,
     });
   };
