@@ -63,6 +63,12 @@ function rootReducer(state = initialState, action) {
         courses: filteredByCategories,
       };
 
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+
     case CLEAN_DETAIL:
       return {
         ...state,

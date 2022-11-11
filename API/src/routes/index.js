@@ -124,6 +124,46 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
+///////// Route Course by category /////////
+
+router.get("/courseByCategory", async (req, res) => {
+
+  console.log("hola")
+  try {
+    const  {categ}  = req.query;
+    console.log(categ)
+    let respuesta = await Course.findAll({
+      where: {
+        category: categ,
+      },
+    });
+  
+    return res.status(200).send(respuesta);
+  } catch (error) {
+    console.log("error");
+  }
+});
+
+router.get("/courseBySubCategory", async (req, res) => {
+
+  console.log("hola")
+  try {
+    const  {subcateg}  = req.query;
+    console.log(subcateg)
+    let respuesta = await Course.findAll({
+      where: {
+        subCategory: subcateg,
+      },
+    });
+  
+    return res.status(200).send(respuesta);
+  } catch (error) {
+    console.log("error");
+  }
+});
+
+
+
 ///////// Route name_prof /////////
 
 //router.get("/course")
