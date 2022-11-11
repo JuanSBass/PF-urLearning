@@ -26,7 +26,7 @@ export function postCourse(dataCourse) {
 	};
 }
 
-export default function getCoursesByName(title) {
+/*export default function getCoursesByName(title) {
 	return async function (dispatch) {
 		try {
 			var json = await axios.get("/course?name=" + title.charAt(0).toUpperCase() + title.slice(1));
@@ -38,7 +38,7 @@ export default function getCoursesByName(title) {
 			console.log(error);
 		}
 	};
-}
+}*/
 
 
 export function getChildCategory(idCategory) {

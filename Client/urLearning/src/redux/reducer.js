@@ -13,11 +13,11 @@ function rootReducer(state = initialState, action) {
 			return {
 				...state,
 			};
-		case GET_COURSES_BY_NAME:
+		/*case GET_COURSES_BY_NAME:
 			return {
 				...state,
 				courses: action.payload,
-			};
+			};*/
 
     default:
       return { ...state };
