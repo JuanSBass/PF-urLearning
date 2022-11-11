@@ -15,11 +15,11 @@ import { Link } from "react-router-dom";
 const Courses = () => {
   const dispatch = useDispatch();
   const [orden, setOrden] = useState("");
-  const [categoryId, setCategoryId] = useState("");
+  const [cursesFiltered, setCursesFilteres] = useState([]);
   const categories = useSelector((state) => state.category);
-  let categoriesName = [];
-  categories.map((cat) => categoriesName.push(cat.name));
-  let catSet = [...new Set(categoriesName)];
+  // let categoriesName = [];
+  // categories.map((cat) => categoriesName.push(cat.name));
+  // let catSet = [...new Set(categoriesName)];
 
   const subCategories = useSelector((state) => state.subCategories);
 
@@ -30,15 +30,16 @@ const Courses = () => {
 
   const filterCategos = (event) => {
     // setCurrentPage(1);
-    dispatch(getChildCategory(event.target.id));
     dispatch(filteredByCategories(event.target.value));
-    console.log(event.target.id);
-    console.log(event.target.value);
+    let categorySelected = categories.find(
+      (c) => c.name === event.target.value
+    );
+    dispatch(getChildCategory(categorySelected.id));
   };
 
   const filterSubCategos = (event) => {
     // setCurrentPage(1);
-    dispatch(filteredBySubCategories(event.target.id));
+    dispatch(filteredBySubCategories(event.target.value));
   };
 
   // const arrIds = [];
