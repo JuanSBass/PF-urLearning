@@ -11,6 +11,7 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
 export const GET_COURSES_NAME = "GET_COURSES_NAME";
 
 export const getCourses = () => {
@@ -84,10 +85,10 @@ export function filteredByCategories(category) {
   };
 }
 
-export function filteredBySubCategories(category) {
+export function filteredBySubCategories(subcategory) {
   return {
     type: FILTER_BY_SUBCATEGORY,
-    payload: category,
+    payload: subcategory,
   };
 }
 //? <--------- Orders -------->
@@ -125,4 +126,12 @@ export const cleanDetail = () => {
 
 }
 
-
+export const getSubCategoriesName = (name) => {
+  return async function (dispatch) {
+    const json = await axios.get(`/courseBySubCategory?subcateg=${name}`);
+    return dispatch({
+      type: GET_SUBCATEGORIES_COURSES,
+      payload: json.data,
+    });
+  };
+};
