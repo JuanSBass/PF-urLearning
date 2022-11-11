@@ -9,6 +9,7 @@ export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
 export const ORDER_BY_ANY = "ORDER_BY_ANY";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 
 export const getCourses = () => {
   try {
@@ -81,6 +82,12 @@ export function filteredByCategories(category) {
   };
 }
 
+export function filteredBySubCategories(category) {
+  return {
+    type: FILTER_BY_SUBCATEGORY,
+    payload: category,
+  };
+}
 //? <--------- Orders -------->
 
 export function orderByAny(payload) {

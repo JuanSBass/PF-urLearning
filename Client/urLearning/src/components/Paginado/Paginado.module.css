@@ -51,3 +51,7 @@
 .pageNumbers li button:focus {
   outline: none;
 }
+
+#paginationcontainer {
+  grid-column: 2/2;
+}

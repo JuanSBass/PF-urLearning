@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filteredByCategories,
+  filteredBySubCategories,
   getCategory,
   getCourses,
 } from "../../redux/actions";
+import { Select } from "flowbite-react";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const Courses = () => {
   categories.map((cat) => categoriesName.push(cat.name));
   let catSet = [...new Set(categoriesName)];
 
+  const subCategories = useSelector((state) => state.category);
+
   useEffect(() => {
     dispatch(getCourses());
     dispatch(getCategory());
@@ -24,6 +28,11 @@ const Courses = () => {
   const filterCategos = (event) => {
     // setCurrentPage(1);
     dispatch(filteredByCategories(event.target.value));
+  };
+
+  const filterSubCategos = (event) => {
+    // setCurrentPage(1);
+    dispatch(filteredBySubCategories(event.target.value));
   };
   // const handleOrder = (event) => {
   //   event.preventDefault();
@@ -40,6 +49,21 @@ const Courses = () => {
             return <option value={category}>{category}</option>;
           })}
         </select>
+
+        <Select
+          id="subCategory"
+          required={true}
+          onChange={filterSubCategos}
+          name="subCategory"
+        >
+          {subCategories?.map((c) => {
+            return (
+              <option value={c.name} key={c.id}>
+                {c.name}
+              </option>
+            );
+          })}
+        </Select>
 
         {/* <select onChange={handleOrder}>
           <option value="all">Todos</option>
