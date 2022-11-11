@@ -5,6 +5,7 @@ export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
 export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
 export const getCourses = () => {
@@ -68,6 +69,27 @@ export function getCategory() {
     });
   };
 }
+
+export const cleanDetail = () => {
+  return { type: CLEAN_DETAIL };
+};
+
+/* export function getCoursesByname(name){
+  return async function (dispatch) {
+  try{
+    var json = await axios.get("/course?name=" + name.charAt(0).toUpperCase() + name.slice(1))
+    return dispatch ({
+      type: "GET_COURSES_NAME",
+      payload: json.data
+    })
+    } catch (error){
+      console.log(error)
+    }
+  }
+}
+
+
+*/
 
 export function setCurrentPage(payload) {
   return {

@@ -5,6 +5,7 @@ import {
   GET_CHILD_CATEGORY,
   POST_USER,
   GET_DETAIL,
+  CLEAN_DETAIL,
   SET_CURRENT_PAGE,
 } from "./actions";
 
@@ -46,7 +47,18 @@ function rootReducer(state = initialState, action) {
         ...state,
         category: action.payload,
       };
-
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        course: {},
+      };
+    /*
+	  case GET_COURSES_NAME:
+		return{
+			...state,
+			courses: action.payload
+		} 
+	   */
     case SET_CURRENT_PAGE:
       return {
         ...state,
