@@ -9,6 +9,7 @@ import {
   SET_CURRENT_PAGE,
   CLEAN_DETAIL,
   FILTER_BY_SUBCATEGORY,
+  ORDER_BY_ANY,
 } from "./actions";
 
 const initialState = {
@@ -89,6 +90,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         courses: filteredBySubCategories,
       };
+
+    case ORDER_BY_ANY:
+      if (action.payload === "all") return state;
+      if (action.payload === "ratingmayor") {
+        state.courses.sort((a, b) => {
+          if (a.rating > b.rating) return 1;
+          if (b.rating > a.rating) return -1;
+          return 0;
+        });
+      }
 
     default:
       return { ...state };

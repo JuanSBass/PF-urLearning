@@ -41,8 +41,8 @@ const Courses = () => {
     dispatch(filteredBySubCategories(event.target.id));
   };
 
-  const arrIds = [];
-  console.log(arrIds);
+  // const arrIds = [];
+  // console.log(arrIds);
   // const handleOrder = (event) => {
   //   event.preventDefault();
   //   // setCurrentPage(1);
@@ -55,21 +55,16 @@ const Courses = () => {
         <select onChange={filterCategos}>
           <option value="All">Todas</option>
           {categories.map(({ name, id }) => {
-            arrIds.push(id);
+            // arrIds.push(id);
             return (
-              <option value={name} id="holi">
+              <option value={name} id={id}>
                 {name}
               </option>
             );
           })}
         </select>
 
-        <Select
-          id="subCategory"
-          required={true}
-          onChange={filterSubCategos}
-          name="subCategory"
-        >
+        <Select id="subCategory" onChange={filterSubCategos} name="subCategory">
           {subCategories?.map((c) => {
             return (
               <option value={c.name} key={c.id}>
