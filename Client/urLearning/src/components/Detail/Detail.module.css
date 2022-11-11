@@ -48,7 +48,7 @@
     max-width: 80vh;
     min-width: 60vh;
     max-height: 70vh;
-    min-height: 65vh;
+    min-height: 55vh;
     margin-right: 20%;
    
 
@@ -60,7 +60,7 @@
     max-width: 80vh;
     min-width: 60vh;
     max-height: 70vh;
-    min-height: 65vh;
+    
     margin-left: 35%;
 
 }
@@ -181,4 +181,12 @@
     background: #e8e8e8;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.carga{
+    background: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

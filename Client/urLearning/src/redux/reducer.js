@@ -6,6 +6,7 @@ import {
   POST_USER,
   GET_DETAIL,
   SET_CURRENT_PAGE,
+  CLEAN_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -47,11 +48,26 @@ function rootReducer(state = initialState, action) {
         category: action.payload,
       };
 
+
     case SET_CURRENT_PAGE:
       return {
         ...state,
         currentPage: action.payload,
       };
+
+
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        course: {},
+      };
+	  /*
+	  case GET_COURSES_NAME:
+		return{
+			...state,
+			courses: action.payload
+		} 
+	   */
 
     default:
       return { ...state };
