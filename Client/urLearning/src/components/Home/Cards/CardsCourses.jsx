@@ -1,17 +1,32 @@
 import styles from "./CardsCourses.module.css";
-import peiton from "../../../img/Rectangle 15.png";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Rating } from "flowbite-react";
 
 const CardsCourses = () => {
+  const courses = useSelector((state) => state.courses);
+  console.log(courses);
+
   return (
     <section className={styles.cardscontainer}>
-      {pruebaData.map((card) => (
+      {courses?.map((card) => (
         <Link to={`/course/${card.id}`} key={card.id}>
           <div className={styles.card}>
-            <img src={peiton} alt="miniatura" />
+            <div className={styles.imgcard}>
+              <img src={card.image} alt="miniatura" />
+            </div>
             <h3>{card.title}</h3>
-            <p>{card.teacher}</p>
-            <p>⭐{card.rating}/5</p>
+            <p>{card.name_prof}</p>
+            <Rating>
+              <Rating.Star filled={card.rating > 0} />
+              <Rating.Star filled={card.rating > 1} />
+              <Rating.Star filled={card.rating > 2} />
+              <Rating.Star filled={card.rating > 3} />
+              <Rating.Star filled={card.rating > 4} />
+              <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                {card.rating} out of 5
+              </p>
+            </Rating>
           </div>
         </Link>
       ))}
@@ -20,54 +35,3 @@ const CardsCourses = () => {
 };
 
 export default CardsCourses;
-
-const pruebaData = [
-  {
-    id: 1,
-    title: "Aprende programación en Phyton",
-    teacher: "Juancito Santillán",
-    rating: 4,
-  },
-  {
-    id: 2,
-    title: "Aprende clases de guitarra",
-    teacher: "Cesar Restrepo",
-    rating: 4,
-  },
-  {
-    id: 3,
-    title: "Aprende programación en Phyton",
-    teacher: "Gaston Resoagli",
-    rating: 4,
-  },
-  {
-    id: 4,
-    title: "Aprende programación en Phyton",
-    teacher: "Lucas Canaparo",
-    rating: 4,
-  },
-  {
-    id: 5,
-    title: "Aprende programación en Phyton",
-    teacher: "Santiago Restrepo",
-    rating: 4,
-  },
-  {
-    id: 6,
-    title: "Aprende programación en Phyton",
-    teacher: "Marco Giabbani",
-    rating: 4,
-  },
-  {
-    id: 7,
-    title: "Aprende programación en Phyton",
-    teacher: "Valen",
-    rating: 4,
-  },
-  {
-    id: 8,
-    title: "Aprende programación en Phyton",
-    teacher: "Lupil López Pepa",
-    rating: 4,
-  },
-];

@@ -1,13 +1,13 @@
-import { GET_COURSES, POST_COURSE, GET_COURSES_BY_NAME } from "./actions";
+import { GET_COURSES, POST_COURSE } from "./actions";
 
 const initialState = {
-	courses: [],
+  courses: [],
 };
 
 function rootReducer(state = initialState, action) {
-	switch (action.type) {
-		case GET_COURSES:
-			return { ...state, courses: action.payload };
+  switch (action.type) {
+    case GET_COURSES:
+      return { ...state, courses: action.payload };
 
 		case POST_COURSE:
 			return {
@@ -19,9 +19,9 @@ function rootReducer(state = initialState, action) {
 				courses: action.payload,
 			};
 
-		default:
-			return { ...state };
-	}
+    default:
+      return { ...state };
+  }
 }
 
 export default rootReducer;

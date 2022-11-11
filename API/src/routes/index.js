@@ -1,10 +1,14 @@
 const { Router } = require("express");
-const { User, Course } = require("../db");
+const { User, Course, Category, SubCategory } = require("../db");
 const {
   allInfo,
   allInfoCourses,
   getCourseById,
+  changeCourseById,
+  getDbInfoCourses,
 } = require("../controllers/controllers");
+const cat = require("./category.js");
+
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -12,6 +16,7 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+router.use("/category", cat);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -80,17 +85,23 @@ router.post("/course", async (req, res) => {
   }
 });
 
+///////// Route Course /////////
+
 router.get("/course", async (req, res) => {
-  const { title } = req.query;
+  const { info } = req.query;
+  console.log(info);
+  let allCourses;
   try {
-    const allCourses = await allInfoCourses(title);
-    return allCourses
-      ? res.status(200).send(allCourses)
-      : res.status(404).send("No existe el curso buscado");
+    info
+      ? (allCourses = await getDbInfoCourses(info))
+      : (allCourses = await allInfoCourses(info));
+    res.status(200).send(allCourses);
   } catch (error) {
     console.log(error + "error del get /course");
   }
 });
+
+///////// Route Course ID /////////
 
 router.get("/course/:id", async (req, res) => {
   const { id } = req.params;
@@ -101,16 +112,20 @@ router.get("/course/:id", async (req, res) => {
   }
 });
 
+///////// Route Course Modify Rating by ID /////////
+
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
-  const rating = req.body;
 
   try {
-    let change = await Course.update(rating, { where: { id: id } });
-    return res.status(200).send("Cambio exitoso");
+    return res.status(200).send(await changeCourseById(id));
   } catch (error) {
     console.log("error");
   }
 });
+
+///////// Route name_prof /////////
+
+//router.get("/course")
 
 module.exports = router;
