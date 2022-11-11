@@ -7,29 +7,32 @@
 .contenedorFormulario {
   background-color: #fafafa;
   width: 70%;
-  min-height: 420px;
+  min-height: 450px;
   border-radius: 25px;
 }
 
 .formulario {
-  padding-top: 20px;
   display: flex;
   justify-content: center;
   font-weight: 200;
   font-size: 15px;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .izq {
   display: flex;
   flex-direction: column;
   width: 45%;
+  gap: 1.3rem;
+  padding-top: 0.9rem;
 }
 
 .der {
   display: flex;
   flex-direction: column;
   width: 45%;
+  gap: 1.3rem;
+  padding-top: 2rem;
 }
 
 .mitadInputs {
@@ -40,4 +43,30 @@
   display: flex;
   width: 100%;
   gap: 1.3rem;
+  position: relative;
+}
+
+.text {
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 1rem;
+  color: #6d6aee;
+}
+
+.buttonSubmit {
+  margin-bottom: 2rem;
+}
+
+/* .tag {
+  position: absolute;
+  top: 5rem;
+} */
+
+.cate {
+  width: 100%;
+}
+
+.desc {
+  padding-bottom: 1rem;
 }

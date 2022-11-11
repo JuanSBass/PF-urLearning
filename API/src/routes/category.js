@@ -56,4 +56,21 @@ router.get("/childCategoriesFrom", async (req, res) => {
   }
 });
 
+
+router.get("/andSubcategories", async (req, res) => {
+  let { id } = req.query;
+  try {
+    let categorySelected = await Category.findAll({
+      where: { id },
+    });
+    let childCategories = await SubCategory.findAll({
+      where: { categoryId: id },
+    });
+    let respuesta = [categorySelected, childCategories]
+    res.status(200).send(respuesta);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;

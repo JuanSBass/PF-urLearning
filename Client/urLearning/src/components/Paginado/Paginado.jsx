@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPage } from "../../redux/actions";
 import styles from "../Paginado/Paginado.module.css";
 import Card from "./Card";
+import { Spinner } from "flowbite-react";
 
 const renderData = (data) => {
   return data.map((p) => {
@@ -26,7 +27,7 @@ function Paginado() {
 
   const currentPage = useSelector((state) => state.currentPage);
 
-  const [cardsPerPage] = useState(2);
+  const [cardsPerPage] = useState(9);
 
   const handleClick = (ev) => {
     dispatch(setCurrentPage(Number(ev.target.id)));
@@ -73,7 +74,11 @@ function Paginado() {
   return (
     <>
       <div className={styles.contCards}>
-        {allCourses.length ? renderData(currentCards) : <div>loading...</div>}
+        {allCourses.length ? (
+          renderData(currentCards)
+        ) : (
+          <Spinner aria-label="Default status example" />
+        )}
       </div>
 
       <div id={styles.paginationcontainer}>
