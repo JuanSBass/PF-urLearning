@@ -87,7 +87,7 @@ export const cleanDetail = () => {
       console.log(error)
     }
   }
-}
 
+}
 
 */
