@@ -4,25 +4,25 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filteredByCategories,
-  getCategories,
+  getCategory,
   getCourses,
 } from "../../redux/actions";
 
 const Courses = () => {
   const dispatch = useDispatch();
   const [orden, setOrden] = useState("");
-  const categories = useSelector((state) => state.categories);
+  const categories = useSelector((state) => state.category);
   let categoriesName = [];
   categories.map((cat) => categoriesName.push(cat.name));
   let catSet = [...new Set(categoriesName)];
 
   useEffect(() => {
     dispatch(getCourses());
-    dispatch(getCategories());
+    dispatch(getCategory());
   }, [dispatch]);
 
   const filterCategos = (event) => {
-    setCurrentPage(1);
+    // setCurrentPage(1);
     dispatch(filteredByCategories(event.target.value));
   };
   // const handleOrder = (event) => {

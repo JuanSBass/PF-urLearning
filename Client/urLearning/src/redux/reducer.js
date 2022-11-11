@@ -6,7 +6,6 @@ import {
   POST_USER,
   GET_DETAIL,
   FILTER_BY_CATEGORY,
-  GET_CATEGORIES,
 } from "./actions";
 
 const initialState = {
@@ -15,7 +14,6 @@ const initialState = {
   subCategories: [],
   copyCourses: [],
   course: {},
-  categories: [],
   copyCategories: [],
 };
 
@@ -47,11 +45,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         category: action.payload,
-      };
-    case GET_CATEGORIES:
-      return {
-        ...state,
-        categories: action.payload,
         copyCategories: action.payload,
       };
     case FILTER_BY_CATEGORY:

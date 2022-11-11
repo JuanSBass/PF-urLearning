@@ -72,15 +72,6 @@ export function getCategory() {
   };
 }
 
-export function getCategories() {
-  return async function (dispatch) {
-    const response = await axios.get("/category/allCategories");
-    dispatch({
-      type: GET_CATEGORIES,
-      payload: response.data,
-    });
-  };
-}
 //? <--------- Filters ------------>
 
 export function filteredByCategories(category) {
