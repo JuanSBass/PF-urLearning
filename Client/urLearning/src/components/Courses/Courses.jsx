@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions";
 import { Button, Select } from "flowbite-react";
 import { Link } from "react-router-dom";
-import SearchBar from "../searchBar/SearchBar";
+import Searchbar from "../searchBar/SearchBar";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -65,7 +65,6 @@ const Courses = () => {
             );
           })}
         </select>
-
         <Select id="subCategory" onChange={filterSubCategos} name="subCategory">
           {/* <option value="All">Todas</option> */}
           <option value=""></option>
@@ -77,7 +76,6 @@ const Courses = () => {
             );
           })}
         </Select>
-
         {/* <select onChange={handleOrder}>
           <option value="all">Todos</option>
           <option value="asc">Alfabético A-Z</option>
@@ -92,6 +90,7 @@ const Courses = () => {
         {/* <SearchBar /> */}
       </section>
       <Paginado />
+      <Searchbar />
     </main>
   );
 };
