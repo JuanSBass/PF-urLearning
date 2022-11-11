@@ -5,6 +5,7 @@ export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
 export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 export const getCourses = () => {
   try {
@@ -68,3 +69,7 @@ export function getCategory() {
     });
   };
 }
+
+export const cleanDetail = () => {
+  return { type: CLEAN_DETAIL };
+};

@@ -1,24 +1,27 @@
 import React from "react";
 import s from "./Detail.module.css"
 import image from "../../images/register.png"
-import { Rating,Button,Avatar } from "flowbite-react";
+import { Rating,Button,Avatar,Spinner } from "flowbite-react";
 import { useState,useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { getDetail } from "../../redux/actions";
+import { getDetail,cleanDetail } from "../../redux/actions";
 
 
 
 const Detail=(props)=>{
   const id=props.match.params.id;
   const dispatch=useDispatch();
-  console.log(id)
+ 
   const course=useSelector((state)=>state.course);
   useEffect(()=>{
-    dispatch(getDetail(id));
+    dispatch(getDetail(id))
+    return function (){dispatch(cleanDetail())}
+   
   },[dispatch,id])
- console.log(course)
-    return (
-        <div >
+
+    return (<div>
+      
+        {course.title?<div >
         
         
         <div className={s.main}>
@@ -43,16 +46,15 @@ const Detail=(props)=>{
         </div>
         <div className={s.rating}>
         <Rating size="md">
-      
-          <Rating.Star />
-          <Rating.Star />
-          <Rating.Star />
-          <Rating.Star />
-          <Rating.Star filled={false} />
-          <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-           4.95 out of 5
-          </p>
-          </Rating>
+              <Rating.Star filled={course.rating > 0} />
+              <Rating.Star filled={course.rating > 1} />
+              <Rating.Star filled={course.rating > 2} />
+              <Rating.Star filled={course.rating > 3} />
+              <Rating.Star filled={course.rating > 4} />
+              <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                {course.rating} out of 5
+              </p>
+            </Rating>
         </div>
 
         
@@ -91,6 +93,11 @@ const Detail=(props)=>{
         </div>
 
         </div>
+    </div>:<div className={s.carga}>
+    <Spinner
+    color="purple"
+    aria-label="Purple spinner example"/>
+      </div>}
     </div>
     )
 }

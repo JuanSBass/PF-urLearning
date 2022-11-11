@@ -5,6 +5,7 @@ import {
   GET_CHILD_CATEGORY,
   POST_USER,
   GET_DETAIL,
+  CLEAN_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -44,7 +45,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         category: action.payload,
       };
-
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        course: {},
+      };
     default:
       return { ...state };
   }
