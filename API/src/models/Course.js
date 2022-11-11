@@ -1,13 +1,5 @@
 const { DataTypes } = require("sequelize");
-const CATEGORY = ["science", "trades", "arts"];
-const SUB_CATEGORY = [
-  "math",
-  "chemistry",
-  "welder",
-  "smith",
-  "visual",
-  "plastic",
-];
+
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
 module.exports = (sequelize) => {
@@ -29,11 +21,11 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       category: {
-        type: DataTypes.ENUM(...CATEGORY),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       subCategory: {
-        type: DataTypes.ENUM(...SUB_CATEGORY),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       duration: {
