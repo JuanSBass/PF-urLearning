@@ -5,7 +5,9 @@ export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
 export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
-
+export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
+export const ORDER_BY_ANY = "ORDER_BY_ANY";
+export const GET_CATEGORIES = "GET_CATEGORIES";
 
 export const getCourses = () => {
   try {
@@ -25,7 +27,6 @@ export function postCourse(dataCourse) {
     return json;
   };
 }
-
 
 export function getChildCategory(idCategory) {
   return async function (dispatch) {
@@ -59,7 +60,6 @@ export const getDetail = (id) => {
   }
 };
 
-
 export function getCategory() {
   return async function (dispatch) {
     const json = await axios.get("/allCategories");
@@ -70,3 +70,29 @@ export function getCategory() {
   };
 }
 
+export function getCategories() {
+  return async function (dispatch) {
+    const response = await axios.get("/category/allCategories");
+    dispatch({
+      type: GET_CATEGORIES,
+      payload: response.data,
+    });
+  };
+}
+//? <--------- Filters ------------>
+
+export function filteredByCategories(category) {
+  return {
+    type: FILTER_BY_ACTIVITY,
+    payload: category,
+  };
+}
+
+//? <--------- Orders -------->
+
+export function orderByAny(payload) {
+  return {
+    type: ORDER_BY_ANY,
+    payload,
+  };
+}
