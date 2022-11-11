@@ -1,30 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import Card from "./Card";
-// import { setCurrentPage } from "../actions";
+import { setCurrentPage } from "../../redux/actions";
+import CardsCourses from "../Home/Cards/CardsCourses";
+import styles from "../Paginado/Paginado.module.css";
 
-// const renderData = (data) => {
-//   return data.map((p) => {
-//     return (
-//       <Card
-//         name={p.name}
-//         image={p.image}
-//         types={p.types}
-//         key={p.id}
-//         id={p.id}
-//       />
-//     );
-//   });
-// };
+const renderData = (data) => {
+  return data.map((p) => {
+    return (
+      <CardsCourses
+        image={p.image}
+        title={p.title}
+        name_prof={p.name_prof}
+        key={p.id}
+        id={p.id}
+        rating={p.rating}
+      />
+    );
+  });
+};
 
 function Paginado() {
   const dispatch = useDispatch();
 
   const allCourses = useSelector((state) => state.courses);
 
-  //   const currentPage = useSelector((state) => state.currentPage);
+  const currentPage = useSelector((state) => state.currentPage);
 
-  const [cardsPerPage] = useState(9);
+  const [cardsPerPage] = useState(1);
 
   const handleClick = (ev) => {
     dispatch(setCurrentPage(Number(ev.target.id)));
@@ -32,16 +34,12 @@ function Paginado() {
 
   const pages = [];
   for (let i = 1; i <= Math.ceil(allCourses.length / cardsPerPage); i++) {
-    // divido mi cantidad de pokemones por la cantidad de pokemones que quiero por pagina
     pages.push(i);
   }
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentPokemons = allPokemons.slice(
-    indexOfFirstPokemon,
-    indexOfLastPokemon
-  );
+  const currentCards = allCourses.slice(indexOfFirstCard, indexOfLastCard);
 
   const pageNumbers = pages.map((numbers) => {
     return (
@@ -75,29 +73,19 @@ function Paginado() {
   return (
     <>
       <div className={styles.contCards}>
-        {allPokemons.length ? (
-          renderData(currentPokemons)
-        ) : (
-          <div>
-            <img src={pokeball} alt="pokeball" className={styles.pokeball} />
-          </div>
-        )}
+        {allCourses.length ? renderData(currentCards) : <div>loading...</div>}
       </div>
 
       <div>
         <ul className={styles.pageNumbers}>
           <li>
-            <button onClick={handlePrev}>
-              <img src={izq} alt="izq" className={styles.chevIzq}></img>
-            </button>
+            <button onClick={handlePrev}>izq</button>
           </li>
 
           {pageNumbers}
 
           <li>
-            <button onClick={handleNext}>
-              <img src={der} alt="der" className={styles.chevDer}></img>
-            </button>
+            <button onClick={handleNext}>der</button>
           </li>
         </ul>
       </div>

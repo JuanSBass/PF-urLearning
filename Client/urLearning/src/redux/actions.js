@@ -8,12 +8,12 @@ export const GET_DETAIL = "GET_DETAIL";
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
 export const ORDER_BY_ANY = "ORDER_BY_ANY";
 export const GET_CATEGORIES = "GET_CATEGORIES";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
 export const getCourses = () => {
   try {
     return async function (dispatch) {
       const response = await axios.get("/course");
-      console.log(response);
       dispatch({ type: GET_COURSES, payload: response.data });
     };
   } catch (error) {
@@ -86,6 +86,13 @@ export function filteredByCategories(category) {
 export function orderByAny(payload) {
   return {
     type: ORDER_BY_ANY,
+    payload,
+  };
+}
+
+export function setCurrentPage(payload) {
+  return {
+    type: SET_CURRENT_PAGE,
     payload,
   };
 }

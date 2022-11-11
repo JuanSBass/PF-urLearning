@@ -6,6 +6,7 @@ import {
   POST_USER,
   GET_DETAIL,
   FILTER_BY_CATEGORY,
+  SET_CURRENT_PAGE,
 } from "./actions";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   copyCourses: [],
   course: {},
   copyCategories: [],
+  currentPage: 1,
 };
 
 function rootReducer(state = initialState, action) {
@@ -56,6 +58,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         countries: filteredByCategories,
+      };
+
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
       };
 
     default:

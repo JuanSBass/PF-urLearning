@@ -1,5 +1,5 @@
 import styles from "./Courses.module.css";
-import CardsCourses from "../Home/Cards/CardsCourses";
+import Paginado from "../Paginado/Paginado";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -49,7 +49,7 @@ const Courses = () => {
           <option value="populationMenor">Población - +</option>
         </select> */}
       </section>
-      <CardsCourses />
+      <Paginado />
     </main>
   );
 };
