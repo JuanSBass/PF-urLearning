@@ -5,13 +5,17 @@ export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
 export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
+export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
+export const ORDER_BY_ANY = "ORDER_BY_ANY";
+export const GET_CATEGORIES = "GET_CATEGORIES";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 export const getCourses = () => {
   try {
     return async function (dispatch) {
       const response = await axios.get("/course");
-      console.log(response);
       dispatch({ type: GET_COURSES, payload: response.data });
     };
   } catch (error) {
@@ -70,10 +74,40 @@ export function getCategory() {
   };
 }
 
+//? <--------- Filters ------------>
+
+export function filteredByCategories(category) {
+  return {
+    type: FILTER_BY_CATEGORY,
+    payload: category,
+  };
+}
+
+export function filteredBySubCategories(category) {
+  return {
+    type: FILTER_BY_SUBCATEGORY,
+    payload: category,
+  };
+}
+//? <--------- Orders -------->
+
+export function orderByAny(payload) {
+  return {
+    type: ORDER_BY_ANY,
+    payload,
+  };
+}
+
+export function setCurrentPage(payload) {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload,
+  };
+}
+
 export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
-
 
 /* export function getCoursesByname(name){
   return async function (dispatch) {
