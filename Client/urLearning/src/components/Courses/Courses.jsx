@@ -66,6 +66,7 @@ const Courses = () => {
         </select>
 
         <Select id="subCategory" onChange={filterSubCategos} name="subCategory">
+          <option value="All">Todas</option>
           {subCategories?.map((c) => {
             return (
               <option value={c.name} key={c.id}>

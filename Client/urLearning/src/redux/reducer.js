@@ -82,7 +82,7 @@ function rootReducer(state = initialState, action) {
 		} 
 	   */
     case FILTER_BY_SUBCATEGORY:
-      let allCoursesSub = state.copyCourses;
+      let allCoursesSub = state.courses;
       const filteredBySubCategories =
         action.payload === "All"
           ? allCoursesSub
