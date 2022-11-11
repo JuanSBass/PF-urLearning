@@ -11,6 +11,7 @@ import {
 } from "../../redux/actions";
 import { Button, Select } from "flowbite-react";
 import { Link } from "react-router-dom";
+import SearchBar from "../searchBar/SearchBar";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,8 @@ const Courses = () => {
         <Link to="/form">
           <Button gradientMonochrome="success">Crear curso</Button>
         </Link>
+
+        {/* <SearchBar /> */}
       </section>
       <Paginado />
     </main>
