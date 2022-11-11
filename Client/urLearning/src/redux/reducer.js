@@ -81,6 +81,13 @@ function rootReducer(state = initialState, action) {
 			courses: action.payload
 		} 
 	   */
+
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+
     case FILTER_BY_SUBCATEGORY:
       let allCoursesSub = state.courses;
       const filteredBySubCategories =
