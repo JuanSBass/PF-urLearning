@@ -1,0 +1,53 @@
+.contCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
+  padding-inline: 0.5rem;
+}
+
+.pageNumbers {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  color: #66625c;
+  padding: 3rem;
+}
+
+.pageNumbers li {
+  cursor: pointer;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageNumbers li.active {
+  background-color: #6d6aee;
+  color: white;
+  font-weight: 500;
+}
+
+.pageNumbers li button {
+  background-color: transparent;
+  border: none;
+  color: #66625c;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.pageNumbers li button:hover {
+  color: white;
+  background-color: #fff;
+}
+
+.pageNumbers li button:focus {
+  outline: none;
+}

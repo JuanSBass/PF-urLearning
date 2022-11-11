@@ -5,12 +5,12 @@ export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
 export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
 export const getCourses = () => {
   try {
     return async function (dispatch) {
       const response = await axios.get("/course");
-      console.log(response);
       dispatch({ type: GET_COURSES, payload: response.data });
     };
   } catch (error) {
@@ -66,5 +66,12 @@ export function getCategory() {
       type: GET_CATEGORY,
       payload: json.data,
     });
+  };
+}
+
+export function setCurrentPage(payload) {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload,
   };
 }

@@ -5,6 +5,7 @@ import {
   GET_CHILD_CATEGORY,
   POST_USER,
   GET_DETAIL,
+  SET_CURRENT_PAGE,
 } from "./actions";
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   subCategories: [],
   copyCourses: [],
   course: {},
+  currentPage: 1,
 };
 
 function rootReducer(state = initialState, action) {
@@ -43,6 +45,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         category: action.payload,
+      };
+
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
       };
 
     default:
