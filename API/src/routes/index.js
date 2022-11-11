@@ -69,7 +69,7 @@ router.post("/course", async (req, res) => {
       image,
       category,
       subCategory,
-      duration,
+      duration: Number(duration),
       description,
       language,
       price,
@@ -88,13 +88,13 @@ router.post("/course", async (req, res) => {
 ///////// Route Course /////////
 
 router.get("/course", async (req, res) => {
-  const { info } = req.query;
-  console.log(info);
+  const { title } = req.query;
+  //console.log(info);
   let allCourses;
   try {
-    info
-      ? (allCourses = await getDbInfoCourses(info))
-      : (allCourses = await allInfoCourses(info));
+    title
+      ? (allCourses = await getDbInfoCourses(title))
+      : (allCourses = await allInfoCourses(title));
     res.status(200).send(allCourses);
   } catch (error) {
     console.log(error + "error del get /course");
@@ -116,11 +116,12 @@ router.get("/course/:id", async (req, res) => {
 
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
-
+  const { rating } = req.body;
+  console.log(rating);
   try {
-    return res.status(200).send(await changeCourseById(id));
+    return res.send(await changeCourseById(id, rating));
   } catch (error) {
-    console.log("error");
+    console.log("error del put rating");
   }
 });
 

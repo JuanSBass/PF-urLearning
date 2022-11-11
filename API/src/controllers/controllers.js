@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
 const { Course, User } = require("../db");
+const { promedioRating } = require("../helpers/helpers");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 const getApiUsers = async (email) => {
@@ -61,19 +62,20 @@ const allInfo = async (email) => {
 
 /////////////////////////////////////////  COURSE  ////////////////////////////////////////////////////////////
 
-const getDbInfoCourses = async (info) => {
+const getDbInfoCourses = async (title) => {
   let respuesta = await Course.findAll({
     where: {
-      title: { [Op.iLike]: `%${info}%` },
+      title: { [Op.iLike]: `%${title}%` },
     },
   });
 
   let respuesta2 = await Course.findAll({
     where: {
-      name_prof: { [Op.iLike]: `%${info}%` },
+      name_prof: { [Op.iLike]: `%${title}%` },
     },
   });
-
+  //console.log(respuesta);
+  //console.log(respuesta2);
   return [respuesta, respuesta2];
   //aca hay que concatenar respuesta con respueta2
 };
@@ -102,14 +104,26 @@ const getCourseById = async (id) => {
 
 ///////// Route Course Modify Rating by ID /////////
 
-const changeCourseById = async (id) => {
-  const rating = req.body;
+const changeCourseById = async (id, rating) => {
+  let changeRating = [];
 
   if (id.includes("-")) {
-    let changeRating = await Course.update(rating, { where: { id: id } });
-    return {
-      changeRating,
-    };
+    //traigo por BBDD
+    let currentCourse = await Course.findOne({ where: { id: id } });
+    changeRating.push(currentCourse);
+    console.log(changeRating);
+    console.log(changeRating[0].rating); //null
+    console.log(rating); //5
+    //NaN -> valor especificado en el parámetro no puede ser parseado como un número (parseInt)
+    let ratingNumber = changeRating[0].rating; //null o con el parse -> NaN
+    console.log(ratingNumber);
+
+    //let final = await promedioRating(ratingNumber, rating);
+    let change = await Course.update(
+      await promedioRating(ratingNumber, rating),
+      { where: { id } }
+    );
+    return change;
   }
 };
 
