@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPage } from "../../redux/actions";
-import CardsCourses from "../Home/Cards/CardsCourses";
 import styles from "../Paginado/Paginado.module.css";
+import Card from "./Card";
 
 const renderData = (data) => {
   return data.map((p) => {
     return (
-      <CardsCourses
+      <Card
         image={p.image}
         title={p.title}
         name_prof={p.name_prof}
@@ -26,7 +26,7 @@ function Paginado() {
 
   const currentPage = useSelector((state) => state.currentPage);
 
-  const [cardsPerPage] = useState(1);
+  const [cardsPerPage] = useState(2);
 
   const handleClick = (ev) => {
     dispatch(setCurrentPage(Number(ev.target.id)));
