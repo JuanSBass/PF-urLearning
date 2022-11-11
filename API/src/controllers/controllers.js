@@ -98,6 +98,8 @@ const getCourseById = async (id) => {
       description: coursejson.description,
       price: coursejson.price,
       rating: coursejson.rating,
+      ratingUserNumber: coursejson.ratingUserNumber,
+      ratingHistory: coursejson.ratingHistory,
     };
   }
 };
@@ -110,22 +112,34 @@ const changeCourseById = async (id, rating) => {
   if (id.includes("-")) {
     //traigo por BBDD
     let currentCourse = await Course.findOne({ where: { id: id } });
+    let courseRatingNumber = currentCourse.ratingUserNumber;
+    //console.log(courseRatingNumber);
+    await currentCourse.update({ ratingUserNumber: courseRatingNumber + 1 });
     changeRating.push(currentCourse);
-    console.log(changeRating);
-    console.log(changeRating[0].rating); //null
-    console.log(rating); //5
-    //NaN -> valor especificado en el parámetro no puede ser parseado como un número (parseInt)
-    let ratingNumber = changeRating[0].rating; //null o con el parse -> NaN
-    console.log(ratingNumber);
+    //console.log(currentCourse.ratingUserNumber);
+    let ratingNew = parseInt(currentCourse.rating) + parseInt(rating);
+    await currentCourse.update({ rating: ratingNew });
+    console.log(ratingNew);
 
-    //let final = await promedioRating(ratingNumber, rating);
+    let promedio = currentCourse.rating / currentCourse.ratingUserNumber;
+    console.log(promedio);
+
     let change = await Course.update(
-      await promedioRating(ratingNumber, rating),
+      { ratingHistory: Math.floor(promedio) },
       { where: { id } }
     );
     return change;
   }
 };
+
+//console.log(changeRating);
+//console.log(changeRating[0].rating); //null
+//console.log(rating); //5
+//NaN -> valor especificado en el parámetro no puede ser parseado como un número (parseInt)
+//let ratingNumber = changeRating[0].rating; //null o con el parse -> NaN
+//console.log(ratingNumber);
+//let final = await promedioRating(ratingNumber, rating);
+//console.log(final, "aaaaaaaaaaaaaa");
 
 module.exports = {
   allInfo,
