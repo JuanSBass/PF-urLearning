@@ -50,6 +50,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         course: {},
       };
+	  /*
+	  case GET_COURSES_NAME:
+		return{
+			...state,
+			courses: action.payload
+		} 
+	   */
     default:
       return { ...state };
   }

@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 import { InfoService } from "./InfoService/InfoService";
 
 const Home = (props) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCourses());
-  }, [dispatch]);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getCourses());
+	}, [dispatch]);
 
   return (
     <main className={styles}>

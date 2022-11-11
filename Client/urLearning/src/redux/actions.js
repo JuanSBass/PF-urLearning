@@ -73,3 +73,21 @@ export function getCategory() {
 export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
+
+
+/* export function getCoursesByname(name){
+  return async function (dispatch) {
+  try{
+    var json = await axios.get("/course?name=" + name.charAt(0).toUpperCase() + name.slice(1))
+    return dispatch ({
+      type: "GET_COURSES_NAME",
+      payload: json.data
+    })
+    } catch (error){
+      console.log(error)
+    }
+  }
+}
+
+
+*/
