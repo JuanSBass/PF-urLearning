@@ -63,13 +63,11 @@ function rootReducer(state = initialState, action) {
         courses: filteredByCategories,
       };
 
-
     case SET_CURRENT_PAGE:
       return {
         ...state,
         currentPage: action.payload,
       };
-
 
     case CLEAN_DETAIL:
       return {
@@ -84,11 +82,11 @@ function rootReducer(state = initialState, action) {
 		} 
 	   */
     case FILTER_BY_SUBCATEGORY:
-      let allCoursesSub = state.copyCourses;
+      let allCoursesSub = state.courses;
       const filteredBySubCategories =
         action.payload === "All"
           ? allCoursesSub
-          : allCourses.filter((c) => c.subCategory === action.payload);
+          : allCoursesSub.filter((c) => c.subCategory === action.payload);
       return {
         ...state,
         courses: filteredBySubCategories,
