@@ -117,7 +117,7 @@ router.get("/course/:id", async (req, res) => {
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
   const { rating } = req.body;
-  console.log(rating);
+  //console.log(rating);
   try {
     return res.send(await changeCourseById(id, rating));
   } catch (error) {

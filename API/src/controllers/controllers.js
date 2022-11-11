@@ -2,7 +2,6 @@ require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
 const { Course, User } = require("../db");
-const { promedioRating } = require("../helpers/helpers");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 const getApiUsers = async (email) => {
@@ -119,10 +118,10 @@ const changeCourseById = async (id, rating) => {
     //console.log(currentCourse.ratingUserNumber);
     let ratingNew = parseInt(currentCourse.rating) + parseInt(rating);
     await currentCourse.update({ rating: ratingNew });
-    console.log(ratingNew);
+    //console.log(ratingNew);
 
     let promedio = currentCourse.rating / currentCourse.ratingUserNumber;
-    console.log(promedio);
+    //console.log(promedio);
 
     let change = await Course.update(
       { ratingHistory: Math.floor(promedio) },
@@ -131,15 +130,6 @@ const changeCourseById = async (id, rating) => {
     return change;
   }
 };
-
-//console.log(changeRating);
-//console.log(changeRating[0].rating); //null
-//console.log(rating); //5
-//NaN -> valor especificado en el parámetro no puede ser parseado como un número (parseInt)
-//let ratingNumber = changeRating[0].rating; //null o con el parse -> NaN
-//console.log(ratingNumber);
-//let final = await promedioRating(ratingNumber, rating);
-//console.log(final, "aaaaaaaaaaaaaa");
 
 module.exports = {
   allInfo,
