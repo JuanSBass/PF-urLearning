@@ -89,6 +89,7 @@ const Courses = () => {
         </Link>
       </section>
       <Paginado />
+      <Searchbar />
     </main>
   );
 };
