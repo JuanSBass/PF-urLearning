@@ -26,7 +26,7 @@ function Paginado() {
 
   const currentPage = useSelector((state) => state.currentPage);
 
-  const [cardsPerPage] = useState(2);
+  const [cardsPerPage] = useState(9);
 
   const handleClick = (ev) => {
     dispatch(setCurrentPage(Number(ev.target.id)));
