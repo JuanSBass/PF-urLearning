@@ -7,6 +7,7 @@ import {
   GET_DETAIL,
   FILTER_BY_CATEGORY,
   SET_CURRENT_PAGE,
+  CLEAN_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -65,7 +66,18 @@ function rootReducer(state = initialState, action) {
         ...state,
         currentPage: action.payload,
       };
-
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        course: {},
+      };
+    /*
+	  case GET_COURSES_NAME:
+		return{
+			...state,
+			courses: action.payload
+		} 
+	   */
     default:
       return { ...state };
   }
