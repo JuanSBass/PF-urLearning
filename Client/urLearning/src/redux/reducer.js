@@ -10,7 +10,7 @@ import {
 const initialState = {
   courses: [],
   category: [],
-  subcategory: [],
+  subCategories: [],
   copyCourses: [],
   course: {},
 };
@@ -37,7 +37,7 @@ function rootReducer(state = initialState, action) {
     case GET_CHILD_CATEGORY:
       return {
         ...state,
-        subcategory: action.payload,
+        subCategories: action.payload,
       };
     case GET_CATEGORY:
       return {

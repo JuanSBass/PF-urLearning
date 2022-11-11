@@ -11,20 +11,12 @@ import {
   getCourses,
 } from "../../redux/actions";
 
-const SUB_CATEGORY = [
-  "math",
-  "chemistry",
-  "welder",
-  "smith",
-  "visual",
-  "plastic",
-];
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
 
 const Form = () => {
   const category = useSelector((state) => state.category);
-  const subcategory = useSelector((state) => state.subcategory);
+  const subCategories = useSelector((state) => state.subCategories);
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
@@ -38,12 +30,6 @@ const Form = () => {
     price: "",
     level: "",
   });
-
-  const [idCategorySelected, setIdCategorySelected] = useState("");
-
-  // const prueba = () => {
-  //   console.log(import.meta.env.VITE_API);
-  // };
 
   useEffect(() => {
     dispatch(getCategory());
@@ -68,7 +54,7 @@ const Form = () => {
         ...input,
         category: categorySelected.name,
       });
-      setIdCategorySelected(categorySelected.id);
+      dispatch(getChildCategory(categorySelected.id));
     } else if (ev.target.name === "language") {
       setInput({
         ...input,
@@ -153,10 +139,10 @@ const Form = () => {
                     onChange={(e) => handleSelect(e)}
                     name="subCategory"
                   >
-                    {subcategory.map((c) => {
+                    {subCategories?.map((c) => {
                       return (
-                        <option value={c} key={c}>
-                          {c}
+                        <option value={c.name} key={c.id}>
+                          {c.name}
                         </option>
                       );
                     })}

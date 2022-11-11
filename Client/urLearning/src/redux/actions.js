@@ -21,13 +21,15 @@ export const getCourses = () => {
 export function postCourse(dataCourse) {
   return async function () {
     const json = await axios.post("/course", dataCourse);
-    return json;
+    return;
   };
 }
 
-export function getChildCategory(idCategory) {
+export function getChildCategory(categoryId) {
   return async function (dispatch) {
-    const json = await axios.get("/childCategoriesFrom", idCategory);
+    const json = await axios.get(
+      `/category/childCategoriesFrom?categoryId=${categoryId}`
+    );
     return dispatch({
       type: GET_CHILD_CATEGORY,
       payload: json.data,

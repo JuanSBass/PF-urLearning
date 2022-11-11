@@ -37,7 +37,7 @@ function Paginado() {
   }
 
   const indexOfLastCard = currentPage * cardsPerPage;
-  const indexOfFirstCard = indexOfLastPokemon - pokemonsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentPokemons = allPokemons.slice(
     indexOfFirstPokemon,
     indexOfLastPokemon
