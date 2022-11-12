@@ -124,6 +124,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           courses: state.courses.filter((c) => c.rating === "5"),
+          currentPage: 1,
         };
       }
 
