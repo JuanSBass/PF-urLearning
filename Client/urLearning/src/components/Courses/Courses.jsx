@@ -10,7 +10,7 @@ import {
   getCourses,
   orderByAny,
 } from "../../redux/actions";
-import { Button, Select, Dropdown, Rating } from "flowbite-react";
+import { Button, Select, Dropdown, Rating, Label } from "flowbite-react";
 import { Link } from "react-router-dom";
 import Searchbar from "../searchBar/SearchBar";
 
@@ -76,6 +76,7 @@ const Courses = () => {
     <main className={styles.coursescontainer}>
       <section className={styles.filterscontainer}>
         <Searchbar />
+        <Label>Categorías</Label>
         <Select onChange={filterCategos}>
           <option value="All">Todas</option>
           {categories?.map(({ name, id }) => {
@@ -87,6 +88,7 @@ const Courses = () => {
             );
           })}
         </Select>
+        <Label>Subcategorías</Label>
         <Select id="subCategory" onChange={filterSubCategos} name="subCategory">
           {/* <option value="All">Todas</option> */}
           <option value="">-</option>
@@ -149,6 +151,7 @@ const Courses = () => {
           </Dropdown.Item>
         </Dropdown>
 
+        <Label>Ordenamiento</Label>
         <Select
           id="orders"
           onChange={ordering}
