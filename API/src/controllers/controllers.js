@@ -74,7 +74,7 @@ const getDbInfoCourses = async (info) => {
     },
   });
 
-  return [respuesta, respuesta2];
+  return [respuesta, respuesta2].flat();
   //aca hay que concatenar respuesta con respueta2
 };
 
