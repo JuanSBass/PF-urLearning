@@ -10,6 +10,7 @@ import {
   CLEAN_DETAIL,
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
+  GET_COURSES_NAME
 } from "./actions";
 
 const initialState = {
@@ -74,20 +75,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         course: {},
       };
-    /*
 	  case GET_COURSES_NAME:
 		return{
 			...state,
-			courses: action.payload
+			courses: action.payload,
+      currentPage: 1,
 		} 
-	   */
-
-    case SET_CURRENT_PAGE:
-      return {
-        ...state,
-        currentPage: action.payload,
-      };
-
     case FILTER_BY_SUBCATEGORY:
       let allCoursesSub = state.courses;
       const filteredBySubCategories =
