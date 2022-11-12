@@ -10,7 +10,7 @@ import {
   CLEAN_DETAIL,
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
-  GET_COURSES_NAME
+  GET_COURSES_NAME,
 } from "./actions";
 
 const initialState = {
@@ -75,12 +75,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         course: {},
       };
-	  case GET_COURSES_NAME:
-		return{
-			...state,
-			courses: action.payload,
-      currentPage: 1,
-		} 
+    case GET_COURSES_NAME:
+      return {
+        ...state,
+        courses: action.payload,
+        currentPage: 1,
+      };
     case FILTER_BY_SUBCATEGORY:
       let allCoursesSub = state.courses;
       const filteredBySubCategories =
@@ -94,12 +94,31 @@ function rootReducer(state = initialState, action) {
 
     case ORDER_BY_ANY:
       if (action.payload === "all") return state;
-      if (action.payload === "ratingmayor") {
-        state.courses.sort((a, b) => {
-          if (a.rating > b.rating) return 1;
-          if (b.rating > a.rating) return -1;
-          return 0;
-        });
+      if (action.payload === "1") {
+        return {
+          ...state,
+          courses: state.courses.filter((c) => c.rating === "1"),
+        };
+      } else if (action.payload === "2") {
+        return {
+          ...state,
+          courses: state.courses.filter((c) => c.rating === "2"),
+        };
+      } else if (action.payload === "3") {
+        return {
+          ...state,
+          courses: state.courses.filter((c) => c.rating === "3"),
+        };
+      } else if (action.payload === "4") {
+        return {
+          ...state,
+          courses: state.courses.filter((c) => c.rating === "4"),
+        };
+      } else if (action.payload === "5") {
+        return {
+          ...state,
+          courses: state.courses.filter((c) => c.rating === "5"),
+        };
       }
 
     default:
