@@ -98,49 +98,52 @@ const Courses = () => {
           label="Rating"
           inline={true}
         >
-          <Dropdown.Item onClick={handleOrderUno} >
+        
+          <Dropdown.Item onClick={handleOrderCinco} >
             <Rating >
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
               <Rating.Star />
             </Rating>
           </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderDos} >
+          <Dropdown.Item onClick={handleOrderCuatro} >
             <Rating>
               <Rating.Star />
               <Rating.Star />
-            </Rating>
-          </Dropdown.Item>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star filled={false} />
           <Dropdown.Item onClick={handleOrderTres}>
             <Rating>
               <Rating.Star />
               <Rating.Star />
               <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
             </Rating>
           </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderCuatro}>
+          <Dropdown.Item onClick={handleOrderDos}>
             <Rating>
               <Rating.Star />
               <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
             </Rating>
           </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderCinco}>
+          <Dropdown.Item onClick={handleOrderUno}>
             <Rating>
               <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
             </Rating>
           </Dropdown.Item>
         </Dropdown>
-        {/* <select onChange={handleOrder}>
-          <option value="all">Todos</option>
-          <option value="asc">Alfabético A-Z</option>
-          <option value="des">Alfabético Z-A</option>
-          <option value="populationMayor">Población + -</option>
-          <option value="populationMenor">Población - +</option>
-        </select> */}
+
         <Link to="/form">
           <Button gradientMonochrome="success">Crear curso</Button>
         </Link>

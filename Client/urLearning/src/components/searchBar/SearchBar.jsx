@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCoursesByname } from "../../redux/actions"
+import style from "./SearchBar.module.css"
 
 export default function Searchbar() {
 
@@ -21,8 +22,8 @@ export default function Searchbar() {
 
 
 	return (
-		<div>
-			<form onClick={(ev) => handleSubmit(ev)}>
+		<div id={style.searchcontainer}>
+			<form >
 				<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
 				<div class="relative">
 					<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -32,16 +33,18 @@ export default function Searchbar() {
 						onChange={(ev) => handleInput(ev)}
 						value={name}
 						type="text"
-						id="default-search"
+						id={style.input}
 						autoComplete="off"
 						class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 						placeholder="Search..."
 						required="" />
-					<button
-						type="submit"
-						class="text-white absolute right-2.5 bottom-2.5 bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
 				</div>
 			</form>
+			<button
+				onClick={(ev) => handleSubmit(ev)}
+				type="submit"
+				class="text-white right-2.5 bottom-2.5 bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+			>Search</button>
 		</div>
 
 	);
