@@ -1,0 +1,44 @@
+.card {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  width: 283px;
+  height: 286px;
+  border-radius: 34px 34px 10px 10px;
+  padding: 1rem;
+}
+
+.card h3 {
+  font-weight: 700;
+  font-size: 18px;
+}
+.card img {
+  object-fit: cover;
+  width: 238px;
+  height: 129px;
+  border-radius: 34px;
+}
+
+.imgcard {
+  width: 238px;
+  height: 129px;
+  border-radius: 34px;
+}
+
+.contCard {
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: flex;
+  justify-content: center;
+  width: 16rem;
+  justify-content: space-evenly;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  min-width: 250px;
+  margin: 0.5rem;
+}
+
+.contCard .img {
+  max-width: 50%;
+}
