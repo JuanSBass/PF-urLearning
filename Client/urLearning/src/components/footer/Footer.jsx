@@ -1,14 +1,16 @@
-import react from "react";
-import Searchbar from "../searchBar/SearchBar";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
 	return (
-		<footer class="p-4 bg-white rounded-lg shadow md:flex sticky top-2 fixed w-full md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+		<footer class="p-4 bg-white rounded-lg shadow align-self: flex-end md:flex sticky top-2 fixed w-full md:items-center md:justify-between md:p-6 dark:bg-gray-800">
 			<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
 				© 2022{" "}
-				<a href="https://flowbite.com/" class="hover:underline">
-					UrLearning™
-				</a>
+				<Link to="/">
+					<a class="hover:underline">
+						UrLearning™
+					</a>
+				</Link>
 				. All Rights Reserved.
 			</span>
 			<ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
@@ -34,6 +36,9 @@ export default function Footer() {
 					</a>
 				</li>
 			</ul>
-		</footer>
+		</footer >
 	);
 }
+
+
+

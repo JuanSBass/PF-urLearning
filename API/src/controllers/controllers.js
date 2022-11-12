@@ -73,9 +73,8 @@ const getDbInfoCourses = async (title) => {
       name_prof: { [Op.iLike]: `%${title}%` },
     },
   });
-  //console.log(respuesta);
-  //console.log(respuesta2);
-  return [respuesta, respuesta2];
+
+  return [respuesta, respuesta2].flat();
   //aca hay que concatenar respuesta con respueta2
 };
 

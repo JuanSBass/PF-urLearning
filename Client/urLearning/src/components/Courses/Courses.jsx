@@ -8,18 +8,16 @@ import {
   getCategory,
   getChildCategory,
   getCourses,
+  orderByAny,
 } from "../../redux/actions";
-import { Button, Select } from "flowbite-react";
+import { Button, Select, Dropdown, Rating } from "flowbite-react";
 import { Link } from "react-router-dom";
+import Searchbar from "../searchBar/SearchBar";
 
 const Courses = () => {
   const dispatch = useDispatch();
   const [orden, setOrden] = useState("");
-  const [cursesFiltered, setCursesFilteres] = useState([]);
   const categories = useSelector((state) => state.category);
-  // let categoriesName = [];
-  // categories.map((cat) => categoriesName.push(cat.name));
-  // let catSet = [...new Set(categoriesName)];
 
   const subCategories = useSelector((state) => state.subCategories);
 
@@ -42,6 +40,26 @@ const Courses = () => {
     dispatch(filteredBySubCategories(event.target.value));
   };
 
+  const handleOrderUno = () => {
+    dispatch(orderByAny("1"));
+    console.log("aqui apretó uno");
+  };
+  const handleOrderDos = () => {
+    dispatch(orderByAny("2"))
+    console.log("aqui apretó dos");
+  };
+  const handleOrderTres = () => {
+    dispatch(orderByAny("3"))
+    console.log("aqui apretó tres");
+  };
+  const handleOrderCuatro = () => {
+    dispatch(orderByAny("4"))
+    console.log("aqui apretó cuatro");
+  };
+  const handleOrderCinco = () => {
+    dispatch(orderByAny("5"))
+    console.log("aqui apretó cinco");
+  };
   // const arrIds = [];
   // console.log(arrIds);
   // const handleOrder = (event) => {
@@ -53,18 +71,18 @@ const Courses = () => {
   return (
     <main className={styles.coursescontainer}>
       <section className={styles.filterscontainer}>
+        <Searchbar />
         <select onChange={filterCategos}>
           <option value="All">Todas</option>
-          {categories.map(({ name, id }) => {
+          {categories?.map(({ name, id }) => {
             // arrIds.push(id);
             return (
-              <option value={name} id={id}>
+              <option value={name} id={id} key={id}>
                 {name}
               </option>
             );
           })}
         </select>
-
         <Select id="subCategory" onChange={filterSubCategos} name="subCategory">
           {/* <option value="All">Todas</option> */}
           <option value=""></option>
@@ -76,7 +94,46 @@ const Courses = () => {
             );
           })}
         </Select>
-
+        <Dropdown
+          label="Rating"
+          inline={true}
+        >
+          <Dropdown.Item onClick={handleOrderUno} >
+            <Rating >
+              <Rating.Star />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderDos} >
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderTres}>
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderCuatro}>
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderCinco}>
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+            </Rating>
+          </Dropdown.Item>
+        </Dropdown>
         {/* <select onChange={handleOrder}>
           <option value="all">Todos</option>
           <option value="asc">Alfabético A-Z</option>
