@@ -98,6 +98,7 @@ const Courses = () => {
           label="Rating"
           inline={true}
         >
+        
           <Dropdown.Item onClick={handleOrderCinco} >
             <Rating >
               <Rating.Star />
@@ -114,8 +115,6 @@ const Courses = () => {
               <Rating.Star />
               <Rating.Star />
               <Rating.Star filled={false} />
-            </Rating>
-          </Dropdown.Item>
           <Dropdown.Item onClick={handleOrderTres}>
             <Rating>
               <Rating.Star />
@@ -144,13 +143,7 @@ const Courses = () => {
             </Rating>
           </Dropdown.Item>
         </Dropdown>
-        {/* <select onChange={handleOrder}>
-          <option value="all">Todos</option>
-          <option value="asc">Alfabético A-Z</option>
-          <option value="des">Alfabético Z-A</option>
-          <option value="populationMayor">Población + -</option>
-          <option value="populationMenor">Población - +</option>
-        </select> */}
+
         <Link to="/form">
           <Button gradientMonochrome="success">Crear curso</Button>
         </Link>
