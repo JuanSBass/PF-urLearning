@@ -164,3 +164,4 @@ export default Courses;
 
 //order rating, precio,
 //filtro categoria, subCategory e idioma
+// arreglando pre-main
