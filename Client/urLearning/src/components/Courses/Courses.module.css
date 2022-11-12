@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 3fr;
   margin: 6rem auto;
+  min-height: calc(150vh - 149px);
 }
 
 .filterscontainer {
