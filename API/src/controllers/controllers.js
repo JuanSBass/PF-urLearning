@@ -70,6 +70,7 @@ const getDbInfoCourses = async (info) => {
 
   let respuesta2 = await Course.findAll({
     where: {
+      title: { [Op.notLike]: `%${info}%` },
       name_prof: { [Op.iLike]: `%${info}%` },
     },
   });

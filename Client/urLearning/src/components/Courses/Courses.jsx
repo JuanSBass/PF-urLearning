@@ -16,9 +16,8 @@ import Searchbar from "../searchBar/SearchBar";
 
 const Courses = () => {
   const dispatch = useDispatch();
-  const [orden, setOrden] = useState("");
   const categories = useSelector((state) => state.category);
-
+  const [order, setOrder] = useState("");
   const subCategories = useSelector((state) => state.subCategories);
 
   useEffect(() => {
@@ -27,18 +26,23 @@ const Courses = () => {
   }, [dispatch]);
 
   const filterCategos = (event) => {
-    // setCurrentPage(1);
     dispatch(filteredByCategories(event.target.value));
     let categorySelected = categories.find(
       (c) => c.name === event.target.value
     );
+
     dispatch(getChildCategory(categorySelected.id));
   };
 
   const filterSubCategos = (event) => {
-    // setCurrentPage(1);
     dispatch(filteredBySubCategories(event.target.value));
   };
+
+  const ordering = (event) => {
+    event.preventDefault();
+    dispatch(orderByAny(event.target.value))
+    setOrder(event.target.value)
+  }
 
   const handleOrderUno = () => {
     dispatch(orderByAny("1"));
@@ -72,7 +76,7 @@ const Courses = () => {
     <main className={styles.coursescontainer}>
       <section className={styles.filterscontainer}>
         <Searchbar />
-        <select onChange={filterCategos}>
+        <Select onChange={filterCategos}>
           <option value="All">Todas</option>
           {categories?.map(({ name, id }) => {
             // arrIds.push(id);
@@ -82,10 +86,10 @@ const Courses = () => {
               </option>
             );
           })}
-        </select>
+        </Select>
         <Select id="subCategory" onChange={filterSubCategos} name="subCategory">
           {/* <option value="All">Todas</option> */}
-          <option value=""></option>
+          <option value="">-</option>
           {subCategories?.map((c) => {
             return (
               <option value={c.name} key={c.id}>
@@ -144,13 +148,20 @@ const Courses = () => {
             </Rating>
           </Dropdown.Item>
         </Dropdown>
-        {/* <select onChange={handleOrder}>
-          <option value="all">Todos</option>
-          <option value="asc">Alfabético A-Z</option>
-          <option value="des">Alfabético Z-A</option>
-          <option value="populationMayor">Población + -</option>
-          <option value="populationMenor">Población - +</option>
-        </select> */}
+
+        <Select
+          id="orders"
+          onChange={ordering}
+          name="orders"
+        >
+          <option value="">-</option>
+          <option value="price+">Mayor precio</option>
+          <option value="price-">Menor precio</option>
+          <option value="rating+">Mejores calificados</option>
+          <option value="rating-">Menor calificación</option>
+
+        </Select>
+
         <Link to="/form">
           <Button gradientMonochrome="success">Crear curso</Button>
         </Link>
