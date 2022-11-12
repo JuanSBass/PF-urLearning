@@ -111,19 +111,18 @@ export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
 
- export function getCoursesByname(name){
+export function getCoursesByname(name) {
   return async function (dispatch) {
-  try{
-    var json = await axios.get(`/course?tittle=${name}` )
-    return dispatch ({
-      type: "GET_COURSES_NAME",
-      payload: json.data
-    })
-    } catch (error){
-      console.log(error)
+    try {
+      var json = await axios.get(`/course?info=${name}`);
+      return dispatch({
+        type: "GET_COURSES_NAME",
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
-
+  };
 }
 
 export const getSubCategoriesName = (name) => {
