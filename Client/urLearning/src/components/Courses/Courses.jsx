@@ -98,15 +98,22 @@ const Courses = () => {
           label="Rating"
           inline={true}
         >
-          <Dropdown.Item onClick={handleOrderUno} >
+          <Dropdown.Item onClick={handleOrderCinco} >
             <Rating >
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
               <Rating.Star />
             </Rating>
           </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderDos} >
+          <Dropdown.Item onClick={handleOrderCuatro} >
             <Rating>
               <Rating.Star />
               <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star filled={false} />
             </Rating>
           </Dropdown.Item>
           <Dropdown.Item onClick={handleOrderTres}>
@@ -114,23 +121,26 @@ const Courses = () => {
               <Rating.Star />
               <Rating.Star />
               <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
             </Rating>
           </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderCuatro}>
+          <Dropdown.Item onClick={handleOrderDos}>
             <Rating>
               <Rating.Star />
               <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
             </Rating>
           </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderCinco}>
+          <Dropdown.Item onClick={handleOrderUno}>
             <Rating>
               <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
             </Rating>
           </Dropdown.Item>
         </Dropdown>
