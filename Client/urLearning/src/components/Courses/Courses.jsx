@@ -32,6 +32,8 @@ const Courses = () => {
     let categorySelected = categories.find(
       (c) => c.name === event.target.value
     );
+
+
     dispatch(getChildCategory(categorySelected.id));
   };
 

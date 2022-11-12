@@ -63,6 +63,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         courses: filteredByCategories,
         currentPage: 1,
+        subCategories: [],
       };
 
     case SET_CURRENT_PAGE:
@@ -83,7 +84,7 @@ function rootReducer(state = initialState, action) {
         currentPage: 1,
       };
     case FILTER_BY_SUBCATEGORY:
-      let allCoursesSub = state.courses;
+      let allCoursesSub = state.copyCourses;
       const filteredBySubCategories =
         action.payload === "All"
           ? allCoursesSub
