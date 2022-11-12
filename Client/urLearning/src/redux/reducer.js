@@ -62,6 +62,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         courses: filteredByCategories,
+        currentPage: 1,
       };
 
     case SET_CURRENT_PAGE:
@@ -90,6 +91,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         courses: filteredBySubCategories,
+        currentPage: 1,
       };
 
     case ORDER_BY_ANY:
@@ -98,21 +100,25 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           courses: state.courses.filter((c) => c.rating === "1"),
+          currentPage: 1,
         };
       } else if (action.payload === "2") {
         return {
           ...state,
           courses: state.courses.filter((c) => c.rating === "2"),
+          currentPage: 1,
         };
       } else if (action.payload === "3") {
         return {
           ...state,
           courses: state.courses.filter((c) => c.rating === "3"),
+          currentPage: 1,
         };
       } else if (action.payload === "4") {
         return {
           ...state,
           courses: state.courses.filter((c) => c.rating === "4"),
+          currentPage: 1,
         };
       } else if (action.payload === "5") {
         return {

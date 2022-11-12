@@ -41,7 +41,6 @@ const Home = (props) => {
           </svg>
         </Button>
       </Link>
-      <Searchbar />
       <InfoService />
     </main>
   );

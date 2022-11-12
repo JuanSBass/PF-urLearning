@@ -1,0 +1,11 @@
+#searchcontainer {
+  display: flex;
+}
+
+#searchcontainer button {
+  border-radius: 0 1rem 1rem 0;
+}
+
+#input {
+  border-radius: 1rem 0 0 1rem;
+}
