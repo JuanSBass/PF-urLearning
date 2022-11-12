@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 
 const CardsCourses = () => {
-  const courses = useSelector((state) => state.courses);
-  console.log(courses);
+  const courses = useSelector((state) => state.courses).slice(0, 8);
 
   return (
     <section className={styles.cardscontainer}>
