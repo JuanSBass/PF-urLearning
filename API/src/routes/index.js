@@ -8,6 +8,10 @@ const {
   getDbInfoCourses,
 } = require("../controllers/controllers");
 const cat = require("./category.js");
+const {
+  validateEmail,
+  validatePassword,
+} = require("../validations/validations");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -21,14 +25,24 @@ router.use("/category", cat);
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
   const { email, password } = req.body;
+  const validEmail = await validateEmail(email);
+  const validPassword = await validatePassword(password);
 
   try {
-    let newUser = await User.create({
-      email,
-      password,
-    });
-
-    res.status(200).send("Usuario creado correctamente");
+    // return !validEmail
+    //   ? res.status(404).send({ message: "Email invalida" })
+    //   : res.status(200).send("Usuario creado correctamente");
+    if (!validEmail) {
+      res.status(404).send({ message: "Email invalida" });
+    } else if (!validPassword) {
+      res.status(404).send({ message: "Password invalida" });
+    } else {
+      let newUser = await User.create({
+        email,
+        password,
+      });
+      res.status(200).send("Usuario creado correctamente");
+    }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + "error del /Post User");
@@ -128,17 +142,16 @@ router.put("/course/:id", async (req, res) => {
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
-
-  console.log("hola")
+  console.log("hola");
   try {
-    const  {categ}  = req.query;
-    console.log(categ)
+    const { categ } = req.query;
+    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
       },
     });
-  
+
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
@@ -146,24 +159,21 @@ router.get("/courseByCategory", async (req, res) => {
 });
 
 router.get("/courseBySubCategory", async (req, res) => {
-
-  console.log("hola")
+  console.log("hola");
   try {
-    const  {subcateg}  = req.query;
-    console.log(subcateg)
+    const { subcateg } = req.query;
+    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,
       },
     });
-  
+
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
   }
 });
-
-
 
 ///////// Route name_prof /////////
 
