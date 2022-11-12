@@ -1,4 +1,13 @@
 .coursescontainer {
   display: grid;
   grid-template-columns: 1fr 3fr;
+  margin: 6rem auto;
+}
+
+.filterscontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin: auto;
 }
