@@ -4,6 +4,8 @@ import { setCurrentPage } from "../../redux/actions";
 import styles from "../Paginado/Paginado.module.css";
 import Card from "./Card";
 import { Spinner } from "flowbite-react";
+import left from "../../img/IoIosArrowDropleftCircle.svg"
+import right from "../../img/IoIosArrowDroprightCircle.svg"
 
 const renderData = (data) => {
   return data.map((p) => {
@@ -84,13 +86,13 @@ function Paginado() {
       <div id={styles.paginationcontainer}>
         <ul className={styles.pageNumbers}>
           <li>
-            <button onClick={handlePrev}>izq</button>
+            <button onClick={handlePrev}  > <img src={left} alt="left" className={styles.btn} /></button>
           </li>
 
           {pageNumbers}
 
           <li>
-            <button onClick={handleNext}>der</button>
+            <button onClick={handleNext} ><img src={right} alt="right" className={styles.btn} /></button>
           </li>
         </ul>
       </div>

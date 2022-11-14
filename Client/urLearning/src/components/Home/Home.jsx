@@ -8,7 +8,6 @@ import CardsCourses from "./Cards/CardsCourses";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { InfoService } from "./InfoService/InfoService";
-import Searchbar from "../searchBar/SearchBar";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -16,8 +15,6 @@ const Home = (props) => {
     dispatch(getCourses());
   }, [dispatch]);
 
-  const courses = useSelector((state) => state.courses);
-  console.log(courses);
   return (
     <main className={styles}>
       <HeaderHome />
@@ -41,7 +38,6 @@ const Home = (props) => {
           </svg>
         </Button>
       </Link>
-      <Searchbar />
       <InfoService />
     </main>
   );

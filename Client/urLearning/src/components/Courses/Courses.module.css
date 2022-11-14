@@ -2,12 +2,13 @@
   display: grid;
   grid-template-columns: 1fr 3fr;
   margin: 6rem auto;
+  min-height: calc(150vh - 149px);
 }
 
 .filterscontainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  justify-content: space-around;
+  height: 70%;
   margin: auto;
 }
