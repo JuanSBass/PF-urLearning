@@ -11,15 +11,13 @@ const cat = require("./category.js");
 const {
   validateEmail,
   validatePassword,
+  validateTitle,
+  validateDescription,
+  validatePrice,
+  validateLevel,
+  validateNameProf,
 } = require("../validations/validations");
-
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-
 const router = Router();
-
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
 router.use("/category", cat);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
@@ -29,13 +27,10 @@ router.post("/user", async (req, res) => {
   const validPassword = await validatePassword(password);
 
   try {
-    // return !validEmail
-    //   ? res.status(404).send({ message: "Email invalida" })
-    //   : res.status(200).send("Usuario creado correctamente");
-    if (!validEmail) {
-      res.status(404).send({ message: "Email invalida" });
-    } else if (!validPassword) {
-      res.status(404).send({ message: "Password invalida" });
+    if (!validEmail || email === "") {
+      res.status(404).send({ message: "Email invalida o campo vacio" });
+    } else if (!validPassword || password === "") {
+      res.status(404).send({ message: "Password invalida o campo vacio" });
     } else {
       let newUser = await User.create({
         email,
@@ -45,7 +40,7 @@ router.post("/user", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(404).send(error + "error del /Post User");
+    res.status(404).send(error + " error del /Post User");
   }
 });
 
@@ -77,22 +72,51 @@ router.post("/course", async (req, res) => {
     name_prof,
   } = req.body;
 
-  try {
-    let newCourse = await Course.create({
-      title,
-      image,
-      category,
-      subCategory,
-      duration: Number(duration),
-      description,
-      language,
-      price,
-      level,
-      name_prof,
-    });
-    //console.log(newCourse);
+  const validTitle = await validateTitle(title);
+  const validDescription = await validateDescription(description);
+  const validPrice = await validatePrice(price);
+  const validLevel = await validateLevel(level);
+  const validNameProf = await validateNameProf(name_prof);
 
-    res.status(200).send("Curso creado correctamente");
+  try {
+    console.log(description.length);
+    console.log(validTitle);
+    console.log(level);
+    //console.log(price.length, "dddddd");
+    if (!validTitle || title === "") {
+      res.status(404).send({ message: "Titulo invalido o inexistente" });
+    } else if (category === "") {
+      res.status(404).send({ message: "Categoria inexistente" });
+    } else if (!validDescription || description === "") {
+      res.status(404).send({ message: "Descripcion invalida o inexistente" });
+    } else if (!validPrice) {
+      res
+        .status(404)
+        .send({ message: "El precio NO debe ser menor a 0 o mayor a 100" });
+    } else if (!validLevel || level === "") {
+      res
+        .status(404)
+        .send({ message: "Nivel de dificultad invalido o inexistente" });
+    } else if (!validNameProf || name_prof === "") {
+      res
+        .status(404)
+        .send({ message: "El campo name_prof es invalido o inexistente" });
+    } else {
+      let newCourse = await Course.create({
+        title,
+        image,
+        category,
+        subCategory,
+        duration: Number(duration),
+        description,
+        language,
+        price,
+        level,
+        name_prof,
+      });
+      //console.log(newCourse);
+      res.status(200).send("Curso creado correctamente");
+    }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + "error del /Post Course");
