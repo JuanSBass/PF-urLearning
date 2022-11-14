@@ -116,7 +116,7 @@ export function getCoursesByname(name) {
     try {
       var json = await axios.get(`/course?info=${name}`);
       return dispatch({
-        type: "GET_COURSES_NAME",
+        type: GET_COURSES_NAME,
         payload: json.data,
       });
     } catch (error) {

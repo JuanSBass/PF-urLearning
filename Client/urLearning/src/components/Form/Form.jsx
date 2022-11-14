@@ -44,17 +44,16 @@ const Form = () => {
     language: "",
     price: "",
     level: "",
+    name_prof: ""
   });
 
   let btnDisabled = !(
     input.title.length &&
-    input.image.length &&
     input.category.length &&
-    input.subCategory.length &&
-    input.duration.length &&
-    input.language.length &&
+    input.description.length &&
     input.price.length &&
-    input.level.length
+    input.level.length &&
+    input.name_prof
   );
 
   useEffect(() => {
@@ -176,9 +175,7 @@ const Form = () => {
                   </Select>
                 </div>
 
-                {/* <Badge color="info" size="sm" className={style.tag}>
-                  {input.category}
-                </Badge> */}
+
 
                 <div id="select" className={style.cate}>
                   <div className="mb-2 block">
@@ -186,7 +183,6 @@ const Form = () => {
                   </div>
                   <Select
                     id="subCategory"
-                    required={true}
                     onChange={(e) => handleSelect(e)}
                     name="subCategory"
                     defaultValue="title"
@@ -228,7 +224,6 @@ const Form = () => {
                   </div>
                   <Select
                     id="language"
-                    required={true}
                     onChange={(e) => handleSelect(e)}
                     name="language"
                     defaultValue="title"
@@ -278,7 +273,6 @@ const Form = () => {
                 <TextInput
                   id="image"
                   type="text"
-                  required={true}
                   onChange={(e) => handleChange(e)}
                   name="image"
                 />
@@ -330,7 +324,7 @@ const Form = () => {
                       <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                         Curso creado con exito!
                       </h3>
-                      {/* <div className="flex justify-center gap-4">
+                      <div className="flex justify-center gap-4">
                         <Button
                           onClick={showModal}
                           type="submit"
@@ -341,7 +335,7 @@ const Form = () => {
                         <Button color="gray" onClick={showModal}>
                           No, cancel
                         </Button>
-                      </div> */}
+                      </div>
                     </div>
                   </Modal.Body>
                 </Modal>
