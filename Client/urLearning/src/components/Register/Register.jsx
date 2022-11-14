@@ -44,7 +44,7 @@ const Register = (props) => {
   }
 
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-  console.log(user.name)
+
   return (
 
     <div >
