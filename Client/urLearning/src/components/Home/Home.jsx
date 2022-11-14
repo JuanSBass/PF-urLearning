@@ -40,14 +40,15 @@ const Home = (props) => {
             ></path>
           </svg>
         </Button>
+
       </Link>
 
 
-      <button onClick={() => loginWithRedirect()}>Login</button>
+      {/* <button onClick={() => loginWithRedirect()}>Login</button>
       <button onClick={() => logout()}>Logout</button>
       <button onClick={(ev) => prueba(ev)}>prueba</button>
       {isAuthenticated && <h3>{JSON.stringify(user)}</h3>}
-      <div>{isAuthenticated && <img src={user.picture} alt="no carga la foto" />}</div>
+      <div>{isAuthenticated && <img src={user.picture} alt="no carga la foto" />}</div> */}
 
 
       <InfoService />
