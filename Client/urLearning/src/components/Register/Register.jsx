@@ -7,8 +7,6 @@ import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom";
 import { postUser } from "../../redux/actions"
 import { Button } from "flowbite-react"
-import { useAuth0 } from "@auth0/auth0-react"
-
 
 const Register = (props) => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
@@ -43,15 +41,13 @@ const Register = (props) => {
     }
   }
 
-  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+
 
   return (
 
     <div >
 
-      {isAuthenticated && <h1>{user.name}</h1>}
-      {isAuthenticated && <img src={user.picture} alt="pictura" />}
-      {isAuthenticated && <h3>{JSON.stringify(user)}</h3>}
+
       <div className={s.main}>
 
 
@@ -106,45 +102,6 @@ const Register = (props) => {
         </div>
 
       </div>
-
-
-
-
-
-
-
-
-
-
-      <div
-
-      >
-        <h1>Auth0</h1>
-        <button onClick={() => loginWithRedirect()}>Login</button>
-        <button onClick={() => logout()}>Logout</button>
-
-
-
-
-
-
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
   )
 }

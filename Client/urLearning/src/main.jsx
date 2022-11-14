@@ -11,6 +11,7 @@ import 'virtual:windi.css'
 
 
 
+
 const domain = import.meta.env.VITE_APP_AUTH0_DOMAIN;
 const cliendId = import.meta.env.VITE_APP_AUTH0_CLIENT_ID;
 
