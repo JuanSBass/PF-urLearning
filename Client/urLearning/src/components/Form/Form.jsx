@@ -288,6 +288,7 @@ const Form = () => {
                   type="number"
                   onChange={(e) => handleChange(e)}
                   name="duration"
+                  addon="Horas"
                   className={style.mitadInputs}
                 />
               </div>
