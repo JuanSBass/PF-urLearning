@@ -19,7 +19,7 @@ const cliendId = import.meta.env.VITE_APP_AUTH0_CLIENT_ID;
 // import dotenv from "dotenv";
 
 // dotenv.config();
-axios.defaults.baseURL = import.meta.env.VITE_API ||"http://localhost:3001";
+axios.defaults.baseURL = "http://localhost:3001";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

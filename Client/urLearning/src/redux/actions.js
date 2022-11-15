@@ -162,6 +162,9 @@ export const startGoogleAuth = () => {
   try {
     return async (dispatch) => {
       const user = await loginWithGoogle();
+      //aca hago un put para encontrar o crear el usuario
+      // si lo encuentro lo traigo, sino lo creo y lo traigo
+      //al log in le paso la data de la api si existe
       dispatch(
         logIn(
           user.user.uid,
@@ -183,6 +186,8 @@ export const registerEmailAuth = (email, password) => {
       const pos = email.indexOf("@");
       const name = email.slice(0, pos);
       console.log(name);
+
+      //aca hago un put para crear un usuario
       dispatch(logIn(user.user.uid, user.user.email, name));
     };
   } catch (error) {
@@ -194,7 +199,10 @@ export const loginEmailAuth = (email, password) => {
   try {
     return async (dispatch) => {
       const user = await loginUser(email, password);
-
+      // aca busco el usuario que ya deberia estar creado,
+      //sino el mismo <liginUser()> le informa al usuario que no
+      //esta registrado
+      //al log in le paso la data de la api si existe
       dispatch(logIn(user.user.uid, null, user.user.email));
     };
   } catch (error) {
