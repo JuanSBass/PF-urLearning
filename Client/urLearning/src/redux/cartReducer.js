@@ -2,7 +2,15 @@ import { TYPES } from "./cartActions";
 import { GET_COURSES } from "./actions";
 export const initialState = {
   cart: [],
-  products: [],
+  products: [
+    {id:1,title:"Curso 1",price:100},
+    // {id:2,title:"Curso 2",price:200},
+    // {id:3,title:"Curso 3",price:300},
+    // {id:4,title:"Curso 4",price:400},
+    // {id:5,title:"Curso 5",price:500},
+    // {id:6,title:"Curso 6",price:600},
+  
+    ],
   courses: [],
   course: {},
   copyCourses: [],
