@@ -11,6 +11,8 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  LOGIN,
+  LOGOUT,
 } from "./actions";
 
 const initialState = {
@@ -22,6 +24,7 @@ const initialState = {
   copyCategories: [],
   currentPage: 1,
   coursesForRating: [],
+  user: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -157,7 +160,10 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
-
+    case LOGIN:
+      return { ...state, user: action.payload };
+    case LOGOUT:
+      return { ...state, user: {} };
     default:
       return { ...state };
   }
