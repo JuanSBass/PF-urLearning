@@ -7,7 +7,6 @@ const {
   changeCourseById,
   getDbInfoCourses,
 } = require("../controllers/controllers");
-const cat = require("./category.js");
 const {
   validateEmail,
   validatePassword,
@@ -18,6 +17,7 @@ const {
   validateNameProf,
 } = require("../validations/validations");
 const router = Router();
+const cat = require("./category.js");
 router.use("/category", cat);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
