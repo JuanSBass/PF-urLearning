@@ -25,6 +25,7 @@ const initialState = {
   currentPage: 1,
   coursesForRating: [],
   user: {},
+  log: false,
 };
 
 function rootReducer(state = initialState, action) {
@@ -161,9 +162,9 @@ function rootReducer(state = initialState, action) {
         });
       }
     case LOGIN:
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload, log: true };
     case LOGOUT:
-      return { ...state, user: {} };
+      return { ...state, user: {}, log: false };
     default:
       return { ...state };
   }

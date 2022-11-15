@@ -3,6 +3,7 @@ import logOuts from "../fireBase/fuctions/logOut";
 import loginUser from "../fireBase/fuctions/loginUser";
 import registerUser from "../fireBase/fuctions/registerUser";
 import loginWithGoogle from "../fireBase/fuctions/logGoogle";
+
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
 export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
@@ -141,9 +142,9 @@ export const getSubCategoriesName = (name) => {
   };
 };
 
-export const logIn = (uid, name) => ({
+export const logIn = (uid, email, name, photo) => ({
   type: LOGIN,
-  payload: { uid, name },
+  payload: { uid, email, name, photo },
 });
 
 export const logOut = () => {
@@ -161,7 +162,14 @@ export const startGoogleAuth = () => {
   try {
     return async (dispatch) => {
       const user = await loginWithGoogle();
-      dispatch(logIn(user.user.uid, user.user.displayName));
+      dispatch(
+        logIn(
+          user.user.uid,
+          user.user.email,
+          user.user.displayName,
+          user.user.photoURL
+        )
+      );
     };
   } catch (error) {
     console.log(error);
@@ -172,7 +180,10 @@ export const registerEmailAuth = (email, password) => {
   try {
     return async (dispatch) => {
       const user = await registerUser(email, password);
-      dispatch(logIn(user.user.uid, user.user.displayName));
+      const pos = email.indexOf("@");
+      const name = email.slice(0, pos);
+      console.log(name);
+      dispatch(logIn(user.user.uid, user.user.email, name));
     };
   } catch (error) {
     console.log(error);
@@ -183,7 +194,8 @@ export const loginEmailAuth = (email, password) => {
   try {
     return async (dispatch) => {
       const user = await loginUser(email, password);
-      dispatch(logIn(user.user.uid, user.user.displayName));
+
+      dispatch(logIn(user.user.uid, null, user.user.email));
     };
   } catch (error) {
     console.log(error);
