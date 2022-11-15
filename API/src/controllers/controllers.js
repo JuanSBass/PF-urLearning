@@ -70,11 +70,12 @@ const getDbInfoCourses = async (info) => {
 
   let respuesta2 = await Course.findAll({
     where: {
+      title: { [Op.notLike]: `%${info}%` },
       name_prof: { [Op.iLike]: `%${info}%` },
     },
   });
 
-  return [respuesta, respuesta2];
+  return [respuesta, respuesta2].flat();
   //aca hay que concatenar respuesta con respueta2
 };
 

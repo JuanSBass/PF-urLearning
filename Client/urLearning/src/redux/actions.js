@@ -1,4 +1,8 @@
 import axios from "axios";
+import logOuts from "../fireBase/fuctions/logOut";
+import loginUser from "../fireBase/fuctions/loginUser";
+import registerUser from "../fireBase/fuctions/registerUser";
+import loginWithGoogle from "../fireBase/fuctions/logGoogle";
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
 export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
@@ -11,6 +15,10 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
+export const GET_COURSES_NAME = "GET_COURSES_NAME";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 
 export const getCourses = () => {
   try {
@@ -83,10 +91,10 @@ export function filteredByCategories(category) {
   };
 }
 
-export function filteredBySubCategories(category) {
+export function filteredBySubCategories(subcategory) {
   return {
     type: FILTER_BY_SUBCATEGORY,
-    payload: category,
+    payload: subcategory,
   };
 }
 //? <--------- Orders -------->
@@ -109,19 +117,75 @@ export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
 
-/* export function getCoursesByname(name){
+export function getCoursesByname(name) {
   return async function (dispatch) {
-  try{
-    var json = await axios.get("/course?name=" + name.charAt(0).toUpperCase() + name.slice(1))
-    return dispatch ({
-      type: "GET_COURSES_NAME",
-      payload: json.data
-    })
-    } catch (error){
-      console.log(error)
+    try {
+      var json = await axios.get(`/course?info=${name}`);
+      return dispatch({
+        type: GET_COURSES_NAME,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 }
 
+export const getSubCategoriesName = (name) => {
+  return async function (dispatch) {
+    const json = await axios.get(`/courseBySubCategory?subcateg=${name}`);
+    return dispatch({
+      type: GET_SUBCATEGORIES_COURSES,
+      payload: json.data,
+    });
+  };
+};
 
-*/
+export const logIn = (uid, name) => ({
+  type: LOGIN,
+  payload: { uid, name },
+});
+
+export const logOut = () => {
+  try {
+    return async (dispatch) => {
+      await logOuts();
+      return dispatch({
+        type: LOGOUT,
+      });
+    };
+  } catch (error) {}
+};
+
+export const startGoogleAuth = () => {
+  try {
+    return async (dispatch) => {
+      const user = await loginWithGoogle();
+      dispatch(logIn(user.user.uid, user.user.displayName));
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const registerEmailAuth = (email, password) => {
+  try {
+    return async (dispatch) => {
+      const user = await registerUser(email, password);
+      dispatch(logIn(user.user.uid, user.user.displayName));
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const loginEmailAuth = (email, password) => {
+  try {
+    return async (dispatch) => {
+      const user = await loginUser(email, password);
+      dispatch(logIn(user.user.uid, user.user.displayName));
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};

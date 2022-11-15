@@ -8,19 +8,16 @@ import {
   getCategory,
   getChildCategory,
   getCourses,
+  orderByAny,
 } from "../../redux/actions";
-import { Button, Select } from "flowbite-react";
+import { Button, Select, Dropdown, Rating, Label } from "flowbite-react";
 import { Link } from "react-router-dom";
+import Searchbar from "../searchBar/SearchBar";
 
 const Courses = () => {
   const dispatch = useDispatch();
-  const [orden, setOrden] = useState("");
-  const [categoryId, setCategoryId] = useState("");
   const categories = useSelector((state) => state.category);
-  let categoriesName = [];
-  categories.map((cat) => categoriesName.push(cat.name));
-  let catSet = [...new Set(categoriesName)];
-
+  const [order, setOrder] = useState("");
   const subCategories = useSelector((state) => state.subCategories);
 
   useEffect(() => {
@@ -29,18 +26,44 @@ const Courses = () => {
   }, [dispatch]);
 
   const filterCategos = (event) => {
-    // setCurrentPage(1);
-    dispatch(getChildCategory(event.target.id));
     dispatch(filteredByCategories(event.target.value));
-    console.log(event.target.id);
-    console.log(event.target.value);
+    let categorySelected = categories.find(
+      (c) => c.name === event.target.value
+    );
+
+    dispatch(getChildCategory(categorySelected.id));
   };
 
   const filterSubCategos = (event) => {
-    // setCurrentPage(1);
-    dispatch(filteredBySubCategories(event.target.id));
+    dispatch(filteredBySubCategories(event.target.value));
   };
 
+  const ordering = (event) => {
+    event.preventDefault();
+    dispatch(orderByAny(event.target.value))
+    setOrder(event.target.value)
+  }
+
+  const handleOrderUno = () => {
+    dispatch(orderByAny("1"));
+    console.log("aqui apretó uno");
+  };
+  const handleOrderDos = () => {
+    dispatch(orderByAny("2"))
+    console.log("aqui apretó dos");
+  };
+  const handleOrderTres = () => {
+    dispatch(orderByAny("3"))
+    console.log("aqui apretó tres");
+  };
+  const handleOrderCuatro = () => {
+    dispatch(orderByAny("4"))
+    console.log("aqui apretó cuatro");
+  };
+  const handleOrderCinco = () => {
+    dispatch(orderByAny("5"))
+    console.log("aqui apretó cinco");
+  };
   // const arrIds = [];
   // console.log(arrIds);
   // const handleOrder = (event) => {
@@ -52,19 +75,23 @@ const Courses = () => {
   return (
     <main className={styles.coursescontainer}>
       <section className={styles.filterscontainer}>
-        <select onChange={filterCategos}>
+        <Searchbar />
+        <Label>Categorías</Label>
+        <Select onChange={filterCategos}>
           <option value="All">Todas</option>
-          {categories.map(({ name, id }) => {
+          {categories?.map(({ name, id }) => {
             // arrIds.push(id);
             return (
-              <option value={name} id={id}>
+              <option value={name} id={id} key={id}>
                 {name}
               </option>
             );
           })}
-        </select>
-
+        </Select>
+        <Label>Subcategorías</Label>
         <Select id="subCategory" onChange={filterSubCategos} name="subCategory">
+          {/* <option value="All">Todas</option> */}
+          <option value="">-</option>
           {subCategories?.map((c) => {
             return (
               <option value={c.name} key={c.id}>
@@ -73,14 +100,71 @@ const Courses = () => {
             );
           })}
         </Select>
+        <Dropdown
+          label="Rating"
+          inline={true}
+        >
+          <Dropdown.Item onClick={handleOrderCinco} >
+            <Rating >
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderCuatro} >
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star filled={false} />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderTres}>
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderDos}>
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+            </Rating>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderUno}>
+            <Rating>
+              <Rating.Star />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+              <Rating.Star filled={false} />
+            </Rating>
+          </Dropdown.Item>
+        </Dropdown>
 
-        {/* <select onChange={handleOrder}>
-          <option value="all">Todos</option>
-          <option value="asc">Alfabético A-Z</option>
-          <option value="des">Alfabético Z-A</option>
-          <option value="populationMayor">Población + -</option>
-          <option value="populationMenor">Población - +</option>
-        </select> */}
+        <Label>Ordenamiento</Label>
+        <Select
+          id="orders"
+          onChange={ordering}
+          name="orders"
+        >
+          <option value="">-</option>
+          <option value="price+">Mayor precio</option>
+          <option value="price-">Menor precio</option>
+          <option value="rating+">Mejores calificados</option>
+          <option value="rating-">Menor calificación</option>
+
+        </Select>
+
         <Link to="/form">
           <Button gradientMonochrome="success">Crear curso</Button>
         </Link>
@@ -91,6 +175,4 @@ const Courses = () => {
 };
 
 export default Courses;
-
-//order rating, precio,
-//filtro categoria, subCategory e idioma
+// arreglando pre-main

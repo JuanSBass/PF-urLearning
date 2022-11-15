@@ -43,15 +43,14 @@
   border-radius: 50%;
 }
 
-.pageNumbers li button:hover {
-  color: white;
-  background-color: #fff;
-}
-
 .pageNumbers li button:focus {
   outline: none;
 }
 
 #paginationcontainer {
   grid-column: 2/2;
+}
+
+.btn:hover {
+  filter: brightness(0.7);
 }

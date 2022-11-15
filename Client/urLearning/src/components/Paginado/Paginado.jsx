@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPage } from "../../redux/actions";
 import styles from "../Paginado/Paginado.module.css";
 import Card from "./Card";
+import { Spinner } from "flowbite-react";
+import left from "../../img/IoIosArrowDropleftCircle.svg"
+import right from "../../img/IoIosArrowDroprightCircle.svg"
 
 const renderData = (data) => {
   return data.map((p) => {
@@ -26,7 +29,7 @@ function Paginado() {
 
   const currentPage = useSelector((state) => state.currentPage);
 
-  const [cardsPerPage] = useState(2);
+  const [cardsPerPage] = useState(9);
 
   const handleClick = (ev) => {
     dispatch(setCurrentPage(Number(ev.target.id)));
@@ -73,19 +76,23 @@ function Paginado() {
   return (
     <>
       <div className={styles.contCards}>
-        {allCourses.length ? renderData(currentCards) : <div>loading...</div>}
+        {allCourses.length ? (
+          renderData(currentCards)
+        ) : (
+          <Spinner aria-label="Default status example" />
+        )}
       </div>
 
       <div id={styles.paginationcontainer}>
         <ul className={styles.pageNumbers}>
           <li>
-            <button onClick={handlePrev}>izq</button>
+            <button onClick={handlePrev}  > <img src={left} alt="left" className={styles.btn} /></button>
           </li>
 
           {pageNumbers}
 
           <li>
-            <button onClick={handleNext}>der</button>
+            <button onClick={handleNext} ><img src={right} alt="right" className={styles.btn} /></button>
           </li>
         </ul>
       </div>

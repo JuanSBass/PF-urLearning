@@ -8,15 +8,16 @@ import CardsCourses from "./Cards/CardsCourses";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { InfoService } from "./InfoService/InfoService";
+import { useAuth0 } from "@auth0/auth0-react"
 
 const Home = (props) => {
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(getCourses());
-	}, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCourses());
+  }, [dispatch]);
 
-  const courses = useSelector((state) => state.courses);
-  console.log(courses);
+  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+
   return (
     <main className={styles}>
       <HeaderHome />
@@ -39,7 +40,17 @@ const Home = (props) => {
             ></path>
           </svg>
         </Button>
+
       </Link>
+
+
+      {/* <button onClick={() => loginWithRedirect()}>Login</button>
+      <button onClick={() => logout()}>Logout</button>
+      <button onClick={(ev) => prueba(ev)}>prueba</button>
+      {isAuthenticated && <h3>{JSON.stringify(user)}</h3>}
+      <div>{isAuthenticated && <img src={user.picture} alt="no carga la foto" />}</div> */}
+
+
       <InfoService />
     </main>
   );
