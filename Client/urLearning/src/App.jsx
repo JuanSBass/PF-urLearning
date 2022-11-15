@@ -7,6 +7,8 @@ import Courses from "./components/Courses/Courses.jsx";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
 
+
+
 function App() {
   return (
     <BrowserRouter>

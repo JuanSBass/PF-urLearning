@@ -11,6 +11,11 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  /////////CARRITO////////////
+ ADD_TO_CART,
+ REMOVE_ONE_FROM_CART,
+ REMOVE_ALL_FROM_CART,
+ CLEAR_CART, 
 } from "./actions";
 
 const initialState = {
@@ -22,7 +27,11 @@ const initialState = {
   copyCategories: [],
   currentPage: 1,
   coursesForRating: [],
+/////CARRITO////////
+  products: [],
+  cart: [],
 };
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -157,6 +166,10 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
+
+      ///////////////////// CARRITO //////////////////
+
+
 
     default:
       return { ...state };
