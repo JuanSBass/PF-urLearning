@@ -61,17 +61,16 @@ const allInfo = async (email) => {
 
 /////////////////////////////////////////  COURSE  ////////////////////////////////////////////////////////////
 
-const getDbInfoCourses = async (info) => {
+const getDbInfoCourses = async (title) => {
   let respuesta = await Course.findAll({
     where: {
-      title: { [Op.iLike]: `%${info}%` },
+      title: { [Op.iLike]: `%${title}%` },
     },
   });
 
   let respuesta2 = await Course.findAll({
     where: {
-      title: { [Op.notLike]: `%${info}%` },
-      name_prof: { [Op.iLike]: `%${info}%` },
+      name_prof: { [Op.iLike]: `%${title}%` },
     },
   });
 
@@ -97,20 +96,37 @@ const getCourseById = async (id) => {
       description: coursejson.description,
       price: coursejson.price,
       rating: coursejson.rating,
+      ratingUserNumber: coursejson.ratingUserNumber,
+      ratingHistory: coursejson.ratingHistory,
     };
   }
 };
 
 ///////// Route Course Modify Rating by ID /////////
 
-const changeCourseById = async (id) => {
-  const rating = req.body;
+const changeCourseById = async (id, rating) => {
+  let changeRating = [];
 
   if (id.includes("-")) {
-    let changeRating = await Course.update(rating, { where: { id: id } });
-    return {
-      changeRating,
-    };
+    //traigo por BBDD
+    let currentCourse = await Course.findOne({ where: { id: id } });
+    let courseRatingNumber = currentCourse.ratingUserNumber;
+    //console.log(courseRatingNumber);
+    await currentCourse.update({ ratingUserNumber: courseRatingNumber + 1 });
+    changeRating.push(currentCourse);
+    //console.log(currentCourse.ratingUserNumber);
+    let ratingNew = parseInt(currentCourse.rating) + parseInt(rating);
+    await currentCourse.update({ rating: ratingNew });
+    //console.log(ratingNew);
+
+    let promedio = currentCourse.rating / currentCourse.ratingUserNumber;
+    //console.log(promedio);
+
+    let change = await Course.update(
+      { ratingHistory: Math.floor(promedio) },
+      { where: { id } }
+    );
+    return change;
   }
 };
 

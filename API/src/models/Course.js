@@ -41,9 +41,21 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       rating: {
-        type: DataTypes.DECIMAL,
+        //-> ratingNumber
+        //valor que recibo
+        type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue: 1,
+        defaultValue: 0,
+      },
+      ratingUserNumber: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      ratingHistory: {
+        //valor que devuelvo -> front (promediado)
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
       },
       price: {
         type: DataTypes.DECIMAL,
