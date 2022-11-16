@@ -8,6 +8,7 @@ import CardsCourses from "./Cards/CardsCourses";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { InfoService } from "./InfoService/InfoService";
+import PruebaStripe from "../Stripe/PruebaStripe";
 
 const Home = (props) => {
   const dispatch = useDispatch();
