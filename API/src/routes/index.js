@@ -63,7 +63,8 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  console.log(info);
+  const tokken = req.headers;
+  console.log("soy el tokken", tokken);
   let allCourses;
   try {
     info
