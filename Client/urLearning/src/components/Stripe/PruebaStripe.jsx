@@ -14,6 +14,53 @@ export const FormPago = () => {
   const stripe = useStripe();
   const elements = useElements();
 
+
+  const handlePrueba = async (event) => {
+
+    try {
+      const products = [
+        {
+          name: "Product1",
+          quantity: 1,
+          price: 5000,
+        },
+        {
+          name: "Product2",
+          quantity: 1,
+          price: 4000,
+        },
+        {
+          name: "Product3",
+          quantity: 1,
+          price: 5000,
+        },
+        {
+          name: "Product4",
+          quantity: 1,
+          price: 2000,
+        },
+      ];
+
+      const obj = {
+        products
+      }
+      const stripe2 = await stripePromise
+      const response = await axios.post("/api/checkoutcart", obj)
+
+      const session = await response.data;
+      console.log(session);
+
+      const result = await stripe2.redirectToCheckout({ sessionId: session.id })
+
+      if (result.error) console.log(result.error);
+
+    } catch (error) {
+      console.log(error.message);
+    }
+
+
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -47,7 +94,7 @@ export const FormPago = () => {
       <form onSubmit={handleSubmit}>
         <CardElement className={style.input} />
         <Button disabled={!stripe} color="gray"
-          pill={true}>
+          pill={true} type="submit">
 
           {
             loading ? (<Spinner aria-label="Default status example" />) : ("Comprar")
@@ -55,6 +102,7 @@ export const FormPago = () => {
 
         </Button>
       </form>
+      <button onClick={handlePrueba} role="link">PAGAR AHORA</button>
     </div>
   )
 
