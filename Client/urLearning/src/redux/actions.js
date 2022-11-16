@@ -149,4 +149,30 @@ export const getSubCategoriesName = (name) => {
 
 //////////////////////CARRITO ///////////////////////
 
+export const addToCart = (id) => {
+  return dispatch({ 
+  type: ADD_TO_CART,
+  payload: id
+});
+}
 
+export const deleteOne = (id) => {
+  return dispatch({ 
+  type: REMOVE_ONE_FROM_CART,
+  payload: id
+});
+}
+
+export const deleteAll = (id) => {
+  return dispatch({
+    type: REMOVE_ALL_FROM_CART,
+    payload: id
+  })
+}
+
+
+export const clearCart = () => {
+  return dispatch ({
+    type: CLEAR_CART,
+  })
+}

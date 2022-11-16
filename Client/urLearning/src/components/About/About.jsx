@@ -4,7 +4,7 @@ export default function About() {
 
     return (
 
-        <div></div>
+        <div>Hola soy about</div>
     )
 
 }
