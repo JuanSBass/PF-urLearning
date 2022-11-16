@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import style from "./Stripe.module.css"
 import axios from 'axios';
-import { Spinner } from "flowbite-react"
+import { Button, Spinner } from "flowbite-react"
 
 
 const stripePromise = loadStripe("pk_test_51M4ZacHhaXjOp4D8FbyV1NvNbspvPqNSq4DtsGSLM2jnydz8rtHuOztZFlkGLkgbCx31fhL7lLcXp5dEZK5Rvvmx00F7vVOLQI")
@@ -17,7 +17,11 @@ export const FormPago = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({ type: "card", card: elements.getElement(CardElement), });
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+
+    });
 
     setLoading(true);
 
@@ -42,13 +46,14 @@ export const FormPago = () => {
     <div className={style.inputStripe}>
       <form onSubmit={handleSubmit}>
         <CardElement className={style.input} />
-        <button disabled={!stripe}>
+        <Button disabled={!stripe} color="gray"
+          pill={true}>
 
           {
             loading ? (<Spinner aria-label="Default status example" />) : ("Comprar")
           }
 
-        </button>
+        </Button>
       </form>
     </div>
   )
