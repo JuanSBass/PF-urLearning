@@ -17,6 +17,7 @@ function App() {
   const dispatch=useDispatch();
   useEffect(()=>{
     onAuthStateChanged(auth,(user)=>{
+      console.log(user)
       if(user.uid){dispatch(logIn(
         user.uid,
         user.email,
