@@ -8,8 +8,8 @@ const CartItem = ({ data, delFromCart }) => {
             <h4>{title}</h4>
             <h5>${price}.00 x {quantity}</h5>
             <h5>TOTAL ${price * quantity}.00</h5> {/*  valor total de los cursos */}
-            <button>Eliminar Uno</button>
-            <button>Eliminar Todos</button>
+            <button onClick={() => delFromCart(id)}>Eliminar Uno</button> {/* all en false -> borra uno */}
+            <button onClick={() => delFromCart(id, true)}>Eliminar Todos</button> {/* all en true -> borra todo */}
         </div>
     )
 }
