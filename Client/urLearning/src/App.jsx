@@ -7,6 +7,7 @@ import Courses from "./components/Courses/Courses.jsx";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
 import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
+import ContactUs from "./components/Contact Us/ContactUs.jsx"
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/allcourses" component={Courses} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/contact" component={ContactUs} />
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
+
         <Footer />
       </div>
     </BrowserRouter>

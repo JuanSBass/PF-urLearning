@@ -1,0 +1,56 @@
+.contenedorGeneral {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 81px;
+  height: calc(100vh - 149px);
+}
+
+.contenedorFormulario {
+  display: flex;
+  background-color: #fafafa;
+  max-width: 1000px;
+  width: 900px;
+  border-radius: 25px;
+  height: 400px;
+  padding-inline: 1rem;
+  align-items: center;
+  gap: 2rem;
+}
+
+.form {
+  width: 50%;
+}
+
+.text {
+  width: 50%;
+  height: 90%;
+  border-radius: 20px;
+  background-color: #6d6aee;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.textTitulo {
+  text-align: center;
+  font-weight: 600;
+  font-size: 30px;
+  padding: 2rem;
+  color: #fafafa;
+  line-height: 2rem;
+  position: absolute;
+}
+
+.imagenChico {
+  position: absolute;
+  object-fit: cover;
+  height: 100%;
+  bottom: 0.01rem;
+  border-radius: 20px;
+  filter: opacity(0.5);
+}
+
+.buttonSubmit {
+  margin-top: 1.5rem;
+}
