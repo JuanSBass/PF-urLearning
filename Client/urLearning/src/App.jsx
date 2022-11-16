@@ -6,6 +6,7 @@ import Detail from "./components/Detail/Detail.jsx";
 import Courses from "./components/Courses/Courses.jsx";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
+import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
+        <Route exact path="/formpage" component={PruebaStripe} />
         <Footer />
       </div>
     </BrowserRouter>

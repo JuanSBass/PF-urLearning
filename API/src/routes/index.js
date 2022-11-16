@@ -8,6 +8,7 @@ const {
   getDbInfoCourses,
 } = require("../controllers/controllers");
 const cat = require("./category.js");
+const apiPayment = require("./payment.js");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -17,6 +18,7 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/category", cat);
+router.use("/api", apiPayment);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -127,17 +129,16 @@ router.put("/course/:id", async (req, res) => {
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
-
-  console.log("hola")
+  console.log("hola");
   try {
-    const  {categ}  = req.query;
-    console.log(categ)
+    const { categ } = req.query;
+    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
       },
     });
-  
+
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
@@ -145,24 +146,21 @@ router.get("/courseByCategory", async (req, res) => {
 });
 
 router.get("/courseBySubCategory", async (req, res) => {
-
-  console.log("hola")
+  console.log("hola");
   try {
-    const  {subcateg}  = req.query;
-    console.log(subcateg)
+    const { subcateg } = req.query;
+    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,
       },
     });
-  
+
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
   }
 });
-
-
 
 ///////// Route name_prof /////////
 
