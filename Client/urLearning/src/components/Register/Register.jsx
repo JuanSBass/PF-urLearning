@@ -5,7 +5,7 @@ import logo from "../../images/urLearning.png"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, Redirect } from "react-router-dom";
-import { postUser, startGoogleAuth, registerEmailAuth, loginEmailAuth } from "../../redux/actions"
+import { startGoogleAuth, registerEmailAuth, loginEmailAuth } from "../../redux/actions"
 import { Button } from "flowbite-react"
 
 const Register = (props) => {
@@ -29,13 +29,6 @@ const Register = (props) => {
     return errors;
   }
 
-  useEffect(() => {
-    return (() => {
-      console.log(user)
-      user ? dispatch(postUser(user)) : ""
-    })
-  }, [dispatch]);
-
   const handleChange = (e) => {
     e.preventDefault();
     setInputs({ ...inputs, [e.target.name]: e.target.value })
@@ -55,9 +48,6 @@ const Register = (props) => {
 
   const handleGoogle = () => {
     dispatch(startGoogleAuth());
-
-
-
   };
 
   return (

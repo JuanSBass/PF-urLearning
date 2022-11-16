@@ -8,7 +8,6 @@ export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
 export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
-export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
 export const ORDER_BY_ANY = "ORDER_BY_ANY";
@@ -50,22 +49,6 @@ export function getChildCategory(categoryId) {
     });
   };
 }
-
-export const postUser = (payload) => {
-  try {
-    return async function (dispatch) {
-      const newPost = {
-        id: payload.uid,
-        email: payload.email,
-        name: payload.name,
-      };
-      const final = await axios.post("/user/create", newPost);
-      dispatch({ type: POST_USER });
-    };
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 export const getDetail = (id) => {
   try {
@@ -147,10 +130,23 @@ export const getSubCategoriesName = (name) => {
   };
 };
 
-export const logIn = (uid, email, name, photo) => ({
-  type: LOGIN,
-  payload: { uid, email, name, photo },
-});
+export const logIn = (uid, email, name, photo) => {
+  const newUser = {
+    id: uid,
+    email: email,
+    name: name,
+  };
+  return async function (dispatch) {
+    const oldUser = await axios.post("/user/create", newUser);
+    const semiOldUser = oldUser.data;
+    dispatch({
+      type: LOGIN,
+      payload: { uid, email, name: semiOldUser[0].name, photo },
+      //ojo que aca solo devuelve el nombre de la base de datos
+      //y el resto se lo proporciona google
+    });
+  };
+};
 
 export const logOut = () => {
   try {
@@ -168,24 +164,11 @@ export const startGoogleAuth = () => {
     return async (dispatch) => {
       const user = await loginWithGoogle();
 
-      //aca hago un put para encontrar o crear el usuario
-      // si lo encuentro lo traigo, sino lo creo y lo traigo
-      //al log in le paso la data de la api si existe
-
-      const jsonUser = {
-        id: user.user.uid,
-        email: user.user.email,
-        name: user.user.displayName,
-      };
-
-      const oldUser = await axios.post("/user/create", jsonUser);
-      const semiOldUser = oldUser.data;
-
       dispatch(
         logIn(
-          semiOldUser[0].uid,
-          semiOldUser[0].email,
-          semiOldUser[0].name,
+          user.user.uid,
+          user.user.email,
+          user.user.name,
           user.user.photoURL
         )
       );
@@ -201,15 +184,11 @@ export const registerEmailAuth = (email, password) => {
       const user = await registerUser(email, password);
       const pos = email.indexOf("@");
       const name = email.slice(0, pos);
-
-      //aca hago un put para crear un usuario
       const jsonUser = {
         id: user.user.uid,
         email: user.user.email,
         name: name,
       };
-
-      const newUser = await axios.post("/user/create", jsonUser);
       dispatch(logIn(user.user.uid, user.user.email, name));
     };
   } catch (error) {
@@ -221,16 +200,11 @@ export const loginEmailAuth = (email, password) => {
   try {
     return async (dispatch) => {
       const user = await loginUser(email, password);
-      // aca busco el usuario que ya deberia estar creado,
-      //sino el mismo <liginUser()> le informa al usuario que no
-      //esta registrado
-      //al log in le paso la data de la api si existe
       const jsonUser = {
         id: user.user.uid,
       };
       const oldUser = await axios.post("/user/create", jsonUser);
       const semiOldUser = oldUser.data;
-
       dispatch(
         logIn(semiOldUser[0].uid, semiOldUser[0].name, semiOldUser[0].email)
       );

@@ -8,15 +8,13 @@ import CardsCourses from "./Cards/CardsCourses";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { InfoService } from "./InfoService/InfoService";
-import { useAuth0 } from "@auth0/auth0-react"
+
 
 const Home = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCourses());
   }, [dispatch]);
-
-  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
   return (
     <main className={styles}>
