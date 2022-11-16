@@ -1,10 +1,16 @@
 import styles from "./CardsCourses.module.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Rating } from "flowbite-react";
+import { addToCart } from "../../../redux/cartActions";
 
 const CardsCourses = () => {
   const courses = useSelector((state) => state.courses).slice(0, 8);
+  const dispatch = useDispatch();
+
+  const handleClick = (id) => {
+    dispatch(addToCart(id))
+  }
 
   return (
     <section className={styles.cardscontainer}>
@@ -29,6 +35,7 @@ const CardsCourses = () => {
           </div>
         </Link>
       ))}
+      <button onClick={() => handleClick(id)}>Agregar a carrito</button>
     </section>
   );
 };

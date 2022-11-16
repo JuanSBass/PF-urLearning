@@ -1,15 +1,13 @@
-import { TYPES } from "./cartActions";
-import { GET_COURSES } from "./actions";
+import {
+  ADD_TO_CART,
+  REMOVE_ONE_FROM_CART,
+  REMOVE_ALL_FROM_CART,
+  CLEAR_CART,
+} from "./types";
+
 export const initialState = {
   cart: [],
-  products: [
-    { id: 1, title: "Curso 1", price: 100 },
-    { id: 2, title: "Curso 2", price: 200 },
-    // {id:3,title:"Curso 3",price:300},
-    // {id:4,title:"Curso 4",price:400},
-    // {id:5,title:"Curso 5",price:500},
-    // {id:6,title:"Curso 6",price:600},
-  ],
+  products: [{ id: "1", title: "cocina", price: 100 }],
   courses: [],
   course: {},
   copyCourses: [],
@@ -17,19 +15,8 @@ export const initialState = {
 };
 
 function cartReducer(state = initialState, action) {
-  {
-    console.log("aaaaaaaaaaaaaaaaa");
-  }
   switch (action.type) {
-    case GET_COURSES:
-      return {
-        ...state,
-        courses: action.payload,
-        copyCourses: action.payload,
-        coursesForRating: action.payload,
-      };
-
-    case TYPES.ADD_TO_CART: {
+    case ADD_TO_CART: {
       //buscar el id en products y guardar en una variable
       let newItem = state.products.find(
         (product) => product.id === action.payload
@@ -53,7 +40,7 @@ function cartReducer(state = initialState, action) {
         : { ...state, cart: [...state.cart, { ...newItem, quantity: 1 }] }; //quantity: 1 -> siginifica que es el primer item de ese producto
     }
 
-    case TYPES.REMOVE_ONE_FROM_CART: {
+    case REMOVE_ONE_FROM_CART: {
       let itemToDelete = state.cart.find((item) => item.id === action.payload);
 
       //debes evitar que quantity sera MENOR a 0
@@ -73,18 +60,18 @@ function cartReducer(state = initialState, action) {
           };
     }
 
-    case TYPES.REMOVE_ALL_FROM_CART:
+    case REMOVE_ALL_FROM_CART:
       return {
         ...state,
         cart: state.cart.filter((item) => item.id !== action.payload),
       };
 
-    case TYPES.CLEAR_CART:
+    case CLEAR_CART:
       //console.log(initialState);
       return initialState; //devuelve todo vacio
 
     default:
-      return { ...state };
+      return initialState;
   }
 }
 
