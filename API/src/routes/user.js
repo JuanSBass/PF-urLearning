@@ -5,7 +5,6 @@ const { User, Course } = require("../db");
 
 router.post("/create", async (req, res) => {
   const { id, email, name } = req.body;
-
   try {
     let newUser = await User.findOrCreate({
       where: { id: id },
@@ -14,11 +13,9 @@ router.post("/create", async (req, res) => {
         name,
       },
     });
-
     res.status(200).send(newUser);
   } catch (error) {
-    console.log(error);
-    res.status(404).send(error + "error del /Post User");
+    res.status(404).send(error.message);
   }
 });
 
@@ -31,19 +28,29 @@ router.get("/getAll", async (req, res) => {
   }
 });
 
-router.put("/:email", async (req, res) => {
+// router.get("/:id", async (req, res) => {
+//   const {id}
+//   try {
+//     const allUsers = await User.findAll({});
+//     res.status(200).send(allUsers);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// });
+
+router.put("/:id", async (req, res) => {
   try {
-    let userEmail = req.params.email;
-    let { newPassword } = req.body;
+    const id = req.params.id;
+    const { newName } = req.body;
     let response = await User.update(
-      { password: newPassword },
+      { name: newName },
       {
         where: {
-          email: userEmail,
+          id: id,
         },
       }
     );
-    res.status(200).send("password modified");
+    res.status(200).send(response);
   } catch (error) {
     res.status(401).send(error.message);
   }

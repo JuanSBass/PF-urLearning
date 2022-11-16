@@ -54,7 +54,12 @@ export function getChildCategory(categoryId) {
 export const postUser = (payload) => {
   try {
     return async function (dispatch) {
-      await axios.post("/user", payload);
+      const newPost = {
+        id: payload.uid,
+        email: payload.email,
+        name: payload.name,
+      };
+      const final = await axios.post("/user/create", newPost);
       dispatch({ type: POST_USER });
     };
   } catch (error) {
@@ -162,14 +167,25 @@ export const startGoogleAuth = () => {
   try {
     return async (dispatch) => {
       const user = await loginWithGoogle();
+
       //aca hago un put para encontrar o crear el usuario
       // si lo encuentro lo traigo, sino lo creo y lo traigo
       //al log in le paso la data de la api si existe
+
+      const jsonUser = {
+        id: user.user.uid,
+        email: user.user.email,
+        name: user.user.displayName,
+      };
+
+      const oldUser = await axios.post("/user/create", jsonUser);
+      const semiOldUser = oldUser.data;
+
       dispatch(
         logIn(
-          user.user.uid,
-          user.user.email,
-          user.user.displayName,
+          semiOldUser[0].uid,
+          semiOldUser[0].email,
+          semiOldUser[0].name,
           user.user.photoURL
         )
       );
@@ -185,9 +201,15 @@ export const registerEmailAuth = (email, password) => {
       const user = await registerUser(email, password);
       const pos = email.indexOf("@");
       const name = email.slice(0, pos);
-      console.log(name);
 
       //aca hago un put para crear un usuario
+      const jsonUser = {
+        id: user.user.uid,
+        email: user.user.email,
+        name: name,
+      };
+
+      const newUser = await axios.post("/user/create", jsonUser);
       dispatch(logIn(user.user.uid, user.user.email, name));
     };
   } catch (error) {
@@ -203,7 +225,15 @@ export const loginEmailAuth = (email, password) => {
       //sino el mismo <liginUser()> le informa al usuario que no
       //esta registrado
       //al log in le paso la data de la api si existe
-      dispatch(logIn(user.user.uid, null, user.user.email));
+      const jsonUser = {
+        id: user.user.uid,
+      };
+      const oldUser = await axios.post("/user/create", jsonUser);
+      const semiOldUser = oldUser.data;
+
+      dispatch(
+        logIn(semiOldUser[0].uid, semiOldUser[0].name, semiOldUser[0].email)
+      );
     };
   } catch (error) {
     console.log(error);
