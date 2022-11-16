@@ -17,12 +17,16 @@ function App() {
   const dispatch=useDispatch();
   useEffect(()=>{
     onAuthStateChanged(auth,(user)=>{
-      console.log(user)
-      if(user.uid){dispatch(logIn(
+
+      
+      if(user?.uid){
+        const token=user.accessToken;
+        dispatch(logIn(
         user.uid,
         user.email,
         user.displayName,
-        user.photoURL))}
+        user.photoURL))
+        window.localStorage.setItem("tokken",token)}
       else{dispatch(logOut())}
     })
   },[dispatch])

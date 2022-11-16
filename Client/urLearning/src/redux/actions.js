@@ -23,7 +23,13 @@ export const LOGOUT = "LOGOUT";
 export const getCourses = () => {
   try {
     return async function (dispatch) {
-      const response = await axios.get("/course");
+      const tokken = window.localStorage.getItem("tokken");
+      const response = await axios.get("/course", {
+        headers: {
+          Authorization: "Bearer " + tokken,
+        },
+      });
+
       dispatch({ type: GET_COURSES, payload: response.data });
     };
   } catch (error) {
@@ -136,6 +142,7 @@ export const logIn = (uid, email, name, photo) => {
     email: email,
     name: name,
   };
+
   return async function (dispatch) {
     const oldUser = await axios.post("/user/create", newUser);
     const semiOldUser = oldUser.data;
@@ -184,11 +191,7 @@ export const registerEmailAuth = (email, password) => {
       const user = await registerUser(email, password);
       const pos = email.indexOf("@");
       const name = email.slice(0, pos);
-      const jsonUser = {
-        id: user.user.uid,
-        email: user.user.email,
-        name: name,
-      };
+
       dispatch(logIn(user.user.uid, user.user.email, name));
     };
   } catch (error) {

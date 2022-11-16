@@ -9,6 +9,7 @@ const {
 } = require("../controllers/controllers");
 const cat = require("./category.js");
 const user = require("./user");
+const middleware = require("../middleware");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -19,6 +20,7 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/category", cat);
 router.use("/user", user);
+router.use(middleware.decodeToken);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 
