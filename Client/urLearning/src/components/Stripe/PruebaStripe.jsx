@@ -62,7 +62,6 @@ export const FormPago = () => {
 
 
 
-
 const PruebaStripe = () => {
   return (
     <Elements stripe={stripePromise}  >
