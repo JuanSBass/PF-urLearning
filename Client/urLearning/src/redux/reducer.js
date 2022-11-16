@@ -3,7 +3,6 @@ import {
   GET_COURSES,
   POST_COURSE,
   GET_CHILD_CATEGORY,
-  POST_USER,
   GET_DETAIL,
   FILTER_BY_CATEGORY,
   SET_CURRENT_PAGE,
@@ -38,8 +37,6 @@ function rootReducer(state = initialState, action) {
         coursesForRating: action.payload,
       };
 
-    case POST_USER:
-      return { ...state };
     case GET_DETAIL:
       return { ...state, course: action.payload };
 
@@ -163,6 +160,7 @@ function rootReducer(state = initialState, action) {
       }
     case LOGIN:
       return { ...state, user: action.payload, log: true };
+
     case LOGOUT:
       return { ...state, user: {}, log: false };
     default:
