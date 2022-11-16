@@ -12,18 +12,12 @@ export default function Nav() {
 					<img src={logo} class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
 					<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
 				</Link>
-				<button data-popover-target="popover-right" data-popover-placement="right" type="button" class="text-white mb-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Right popover</button>
-				<div data-popover id="popover-right" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-					<div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
-						<h3 class="font-semibold text-gray-900 dark:text-white">Popover right</h3>
-					</div>
-					<div class="px-3 py-2">
-						<p>And here's some amazing content. It's very engaging. Right?</p>
-					</div>
-					<div data-popper-arrow></div>
-				</div>
-
-				<div class="flex md:order-2 md:space-x-4">
+				<div class="flex md:order-3 md:space-x-4">
+					<button
+						type="button"
+						class="focus:outline-none rounded-full text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 py-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+						<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+					</button>
 					<Link to="/register">
 						<button
 							type="button"
@@ -75,6 +69,6 @@ export default function Nav() {
 					</ul>
 				</div>
 			</div>
-		</nav>
+		</nav >
 	);
 }

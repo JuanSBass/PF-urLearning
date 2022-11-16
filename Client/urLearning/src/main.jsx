@@ -7,7 +7,7 @@ import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 // import dotenv from "dotenv";
-
+<script src="../path/to/flowbite/dist/flowbite.js"></script>
 
 // dotenv.config();
 axios.defaults.baseURL = import.meta.env.VITE_API || "http://localhost:3001";
