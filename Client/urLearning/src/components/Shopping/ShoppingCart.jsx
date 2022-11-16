@@ -1,26 +1,27 @@
 import { useReducer } from "react";
 import cartReducer, { initialState } from "../../redux/cartReducer"
-import CourseItem from "../courseItem/CourseItem";
+import courseItem from "../../components/courseItem/courseItem"
 
 const ShoppingCart = () => {
   const [state, dispatch] = useReducer(cartReducer, initialState)
-  const { products, cart } = state
+  const { courses, cart } = state
 
-  const addToCart = (id) => { 
-    console.log(id)
-  }
+  console.log("aaaaaaaaaaaaaaaaa");
+
+
+  const addToCart = () => { }
   const delFromCart = () => { }
   const clearCart = () => { }
 
   return (
-    <div >
-      <h2>Carrito de Compras</h2>
-      <h3>Productos</h3>
-     <article className="box grid-responsive">
-        {products.map((course) => <CourseItem key={course.id} data={course} addToCart={addToCart} />)}
-       </article>
+    <div>
+      <h2>carrito de cursos</h2>
+      {console.log('soy el carrito de compras')}
+      <article className="box">
+        {courses.map((course) => <courseItem key={course.id} data={course} addToCart={addToCart} />)}
+        {console.log(courses)}
+      </article>
       <h3>Carrito</h3>
-      <article className="box"></article>
     </div>
   );
 };
