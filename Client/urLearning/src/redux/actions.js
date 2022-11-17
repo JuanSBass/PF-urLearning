@@ -15,6 +15,7 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const CLEAN_CATEGORIES = "CLEAN_CATEGORIES";
 export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
 export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
@@ -110,8 +111,9 @@ export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
 
+
 export const cleanCategory = () => {
-  return { type: CLEAN_DETAIL };
+  return { type: CLEAN_CATEGORIES };
 };
 
 export function getCoursesByname(name) {
