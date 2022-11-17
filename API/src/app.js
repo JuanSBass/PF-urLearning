@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
 const cors = require("cors");
+const middleware = require("./middleware/index.js");
 
 require("./db.js");
 
