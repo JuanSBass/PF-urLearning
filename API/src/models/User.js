@@ -4,6 +4,12 @@ module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -13,8 +19,18 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      fecha:{
+        type:DataTypes.DATE,
+        allowNull:false,
+      },
+      admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       // here would be the idProf reference
     },
+
     {
       timestamps: false,
       createdAt: false,

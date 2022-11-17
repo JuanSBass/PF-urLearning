@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
-const { Course, User } = require("../db");
+const { Course, User,Cart} = require("../db");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 const getApiUsers = async (email) => {
@@ -131,10 +131,43 @@ const changeCourseById = async (id, rating) => {
   }
 };
 
+///////// Route Course para el carrito de compras /////////
+const getCartCourseDb = async () => {
+  return await Course.findAll({
+    include: {
+      model: User,
+      attributes: ["name", "id"],
+     // trought: { attributes: [] },
+    },
+  });
+};
+
+const getAllCart = async () => {
+ 
+  var db = await getCartCourseDb();
+  db = db.map((courses) => {
+    return {
+      id: courses.id,
+      title: courses.title,
+      image: courses.image,
+      description:courses.description,
+      ratingHistory:courses.ratingHistory,
+      price:courses.price,
+      name_prof:courses.name_prof,
+     };
+  });
+ 
+
+  return db;
+};
+
+
+
 module.exports = {
   allInfo,
   allInfoCourses,
   getCourseById,
   changeCourseById,
   getDbInfoCourses,
+  getAllCart,
 };
