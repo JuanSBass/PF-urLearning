@@ -4,6 +4,7 @@ import { Elements, CardElement, useStripe, useElements } from "@stripe/react-str
 import style from "./Stripe.module.css"
 import axios from 'axios';
 import { Button, Spinner } from "flowbite-react"
+// import UserLogeado from reducer
 
 
 const stripePromise = loadStripe("pk_test_51M4ZacHhaXjOp4D8FbyV1NvNbspvPqNSq4DtsGSLM2jnydz8rtHuOztZFlkGLkgbCx31fhL7lLcXp5dEZK5Rvvmx00F7vVOLQI")
@@ -20,21 +21,25 @@ export const FormPago = () => {
     try {
       const products = [
         {
+          id: 1,
           name: "Product1",
           quantity: 1,
           price: 5000,
         },
         {
+          id: 2,
           name: "Product2",
           quantity: 1,
           price: 4000,
         },
         {
+          id: 3,
           name: "Product3",
           quantity: 1,
           price: 5000,
         },
         {
+          id: 4,
           name: "Product4",
           quantity: 1,
           price: 2000,
@@ -43,8 +48,8 @@ export const FormPago = () => {
 
       const obj = {
         products,
-        // user,
-        // idOrder
+        // accesstoken,
+        // session.id
       }
       // stripe.paymentRequest({})
       const stripe2 = await stripePromise
@@ -121,3 +126,4 @@ const PruebaStripe = () => {
 }
 
 export default PruebaStripe
+
