@@ -8,8 +8,35 @@ import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
 import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
 import ContactUs from "./components/Contact Us/ContactUs.jsx"
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./fireBase/credenciales";
+import { useDispatch } from "react-redux"
+import { logIn, logOut } from "./redux/actions"
+import { useEffect } from "react"
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+
+
+      if (user?.uid) {
+        const token = user.accessToken;
+        console.log(user)
+        dispatch(logIn(
+          user.uid,
+          user.email,
+          user.displayName,
+          user.photoURL))
+        window.localStorage.setItem("tokken", token)
+      }
+      else {
+        window.localStorage.setItem("tokken", null)
+        dispatch(logOut())
+      }
+    })
+  }, [dispatch])
+
   return (
     <BrowserRouter>
       <div className="App">
