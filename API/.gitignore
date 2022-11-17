@@ -112,3 +112,5 @@ package-lock.json
 #vscode configs
 **/.vscode/
 .vscode/
+
+src/firebase/serviceAccount.json
