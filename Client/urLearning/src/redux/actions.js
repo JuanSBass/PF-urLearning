@@ -23,13 +23,6 @@ export const LOGOUT = "LOGOUT";
 export const getCourses = () => {
   try {
     return async function (dispatch) {
-      const tokken = window.localStorage.getItem("tokken");
-      const response = await axios.get("/course", {
-        headers: {
-          Authorization: "Bearer " + tokken,
-        },
-      });
-
       dispatch({ type: GET_COURSES, payload: response.data });
     };
   } catch (error) {
@@ -69,7 +62,12 @@ export const getDetail = (id) => {
 
 export function getCategory() {
   return async function (dispatch) {
-    const json = await axios.get("/category/allCategories");
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.get("/category/allCategories", {
+      headers: {
+        Authorization: "Bearer " + tokken,
+      },
+    });
     return dispatch({
       type: GET_CATEGORY,
       payload: json.data,
@@ -148,7 +146,7 @@ export const logIn = (uid, email, name, photo) => {
     const semiOldUser = oldUser.data;
     dispatch({
       type: LOGIN,
-      payload: { uid, email, name: semiOldUser[0].name, photo },
+      payload: { uid, email, name: name, photo },
       //ojo que aca solo devuelve el nombre de la base de datos
       //y el resto se lo proporciona google
     });

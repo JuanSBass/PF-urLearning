@@ -20,7 +20,6 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/category", cat);
 router.use("/user", user);
-router.use(middleware.decodeToken);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 
@@ -65,8 +64,6 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  const tokken = req.headers;
-  console.log("soy el tokken", tokken);
   let allCourses;
   try {
     info
