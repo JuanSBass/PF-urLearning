@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
-import 'virtual:windi.css'
 
 
 
