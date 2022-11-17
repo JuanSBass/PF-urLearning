@@ -34,11 +34,11 @@ router.post("/user", async (req, res) => {
       email,
       password,
     });
-    const customer = await stripe.customers.create({
-      email,
-    });
+    // const customer = await stripe.customers.create({
+    //   email,
+    // });
 
-    res.status(200).json({ customer, message: "Usuario creado correctamente" });
+    res.status(200).json({ message: "Usuario creado correctamente" });
   } catch (error) {
     console.log(error);
     res.status(404).send(error + "error del /Post User");
