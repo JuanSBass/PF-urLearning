@@ -110,6 +110,10 @@ export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
 
+export const cleanCategory = () => {
+  return { type: CLEAN_DETAIL };
+};
+
 export function getCoursesByname(name) {
   return async function (dispatch) {
     try {
