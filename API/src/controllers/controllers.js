@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
-const { Course, User } = require("../db");
+const { Course, User, Cart } = require("../db");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 const getApiUsers = async (email) => {
@@ -44,6 +44,7 @@ const getDbInfo = async (email) => {
 
   const newUserDb = await userDb.map((e) => {
     return {
+      ID: e.ID,
       email: e.email,
       password: e.password,
     };
@@ -131,10 +132,80 @@ const changeCourseById = async (id, rating) => {
   }
 };
 
+///////// Route Add Course ID CART /////////
+//id -> courses
+//ID -> User
+const addCartItem = async (id, ID) => {
+  const user = await User.findOne({
+    where: {
+      ID: ID,
+    },
+  });
+  if (user) {
+    await user.addCart(id);
+    const result = await User.findOne({
+      where: { ID: ID },
+    });
+    return await result.getCart();
+  }
+  return undefined;
+};
+
+///////// Route Course para el carrito de compras /////////
+
+const getCartCourseDb = async (ID) => {
+  const cartDb = ID
+    ? await Cart.findAll({
+        where: {
+          ID: { ID },
+        },
+      })
+    : await Cart.findAll();
+
+  const newCartDb = await cartDb.map((e) => {
+    return {
+      ID: e.ID,
+      title: e.title,
+      image: e.image,
+      description: e.description,
+      price: e.price,
+      name_prof: e.name_prof,
+    };
+  });
+  console.log(newCartDb);
+  return newCartDb;
+};
+
+const getAllCart = async (ID) => {
+  if (ID) {
+    console.log("vengo antes del getCourse");
+    var db = await getCartCourseDb();
+    console.log("vengo LUEGO del getCourse");
+    db = db.map((courses) => {
+      return {
+        ID: courses.ID,
+        title: courses.title,
+        image: courses.image,
+        description: courses.description,
+        ratingHistory: courses.ratingHistory,
+        price: courses.price,
+        name_prof: courses.name_prof,
+      };
+    });
+  } else {
+    console.log("no se hallo el ID");
+  }
+
+  return db;
+};
+
 module.exports = {
   allInfo,
   allInfoCourses,
   getCourseById,
   changeCourseById,
   getDbInfoCourses,
+  addCartItem,
+  getCartCourseDb,
+  getAllCart,
 };

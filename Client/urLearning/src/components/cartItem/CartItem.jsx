@@ -1,7 +1,7 @@
 import React from 'react'
 
 const CartItem = ({ data, delOneFromCart, delAllFromCart }) => {
-    let { id, title, price, quantity } = data
+    let { id, title, price, quantity } = data0
     return (
         <div style={{ borderBottom: "thin solid gray" }}>
             {console.log('soy el CartItem')}

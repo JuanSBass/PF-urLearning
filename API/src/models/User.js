@@ -4,6 +4,11 @@ module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
+      ID: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true, //cambia su id con cada nuevo user
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,

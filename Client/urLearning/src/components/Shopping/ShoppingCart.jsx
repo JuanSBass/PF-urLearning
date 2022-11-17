@@ -7,8 +7,9 @@ const ShoppingCart = () => {
   //const [state, dispatch] = useReducer(cartReducer, initialState)
   const dispatch = useDispatch()
   const state = useSelector(state => state)
-  const { products, cart } = state
+  const { products, cart } = state.shopping
   console.log(state)
+  console.log(state.products)
 
   // const addToCart = (id) => {
   //   console.log(id) //numero

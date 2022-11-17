@@ -1,3 +1,4 @@
+import { GET_COURSES } from "./actions";
 import {
   ADD_TO_CART,
   CLEAR_CART,
