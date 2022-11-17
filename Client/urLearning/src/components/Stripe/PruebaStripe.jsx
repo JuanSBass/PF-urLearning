@@ -16,7 +16,7 @@ export const FormPago = () => {
 
 
   const handlePrueba = async (event) => {
-
+    event.preventDefault();
     try {
       const products = [
         {
@@ -42,8 +42,11 @@ export const FormPago = () => {
       ];
 
       const obj = {
-        products
+        products,
+        // user,
+        // idOrder
       }
+      // stripe.paymentRequest({})
       const stripe2 = await stripePromise
       const response = await axios.post("/api/checkoutcart", obj)
 
@@ -57,7 +60,6 @@ export const FormPago = () => {
     } catch (error) {
       console.log(error.message);
     }
-
 
   };
 

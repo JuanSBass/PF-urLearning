@@ -53,10 +53,27 @@ router.post("/checkoutcart", async (req, res) => {
     payment_method_types: ["card"],
     line_items: arrayProducts,
     mode: "payment",
-    success_url: "http://localhost:5173/formpage",
-    cancel_url: "http://localhost:5173/formpage",
+    success_url: "http://localhost:5173/formpage/succcess",
+    cancel_url: "http://localhost:5173/formpage/failed",
   });
+  console.log(session);
   res.json({ id: session.id });
 });
 
+router.get("/customer/:id", async (req, res) => {
+  const id = req.params.id;
+  const customer = await stripe.customers.retrieve(id);
+  res.send(customer);
+});
+
+router.get("/checkout/:id", async (req, res) => {
+  const { id } = req.params;
+  const session = await stripe.checkout.sessions.retrieve(id, {
+    expand: ["line_items"],
+  });
+  res.send(session);
+});
+
 module.exports = router;
+
+// GUARDAR USERID, SESIONID, ORDER
