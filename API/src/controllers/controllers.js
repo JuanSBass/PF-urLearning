@@ -4,32 +4,32 @@ const axios = require("axios");
 const { Course, User } = require("../db");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
-const getApiUsers = async (email) => {
-  try {
-    let users = [];
-    let urlApi = email
-      ? `https://jsonplaceholder.typicode.com/users&search=${email}`
-      : "https://jsonplaceholder.typicode.com/users";
+// const getApiUsers = async (email) => {
+//   try {
+//     let users = [];
+//     let urlApi = email
+//       ? `https://jsonplaceholder.typicode.com/users&search=${email}`
+//       : "https://jsonplaceholder.typicode.com/users";
 
-    //http://localhost:3001/
+//     //http://localhost:3001/
 
-    for (let i = 0; i < 1; i++) {
-      const urlData = await axios.get(urlApi);
-      const data = urlData.data.map(async (e) => {
-        users.push({
-          email: e.email,
-        });
-      });
-      await Promise.all(data);
-      urlApi = urlData.data.next;
-    }
-    //console.log(users);
-    return users;
-  } catch (error) {
-    console.log(error);
-    return []; //si la api no trae nada devuelve un array vacio para que no tire error
-  }
-};
+//     for (let i = 0; i < 1; i++) {
+//       const urlData = await axios.get(urlApi);
+//       const data = urlData.data.map(async (e) => {
+//         users.push({
+//           email: e.email,
+//         });
+//       });
+//       await Promise.all(data);
+//       urlApi = urlData.data.next;
+//     }
+//     //console.log(users);
+//     return users;
+//   } catch (error) {
+//     console.log(error);
+//     return []; //si la api no trae nada devuelve un array vacio para que no tire error
+//   }
+// };
 
 const getDbInfo = async (email) => {
   //busco por email

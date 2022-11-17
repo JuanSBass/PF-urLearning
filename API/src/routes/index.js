@@ -8,6 +8,8 @@ const {
   getDbInfoCourses,
 } = require("../controllers/controllers");
 const cat = require("./category.js");
+const user = require("./user");
+const middleware = require("../middleware");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -17,36 +19,9 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/category", cat);
+router.use("/user", user);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
-router.post("/user", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    let newUser = await User.create({
-      email,
-      password,
-    });
-
-    res.status(200).send("Usuario creado correctamente");
-  } catch (error) {
-    console.log(error);
-    res.status(404).send(error + "error del /Post User");
-  }
-});
-
-router.get("/user", async (req, res) => {
-  const { email } = req.query;
-
-  try {
-    const allUsers = await allInfo(email);
-    return allUsers
-      ? res.status(200).send(allUsers)
-      : res.status(404).send("No existe el usuario buscado");
-  } catch (error) {
-    console.log(error + "error del get /user");
-  }
-});
 
 /////////////////////////////////////////  COURSE   ////////////////////////////////////////////////////////////
 router.post("/course", async (req, res) => {
@@ -89,7 +64,6 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  console.log(info);
   let allCourses;
   try {
     info
@@ -127,17 +101,16 @@ router.put("/course/:id", async (req, res) => {
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
-
-  console.log("hola")
+  console.log("hola");
   try {
-    const  {categ}  = req.query;
-    console.log(categ)
+    const { categ } = req.query;
+    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
       },
     });
-  
+
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
@@ -145,24 +118,21 @@ router.get("/courseByCategory", async (req, res) => {
 });
 
 router.get("/courseBySubCategory", async (req, res) => {
-
-  console.log("hola")
+  console.log("hola");
   try {
-    const  {subcateg}  = req.query;
-    console.log(subcateg)
+    const { subcateg } = req.query;
+    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,
       },
     });
-  
+
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
   }
 });
-
-
 
 ///////// Route name_prof /////////
 
