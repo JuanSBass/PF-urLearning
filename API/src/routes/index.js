@@ -9,6 +9,8 @@ const {
 } = require("../controllers/controllers");
 const cat = require("./category.js");
 const apiPayment = require("./payment.js");
+const { API_KEY_PAYMENT } = process.env;
+const stripe = require("stripe")(API_KEY_PAYMENT);
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -29,8 +31,11 @@ router.post("/user", async (req, res) => {
       email,
       password,
     });
+    const customer = await stripe.customers.create({
+      email,
+    });
 
-    res.status(200).send("Usuario creado correctamente");
+    res.status(200).json({ customer, message: "Usuario creado correctamente" });
   } catch (error) {
     console.log(error);
     res.status(404).send(error + "error del /Post User");
