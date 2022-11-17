@@ -21,7 +21,7 @@ const Home = (props) => {
     <main className={styles}>
       <HeaderHome />
       <h1>¡Mira todos los cursos disponibles para vos!</h1>
-      {/* <CardsCourses /> */}
+      <CardsCourses />
       <Link to="/allcourses">
         <Button id={styles.toallcourses} gradientDuoTone="greenToBlue">
           Ver más cursos

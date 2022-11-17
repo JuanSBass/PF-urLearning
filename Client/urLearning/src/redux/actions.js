@@ -24,6 +24,7 @@ export const LOGOUT = "LOGOUT";
 export const getCourses = () => {
   try {
     return async function (dispatch) {
+      const response = await axios.get("/course");
       dispatch({ type: GET_COURSES, payload: response.data });
     };
   } catch (error) {
@@ -110,7 +111,6 @@ export function setCurrentPage(payload) {
 export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
-
 
 export const cleanCategory = () => {
   return { type: CLEAN_CATEGORIES };
