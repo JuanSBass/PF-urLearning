@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 import { useState } from "react";
-import { addToCart } from "../../../redux/actions";
+import { addToCart, postProductCart } from "../../../redux/actions";
 
 
 const CardsCourses = () => {
