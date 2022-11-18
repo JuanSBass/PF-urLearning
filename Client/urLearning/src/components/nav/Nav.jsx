@@ -36,9 +36,11 @@ export default function Nav() {
       {user.email}
     </span>
   </Dropdown.Header>
+  <Link to={`/${user.name}`}>
   <Dropdown.Item>
     Dashboard
   </Dropdown.Item>
+  </Link>
   <Dropdown.Item>
     Settings
   </Dropdown.Item>
@@ -46,9 +48,11 @@ export default function Nav() {
     Earnings
   </Dropdown.Item>
   <Dropdown.Divider />
+  <button onClick={handleLogOut} type="button">
   <Dropdown.Item>
-   <button onClick={handleLogOut} type="button">Sign out</button> 
+   Sign out
   </Dropdown.Item>
+  </button> 
 </Dropdown>:<Link to="/register">
 						<button
 							type="button"
