@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const Stripe = require("stripe");
+const { Order } = require("../db");
 const apiKeyPayment = process.env.API_KEY_PAYMENT;
 
 const stripe = new Stripe(apiKeyPayment);
@@ -72,6 +73,27 @@ router.get("/checkout/:id", async (req, res) => {
     expand: ["line_items"],
   });
   res.send(session);
+});
+
+router.post("/checkoutPost/:id", async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+  //console.log(userId);
+  try {
+    const session = await stripe.checkout.sessions.retrieve(id, {
+      expand: ["line_items"],
+    });
+    const obj = await Order.create({
+      id: session.id,
+      amount_subtotal: session.amount_subtotal,
+      customer_email: session.customer_email,
+      payment_status: session.payment_status,
+      userId,
+    });
+    res.send(/* session */ "Sesion de pago creada");
+  } catch (error) {
+    res.send(error.message);
+  }
 });
 
 module.exports = router;

@@ -4,25 +4,21 @@ module.exports = (sequelize) => {
   sequelize.define(
     "order",
     {
-      external_reference: {
+      id: {
         type: DataTypes.STRING,
+        allowNull: false,
         primaryKey: true,
       },
-      status: {
-        type: DataTypes.ENUM("created", "processing", "cancelled", "complete"),
-        allowNull: true,
+      amount_subtotal: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
       },
-      payment_id: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
+      customer_email: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       payment_status: {
         type: DataTypes.STRING,
-        defaultValue: "",
-      },
-      merchant_order_id: {
-        type: DataTypes.BIGINT,
-        defaultValue: 0,
       },
     },
     {
