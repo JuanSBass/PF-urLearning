@@ -21,6 +21,7 @@ export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const ID_SESSION = "ID_SESSION";
 
 export const getCourses = () => {
   try {
@@ -232,6 +233,20 @@ export function addToCart(id) {
 export function postProductCart(carrito) {
   return async function () {
     const json = await axios.post("/cart", carrito);
+    return;
+  };
+}
+
+export function idSession(id) {
+  return {
+    type: ID_SESSION,
+    payload: id,
+  };
+}
+
+export function saveDataSession(id, userId) {
+  return async function () {
+    const json = await axios.post(`/checkout/confirmation/${id}`, userId);
     return;
   };
 }

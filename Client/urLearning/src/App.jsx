@@ -53,7 +53,7 @@ function App() {
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
-        <Route exact path="/success" component={PagoExitoso} />
+        <Route exact path="/formpage/success" component={PagoExitoso} />
         <Route exact path="/failed" component={PagoDenegado} />
 
 

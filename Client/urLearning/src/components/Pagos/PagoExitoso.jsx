@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from "../Pagos/PagoExitoso.module.css"
 import { Button } from "flowbite-react"
+import { saveDataSession } from '../../redux/actions';
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+
+
 
 function PagoExitoso() {
+    const user = useSelector(state => state.user)
+    const dispatch = useDispatch()
+    const sessionId = useSelector(state => state.idSession)
+
+
+    useEffect(() => {
+        // const ids = [sessionId, user.id]
+        dispatch(saveDataSession(user.id, sessionId))
+        console.log(user.id)
+    }, [dispatch]);
 
     const products = [
         {
