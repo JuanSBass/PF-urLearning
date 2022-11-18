@@ -13,6 +13,7 @@ import {
   GET_COURSES_NAME,
   LOGIN,
   LOGOUT,
+  GET_USER_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -26,6 +27,7 @@ const initialState = {
   coursesForRating: [],
   user: {},
   log: false,
+  userDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -170,6 +172,8 @@ function rootReducer(state = initialState, action) {
 
     case LOGOUT:
       return { ...state, user: {}, log: false };
+    case GET_USER_DETAIL:
+      return { ...state, userDetail: action.payload };
     default:
       return { ...state };
   }

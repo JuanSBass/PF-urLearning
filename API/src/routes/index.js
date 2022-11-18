@@ -9,7 +9,7 @@ const {
 } = require("../controllers/controllers");
 const cat = require("./category.js");
 const user = require("./user");
-const middleware = require("../middleware");
+const userCredencial = require("./userCredential");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -20,6 +20,7 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/category", cat);
 router.use("/user", user);
+router.use("/userCresential", userCredencial);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 
@@ -64,6 +65,8 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
+  const tokken = req.headers;
+
   let allCourses;
   try {
     info

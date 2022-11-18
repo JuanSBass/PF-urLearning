@@ -2,12 +2,23 @@ const { Router } = require("express");
 const { where } = require("sequelize");
 const router = Router();
 const { User, Course } = require("../db");
+const admin = require("../firebase/config");
 
 router.post("/create", async (req, res) => {
-  const { id, email, name } = req.body;
   try {
+    const token = req.body.authorization.split(" ")[1];
+    console.log(token);
+    const decodeValue = await admin.auth().verifyIdToken(token);
+
+    const { email, user_id } = decodeValue;
+    let name;
+    if (decodeValue.name) name = decodeValue.name;
+    else {
+      name = "Usuario";
+    }
+    if (!decodeValue) return new Error("no se pudio");
     let newUser = await User.findOrCreate({
-      where: { id: id },
+      where: { id: user_id },
       defaults: {
         email,
         name,

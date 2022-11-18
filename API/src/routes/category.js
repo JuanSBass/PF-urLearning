@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 const { Category, SubCategory } = require("../db");
-const admin = require("../firebase/config");
 
 router.post("/category", async (req, res) => {
   const { name } = req.body;
