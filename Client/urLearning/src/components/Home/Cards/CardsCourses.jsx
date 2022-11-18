@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Rating } from "flowbite-react";
 import { addToCart } from "../../../redux/cartActions";
+import { useState } from "react";
 
 const CardsCourses = () => {
   const courses = useSelector((state) => state.courses).slice(0, 8);
   const dispatch = useDispatch();
+
+  const [id, setId] = useState()
 
   const handleClick = (id) => {
     dispatch(addToCart(id))

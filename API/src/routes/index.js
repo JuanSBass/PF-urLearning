@@ -1,11 +1,12 @@
 const { Router } = require("express");
-const { User, Course, Category, SubCategory } = require("../db");
+const { User, Course, Cart, Category, SubCategory } = require("../db");
 const {
   allInfo,
   allInfoCourses,
   getCourseById,
   changeCourseById,
   getDbInfoCourses,
+  getAllCart,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -150,6 +151,17 @@ router.get("/course/:id", async (req, res) => {
   }
 });
 
+///////// Route Course ID for Cart /////////
+
+router.get("/course/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    return res.send(await getCourseByIdCart(id)); //envia la info (id recibida) a la funcion getById y la devuelve
+  } catch (error) {
+    console.log(error + "error del get /course/id cart");
+  }
+});
+
 ///////// Route Course Modify Rating by ID /////////
 
 router.put("/course/:id", async (req, res) => {
@@ -196,6 +208,44 @@ router.get("/courseBySubCategory", async (req, res) => {
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
+  }
+});
+
+///////////////////////// Cart /////////////////////////
+
+router.post("/cart", async (req, res) => {
+  const { title, image, description, price, name_prof } = req.body;
+
+  try {
+    console.log("tuki");
+    let newCartItem = await Cart.create({
+      title,
+      image,
+      description,
+      price,
+      name_prof,
+    });
+    res.status(200).send("Cart creado correctamente");
+  } catch (error) {
+    console.log("tukiiiiiiiii");
+    console.log(error);
+    res.status(404).send(error + " error del /Post Cart");
+  }
+});
+
+router.get("/cart/:ID", async (req, res) => {
+  const { ID } = req.params;
+
+  try {
+    console.log("aaaaaaaaaaaa");
+    const allCart = await getAllCart(ID);
+    console.log(allCart);
+    return allCart
+      ? res.status(200).send(allCart)
+      : res.status(404).send({ message: "No existe la info del carrito" });
+  } catch (error) {
+    console.log("bbbbbbbbbbbb");
+    console.log(error + "error del get /cart");
   }
 });
 
