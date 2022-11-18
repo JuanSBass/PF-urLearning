@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourses } from "../../redux/actions";
+import { getCourses, cleanCategory } from "../../redux/actions";
 import styles from "./Home.module.css";
 import { HeaderHome } from "./Header/HeaderHome";
 import CardsCourses from "./Cards/CardsCourses";
@@ -9,10 +9,12 @@ import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { InfoService } from "./InfoService/InfoService";
 
+
 const Home = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCourses());
+    dispatch(cleanCategory())
   }, [dispatch]);
 
   return (
@@ -37,7 +39,17 @@ const Home = (props) => {
             ></path>
           </svg>
         </Button>
+
       </Link>
+
+
+      {/* <button onClick={() => loginWithRedirect()}>Login</button>
+      <button onClick={() => logout()}>Logout</button>
+      <button onClick={(ev) => prueba(ev)}>prueba</button>
+      {isAuthenticated && <h3>{JSON.stringify(user)}</h3>}
+      <div>{isAuthenticated && <img src={user.picture} alt="no carga la foto" />}</div> */}
+
+
       <InfoService />
     </main>
   );

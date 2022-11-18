@@ -3,19 +3,18 @@ import {
   GET_COURSES,
   POST_COURSE,
   GET_CHILD_CATEGORY,
-  POST_USER,
   GET_DETAIL,
   FILTER_BY_CATEGORY,
   SET_CURRENT_PAGE,
   CLEAN_DETAIL,
+  CLEAN_CATEGORIES,
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
-  /////////CARRITO////////////
- ADD_TO_CART,
- REMOVE_ONE_FROM_CART,
- REMOVE_ALL_FROM_CART,
- CLEAR_CART, 
+  ADD_TO_CART,
+  REMOVE_TO_CART,
+  CLEAN_CART,
+  GET_CART, 
 } from "./actions";
 
 const initialState = {
@@ -27,9 +26,7 @@ const initialState = {
   copyCategories: [],
   currentPage: 1,
   coursesForRating: [],
-/////CARRITO////////
-  products: [],
-  cart: [],
+  cart:[]
 };
 
 
@@ -43,8 +40,6 @@ function rootReducer(state = initialState, action) {
         coursesForRating: action.payload,
       };
 
-    case POST_USER:
-      return { ...state };
     case GET_DETAIL:
       return { ...state, course: action.payload };
 
@@ -89,6 +84,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         course: {},
       };
+
+      case CLEAN_CATEGORIES:
+        return {
+          ...state,
+          category: [],
+        };
     case GET_COURSES_NAME:
       return {
         ...state,
@@ -166,23 +167,32 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
+    case LOGIN:
+      return { ...state, user: action.payload, log: true };
 
-      ///////////////////// CARRITO //////////////////
+    
+      /* 
+    case GET_CART:
+      return{
+        ...state.cart = action.payload;
+      },
 
+    case ADD_TO_CART :
+      return {
+        ...state.cart = action.payload
+      },
 
-     /*    getCart: (state, action) => {
-      state.cart = action.payload;
-    },
-    addCart: (state, action) => {
-      state.cart = action.payload;
-    },
-    removeCart: (state, action) => {
-      state.cart = action.payload;
-    },
-    clearCart: (state) => {
-      state.cart = [];
-    },*/
+      case REMOVE_TO_CART:
+        return{
+          ...state.cart = action.payload
+        },
 
+        case CLEAR_CART:
+          return{
+            ...state.cart = [];
+          }
+
+   */
 
     default:
       return { ...state };

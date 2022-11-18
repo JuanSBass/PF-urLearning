@@ -8,7 +8,6 @@ const CardsCourses = () => {
   const courses = useSelector((state) => state.courses).slice(0, 8);
 
   return (
-
     <section className={styles.cardscontainer}>
       {courses?.map((card) => (
         <Link to={`/course/${card.id}`} key={card.id}>

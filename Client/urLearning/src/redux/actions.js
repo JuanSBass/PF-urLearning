@@ -1,10 +1,8 @@
 import axios from "axios";
-////COURSES//////
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
 export const GET_CHILD_CATEGORY = "GET_CHILD_CATEGORY";
 export const GET_CATEGORY = "GET_CATEGORY";
-export const POST_USER = "POST_USER";
 export const GET_DETAIL = "GET_DETAIL";
 export const GET_COURSES_NAME = "GET_COURSES_NAME";
 
@@ -15,13 +13,9 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const CLEAN_CATEGORIES = "CLEAN_CATEGORIES";
 export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
 
-//////CARRITO///////
-export const ADD_TO_CART = "ADD_TO_CART";
-export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART"
-export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART"
-export const CLEAR_CART = "CLEAR_CART"
 
 export const getCourses = () => {
   try {
@@ -53,17 +47,6 @@ export function getChildCategory(categoryId) {
   };
 }
 
-export const postUser = (payload) => {
-  try {
-    return async function (dispatch) {
-      await axios.post("/user", payload);
-      dispatch({ type: POST_USER });
-    };
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
 export const getDetail = (id) => {
   try {
     return async function (dispatch) {
@@ -77,7 +60,12 @@ export const getDetail = (id) => {
 
 export function getCategory() {
   return async function (dispatch) {
-    const json = await axios.get("/category/allCategories");
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.get("/category/allCategories", {
+      headers: {
+        Authorization: "Bearer " + tokken,
+      },
+    });
     return dispatch({
       type: GET_CATEGORY,
       payload: json.data,
@@ -120,6 +108,10 @@ export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
 };
 
+export const cleanCategory = () => {
+  return { type: CLEAN_CATEGORIES };
+};
+
 export function getCoursesByname(name) {
   return async function (dispatch) {
     try {
@@ -146,17 +138,17 @@ export const getSubCategoriesName = (name) => {
 
 
 
-
-//////////////////////CARRITO ///////////////////////
-
- /* 
+/////////////CARRITO ////////////////
+/* 
  
-  export const GetItemsCart = (ID) => {
+  export const GetItemsCart = (id) => {
     return async function (dispatch) {
         try {
-            const response = (await axios(`/cart=${ID}`)).data;
-            dispatch(GetItemsCart(response));
-            return true;
+            const response = (await axios(`/cart=${id}`));
+            return dispatch({
+              type:GET_CART,
+              payload response.data
+            })
         } catch (error) {
             console.error(error);
         }
@@ -164,51 +156,27 @@ export const getSubCategoriesName = (name) => {
 }
  
  
- export function async AddItemCart(ID) {
+ export function AddItemCart(id) {
     return async function (dispatch) {
         try {
-            const response = (
-                await axios.post(`/cart`, { ID: bookID })
-            ).data.data;
-            satisfaction.fire({
-                icon: 'success',
-                title: 'Added!',
-                html: 'You have <b>added</b> this item to your cart',
-            });
-            dispatch(addItemCart(response));
+            const response = (await axios.post(`/cart`, id));
+            return dispatch({
+              type: ADD_TO_CART,
+              payload: response.data,
         } catch (error) {
-            satisfaction.fire({
-                icon: 'error',
-                title: 'Oops...',
-                html: 'Sorry, we were unable to <b>add</b> the book to your cart',
-            });
             console.error(error);
         }
     };
 }
 
-export function asyncRemoveItemCart(bookID) {
+export function RemoveItemCart(id) {
     return async function (dispatch) {
         try {
-            const response = (
-                await axios.delete(`/cart`, {
-                    data: {
-                        ID: parseInt(bookID),
-                    },
-                })
-            ).data.data;
-            satisfaction.fire({
-                icon: 'error',
-                title: 'Removed!',
-                html: 'You have <b>removed</b> this book from your cart',
-            });
-            dispatch(removeItemCart(response));
+            const response = (await axios.delete(`/cart`, id));
+            return dispatch({
+              type:REMOVE_FROM_CART,
+              Payload: response.data,
         } catch (error) {
-            satisfaction.fire({
-                icon: 'error',
-                title: 'Oops...',
-                html: 'Sorry, we were unable to <b>remove</b> the book from your cart',
-            });
             console.error(error);
         }
     };
