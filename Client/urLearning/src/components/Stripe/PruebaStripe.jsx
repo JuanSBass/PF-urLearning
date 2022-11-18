@@ -4,6 +4,8 @@ import { Elements, CardElement, useStripe, useElements } from "@stripe/react-str
 import style from "./Stripe.module.css"
 import axios from 'axios';
 import { Button, Spinner } from "flowbite-react"
+import { idSession } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
 // import UserLogeado from reducer
 
 
@@ -14,6 +16,7 @@ export const FormPago = () => {
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+  const dispatch = useDispatch()
 
 
   const handlePrueba = async (event) => {
@@ -56,7 +59,8 @@ export const FormPago = () => {
       const response = await axios.post("/api/checkoutcart", obj)
 
       const session = await response.data;
-      console.log(session);
+      // console.log(session);
+      dispatch(idSession(session.id))
 
       const result = await stripe2.redirectToCheckout({ sessionId: session.id })
 
@@ -68,47 +72,9 @@ export const FormPago = () => {
 
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
-
-    });
-
-    setLoading(true);
-
-    if (!error) {
-      const { id } = paymentMethod;
-      console.log(paymentMethod);
-
-      try {
-        const obj = { id, amount: 10000 }
-        const { data } = await axios.post("/api/checkout", obj)
-        console.log(data);
-        elements.getElement(CardElement).clear();
-
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading(false);
-    }
-  }
 
   return (
     <div className={style.inputStripe}>
-      <form onSubmit={handleSubmit}>
-        <CardElement className={style.input} />
-        <Button disabled={!stripe} color="gray"
-          pill={true} type="submit">
-
-          {
-            loading ? (<Spinner aria-label="Default status example" />) : ("Comprar")
-          }
-
-        </Button>
-      </form>
       <button onClick={handlePrueba} role="link">PAGAR AHORA</button>
     </div>
   )

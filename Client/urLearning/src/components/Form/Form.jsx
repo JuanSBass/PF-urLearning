@@ -10,8 +10,7 @@ import {
   TextInput,
   Textarea,
   Button,
-  Badge,
-  Modal,
+
 } from "flowbite-react";
 import style from "../Form/Form.module.css";
 import {
@@ -56,7 +55,9 @@ const Form = () => {
     input.description.length &&
     input.price.length &&
     input.level.length &&
-    input.name_prof
+    input.name_prof.length &&
+    input.subCategory.length &&
+    input.language.length
   );
 
   useEffect(() => {
@@ -342,6 +343,7 @@ const Form = () => {
                   type="number"
                   onChange={(e) => handleChange(e)}
                   name="duration"
+                  addon="Horas"
                   className={style.mitadInputs}
                 />
               </div>
@@ -372,28 +374,7 @@ const Form = () => {
                   Crear el curso
                 </Button>
 
-                <Modal show={modal} size="md" popup={true} onClose={showModal}>
-                  <Modal.Header />
-                  <Modal.Body>
-                    <div className="text-center">
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        Curso creado con exito!
-                      </h3>
-                      <div className="flex justify-center gap-4">
-                        <Button
-                          onClick={showModal}
-                          type="submit"
-                          className={style.btnYes}
-                        >
-                          Yes, I'm sure
-                        </Button>
-                        <Button color="gray" onClick={showModal}>
-                          No, cancel
-                        </Button>
-                      </div>
-                    </div>
-                  </Modal.Body>
-                </Modal>
+
               </>
             </div>
 
