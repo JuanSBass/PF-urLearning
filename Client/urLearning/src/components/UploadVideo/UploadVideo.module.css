@@ -1,0 +1,17 @@
+.contenedorupload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30rem;
+  height: 100vh;
+  margin: 6rem auto;
+}
+
+.dropzone {
+  text-align: center;
+  padding: 2rem;
+  border: 3px dashed #eeeeee;
+  border-color: #d0c5c5;
+  color: #bababa;
+  margin-bottom: 2rem;
+}

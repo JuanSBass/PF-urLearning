@@ -13,6 +13,7 @@ import { auth } from "./fireBase/credenciales";
 import { useDispatch } from "react-redux"
 import { logIn, logOut } from "./redux/actions"
 import { useEffect } from "react"
+import UploadVideo from "./components/UploadVideo/UploadVideo.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
+        <Route exact path="/uploadvideo" component={UploadVideo} />
 
         <Footer />
       </div>
