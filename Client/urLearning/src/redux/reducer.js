@@ -14,6 +14,7 @@ import {
   LOGIN,
   LOGOUT,
   ADD_TO_CART,
+  GET_USER_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   user: {},
   log: false,
   carrito: [],
+  userDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -187,6 +189,10 @@ function rootReducer(state = initialState, action) {
         ...state,
         carrito: [...state.carrito, product],
       };
+
+    case GET_USER_DETAIL:
+      return { ...state, userDetail: action.payload };
+
     default:
       return { ...state };
   }
