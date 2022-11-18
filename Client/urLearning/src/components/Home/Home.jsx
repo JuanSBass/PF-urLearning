@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourses } from "../../redux/actions";
+import { getCourses, cleanCategory } from "../../redux/actions";
 import styles from "./Home.module.css";
 import { HeaderHome } from "./Header/HeaderHome";
 import CardsCourses from "./Cards/CardsCourses";
@@ -14,6 +14,7 @@ const Home = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCourses());
+    dispatch(cleanCategory())
   }, [dispatch]);
 
   return (

@@ -15,6 +15,7 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const CLEAN_CATEGORIES = "CLEAN_CATEGORIES";
 export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
 export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
@@ -24,13 +25,7 @@ export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const getCourses = () => {
   try {
     return async function (dispatch) {
-      const tokken = window.localStorage.getItem("tokken");
-      const response = await axios.get("/course", {
-        headers: {
-          Authorization: "Bearer " + tokken,
-        },
-      });
-
+      const response = await axios.get("/course");
       dispatch({ type: GET_COURSES, payload: response.data });
     };
   } catch (error) {
@@ -70,7 +65,12 @@ export const getDetail = (id) => {
 
 export function getCategory() {
   return async function (dispatch) {
-    const json = await axios.get("/category/allCategories");
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.get("/category/allCategories", {
+      headers: {
+        Authorization: "Bearer " + tokken,
+      },
+    });
     return dispatch({
       type: GET_CATEGORY,
       payload: json.data,
@@ -111,6 +111,10 @@ export function setCurrentPage(payload) {
 
 export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
+};
+
+export const cleanCategory = () => {
+  return { type: CLEAN_CATEGORIES };
 };
 
 export function getCoursesByname(name) {
