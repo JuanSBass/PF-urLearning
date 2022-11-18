@@ -60,7 +60,7 @@ const UploadVideo = () => {
             >
               <input {...getInputProps()} />
               <span>📁</span>
-              <p>Coloca tus imagenes aqui o click para seleccionar</p>
+              <p>Carga tu video aqui o click para seleccionar</p>
             </div>
           </section>
         )}
