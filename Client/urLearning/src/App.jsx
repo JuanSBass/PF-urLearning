@@ -6,10 +6,42 @@ import Detail from "./components/Detail/Detail.jsx";
 import Courses from "./components/Courses/Courses.jsx";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
+import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
 import ContactUs from "./components/Contact Us/ContactUs.jsx"
-import ShoppingCart from "./components/Shopping/ShoppingCart.jsx";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./fireBase/credenciales";
+import { useDispatch } from "react-redux"
+import { logIn, logOut } from "./redux/actions"
+import { useEffect } from "react"
+import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
+import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
+
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+
+
+      if (user?.uid) {
+        const token = user.accessToken;
+        console.log(user)
+        dispatch(logIn(
+          user.uid,
+          user.email,
+          user.displayName,
+          user.photoURL))
+        window.localStorage.setItem("tokken", token)
+      }
+      else {
+        window.localStorage.setItem("tokken", null)
+        dispatch(logOut())
+      }
+    })
+  }, [dispatch])
+
+
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -23,6 +55,11 @@ function App() {
         <Route exact path="/contact" component={ContactUs} />
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
+        <Route exact path="/formpage" component={PruebaStripe} />
+        <Route exact path="/success" component={PagoExitoso} />
+        <Route exact path="/failed" component={PagoDenegado} />
+
+
 
         <Footer />
       </div>
