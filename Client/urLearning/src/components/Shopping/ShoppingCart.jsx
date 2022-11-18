@@ -2,6 +2,10 @@ import { useReducer } from "react";
 import {useDispatch} from "react-redux";
 import cartReducer, { initialState } from "../../redux/cartReducer"
 import courseItem from "../../components/courseItem/courseItem"
+import CartItem from "../cartItem/cartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { delFromCart, clearCart } from '../../redux/cartActions'
+import { addToCart } from "../../redux/actions";
 
 const ShoppingCart = () => {
   //const [state, dispatch] = useReducer(cartReducer, initialState)
@@ -29,12 +33,6 @@ const ShoppingCart = () => {
   //   dispatch({ type: TYPES.CLEAR_CART })
   // }
 
-  console.log("aaaaaaaaaaaaaaaaa");
-
-
-  const addToCart = () => { }
-  const delFromCart = () => { }
-  const clearCart = () => { }
 
   return (
     <div>

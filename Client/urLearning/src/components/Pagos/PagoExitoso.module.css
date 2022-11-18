@@ -1,0 +1,59 @@
+.contenedorGeneral {
+  display: flex;
+  justify-content: center;
+  margin-top: 81px;
+  height: calc(100vh - 149px);
+}
+
+.contenedorCosas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contProductos {
+  display: flex;
+  gap: 2rem;
+}
+
+.contItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #fafafa;
+  height: 10rem;
+  width: 10rem;
+  border-radius: 20px;
+  margin-top: 2.5rem;
+  font-size: clamp(0.5rem, 1vw, 1.5rem);
+  line-height: 0.9rem;
+  text-align: center;
+  font-weight: 600;
+  padding-inline: 1rem;
+  color: #1c2321;
+  box-shadow: 1px 2px 3px -1px rgb(0 0 0 / 25%);
+}
+
+.images {
+  max-height: 50%;
+  border-radius: 10px;
+}
+
+.texto {
+  margin-top: 5rem;
+  font-size: clamp(2rem, 1.5vw, 3rem);
+  font-weight: 800;
+  color: #6d6aee;
+}
+
+.texto2 {
+  margin-top: 2.5rem;
+  font-size: clamp(1.3rem, 1.2vw, 1.5rem);
+  font-weight: 600;
+  color: #c6a2fe;
+}
+
+.buttonGo {
+  margin-top: 1rem;
+}

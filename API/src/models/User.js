@@ -14,7 +14,11 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-      password: {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
