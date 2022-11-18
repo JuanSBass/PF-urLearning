@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { Category, SubCategory } = require("../db");
+const admin = require("../firebase/config");
 
 router.post("/category", async (req, res) => {
   const { name } = req.body;
@@ -35,8 +36,13 @@ router.post("/subCategory", async (req, res) => {
 
 router.get("/allCategories", async (req, res) => {
   let { categoryId } = req.body;
-  console.log(categoryId);
+
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodeValue = await admin.auth().verifyIdToken(token);
+    console.log(decodeValue);
+    if (!decodeValue) return new Error("no se pudio");
+
     let allCategories = await Category.findAll({});
     res.status(200).send(allCategories);
   } catch (error) {
@@ -56,7 +62,6 @@ router.get("/childCategoriesFrom", async (req, res) => {
   }
 });
 
-
 router.get("/andSubcategories", async (req, res) => {
   let { id } = req.query;
   try {
@@ -66,7 +71,7 @@ router.get("/andSubcategories", async (req, res) => {
     let childCategories = await SubCategory.findAll({
       where: { categoryId: id },
     });
-    let respuesta = [categorySelected, childCategories]
+    let respuesta = [categorySelected, childCategories];
     res.status(200).send(respuesta);
   } catch (error) {
     console.log(error);
