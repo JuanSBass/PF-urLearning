@@ -232,6 +232,7 @@ export function addToCart(id) {
 export function postProductCart(carrito) {
   return async function () {
     const json = await axios.post("/cart", carrito);
+    console.log(carrito);
     return;
   };
 }

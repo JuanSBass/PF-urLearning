@@ -21,9 +21,10 @@ const validateEmail = async (email) => {
 
 //////////// Validation Password /////////////
 const validatePassword = async (password) => {
+  console.log(password);
   if (
-    !password.match(uppercase) &&
-    !password.match(numericValue) &&
+    !password.match(uppercase) ||
+    !password.match(numericValue) ||
     !password.match(maxCharcters)
   ) {
     return false;

@@ -5,11 +5,6 @@ module.exports = (sequelize) => {
     "user",
     {
       ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true, //cambia su id con cada nuevo user
-      },
-      email: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
@@ -17,10 +12,11 @@ module.exports = (sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        primaryKey: true,
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       // here would be the idProf reference
     },

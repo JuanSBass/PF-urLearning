@@ -6,7 +6,7 @@ const {
   getCourseById,
   changeCourseById,
   getDbInfoCourses,
-  getAllCart,
+  getCartCourseDb,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -30,17 +30,24 @@ router.use("/user", user);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, name, ID } = req.body;
   const validEmail = await validateEmail(email);
-  const validPassword = await validatePassword(password);
+  //const validPassword = await validatePassword(password);
+  console.log(email);
+  console.log(name);
 
   try {
-    let newUser = await User.create({
-      email,
-      password,
-    });
-
-    res.status(200).send("Usuario creado correctamente");
+    if (!validEmail || email === "") {
+      console.log(email);
+      res.status(404).send({ message: "Email invalida o campo vacio" });
+    } else {
+      let newUser = await User.create({
+        ID,
+        email,
+        name,
+      });
+      res.status(200).send("Usuario creado correctamente");
+    }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post User");
@@ -133,9 +140,9 @@ router.get("/course", async (req, res) => {
   console.log(info);
   let allCourses;
   try {
-    title
-      ? (allCourses = await getDbInfoCourses(title))
-      : (allCourses = await allInfoCourses(title));
+    info
+      ? (allCourses = await getDbInfoCourses(info))
+      : (allCourses = await allInfoCourses(info));
     res.status(200).send(allCourses);
   } catch (error) {
     console.log(error + "error del get /course");
@@ -210,6 +217,43 @@ router.get("/courseBySubCategory", async (req, res) => {
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
+  }
+});
+
+router.post("/cart", async (req, res) => {
+  const { title, image, description, price, name_prof } = req.body;
+
+  try {
+    console.log("tuki");
+    let newCartItem = await Cart.create({
+      title,
+      image,
+      description,
+      price,
+      name_prof,
+    });
+    res.status(200).send("Cart creado correctamente");
+  } catch (error) {
+    console.log("tukiiiiiiiii");
+    console.log(error);
+    res.status(404).send(error + " error del /Post Cart");
+  }
+});
+
+///////// Route Course para el carrito de compras /////////
+router.get("/cart", async (req, res) => {
+  const { ID } = req.query;
+
+  try {
+    console.log("aaaaaaaaaaaa");
+    const allCart = await getCartCourseDb(ID);
+    console.log(allCart, "cccccccccccccccc");
+    return allCart
+      ? res.status(200).send(allCart)
+      : res.status(404).send({ message: "No existe la info del carrito" });
+  } catch (error) {
+    console.log("bbbbbbbbbbbb");
+    console.log(error + "error del get /cart");
   }
 });
 

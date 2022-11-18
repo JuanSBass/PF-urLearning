@@ -46,9 +46,9 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Nav />
-        <hr />
+        {/* <hr />
         <ShoppingCart />
-        <hr />
+        <hr /> */}
         <Route exact path="/" component={Home} />
         <Route exact path="/allcourses" component={Courses} />
         <Route exact path="/register" component={Register} />
