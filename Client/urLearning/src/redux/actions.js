@@ -149,30 +149,67 @@ export const getSubCategoriesName = (name) => {
 
 //////////////////////CARRITO ///////////////////////
 
-export const addToCart = (id) => {
-  return dispatch({ 
-  type: ADD_TO_CART,
-  payload: id
-});
+ /* 
+ 
+  export const GetItemsCart = (ID) => {
+    return async function (dispatch) {
+        try {
+            const response = (await axios(`/cart=${ID}`)).data;
+            dispatch(GetItemsCart(response));
+            return true;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+}
+ 
+ 
+ export function async AddItemCart(ID) {
+    return async function (dispatch) {
+        try {
+            const response = (
+                await axios.post(`/cart`, { ID: bookID })
+            ).data.data;
+            satisfaction.fire({
+                icon: 'success',
+                title: 'Added!',
+                html: 'You have <b>added</b> this item to your cart',
+            });
+            dispatch(addItemCart(response));
+        } catch (error) {
+            satisfaction.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Sorry, we were unable to <b>add</b> the book to your cart',
+            });
+            console.error(error);
+        }
+    };
 }
 
-export const deleteOne = (id) => {
-  return dispatch({ 
-  type: REMOVE_ONE_FROM_CART,
-  payload: id
-});
-}
-
-export const deleteAll = (id) => {
-  return dispatch({
-    type: REMOVE_ALL_FROM_CART,
-    payload: id
-  })
-}
-
-
-export const clearCart = () => {
-  return dispatch ({
-    type: CLEAR_CART,
-  })
-}
+export function asyncRemoveItemCart(bookID) {
+    return async function (dispatch) {
+        try {
+            const response = (
+                await axios.delete(`/cart`, {
+                    data: {
+                        ID: parseInt(bookID),
+                    },
+                })
+            ).data.data;
+            satisfaction.fire({
+                icon: 'error',
+                title: 'Removed!',
+                html: 'You have <b>removed</b> this book from your cart',
+            });
+            dispatch(removeItemCart(response));
+        } catch (error) {
+            satisfaction.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Sorry, we were unable to <b>remove</b> the book from your cart',
+            });
+            console.error(error);
+        }
+    };
+} */

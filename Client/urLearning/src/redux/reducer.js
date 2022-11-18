@@ -168,13 +168,20 @@ function rootReducer(state = initialState, action) {
       }
 
       ///////////////////// CARRITO //////////////////
-       case ADD_TO_CART:
-        let item = state.products.find(products => products.id === action.payload)
 
-        return {
-          ...state,
-          cart:[]
-        }
+
+     /*    getCart: (state, action) => {
+      state.cart = action.payload;
+    },
+    addCart: (state, action) => {
+      state.cart = action.payload;
+    },
+    removeCart: (state, action) => {
+      state.cart = action.payload;
+    },
+    clearCart: (state) => {
+      state.cart = [];
+    },*/
 
 
     default:
