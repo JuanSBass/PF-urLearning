@@ -1,6 +1,8 @@
 import React from "react";
+import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Label,
@@ -44,7 +46,8 @@ const Form = () => {
     language: "",
     price: "",
     level: "",
-    name_prof: ""
+    name_prof: "",
+    videos: []
   });
 
   let btnDisabled = !(
@@ -107,10 +110,62 @@ const Form = () => {
       price: "",
       level: "",
       name_prof: "",
+      videos: []
     });
     history.push("/");
     dispatch(getCourses());
   };
+
+
+
+  const [video, setVideo] = useState({ linksVideos: [] });
+  const [loading, setLoading] = useState(false);
+
+  const handleDrop = (files) => {
+    const uploaders = files.map(file => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("tags", `codeinfuse, medium, gist`);
+      formData.append("upload_preset", "urLearning");
+      formData.append("api_key", "983694461673571");
+      formData.append("timestamp", (Date.now() / 1000) | 0);
+      setLoading(true);
+      return axios
+        .post("https://api.cloudinary.com/v1_1/dv2xlr9k0/video/upload", formData, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then(response => {
+          const data = response.data;
+          console.log(data);
+          const fileURL = data.secure_url;
+          const height = data.height;
+          const width = data.width;
+          // console.log(fileURL);
+
+
+          video.linksVideos.push({
+            fileURL,
+            height,
+            width
+          });
+          const newObj = { ...video }
+          setVideo(newObj)
+          setInput({
+            ...input,
+            videos: newObj
+          })
+          console.log(video);
+        })
+
+    })
+    axios.all(uploaders).then(() => {
+      setLoading(false)
+    })
+
+  }
+
+  console.log(input);
+
 
   return (
     <div className={style.contenedorGeneral}>
@@ -341,6 +396,50 @@ const Form = () => {
                 </Modal>
               </>
             </div>
+
+
+            <div className={style.contenedorupload}>
+              <h1>Aqui subirás tu <b>Video de introducción</b>.</h1>
+              <p>El video de introducción debe durar máximo 1 minuto. <br /> Trata de resumir el contenido de tu curso en este video</p>
+              <Dropzone
+                className={style.dropzone}
+                onDrop={handleDrop}
+                onChange={e => setImage(e.target.value)}
+                value={video}
+              >
+
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div
+                      {...getRootProps({ className: "dropzone" })}
+                      className={style.dropzone}
+                    >
+                      <input {...getInputProps()} />
+                      <span>📁</span>
+                      <p>Carga tu video aqui o click para seleccionar</p>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+              {loading ?
+                (
+                  <div className={style.loading}><h3>Cargando video...</h3></div>
+                ) :
+                (<></>
+                )}
+              <div className={style.videos}>
+                {video.linksVideos.length <= 0
+                  ? "Aun no subes tu video..."
+                  : video.linksVideos.map(vid =>
+                    <video controls autoPlay key={vid} height={vid.height / 10} width={vid.width / 10}>
+                      <source src={vid.fileURL} type="video/mp4" />
+                    </video>
+                  )
+                }
+              </div>
+            </div>
+
+
           </div>
         </form>
       </div>

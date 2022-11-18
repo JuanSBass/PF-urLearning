@@ -97,6 +97,7 @@ const getCourseById = async (id) => {
       description: coursejson.description,
       price: coursejson.price,
       rating: coursejson.rating,
+      videos: coursejson.videos.linksVideos,
     };
   }
 };

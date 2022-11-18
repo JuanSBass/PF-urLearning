@@ -71,6 +71,7 @@ router.post("/course", async (req, res) => {
     price,
     level,
     name_prof,
+    videos,
   } = req.body;
 
   try {
@@ -85,6 +86,7 @@ router.post("/course", async (req, res) => {
       price,
       level,
       name_prof,
+      videos,
     });
     //console.log(newCourse);
 
