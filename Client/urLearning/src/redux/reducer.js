@@ -13,6 +13,7 @@ import {
   GET_COURSES_NAME,
   LOGIN,
   LOGOUT,
+  ADD_TO_CART,
 } from "./actions";
 
 const initialState = {
@@ -26,6 +27,7 @@ const initialState = {
   coursesForRating: [],
   user: {},
   log: false,
+  carrito: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -83,11 +85,11 @@ function rootReducer(state = initialState, action) {
         course: {},
       };
 
-      case CLEAN_CATEGORIES:
-        return {
-          ...state,
-          category: [],
-        };
+    case CLEAN_CATEGORIES:
+      return {
+        ...state,
+        category: [],
+      };
     case GET_COURSES_NAME:
       return {
         ...state,
@@ -170,6 +172,15 @@ function rootReducer(state = initialState, action) {
 
     case LOGOUT:
       return { ...state, user: {}, log: false };
+
+    case ADD_TO_CART:
+      const cursos = state.courses;
+      const product = cursos.find((cursoId) => cursoId.id === action.payload);
+
+      return {
+        ...state,
+        carrito: [...state.carrito, product],
+      };
     default:
       return { ...state };
   }

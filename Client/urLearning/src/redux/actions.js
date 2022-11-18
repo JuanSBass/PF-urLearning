@@ -20,6 +20,7 @@ export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
 export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const ADD_TO_CART = "ADD_TO_CART";
 
 export const getCourses = () => {
   try {
@@ -220,3 +221,17 @@ export const loginEmailAuth = (email, password) => {
     console.log(error);
   }
 };
+
+export function addToCart(id) {
+  return {
+    type: ADD_TO_CART,
+    payload: id,
+  };
+}
+
+export function postProductCart(carrito) {
+  return async function () {
+    const json = await axios.post("/cart", carrito);
+    return;
+  };
+}

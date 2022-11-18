@@ -13,6 +13,9 @@ import { auth } from "./fireBase/credenciales";
 import { useDispatch } from "react-redux"
 import { logIn, logOut } from "./redux/actions"
 import { useEffect } from "react"
+import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
+import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +40,8 @@ function App() {
     })
   }, [dispatch])
 
+
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -48,6 +53,10 @@ function App() {
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
+        <Route exact path="/success" component={PagoExitoso} />
+        <Route exact path="/failed" component={PagoDenegado} />
+
+
 
         <Footer />
       </div>
