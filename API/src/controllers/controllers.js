@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
 const { Course, User, Cart } = require("../db");
+const admin = require("../firebase/config");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 const getApiUsers = async (email) => {
@@ -44,7 +45,7 @@ const getDbInfo = async (email) => {
 
   const newUserDb = await userDb.map((e) => {
     return {
-      ID: e.ID, //6fd944f0-6537-11ed-a8cd-f9b1813ejfkde
+      id: e.id, //6fd944f0-6537-11ed-a8cd-f9b1813ejfkde
       email: e.email,
       name: e.name,
     };
@@ -151,17 +152,21 @@ const addCartItem = async (id, ID) => {
   return undefined;
 };
 
-///////// Route Course para el carrito de compras /////////
+///////// Route Get para el carrito de compras ////////
 
-const getCartCourseDb = async (ID) => {
-  const cartDb = ID
+const getCartCourseDb = async (req) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const cartUserTokken = await admin.auth().verifyIdToken(token);
+  if (!cartUserTokken) return new Error("no se pudio");
+
+  const cartDb = cartUserTokken
     ? await Cart.findAll({
         where: {
-          ID: { ID },
+          userId: cartUserTokken.uid,
         },
         include: {
           model: User,
-          attributes: ["ID"],
+          attributes: ["id"],
         },
       })
     : await Cart.findAll();
@@ -174,6 +179,7 @@ const getCartCourseDb = async (ID) => {
       description: e.description,
       price: e.price,
       name_prof: e.name_prof,
+      userId: e.userId,
     };
   });
   console.log(newCartDb);

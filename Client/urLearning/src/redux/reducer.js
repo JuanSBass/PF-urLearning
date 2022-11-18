@@ -15,6 +15,7 @@ import {
   LOGOUT,
   ADD_TO_CART,
   GET_USER_DETAIL,
+  GET_CART,
 } from "./actions";
 
 const initialState = {
@@ -182,12 +183,14 @@ function rootReducer(state = initialState, action) {
       );
       console.log(product);
 
-      const userID = window.localStorage.getItem("tokken");
-      console.log(userID);
-
       return {
         ...state,
         carrito: [...state.carrito, product],
+      };
+    case GET_CART:
+      return {
+        ...state,
+        carrito: action.payload,
       };
 
     case GET_USER_DETAIL:

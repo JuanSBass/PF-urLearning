@@ -25,6 +25,7 @@ const stripe = require("stripe")(API_KEY_PAYMENT);
 const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
+const admin = require("../firebase/config");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -33,7 +34,7 @@ router.use("/userCresential", userCredencial);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
-  const { email, name, ID } = req.body;
+  const { email, name, id } = req.body;
   const validEmail = await validateEmail(email);
   //const validPassword = await validatePassword(password);
   console.log(email);
@@ -45,7 +46,7 @@ router.post("/user", async (req, res) => {
       res.status(404).send({ message: "Email invalida o campo vacio" });
     } else {
       let newUser = await User.create({
-        ID,
+        id,
         email,
         name,
       });
@@ -226,20 +227,22 @@ router.get("/courseBySubCategory", async (req, res) => {
 });
 
 router.post("/cart", async (req, res) => {
-  const { title, image, description, price, name_prof } = req.body;
+  const { title, image, description, price, name_prof } = req.body[0];
+  const token = req.body[1];
+  const userId = await admin.auth().verifyIdToken(token);
+  if (!userId) return new Error("no se pudio");
 
   try {
-    console.log("tuki");
     let newCartItem = await Cart.create({
       title,
       image,
       description,
       price,
       name_prof,
+      userId: userId.uid,
     });
     res.status(200).send("Cart creado correctamente");
   } catch (error) {
-    console.log("tukiiiiiiiii");
     console.log(error);
     res.status(404).send(error + " error del /Post Cart");
   }
@@ -247,18 +250,29 @@ router.post("/cart", async (req, res) => {
 
 ///////// Route Course para el carrito de compras /////////
 router.get("/cart", async (req, res) => {
-  const { ID } = req.query;
-
   try {
-    console.log("aaaaaaaaaaaa");
-    const allCart = await getCartCourseDb(ID);
-    console.log(allCart, "cccccccccccccccc");
+    const allCart = await getCartCourseDb(req);
+    console.log(allCart);
     return allCart
       ? res.status(200).send(allCart)
       : res.status(404).send({ message: "No existe la info del carrito" });
   } catch (error) {
-    console.log("bbbbbbbbbbbb");
     console.log(error + "error del get /cart");
+  }
+});
+
+///////// Route DELETE para el carrito de compras ////////
+router.delete("/cart/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Cart.destroy({
+      where: {
+        ID: id,
+      },
+    });
+    res.status(200).send("Item eliminado correctamente del carrito");
+  } catch (error) {
+    console.log({ error });
   }
 });
 

@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
-      ID: {
+      id: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
@@ -12,7 +12,6 @@ module.exports = (sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
       },
       name: {
         type: DataTypes.STRING,

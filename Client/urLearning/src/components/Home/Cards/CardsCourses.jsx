@@ -13,15 +13,13 @@ const CardsCourses = () => {
     price: ""
   })
 
-
-
+  const userTokken = window.localStorage.getItem("tokken");
+  console.log(userTokken);
 
   const dispatch = useDispatch()
   const handleClick = (id) => {
-    dispatch(addToCart(id))
-    dispatch(postProductCart(id))
+    dispatch(postProductCart(id, userTokken))
   }
-
 
   return (
     <section className={styles.cardscontainer}>

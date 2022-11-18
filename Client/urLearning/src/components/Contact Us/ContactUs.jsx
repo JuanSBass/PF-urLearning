@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Label, TextInput, Textarea, Button } from "flowbite-react";
 import style from "../Contact Us/ContactUs.module.css"
 import img from "../../img/chicoformulario.jpg"
+import { getCart } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+
 
 
 function ContactUs() {
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        console.log('soy getCart')
+        console.log(getCart())
+        dispatch(getCart());
+    }, [dispatch]);
 
 
     return (
@@ -70,7 +80,7 @@ function ContactUs() {
                     >
                         Enviar
                     </Button>
-                
+
                 </div>
             </div>
         </div>

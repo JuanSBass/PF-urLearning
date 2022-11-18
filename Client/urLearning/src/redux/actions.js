@@ -22,6 +22,7 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const GET_CART = "GET_CART";
 
 export const getCourses = () => {
   try {
@@ -218,13 +219,15 @@ export function addToCart(id) {
   };
 }
 
-export function postProductCart(carrito) {
+export function postProductCart(carrito, userTokken) {
+  const item = [carrito, userTokken];
   return async function () {
-    const json = await axios.post("/cart", carrito);
-    console.log(carrito);
+    const json = await axios.post("/cart", item);
+    console.log(item);
     return;
   };
 }
+
 export const getUserDetail = () => {
   try {
     return async function (dispatch) {
@@ -241,3 +244,24 @@ export const getUserDetail = () => {
     console.log(error.message);
   }
 };
+
+export function getCart() {
+  return async function (dispatch) {
+    try {
+      console.log("aaaaaaaaa");
+      const tokken = window.localStorage.getItem("tokken");
+      const json = await axios.get("/cart", {
+        headers: {
+          Authorization: "Bearer " + tokken,
+        },
+      });
+      console.log(json.data, "bbbbbbbb");
+      return dispatch({
+        type: GET_CART,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+}
