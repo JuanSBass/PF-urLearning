@@ -1,7 +1,8 @@
 import CourseItem from "../courseItem/CourseItem";
 import CartItem from "../cartItem/cartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, delFromCart, clearCart } from '../../redux/cartActions'
+import { delFromCart, clearCart } from '../../redux/cartActions'
+import { addToCart } from "../../redux/actions";
 
 const ShoppingCart = () => {
   //const [state, dispatch] = useReducer(cartReducer, initialState)
