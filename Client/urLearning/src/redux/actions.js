@@ -15,7 +15,9 @@ export const FILTER_BY_SUBCATEGORY = "FILTER_BY_SUBCATEGORY";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const CLEAN_CATEGORIES = "CLEAN_CATEGORIES";
 export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
-
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
+export const GET_USER_DETAIL = "GET_USER_DETAIL";
 
 export const getCourses = () => {
   try {
@@ -136,48 +138,3 @@ export const getSubCategoriesName = (name) => {
   };
 };
 
-
-
-/////////////CARRITO ////////////////
-/* 
- 
-  export const GetItemsCart = (id) => {
-    return async function (dispatch) {
-        try {
-            const response = (await axios(`/cart=${id}`));
-            return dispatch({
-              type:GET_CART,
-              payload response.data
-            })
-        } catch (error) {
-            console.error(error);
-        }
-    };
-}
- 
- 
- export function AddItemCart(id) {
-    return async function (dispatch) {
-        try {
-            const response = (await axios.post(`/cart`, id));
-            return dispatch({
-              type: ADD_TO_CART,
-              payload: response.data,
-        } catch (error) {
-            console.error(error);
-        }
-    };
-}
-
-export function RemoveItemCart(id) {
-    return async function (dispatch) {
-        try {
-            const response = (await axios.delete(`/cart`, id));
-            return dispatch({
-              type:REMOVE_FROM_CART,
-              Payload: response.data,
-        } catch (error) {
-            console.error(error);
-        }
-    };
-} */

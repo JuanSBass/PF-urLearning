@@ -11,10 +11,9 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
-  ADD_TO_CART,
-  REMOVE_TO_CART,
-  CLEAN_CART,
-  GET_CART, 
+  LOGIN,
+  LOGOUT,
+  GET_USER_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -26,7 +25,9 @@ const initialState = {
   copyCategories: [],
   currentPage: 1,
   coursesForRating: [],
-  cart:[]
+  user: {},
+  log: false,
+  userDetail: {},
 };
 
 
@@ -85,11 +86,11 @@ function rootReducer(state = initialState, action) {
         course: {},
       };
 
-      case CLEAN_CATEGORIES:
-        return {
-          ...state,
-          category: [],
-        };
+    case CLEAN_CATEGORIES:
+      return {
+        ...state,
+        category: [],
+      };
     case GET_COURSES_NAME:
       return {
         ...state,
@@ -170,30 +171,10 @@ function rootReducer(state = initialState, action) {
     case LOGIN:
       return { ...state, user: action.payload, log: true };
 
-    
-      /* 
-    case GET_CART:
-      return{
-        ...state.cart = action.payload;
-      },
-
-    case ADD_TO_CART :
-      return {
-        ...state.cart = action.payload
-      },
-
-      case REMOVE_TO_CART:
-        return{
-          ...state.cart = action.payload
-        },
-
-        case CLEAR_CART:
-          return{
-            ...state.cart = [];
-          }
-
-   */
-
+    case LOGOUT:
+      return { ...state, user: {}, log: false };
+    case GET_USER_DETAIL:
+      return { ...state, userDetail: action.payload };
     default:
       return { ...state };
   }
