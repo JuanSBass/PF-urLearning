@@ -252,7 +252,6 @@ router.post("/cart", async (req, res) => {
 router.get("/cart", async (req, res) => {
   try {
     const allCart = await getCartCourseDb(req);
-    console.log(allCart);
     return allCart
       ? res.status(200).send(allCart)
       : res.status(404).send({ message: "No existe la info del carrito" });
@@ -270,9 +269,11 @@ router.delete("/cart/:id", async (req, res) => {
         ID: id,
       },
     });
-    res.status(200).send("Item eliminado correctamente del carrito");
+    const result = await getCartCourseDb(req);
+    console.log(result);
+    res.status(200).send(result);
   } catch (error) {
-    console.log({ error });
+    console.log(error + "error del delete /cart");
   }
 });
 

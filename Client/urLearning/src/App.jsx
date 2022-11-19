@@ -16,6 +16,7 @@ import { logIn, logOut } from "./redux/actions"
 import { useEffect } from "react"
 import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
 import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
+import { Shop } from "./components/Shop/Shop.jsx";
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
         <Route exact path="/formpage" component={PruebaStripe} />
         <Route exact path="/success" component={PagoExitoso} />
         <Route exact path="/failed" component={PagoDenegado} />
+        <Route exact path="/shop" component={Shop} />
 
 
         <Route exact path={`/${user.name}`} component={userDetail} />

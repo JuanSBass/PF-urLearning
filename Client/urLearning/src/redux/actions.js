@@ -23,6 +23,7 @@ export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_CART = "GET_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
 export const getCourses = () => {
   try {
@@ -255,13 +256,33 @@ export function getCart() {
           Authorization: "Bearer " + tokken,
         },
       });
-      console.log(json.data, "bbbbbbbb");
       return dispatch({
         type: GET_CART,
         payload: json.data,
       });
     } catch (error) {
       console.log({ error });
+    }
+  };
+}
+
+export function removeItemCart(id) {
+  return async function (dispatch) {
+    try {
+      const tokken = window.localStorage.getItem("tokken");
+      console.log(id);
+      const response = await axios.delete(`/cart/${id}`, {
+        headers: {
+          Authorization: "Bearer " + tokken,
+        },
+      });
+      console.log(response, "aaaaaaaaaa");
+      return dispatch({
+        type: REMOVE_FROM_CART,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error({ error });
     }
   };
 }

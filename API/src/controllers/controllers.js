@@ -182,7 +182,6 @@ const getCartCourseDb = async (req) => {
       userId: e.userId,
     };
   });
-  console.log(newCartDb);
   return newCartDb;
 };
 

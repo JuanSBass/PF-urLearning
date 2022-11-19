@@ -16,6 +16,7 @@ import {
   ADD_TO_CART,
   GET_USER_DETAIL,
   GET_CART,
+  REMOVE_FROM_CART,
 } from "./actions";
 
 const initialState = {
@@ -188,6 +189,12 @@ function rootReducer(state = initialState, action) {
         carrito: [...state.carrito, product],
       };
     case GET_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case REMOVE_FROM_CART:
       return {
         ...state,
         carrito: action.payload,
