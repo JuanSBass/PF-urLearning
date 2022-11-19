@@ -2,9 +2,7 @@ import React, { useEffect } from 'react'
 import style from "../Pagos/PagoExitoso.module.css"
 import { Button } from "flowbite-react"
 import { saveDataSession } from '../../redux/actions';
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 
 
 
@@ -16,9 +14,10 @@ function PagoExitoso() {
 
     useEffect(() => {
         // const ids = [sessionId, user.id]
-        dispatch(saveDataSession(user.id, sessionId))
-        console.log(user.id)
+        // dispatch(saveDataSession(user.id, sessionId))
     }, [dispatch]);
+    console.log(user.uid)
+    console.log(sessionId);
 
     const products = [
         {

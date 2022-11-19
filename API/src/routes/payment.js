@@ -5,29 +5,6 @@ const apiKeyPayment = process.env.API_KEY_PAYMENT;
 
 const stripe = new Stripe(apiKeyPayment);
 
-router.post("/checkout", async (req, res) => {
-  try {
-    const { id, amount } = req.body;
-
-    const payment = await stripe.paymentIntents.create({
-      customer: customer.id,
-      amount,
-      currency: "USD",
-      description: "description Product",
-      payment_method: id,
-      confirm: true,
-      automatic_payment_methods: {
-        enabled: true,
-      },
-    });
-
-    console.log(payment);
-    res.send({ message: "Pago realizado" });
-  } catch (error) {
-    res.send(error.raw.message);
-  }
-});
-
 router.post("/checkoutcart", async (req, res) => {
   const { products } = req.body;
 

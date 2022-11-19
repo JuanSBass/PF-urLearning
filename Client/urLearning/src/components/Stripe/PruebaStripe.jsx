@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { loadStripe } from "@stripe/stripe-js"
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
+import { Elements } from "@stripe/react-stripe-js"
 import style from "./Stripe.module.css"
 import axios from 'axios';
-import { Button, Spinner } from "flowbite-react"
 import { idSession } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 // import UserLogeado from reducer
@@ -13,9 +12,6 @@ const stripePromise = loadStripe("pk_test_51M4ZacHhaXjOp4D8FbyV1NvNbspvPqNSq4Dts
 
 
 export const FormPago = () => {
-  const [loading, setLoading] = useState(false);
-  const stripe = useStripe();
-  const elements = useElements();
   const dispatch = useDispatch()
 
 
@@ -58,13 +54,20 @@ export const FormPago = () => {
       const stripe2 = await stripePromise
       const response = await axios.post("/api/checkoutcart", obj)
 
-      const session = await response.data;
-      // console.log(session);
-      dispatch(idSession(session.id))
+      const session = await response.data
+      console.log(session.id);
+      window.localStorage.setItem("sessionId", session.id)
 
-      const result = await stripe2.redirectToCheckout({ sessionId: session.id })
 
-      if (result.error) console.log(result.error);
+      setTimeout(() => {
+        dispatch(idSession(window.localStorage.getItem("sessionId", session.id)))
+
+        const result = stripe2.redirectToCheckout({ sessionId: session.id })
+        if (result.error) console.log(result.error);
+      }, "2000");
+
+
+
 
     } catch (error) {
       console.log(error.message);
