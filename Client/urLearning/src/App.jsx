@@ -17,7 +17,7 @@ import { useEffect } from "react"
 import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
 import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
 import { Shop } from "./components/Shop/Shop.jsx";
-
+import About from "./components/About/About"
 
 function App() {
   const dispatch = useDispatch();

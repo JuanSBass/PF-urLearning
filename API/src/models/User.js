@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      fecha:{
+     /* fecha:{
         type:DataTypes.DATE,
         allowNull:false,
       },
@@ -25,10 +25,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
-      },
+      }, */
       // here would be the idProf reference
     },
-
+    
     {
       timestamps: false,
       createdAt: false,

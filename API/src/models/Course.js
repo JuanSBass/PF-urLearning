@@ -69,10 +69,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      fecha:{
-        type: DataTypes.DATE,
-        allowNull: false,
-      }
       // here would be the idProf reference and students
     },
     {
