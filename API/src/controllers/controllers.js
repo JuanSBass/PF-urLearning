@@ -185,6 +185,16 @@ const getCartCourseDb = async (req) => {
   return newCartDb;
 };
 
+const getPrueba = async (req) => {
+  // console.log(req.body);
+  const token2 = req.headers.authorization.split(" ")[1];
+  // console.log(token2);
+  const cartUserTokken2 = await admin.auth().verifyIdToken(token2);
+  if (!cartUserTokken2) return new Error("no se pudio");
+  // console.log(cartUserTokken2);
+  return cartUserTokken2;
+};
+
 module.exports = {
   allInfo,
   allInfoCourses,
@@ -193,4 +203,5 @@ module.exports = {
   getDbInfoCourses,
   addCartItem,
   getCartCourseDb,
+  getPrueba,
 };

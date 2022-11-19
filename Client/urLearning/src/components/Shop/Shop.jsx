@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { getCart, removeItemCart } from '../../redux/actions';
+import { clearCart, getCart, removeItemCart } from '../../redux/actions';
+import Error404 from "../404/Error404";
 import styles from "./Shop.module.css";
 
 export const Shop = () => {
     const cart = useSelector((state) => state.carrito)
-    console.log(cart)
+    console.log(cart.length)
     const dispatch = useDispatch()
-    const history = useHistory()
 
-    // eslint-disable-next-line
-    // const [order, setOrder] = useState(""); //estado local
-    // setOrder(e.target.value)
+    const handleDeleteAll = (e) => {
+        e.preventDefault()
+        console.log('Soy el handleDeleteALll')
+        dispatch(clearCart())
+        console.log("Vengo luego del hanldeDeleteAll")
+    }
 
     useEffect(() => {
         console.log('soy getCart')
@@ -23,11 +25,10 @@ export const Shop = () => {
     const handleDelete = (e) => {
         e.preventDefault()
         dispatch(removeItemCart(e.target.value))
-        console.log(e.target.value)
+        console.log(e.target.value, 'eeeeeeeee')
     }
 
-
-    return (
+    return cart.length ? (
         <div class={styles.container}>
             <h1>Shop</h1>
             <section className={styles.cardscontainer}>
@@ -45,6 +46,14 @@ export const Shop = () => {
                     </div>
                 ))}
             </section>
+            <div>
+                <button onClick={(e) => handleDeleteAll(e)}>Borrar todo</button>
+            </div>
+        </div>
+    ) : (
+        <div class={styles.container}>
+            <h1>toi solo</h1>
         </div>
     )
 }
+

@@ -7,6 +7,7 @@ const {
   changeCourseById,
   getDbInfoCourses,
   getCartCourseDb,
+  getPrueba,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -229,6 +230,7 @@ router.get("/courseBySubCategory", async (req, res) => {
 router.post("/cart", async (req, res) => {
   const { title, image, description, price, name_prof } = req.body[0];
   const token = req.body[1];
+  console.log(token);
   const userId = await admin.auth().verifyIdToken(token);
   if (!userId) return new Error("no se pudio");
 
@@ -270,8 +272,26 @@ router.delete("/cart/:id", async (req, res) => {
       },
     });
     const result = await getCartCourseDb(req);
-    console.log(result);
     res.status(200).send(result);
+  } catch (error) {
+    console.log(error + "error del delete /cart");
+  }
+});
+
+///////// Route DELETE para BORRAR TODO el carrito de compras ////////
+router.delete("/cart", async (req, res) => {
+  const clear = await getPrueba(req);
+  console.log(clear, "uuuuuuuuuuuu");
+
+  try {
+    await Cart.destroy({
+      where: {
+        userId: clear.uid,
+      },
+    });
+    const result = await getCartCourseDb(req);
+    console.log(result, "soielarai");
+    res.send(200, result, "Borrado exitoso");
   } catch (error) {
     console.log(error + "error del delete /cart");
   }
