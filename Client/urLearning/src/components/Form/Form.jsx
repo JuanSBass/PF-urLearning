@@ -161,7 +161,7 @@ const Form = () => {
     })
     axios.all(uploaders).then(() => {
       setLoading(false)
-    })
+    }).catch(error => console.log(error.response.data.error));
 
   }
 

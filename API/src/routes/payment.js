@@ -2,11 +2,12 @@ const { Router } = require("express");
 const router = Router();
 const Stripe = require("stripe");
 const apiKeyPayment = process.env.API_KEY_PAYMENT;
+const { Order } = require("../db.js");
 
 const stripe = new Stripe(apiKeyPayment);
 
 router.post("/checkoutcart", async (req, res) => {
-  const { products } = req.body;
+  const { products, userId } = req.body;
 
   let arrayProducts = [];
   products.forEach((product) => {
@@ -34,6 +35,16 @@ router.post("/checkoutcart", async (req, res) => {
     cancel_url: "http://localhost:5173/formpage/failed",
   });
   console.log(session);
+  console.log(userId);
+
+  let comprobanteAsociado = await Order.create({
+    order_id: session.id,
+    status: session.status,
+    payment_status: session.payment_status,
+    amount_total: session.amount_total,
+    userId,
+  });
+
   res.json({ id: session.id });
 });
 

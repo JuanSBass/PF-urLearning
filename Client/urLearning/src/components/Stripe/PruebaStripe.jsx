@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js"
 import style from "./Stripe.module.css"
 import axios from 'axios';
 import { idSession } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import UserLogeado from reducer
 
 
@@ -13,7 +13,8 @@ const stripePromise = loadStripe("pk_test_51M4ZacHhaXjOp4D8FbyV1NvNbspvPqNSq4Dts
 
 export const FormPago = () => {
   const dispatch = useDispatch()
-
+  const userId = useSelector(state => state.user.uid)
+  console.log(userId);
 
   const handlePrueba = async (event) => {
     event.preventDefault();
@@ -47,8 +48,7 @@ export const FormPago = () => {
 
       const obj = {
         products,
-        // accesstoken,
-        // session.id
+        userId
       }
       // stripe.paymentRequest({})
       const stripe2 = await stripePromise
@@ -58,16 +58,8 @@ export const FormPago = () => {
       console.log(session.id);
       window.localStorage.setItem("sessionId", session.id)
 
-
-      setTimeout(() => {
-        dispatch(idSession(window.localStorage.getItem("sessionId", session.id)))
-
-        const result = stripe2.redirectToCheckout({ sessionId: session.id })
-        if (result.error) console.log(result.error);
-      }, "2000");
-
-
-
+      const result = stripe2.redirectToCheckout({ sessionId: session.id })
+      if (result.error) console.log(result.error);
 
     } catch (error) {
       console.log(error.message);
