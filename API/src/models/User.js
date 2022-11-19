@@ -4,12 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
-      ID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true, //cambia su id con cada nuevo user
-      },
-      email: {
+      id: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
@@ -20,7 +15,7 @@ module.exports = (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       fecha:{
         type:DataTypes.DATE,

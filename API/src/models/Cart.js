@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       ratingHistory: {
         type: DataTypes.INTEGER,
@@ -29,11 +29,11 @@ module.exports = (sequelize) => {
       },
       price: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
+        allowNull: true,
       },
       name_prof: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {

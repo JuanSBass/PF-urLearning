@@ -7,11 +7,6 @@ import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-
-
-
-
-
 // import dotenv from "dotenv";
 
 // dotenv.config();

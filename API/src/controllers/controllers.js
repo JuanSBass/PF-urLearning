@@ -2,34 +2,35 @@ require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
 const { Course, User, Cart } = require("../db");
+const admin = require("../firebase/config");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
-// const getApiUsers = async (email) => {
-//   try {
-//     let users = [];
-//     let urlApi = email
-//       ? `https://jsonplaceholder.typicode.com/users&search=${email}`
-//       : "https://jsonplaceholder.typicode.com/users";
+const getApiUsers = async (email) => {
+  try {
+    let users = [];
+    let urlApi = email
+      ? `https://jsonplaceholder.typicode.com/users&search=${email}`
+      : "https://jsonplaceholder.typicode.com/users";
 
-//     //http://localhost:3001/
+    //http://localhost:3001/
 
-//     for (let i = 0; i < 1; i++) {
-//       const urlData = await axios.get(urlApi);
-//       const data = urlData.data.map(async (e) => {
-//         users.push({
-//           email: e.email,
-//         });
-//       });
-//       await Promise.all(data);
-//       urlApi = urlData.data.next;
-//     }
-//     //console.log(users);
-//     return users;
-//   } catch (error) {
-//     console.log(error);
-//     return []; //si la api no trae nada devuelve un array vacio para que no tire error
-//   }
-// };
+    for (let i = 0; i < 1; i++) {
+      const urlData = await axios.get(urlApi);
+      const data = urlData.data.map(async (e) => {
+        users.push({
+          email: e.email,
+        });
+      });
+      await Promise.all(data);
+      urlApi = urlData.data.next;
+    }
+    //console.log(users);
+    return users;
+  } catch (error) {
+    console.log(error);
+    return []; //si la api no trae nada devuelve un array vacio para que no tire error
+  }
+};
 
 const getDbInfo = async (email) => {
   //busco por email
@@ -44,9 +45,9 @@ const getDbInfo = async (email) => {
 
   const newUserDb = await userDb.map((e) => {
     return {
-      ID: e.ID,
+      id: e.id, //6fd944f0-6537-11ed-a8cd-f9b1813ejfkde
       email: e.email,
-      password: e.password,
+      name: e.name,
     };
   });
   //console.log(newUserDb);
@@ -62,10 +63,10 @@ const allInfo = async (email) => {
 
 /////////////////////////////////////////  COURSE  ////////////////////////////////////////////////////////////
 
-const getDbInfoCourses = async (title) => {
+const getDbInfoCourses = async (info) => {
   let respuesta = await Course.findAll({
     where: {
-      title: { [Op.iLike]: `%${title}%` },
+      title: { [Op.iLike]: `%${info}%` },
     },
   });
 
@@ -80,7 +81,7 @@ const getDbInfoCourses = async (title) => {
   //aca hay que concatenar respuesta con respueta2
 };
 
-const allInfoCourses = async (title) => {
+const allInfoCourses = async (info) => {
   let respuesta = await Course.findAll({});
   return respuesta;
 };
@@ -153,13 +154,21 @@ const addCartItem = async (id, ID) => {
   return undefined;
 };
 
-///////// Route Course para el carrito de compras /////////
+///////// Route Get para el carrito de compras ////////
 
-const getCartCourseDb = async (ID) => {
-  const cartDb = ID
+const getCartCourseDb = async (req) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const cartUserTokken = await admin.auth().verifyIdToken(token);
+  if (!cartUserTokken) return new Error("no se pudio");
+
+  const cartDb = cartUserTokken
     ? await Cart.findAll({
         where: {
-          ID: { ID },
+          userId: cartUserTokken.uid,
+        },
+        include: {
+          model: User,
+          attributes: ["id"],
         },
       })
     : await Cart.findAll();
@@ -172,33 +181,10 @@ const getCartCourseDb = async (ID) => {
       description: e.description,
       price: e.price,
       name_prof: e.name_prof,
+      userId: e.userId,
     };
   });
-  console.log(newCartDb);
   return newCartDb;
-};
-
-const getAllCart = async (ID) => {
-  if (ID) {
-    console.log("vengo antes del getCourse");
-    var db = await getCartCourseDb();
-    console.log("vengo LUEGO del getCourse");
-    db = db.map((courses) => {
-      return {
-        ID: courses.ID,
-        title: courses.title,
-        image: courses.image,
-        description: courses.description,
-        ratingHistory: courses.ratingHistory,
-        price: courses.price,
-        name_prof: courses.name_prof,
-      };
-    });
-  } else {
-    console.log("no se hallo el ID");
-  }
-
-  return db;
 };
 
 module.exports = {
@@ -209,5 +195,4 @@ module.exports = {
   getDbInfoCourses,
   addCartItem,
   getCartCourseDb,
-  getAllCart,
 };

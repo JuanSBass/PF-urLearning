@@ -14,6 +14,9 @@ import {
   LOGIN,
   LOGOUT,
   ADD_TO_CART,
+  GET_USER_DETAIL,
+  GET_CART,
+  REMOVE_FROM_CART,
 } from "./actions";
 
 const initialState = {
@@ -28,6 +31,7 @@ const initialState = {
   user: {},
   log: false,
   carrito: [],
+  userDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -175,12 +179,30 @@ function rootReducer(state = initialState, action) {
 
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find((cursoId) => cursoId.id === action.payload);
+      const product = cursos.find(
+        (cursoId) => cursoId.id === action.payload.id
+      );
+      console.log(product);
 
       return {
         ...state,
         carrito: [...state.carrito, product],
       };
+    case GET_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case GET_USER_DETAIL:
+      return { ...state, userDetail: action.payload };
+
     default:
       return { ...state };
   }

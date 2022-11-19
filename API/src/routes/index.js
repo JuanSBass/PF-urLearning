@@ -6,7 +6,7 @@ const {
   getCourseById,
   changeCourseById,
   getDbInfoCourses,
-  getAllCart,
+  getCartCourseDb,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -24,23 +24,34 @@ const { API_KEY_PAYMENT } = process.env;
 const stripe = require("stripe")(API_KEY_PAYMENT);
 const user = require("./user");
 const middleware = require("../middleware");
+const userCredencial = require("./userCredential");
+const admin = require("../firebase/config");
+
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
+router.use("/userCresential", userCredencial);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, name, id } = req.body;
   const validEmail = await validateEmail(email);
-  const validPassword = await validatePassword(password);
+  //const validPassword = await validatePassword(password);
+  console.log(email);
+  console.log(name);
 
   try {
-    let newUser = await User.create({
-      email,
-      password,
-    });
-
-    res.status(200).send("Usuario creado correctamente");
+    if (!validEmail || email === "") {
+      console.log(email);
+      res.status(404).send({ message: "Email invalida o campo vacio" });
+    } else {
+      let newUser = await User.create({
+        id,
+        email,
+        name,
+      });
+      res.status(200).send("Usuario creado correctamente");
+    }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post User");
@@ -131,11 +142,13 @@ router.post("/course", async (req, res) => {
 router.get("/course", async (req, res) => {
   const { info } = req.query;
   console.log(info);
+  const tokken = req.headers;
+
   let allCourses;
   try {
-    title
-      ? (allCourses = await getDbInfoCourses(title))
-      : (allCourses = await allInfoCourses(title));
+    info
+      ? (allCourses = await getDbInfoCourses(info))
+      : (allCourses = await allInfoCourses(info));
     res.status(200).send(allCourses);
   } catch (error) {
     console.log(error + "error del get /course");
@@ -210,6 +223,57 @@ router.get("/courseBySubCategory", async (req, res) => {
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
+  }
+});
+
+router.post("/cart", async (req, res) => {
+  const { title, image, description, price, name_prof } = req.body[0];
+  const token = req.body[1];
+  const userId = await admin.auth().verifyIdToken(token);
+  if (!userId) return new Error("no se pudio");
+
+  try {
+    let newCartItem = await Cart.create({
+      title,
+      image,
+      description,
+      price,
+      name_prof,
+      userId: userId.uid,
+    });
+    res.status(200).send("Cart creado correctamente");
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error + " error del /Post Cart");
+  }
+});
+
+///////// Route Course para el carrito de compras /////////
+router.get("/cart", async (req, res) => {
+  try {
+    const allCart = await getCartCourseDb(req);
+    return allCart
+      ? res.status(200).send(allCart)
+      : res.status(404).send({ message: "No existe la info del carrito" });
+  } catch (error) {
+    console.log(error + "error del get /cart");
+  }
+});
+
+///////// Route DELETE para el carrito de compras ////////
+router.delete("/cart/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Cart.destroy({
+      where: {
+        ID: id,
+      },
+    });
+    const result = await getCartCourseDb(req);
+    console.log(result);
+    res.status(200).send(result);
+  } catch (error) {
+    console.log(error + "error del delete /cart");
   }
 });
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Dropdown, Avatar } from "flowbite-react"
 import { logOut } from "../../redux/actions";
-import ShoppingCart from "../Shopping/ShoppingCart";
+// import ShoppingCart from "../Shopping/ShoppingCart";
 
 
 export default function Nav() {
@@ -37,9 +37,11 @@ export default function Nav() {
 								{user.email}
 							</span>
 						</Dropdown.Header>
-						<Dropdown.Item>
-							Dashboard
-						</Dropdown.Item>
+						<Link to={`/${user.name}`}>
+							<Dropdown.Item>
+								Dashboard
+							</Dropdown.Item>
+						</Link>
 						<Dropdown.Item>
 							Settings
 						</Dropdown.Item>
@@ -47,9 +49,11 @@ export default function Nav() {
 							Earnings
 						</Dropdown.Item>
 						<Dropdown.Divider />
-						<Dropdown.Item>
-							<button onClick={handleLogOut} type="button">Sign out</button>
-						</Dropdown.Item>
+						<button onClick={handleLogOut} type="button">
+							<Dropdown.Item>
+								Sign out
+							</Dropdown.Item>
+						</button>
 					</Dropdown> : <Link to="/register">
 						<button
 							type="button"
@@ -94,7 +98,7 @@ export default function Nav() {
 						</Link>
 						<li>
 							<a class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent  text-xl md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-								<ShoppingCart></ShoppingCart>
+								{/* <ShoppingCart></ShoppingCart> */}
 							</a>
 						</li>
 					</ul>
