@@ -11,12 +11,15 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  /////login//////////
   LOGIN,
   LOGOUT,
+  ////////// CARRITO//////////
   ADD_TO_CART,
   GET_USER_DETAIL,
   GET_CART,
   REMOVE_FROM_CART,
+  CLEAR_CART,
 } from "./actions";
 
 const initialState = {
@@ -171,12 +174,16 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
+
+      //////////////LOGIN //////////////////
     case LOGIN:
       return { ...state, user: action.payload, log: true };
 
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
+
+      ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
       const product = cursos.find(
@@ -195,6 +202,12 @@ function rootReducer(state = initialState, action) {
       };
 
     case REMOVE_FROM_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case CLEAR_CART:
       return {
         ...state,
         carrito: action.payload,

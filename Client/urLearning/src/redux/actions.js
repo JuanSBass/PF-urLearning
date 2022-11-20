@@ -24,6 +24,7 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
 
 export const getCourses = () => {
   try {
@@ -225,8 +226,31 @@ export function postProductCart(carrito, userTokken) {
   return async function () {
     const json = await axios.post("/cart", item);
     console.log(item);
-    return;
   };
+}
+
+export function clearCart() {
+  try {
+    // const item = userTokken;
+    const tokken2 = window.localStorage.getItem("tokken");
+    console.log(tokken2, "soy el item del token en la action");
+    console.log(tokken2);
+    return async function (dispatch) {
+      console.log("estoy en el medio");
+      const json = await axios.delete(`/cart`, {
+        headers: {
+          Authorization: "Bearer " + tokken2,
+        },
+      });
+      console.log("soy el segundo Item");
+      return dispatch({
+        type: CLEAR_CART,
+        payload: json.data,
+      });
+    };
+  } catch (error) {
+    console.log(error + "error del clearCart");
+  }
 }
 
 export const getUserDetail = () => {
@@ -276,7 +300,6 @@ export function removeItemCart(id) {
           Authorization: "Bearer " + tokken,
         },
       });
-      console.log(response, "aaaaaaaaaa");
       return dispatch({
         type: REMOVE_FROM_CART,
         payload: response.data,
