@@ -3,16 +3,17 @@ import {
   GET_COURSES,
   POST_COURSE,
   GET_CHILD_CATEGORY,
-  POST_USER,
   GET_DETAIL,
   FILTER_BY_CATEGORY,
   SET_CURRENT_PAGE,
   CLEAN_DETAIL,
+  CLEAN_CATEGORIES,
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
   LOGIN,
   LOGOUT,
+  GET_USER_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -25,6 +26,8 @@ const initialState = {
   currentPage: 1,
   coursesForRating: [],
   user: {},
+  log: false,
+  userDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -37,8 +40,6 @@ function rootReducer(state = initialState, action) {
         coursesForRating: action.payload,
       };
 
-    case POST_USER:
-      return { ...state };
     case GET_DETAIL:
       return { ...state, course: action.payload };
 
@@ -83,6 +84,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         course: {},
       };
+
+      case CLEAN_CATEGORIES:
+        return {
+          ...state,
+          category: [],
+        };
     case GET_COURSES_NAME:
       return {
         ...state,
@@ -161,9 +168,12 @@ function rootReducer(state = initialState, action) {
         });
       }
     case LOGIN:
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload, log: true };
+
     case LOGOUT:
-      return { ...state, user: {} };
+      return { ...state, user: {}, log: false };
+    case GET_USER_DETAIL:
+      return { ...state, userDetail: action.payload };
     default:
       return { ...state };
   }

@@ -2,7 +2,6 @@ import React from 'react'
 import { Label, TextInput, Textarea, Button } from "flowbite-react";
 import style from "../Contact Us/ContactUs.module.css"
 import img from "../../img/chicoformulario.jpg"
-import Login from "../PruebaFirebase";
 
 
 function ContactUs() {
@@ -71,8 +70,7 @@ function ContactUs() {
                     >
                         Enviar
                     </Button>
-                    <Login />
-
+                
                 </div>
             </div>
         </div>

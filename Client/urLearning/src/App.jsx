@@ -5,19 +5,35 @@ import { Route, BrowserRouter } from "react-router-dom";
 import Detail from "./components/Detail/Detail.jsx";
 import Courses from "./components/Courses/Courses.jsx";
 import Nav from "./components/nav/Nav";
+import userDetail from "./components/userDetail/userDetail.jsx";
 import Footer from "./components/footer/Footer";
 import ContactUs from "./components/Contact Us/ContactUs.jsx"
-import {onAuthStateChanged} from "firebase/auth";
-import {auth} from "./fireBase/credenciales";
-import {useDispatch} from "react-redux"
-import {logIn} from "./redux/actions"
-
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./fireBase/credenciales";
+import { useDispatch, useSelector } from "react-redux"
+import { logIn, logOut } from "./redux/actions"
+import { useEffect } from "react"
 
 function App() {
-  const dispatch=useDispatch();
-onAuthStateChanged(auth,user=>{
-  if(user.uid){dispatch(logIn(user.uid,user.name))}
-})
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+
+      console.log(user)
+      if (user?.uid) {
+        const token = user.accessToken;
+        dispatch(logIn(token))
+        window.localStorage.setItem("tokken", token)
+      }
+      else {
+        window.localStorage.setItem("tokken", null)
+        dispatch(logOut())
+      }
+    })
+  }, [dispatch])
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -28,6 +44,7 @@ onAuthStateChanged(auth,user=>{
         <Route exact path="/contact" component={ContactUs} />
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
+        <Route exact path={`/${user.name}`} component={userDetail} />
 
         <Footer />
       </div>
