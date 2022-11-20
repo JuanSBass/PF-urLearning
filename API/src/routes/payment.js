@@ -63,32 +63,40 @@ router.get("/checkout/:id", async (req, res) => {
 });
 
 /**PRE: El usuario previamente cargado en la base de datos y la compra
- * realizada.
+ * realizada por stripe.
  *
- * POST: Guarda los datos de la "session" y los relaciona al id del usuario
- * que viene por body.
+ * POST: Accede automaticamente (es accionada cuando se monta un componente de )
+ * a la ultima orden de compra generada por el usuario y actualiza los datos de la
+ * compra .
  *
- * OBS: Habría que recibir el acces token, validarlo y de ahi sacar el user_id?
+ * OBS: Habría que recibir el acces token, validarlo y de ahi sacar el user_id
  */
-router.post("/checkout/confirmation/:id", async (req, res) => {
-  const { id } = req.params;
+router.put("/updateLastOrer", async (req, res) => {
   const { userId } = req.body;
   try {
-    const session = await stripe.checkout.sessions.retrieve(id, {
-      expand: ["line_items"],
+    const lastOrder = await Order.findAll({
+      where: { userId },
+      order: [["createdAt", "DESC"]],
     });
+    const { order_id } = lastOrder[0];
 
-    let comprobanteAsociado = await Order.create({
-      order_id: id,
-      status: session.status,
-      payment_status: session.payment_status,
-      amount_total: session.amount_total,
-      userId,
-    });
+    const stripeOrder = await stripe.checkout.sessions.retrieve(order_id);
 
-    res.status(200).send(comprobanteAsociado);
+    const { payment_status } = stripeOrder;
+    console.log(payment_status);
+
+    const finalUpdate = await Order.update(
+      { payment_status },
+      {
+        where: {
+          order_id,
+        },
+      }
+    );
+
+    res.status(200).send(finalUpdate);
   } catch (error) {
-    res.status(401).send(error.message);
+    res.status(400).send({ error });
   }
 });
 
