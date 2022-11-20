@@ -15,6 +15,7 @@ import {
   LOGOUT,
   ADD_TO_CART,
   ID_SESSION,
+  GET_USER_DETAIL,
 } from "./actions";
 
 const initialState = {
@@ -30,6 +31,7 @@ const initialState = {
   log: false,
   carrito: [],
   idSession: "",
+  userDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -186,6 +188,8 @@ function rootReducer(state = initialState, action) {
     case ID_SESSION:
       return { ...state, idSession: action.payload };
 
+    case GET_USER_DETAIL:
+      return { ...state, userDetail: action.payload };
     default:
       return { ...state };
   }

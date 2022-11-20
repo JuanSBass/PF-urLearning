@@ -12,7 +12,7 @@ const apiPayment = require("./payment.js");
 const { API_KEY_PAYMENT } = process.env;
 const stripe = require("stripe")(API_KEY_PAYMENT);
 const user = require("./user");
-const middleware = require("../middleware");
+const userCredencial = require("./userCredential");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -24,6 +24,7 @@ const router = Router();
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
+router.use("/userCresential", userCredencial);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -99,6 +100,8 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
+  const tokken = req.headers;
+
   let allCourses;
   try {
     info

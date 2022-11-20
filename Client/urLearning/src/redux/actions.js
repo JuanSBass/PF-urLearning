@@ -22,6 +22,7 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const ID_SESSION = "ID_SESSION";
+export const GET_USER_DETAIL = "GET_USER_DETAIL";
 
 export const getCourses = () => {
   try {
@@ -142,19 +143,18 @@ export const getSubCategoriesName = (name) => {
   };
 };
 
-export const logIn = (uid, email, name, photo) => {
-  const newUser = {
-    id: uid,
-    email: email,
-    name: name,
-  };
-
+export const logIn = (tokken) => {
   return async function (dispatch) {
-    const oldUser = await axios.post("/user/create", newUser);
+    const oldUser = await axios.post("/user/create", {
+      authorization: "Bearer " + tokken,
+    });
     const semiOldUser = oldUser.data;
     dispatch({
       type: LOGIN,
-      payload: { uid, email, name: name, photo },
+      payload: {
+        email: semiOldUser[0].email,
+        name: semiOldUser[0].name,
+      },
       //ojo que aca solo devuelve el nombre de la base de datos
       //y el resto se lo proporciona google
     });
@@ -176,15 +176,10 @@ export const startGoogleAuth = () => {
   try {
     return async (dispatch) => {
       const user = await loginWithGoogle();
+      console.log(user);
+      const tokken = user.accessToken;
 
-      dispatch(
-        logIn(
-          user.user.uid,
-          user.user.email,
-          user.user.name,
-          user.user.photoURL
-        )
-      );
+      dispatch(logIn(tokken));
     };
   } catch (error) {
     console.log(error);
@@ -197,8 +192,8 @@ export const registerEmailAuth = (email, password) => {
       const user = await registerUser(email, password);
       const pos = email.indexOf("@");
       const name = email.slice(0, pos);
-
-      dispatch(logIn(user.user.uid, user.user.email, name));
+      const token = user.accessToken;
+      dispatch(logIn(token));
     };
   } catch (error) {
     console.log(error);
@@ -209,14 +204,8 @@ export const loginEmailAuth = (email, password) => {
   try {
     return async (dispatch) => {
       const user = await loginUser(email, password);
-      const jsonUser = {
-        id: user.user.uid,
-      };
-      const oldUser = await axios.post("/user/create", jsonUser);
-      const semiOldUser = oldUser.data;
-      dispatch(
-        logIn(semiOldUser[0].uid, semiOldUser[0].name, semiOldUser[0].email)
-      );
+      const tokken = user.user.accessToken;
+      dispatch(logIn(tokken));
     };
   } catch (error) {
     console.log(error);
@@ -250,3 +239,19 @@ export function saveDataSession(id, userId) {
     return;
   };
 }
+export const getUserDetail = () => {
+  try {
+    return async function (dispatch) {
+      const tokken = window.localStorage.getItem("tokken");
+      const response = await axios.get("/userCresential/detail", {
+        headers: {
+          Authorization: "Bearer " + tokken,
+        },
+      });
+
+      dispatch({ type: GET_USER_DETAIL, payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
