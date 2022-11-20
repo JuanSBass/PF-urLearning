@@ -3,18 +3,22 @@ import { Elements } from "@stripe/react-stripe-js"
 import style from "./Stripe.module.css"
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { Button } from "flowbite-react";
 
 
 const stripePromise = loadStripe("pk_test_51M4ZacHhaXjOp4D8FbyV1NvNbspvPqNSq4DtsGSLM2jnydz8rtHuOztZFlkGLkgbCx31fhL7lLcXp5dEZK5Rvvmx00F7vVOLQI")
 
 
 export const FormPago = () => {
-  const userId = useSelector(state => state.user.uid)
-  console.log(userId);
+
+  const cart = useSelector((state) => state.carrito)
+
 
   const handlePrueba = async (event) => {
     event.preventDefault();
     try {
+      const tuki = window.localStorage.getItem("tokken")
+      console.log(tuki)
       const products = [
         {
           id: 1,
@@ -44,7 +48,8 @@ export const FormPago = () => {
 
       const obj = {
         products,
-        userId
+        cart,
+        tuki
       }
       // stripe.paymentRequest({})
       const stripe2 = await stripePromise
@@ -63,7 +68,7 @@ export const FormPago = () => {
 
   return (
     <div className={style.inputStripe}>
-      <button onClick={handlePrueba} role="link">PAGAR AHORA</button>
+      <Button onClick={handlePrueba} role="link">PAGAR AHORA</Button>
     </div>
   )
 

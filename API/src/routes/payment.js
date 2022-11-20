@@ -8,20 +8,26 @@ const admin = require("../firebase/config");
 const stripe = new Stripe(apiKeyPayment);
 
 router.post("/checkoutcart", async (req, res) => {
-  const { products, userId } = req.body;
+  const { products, tuki, cart } = req.body;
+
+  // console.log("tuki", tuki);
+
+  const decodeValue = await admin.auth().verifyIdToken(tuki);
+  if (!decodeValue) return new Error("no se pudio");
+  const userId = decodeValue.uid;
+  console.log(products);
+  console.log(cart);
 
   let arrayProducts = [];
-  products.forEach((product) => {
+  cart.forEach((product) => {
     let lineProduct = {
       price_data: {
         currency: "USD",
         product_data: {
-          name: product.name,
-          images: [
-            "https://edicioneszigurat.mx/wp-content/uploads/2021/01/cursodefilosofia.png",
-          ],
+          name: product.title,
+          images: [product.image],
         },
-        unit_amount: product.price,
+        unit_amount: product.price * 100,
       },
       quantity: 1,
     };
@@ -35,8 +41,6 @@ router.post("/checkoutcart", async (req, res) => {
     success_url: `http://localhost:5173/formpage/success`,
     cancel_url: "http://localhost:5173/formpage/failed",
   });
-  console.log(session);
-  console.log(userId);
 
   let comprobanteAsociado = await Order.create({
     order_id: session.id,

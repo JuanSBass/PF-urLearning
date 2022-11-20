@@ -1,11 +1,11 @@
 .inputStripe {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 81px;
-  height: calc(100vh - 149px);
+  height: calc(100vh - 149px); */
 }
 
 .input {
-  width: 40rem;
+  /* width: 40rem; */
 }

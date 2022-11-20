@@ -380,8 +380,8 @@ const Form = () => {
 
 
             <div className={style.contenedorupload}>
-              <h1>Aqui subirás tu <b>Video de introducción</b>.</h1>
-              <p>El video de introducción debe durar máximo 1 minuto. <br /> Trata de resumir el contenido de tu curso en este video</p>
+              <h1>Aqui subirás 2 videos. <br /> Tu <b>Video de introducción</b> y tu video de curso.</h1>
+              <p>El video de introducción debe durar máximo 1 minuto. Trata de resumir el contenido de tu curso en este video</p>
               <Dropzone
                 className={style.dropzone}
                 onDrop={handleDrop}

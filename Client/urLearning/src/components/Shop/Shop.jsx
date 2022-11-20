@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clearCart, getCart, removeItemCart } from '../../redux/actions';
+import PruebaStripe from '../Stripe/PruebaStripe';
 import styles from "./Shop.module.css";
 
 export const Shop = () => {
@@ -75,9 +76,12 @@ export const Shop = () => {
                     </tbody>
                 </table>
             </div>
-            <div>
+            <div className={styles.buttonscontainer}>
                 <br />
                 <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => handleDeleteAll(e)}>Clear Cart</button>
+
+                <PruebaStripe />
+
             </div>
         </div>
     ) : (
