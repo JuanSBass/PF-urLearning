@@ -111,7 +111,8 @@ router.put("/updateLastOrer", async (req, res) => {
 });
 
 router.put("/updateUserCourseRelations", async (req, res) => {
-  const { token, courseId } = req.body;
+  const { token, carrito } = req.body;
+  console.log("carrito", carrito);
   let message;
   try {
     const decodeValue = await admin.auth().verifyIdToken(token);
@@ -132,8 +133,9 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     if (payment_status === "paid") {
       //aca hago las relaciones en la tabla intermedia con el id del curso y del usuario
       let currentUser = await User.findByPk(userId);
-      let currentCourse = await Course.findByPk(courseId);
-      await currentUser.addCourse(currentCourse);
+      console.log("currentUser", currentUser);
+      // let currentCourse = await Course.findByPk(carrito);
+      await currentUser.addCourses(carrito);
       //await currentCourse.addUser(currentUser); CREO que esta linea no hace falta
       console.log("ldkflsdkflskd", await currentUser.getCourses());
       message = "Relation successfull";

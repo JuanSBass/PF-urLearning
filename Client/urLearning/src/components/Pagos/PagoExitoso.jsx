@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import style from "../Pagos/PagoExitoso.module.css"
 import { Button } from "flowbite-react"
 import { useDispatch, useSelector } from "react-redux";
-import { getCart, updatePaymentStatus } from '../../redux/actions';
+import { getCart, saveCoursesAtUser, updatePaymentStatus } from '../../redux/actions';
 
 
 
@@ -16,6 +16,7 @@ function PagoExitoso() {
         console.log(user);
         console.log(tokken);
         dispatch(updatePaymentStatus(tokken))
+        dispatch(saveCoursesAtUser(tokken, cart))
         dispatch(getCart())
 
     }, [dispatch, user, tokken]);

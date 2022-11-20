@@ -315,3 +315,13 @@ export function removeItemCart(id) {
     }
   };
 }
+
+export function saveCoursesAtUser(token, carrito) {
+  return async function () {
+    const json = await axios.put("api/updateUserCourseRelations", {
+      token,
+      carrito,
+    });
+    return;
+  };
+}
