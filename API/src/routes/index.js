@@ -85,8 +85,10 @@ router.post("/course", async (req, res) => {
     price,
     level,
     name_prof,
+    videos,
   } = req.body;
 
+  //console.log(newCourse);
   const validTitle = await validateTitle(title);
   const validDescription = await validateDescription(description);
   const validPrice = await validatePrice(price);
@@ -128,6 +130,7 @@ router.post("/course", async (req, res) => {
         price,
         level,
         name_prof,
+        videos,
       });
       //console.log(newCourse);
       res.status(200).send("Curso creado correctamente");

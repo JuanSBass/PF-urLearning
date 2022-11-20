@@ -99,6 +99,7 @@ const getCourseById = async (id) => {
       description: coursejson.description,
       price: coursejson.price,
       rating: coursejson.rating,
+      videos: coursejson.videos.linksVideos,
       ratingUserNumber: coursejson.ratingUserNumber,
       ratingHistory: coursejson.ratingHistory,
     };
@@ -132,8 +133,6 @@ const changeCourseById = async (id, rating) => {
     return change;
   }
 };
-
-
 
 ///////// Route Add Course ID CART /////////
 //id -> courses

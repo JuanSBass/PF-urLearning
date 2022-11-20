@@ -42,6 +42,7 @@ router.get("/allCategories", async (req, res) => {
     // const decodeValue = await admin.auth().verifyIdToken(token);
     // console.log(token);
 
+    // console.log(decodeValue);
     // if (!decodeValue) return new Error("no se pudio");
 
     let allCategories = await Category.findAll({});

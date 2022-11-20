@@ -1,27 +1,24 @@
-import React, { useState } from 'react'
 import { loadStripe } from "@stripe/stripe-js"
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
+import { Elements } from "@stripe/react-stripe-js"
 import style from "./Stripe.module.css"
 import axios from 'axios';
-import { Button, Spinner } from "flowbite-react"
-import { idSession } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
-// import UserLogeado from reducer
+import { useSelector } from 'react-redux';
+import { Button } from "flowbite-react";
 
 
 const stripePromise = loadStripe("pk_test_51M4ZacHhaXjOp4D8FbyV1NvNbspvPqNSq4DtsGSLM2jnydz8rtHuOztZFlkGLkgbCx31fhL7lLcXp5dEZK5Rvvmx00F7vVOLQI")
 
 
 export const FormPago = () => {
-  const [loading, setLoading] = useState(false);
-  const stripe = useStripe();
-  const elements = useElements();
-  const dispatch = useDispatch()
+
+  const cart = useSelector((state) => state.carrito)
 
 
   const handlePrueba = async (event) => {
     event.preventDefault();
     try {
+      const tuki = window.localStorage.getItem("tokken")
+      console.log(tuki)
       const products = [
         {
           id: 1,
@@ -51,19 +48,15 @@ export const FormPago = () => {
 
       const obj = {
         products,
-        // accesstoken,
-        // session.id
+        cart,
+        tuki
       }
       // stripe.paymentRequest({})
       const stripe2 = await stripePromise
       const response = await axios.post("/api/checkoutcart", obj)
+      const session = await response.data
 
-      const session = await response.data;
-      // console.log(session);
-      dispatch(idSession(session.id))
-
-      const result = await stripe2.redirectToCheckout({ sessionId: session.id })
-
+      const result = stripe2.redirectToCheckout({ sessionId: session.id })
       if (result.error) console.log(result.error);
 
     } catch (error) {
@@ -75,7 +68,7 @@ export const FormPago = () => {
 
   return (
     <div className={style.inputStripe}>
-      <button onClick={handlePrueba} role="link">PAGAR AHORA</button>
+      <Button onClick={handlePrueba} role="link">PAGAR AHORA</Button>
     </div>
   )
 
