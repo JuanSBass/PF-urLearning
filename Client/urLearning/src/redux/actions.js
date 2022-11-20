@@ -309,24 +309,3 @@ export function removeItemCart(id) {
     }
   };
 }
-
-///////////// Borrar Item cart por userID /////////////
-// export function clearCart(id) {
-//   return async function (dispatch) {
-//     try {
-//       const tokken = window.localStorage.getItem("tokken");
-//       console.log(id);
-//       const response = await axios.delete(`/cart/${id}`, {
-//         headers: {
-//           Authorization: "Bearer " + tokken,
-//         },
-//       });
-//       return dispatch({
-//         type: CLEAR_CART,
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//       console.error({ error });
-//     }
-//   };
-// }

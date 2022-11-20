@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 import { useState } from "react";
-import { addToCart, postProductCart } from "../../../redux/actions";
+import { postProductCart } from "../../../redux/actions";
 
 
 const CardsCourses = () => {
@@ -24,7 +24,7 @@ const CardsCourses = () => {
   return (
     <section className={styles.cardscontainer}>
       {courses?.map((card) => (
-        <div className={styles.card}>
+        <div className={styles.card} key={card.id}>
           <Link to={`/course/${card.id}`} key={card.id}>
             <div className={styles.imgcard}>
               <img src={card.image} alt="miniatura" />
