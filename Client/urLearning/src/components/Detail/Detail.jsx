@@ -4,15 +4,24 @@ import image from "../../images/register.png"
 import { Rating, Button, Avatar, Spinner } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail, cleanDetail } from "../../redux/actions";
+import { getDetail, cleanDetail, postProductCart } from "../../redux/actions";
 
 
 
 const Detail = (props) => {
   const id = props.match.params.id;
   const dispatch = useDispatch();
-
   const course = useSelector((state) => state.course);
+
+
+  const userTokken = window.localStorage.getItem("tokken");
+  console.log(userTokken);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    dispatch(postProductCart(course, userTokken));
+  }
+
   // let urlVideos = []
   console.log(course.videos)
   useEffect(() => {
@@ -88,7 +97,7 @@ const Detail = (props) => {
                 </div>
 
                 <div className={s.add}>
-                  <Button className={s.addb} color="purple">
+                  <Button className={s.addb} color="purple" onClick={handleClick}>
                     Añadir a la cesta
                   </Button>
                 </div>
