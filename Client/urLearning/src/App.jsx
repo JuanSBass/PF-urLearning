@@ -16,7 +16,8 @@ import { logIn, logOut } from "./redux/actions"
 import { useEffect } from "react"
 import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
 import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
-
+import { Shop } from "./components/Shop/Shop.jsx";
+import About from "./components/About/About"
 
 function App() {
   const dispatch = useDispatch();
@@ -44,15 +45,20 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Nav />
+        {/* <hr />
+        <ShoppingCart />
+        <hr /> */}
         <Route exact path="/" component={Home} />
         <Route exact path="/allcourses" component={Courses} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/contact" component={ContactUs} />
+        <Route exact path="/about" component={About} />
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
         <Route exact path="/formpage/success" component={PagoExitoso} />
         <Route exact path="/failed" component={PagoDenegado} />
+        <Route exact path="/shop" component={Shop} />
 
 
         <Route exact path={`/${user.name}`} component={userDetail} />
