@@ -3,14 +3,23 @@ import {
   GET_COURSES,
   POST_COURSE,
   GET_CHILD_CATEGORY,
-  POST_USER,
   GET_DETAIL,
   FILTER_BY_CATEGORY,
   SET_CURRENT_PAGE,
   CLEAN_DETAIL,
+  CLEAN_CATEGORIES,
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  /////login//////////
+  LOGIN,
+  LOGOUT,
+  ////////// CARRITO//////////
+  ADD_TO_CART,
+  GET_USER_DETAIL,
+  GET_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
 } from "./actions";
 
 const initialState = {
@@ -22,6 +31,10 @@ const initialState = {
   copyCategories: [],
   currentPage: 1,
   coursesForRating: [],
+  user: {},
+  log: false,
+  carrito: [],
+  userDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -34,8 +47,6 @@ function rootReducer(state = initialState, action) {
         coursesForRating: action.payload,
       };
 
-    case POST_USER:
-      return { ...state };
     case GET_DETAIL:
       return { ...state, course: action.payload };
 
@@ -79,6 +90,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         course: {},
+      };
+
+    case CLEAN_CATEGORIES:
+      return {
+        ...state,
+        category: [],
       };
     case GET_COURSES_NAME:
       return {
@@ -157,6 +174,47 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
+
+      //////////////LOGIN //////////////////
+    case LOGIN:
+      return { ...state, user: action.payload, log: true };
+
+    case LOGOUT:
+      return { ...state, user: {}, log: false };
+
+
+      ////////////////CARRITO/////////////
+    case ADD_TO_CART:
+      const cursos = state.courses;
+      const product = cursos.find(
+        (cursoId) => cursoId.id === action.payload.id
+      );
+      console.log(product);
+
+      return {
+        ...state,
+        carrito: [...state.carrito, product],
+      };
+    case GET_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case CLEAR_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case GET_USER_DETAIL:
+      return { ...state, userDetail: action.payload };
 
     default:
       return { ...state };

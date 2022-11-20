@@ -1,10 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Label, TextInput, Textarea, Button } from "flowbite-react";
 import style from "../Contact Us/ContactUs.module.css"
 import img from "../../img/chicoformulario.jpg"
+import { getCart, removeItemCart } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+
 
 
 function ContactUs() {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        console.log('soy getCart')
+        console.log(getCart())
+        dispatch(getCart());
+    }, [dispatch]);
+
+
+    const handleDelete = (id) => {
+        dispatch(removeItemCart(id))
+    }
+
 
 
 
@@ -16,6 +33,8 @@ function ContactUs() {
                     <div className={style.textTitulo}>¡Contactate con nosotros!</div>
                 </div>
                 <div className={style.form}>
+
+                    <button onClick={(id) => handleDelete(id)}>Borrar item</button>
 
 
                     <div className="flex flex-col gap-4">
@@ -70,6 +89,7 @@ function ContactUs() {
                     >
                         Enviar
                     </Button>
+
                 </div>
             </div>
         </div>
