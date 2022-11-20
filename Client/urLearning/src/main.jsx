@@ -7,12 +7,8 @@ import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-
-
-
-
-
 // import dotenv from "dotenv";
+<script src="../path/to/flowbite/dist/flowbite.js"></script>
 
 // dotenv.config();
 axios.defaults.baseURL = "http://localhost:3001";
@@ -23,4 +19,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <App />
     </BrowserRouter>
   </Provider>
+
 );
