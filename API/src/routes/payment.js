@@ -3,6 +3,7 @@ const router = Router();
 const Stripe = require("stripe");
 const apiKeyPayment = process.env.API_KEY_PAYMENT;
 const { Order } = require("../db.js");
+const admin = require("../firebase/config");
 
 const stripe = new Stripe(apiKeyPayment);
 
@@ -72,8 +73,13 @@ router.get("/checkout/:id", async (req, res) => {
  * OBS: Habría que recibir el acces token, validarlo y de ahi sacar el user_id
  */
 router.put("/updateLastOrer", async (req, res) => {
-  const { userId } = req.body;
+  const { token } = req.body;
   try {
+    const decodeValue = await admin.auth().verifyIdToken(token);
+    if (!decodeValue) return new Error("no se pudio");
+
+    const userId = decodeValue.uid;
+
     const lastOrder = await Order.findAll({
       where: { userId },
       order: [["createdAt", "DESC"]],
@@ -83,7 +89,6 @@ router.put("/updateLastOrer", async (req, res) => {
     const stripeOrder = await stripe.checkout.sessions.retrieve(order_id);
 
     const { payment_status } = stripeOrder;
-    console.log(payment_status);
 
     const finalUpdate = await Order.update(
       { payment_status },
@@ -96,7 +101,8 @@ router.put("/updateLastOrer", async (req, res) => {
 
     res.status(200).send(finalUpdate);
   } catch (error) {
-    res.status(400).send({ error });
+    console.log(error.message);
+    res.status(405).send({ error });
   }
 });
 

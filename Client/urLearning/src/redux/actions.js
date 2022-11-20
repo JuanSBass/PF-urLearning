@@ -237,16 +237,9 @@ export function postProductCart(carrito) {
   };
 }
 
-export function idSession(id) {
-  return {
-    type: ID_SESSION,
-    payload: id,
-  };
-}
-
-export function saveDataSession(id, userId) {
+export function updatePaymentStatus(token) {
   return async function () {
-    const json = await axios.post(`/checkout/confirmation/${id}`, userId);
+    const json = await axios.put("api/updateLastOrer", { token });
     return;
   };
 }
