@@ -14,6 +14,7 @@ import { auth } from "./fireBase/credenciales";
 import { useDispatch, useSelector } from "react-redux"
 import { logIn, logOut } from "./redux/actions"
 import { useEffect } from "react"
+import UploadVideo from "./components/UploadVideo/UploadVideo.jsx";
 import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
 import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
 import { Shop } from "./components/Shop/Shop.jsx";
@@ -56,7 +57,8 @@ function App() {
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
-        <Route exact path="/success" component={PagoExitoso} />
+        <Route exact path="/uploadvideo" component={UploadVideo} />
+        <Route exact path="/formpage/success" component={PagoExitoso} />
         <Route exact path="/failed" component={PagoDenegado} />
         <Route exact path="/shop" component={Shop} />
 

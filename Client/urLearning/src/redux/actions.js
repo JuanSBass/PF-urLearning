@@ -229,6 +229,12 @@ export function postProductCart(carrito, userTokken) {
   };
 }
 
+export function updatePaymentStatus(token) {
+  return async function () {
+    const json = await axios.put("api/updateLastOrer", { token });
+    return;
+  };
+}
 export function clearCart() {
   try {
     // const item = userTokken;
@@ -307,5 +313,15 @@ export function removeItemCart(id) {
     } catch (error) {
       console.error({ error });
     }
+  };
+}
+
+export function saveCoursesAtUser(token, carrito) {
+  return async function () {
+    const json = await axios.put("api/updateUserCourseRelations", {
+      token,
+      carrito,
+    });
+    return;
   };
 }

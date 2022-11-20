@@ -38,8 +38,7 @@
   border-radius: 34px;
 }
 
-
-.contenedor{
+.contenedor {
   background-color: #fafafa;
   max-width: 1000px;
   width: 900px;
@@ -47,7 +46,7 @@
   height: 400px;
   padding-inline: 1rem;
   gap: 2rem;
-  margin:0px auto;
+  margin: 0px auto;
 }
 
 .contenedorGeneral {
@@ -56,14 +55,17 @@
   align-items: center;
   margin-top: 81px;
   height: calc(100vh - 149px);
-  text-align:center;
+  text-align: center;
 }
 
 .Table {
-  
- width: 100%;
-align-items: center;
-text-align:center;
-margin-top: 81px;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  margin-top: 81px;
 }
 
+.buttonscontainer {
+  display: flex;
+  justify-content: center;
+}

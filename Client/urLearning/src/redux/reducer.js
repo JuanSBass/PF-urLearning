@@ -175,22 +175,17 @@ function rootReducer(state = initialState, action) {
         });
       }
 
-      //////////////LOGIN //////////////////
+    //////////////LOGIN //////////////////
     case LOGIN:
       return { ...state, user: action.payload, log: true };
 
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
-
-      ////////////////CARRITO/////////////
+    ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find(
-        (cursoId) => cursoId.id === action.payload.id
-      );
-      console.log(product);
-
+      const product = cursos.find((cursoId) => cursoId.id === action.payload);
       return {
         ...state,
         carrito: [...state.carrito, product],
