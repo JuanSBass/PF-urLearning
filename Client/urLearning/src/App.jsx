@@ -57,7 +57,7 @@ function App() {
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
         <Route exact path="/formpage/success" component={PagoExitoso} />
-        <Route exact path="/failed" component={PagoDenegado} />
+        <Route exact path="/formpage/failed" component={PagoDenegado} />
         <Route exact path="/shop" component={Shop} />
 
 
