@@ -18,7 +18,6 @@ import {
   GET_USER_DETAIL,
   ////////// CARRITO//////////
   ADD_TO_CART,
-  GET_USER_DETAIL,
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
