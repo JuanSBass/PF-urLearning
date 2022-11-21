@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Label, TextInput, Textarea, Button } from "flowbite-react";
-import style from "../Contact Us/ContactUs.module.css"
+import style from "./ContactUs.module.css"
 import img from "../../img/chicoformulario.jpg"
 
 function ContactUs() {

@@ -6,7 +6,6 @@ const admin = require("../firebase/config");
 router.post("/create", async (req, res) => {
   try {
     const token = req.body.authorization.split(" ")[1];
-    console.log(token);
     const decodeValue = await admin.auth().verifyIdToken(token);
 
     const { email, user_id } = decodeValue;
