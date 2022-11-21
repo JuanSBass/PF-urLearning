@@ -81,7 +81,7 @@ router.post("/checkoutPost/:id", async (req, res) => {
   const token = req.body.authorization.split(" ")[1];
   const decoValue = await admin.auth().verifyIdToken(token);
   const { user_id } = decoValue;
-  console.log("ACA ESTA EL TOKEN", token);
+  console.log("ACA ESTA EL USERID", user_id);
   try {
     const session = await stripe.checkout.sessions.retrieve(id, {
       expand: ["line_items"],
@@ -91,7 +91,7 @@ router.post("/checkoutPost/:id", async (req, res) => {
       amount_subtotal: session.amount_subtotal,
       customer_email: session.customer_email,
       payment_status: session.payment_status,
-      user_id,
+      userId: user_id,
     });
     res.send(/* session */ "Sesion de pago creada");
   } catch (error) {
