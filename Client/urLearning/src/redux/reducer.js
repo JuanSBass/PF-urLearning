@@ -14,9 +14,10 @@ import {
   /////login//////////
   LOGIN,
   LOGOUT,
+  ID_SESSION,
+  GET_USER_DETAIL,
   ////////// CARRITO//////////
   ADD_TO_CART,
-  GET_USER_DETAIL,
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
@@ -190,6 +191,9 @@ function rootReducer(state = initialState, action) {
         ...state,
         carrito: [...state.carrito, product],
       };
+    case ID_SESSION:
+      return { ...state, idSession: action.payload };
+
     case GET_CART:
       return {
         ...state,

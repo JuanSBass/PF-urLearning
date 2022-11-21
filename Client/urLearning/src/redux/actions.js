@@ -21,6 +21,7 @@ export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const ID_SESSION = "ID_SESSION";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
