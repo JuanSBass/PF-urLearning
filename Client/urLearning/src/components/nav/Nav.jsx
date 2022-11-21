@@ -24,7 +24,7 @@ export default function Nav() {
 
 				<div class="flex md:order-2 md:space-x-4">
 					{log?<Dropdown
-  label={<Avatar alt="User settings" img={user.photo} rounded={true}/>}
+  label={<Avatar alt="User settings" img={user.image} rounded={true}/>}
   arrowIcon={false}
   inline={true}
 >

@@ -13,6 +13,7 @@ import {
   LOGIN,
   LOGOUT,
   GET_USER_DETAIL,
+  PUT_USER,
 } from "./actions";
 
 const initialState = {
@@ -167,6 +168,9 @@ function rootReducer(state = initialState, action) {
       return { ...state, user: {}, log: false };
     case GET_USER_DETAIL:
       return { ...state, userDetail: action.payload };
+
+    case PUT_USER:
+      return { ...state };
     default:
       return { ...state };
   }
