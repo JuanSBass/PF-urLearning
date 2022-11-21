@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { Category, SubCategory } = require("../db");
+const admin = require("../firebase/config");
 
 router.post("/category", async (req, res) => {
   const { name } = req.body;
@@ -37,10 +38,12 @@ router.get("/allCategories", async (req, res) => {
   let { categoryId } = req.body;
 
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decodeValue = await admin.auth().verifyIdToken(token);
-    console.log(decodeValue);
-    if (!decodeValue) return new Error("no se pudio");
+    // const token = req.headers.authorization.split(" ")[1];
+    // const decodeValue = await admin.auth().verifyIdToken(token);
+    // console.log(token);
+
+    // console.log(decodeValue);
+    // if (!decodeValue) return new Error("no se pudio");
 
     let allCategories = await Category.findAll({});
     res.status(200).send(allCategories);

@@ -20,7 +20,12 @@ export const GET_SUBCATEGORIES_COURSES = "GET_SUBCATEGORIES_COURSES";
 export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const ID_SESSION = "ID_SESSION";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const GET_CART = "GET_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
 
 export const getCourses = () => {
   try {
@@ -210,6 +215,51 @@ export const loginEmailAuth = (email, password) => {
   }
 };
 
+export function addToCart(id) {
+  return {
+    type: ADD_TO_CART,
+    payload: id,
+  };
+}
+
+export function postProductCart(carrito, userTokken) {
+  const item = [carrito, userTokken];
+  return async function () {
+    const json = await axios.post("/cart", item);
+    console.log(item);
+  };
+}
+
+export function updatePaymentStatus(token) {
+  return async function () {
+    const json = await axios.put("api/updateLastOrer", { token });
+    return;
+  };
+}
+export function clearCart() {
+  try {
+    // const item = userTokken;
+    const tokken2 = window.localStorage.getItem("tokken");
+    console.log(tokken2, "soy el item del token en la action");
+    console.log(tokken2);
+    return async function (dispatch) {
+      console.log("estoy en el medio");
+      const json = await axios.delete(`/cart`, {
+        headers: {
+          Authorization: "Bearer " + tokken2,
+        },
+      });
+      console.log("soy el segundo Item");
+      return dispatch({
+        type: CLEAR_CART,
+        payload: json.data,
+      });
+    };
+  } catch (error) {
+    console.log(error + "error del clearCart");
+  }
+}
+
 export const getUserDetail = () => {
   try {
     return async function (dispatch) {
@@ -226,3 +276,53 @@ export const getUserDetail = () => {
     console.log(error.message);
   }
 };
+
+export function getCart() {
+  return async function (dispatch) {
+    try {
+      console.log("aaaaaaaaa");
+      const tokken = window.localStorage.getItem("tokken");
+      const json = await axios.get("/cart", {
+        headers: {
+          Authorization: "Bearer " + tokken,
+        },
+      });
+      return dispatch({
+        type: GET_CART,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+}
+
+export function removeItemCart(id) {
+  return async function (dispatch) {
+    try {
+      const tokken = window.localStorage.getItem("tokken");
+      console.log(id);
+      const response = await axios.delete(`/cart/${id}`, {
+        headers: {
+          Authorization: "Bearer " + tokken,
+        },
+      });
+      return dispatch({
+        type: REMOVE_FROM_CART,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error({ error });
+    }
+  };
+}
+
+export function saveCoursesAtUser(token, carrito) {
+  return async function () {
+    const json = await axios.put("api/updateUserCourseRelations", {
+      token,
+      carrito,
+    });
+    return;
+  };
+}

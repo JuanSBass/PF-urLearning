@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       image: {
-        type: DataTypes.TEXT,
+        type: DataTypes.TEXT, //cambiar en str
         allowNull: true,
       },
       category: {
@@ -41,9 +41,21 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       rating: {
-        type: DataTypes.DECIMAL,
+        //-> ratingNumber
+        //valor que recibo
+        type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue: 1,
+        defaultValue: 0,
+      },
+      ratingUserNumber: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      ratingHistory: {
+        //valor que devuelvo -> front (promediado)
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
       },
       price: {
         type: DataTypes.DECIMAL,
@@ -56,6 +68,9 @@ module.exports = (sequelize) => {
       name_prof: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      videos: {
+        type: DataTypes.JSON,
       },
       // here would be the idProf reference and students
     },

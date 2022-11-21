@@ -15,10 +15,20 @@ module.exports = (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
+     /* fecha:{
+        type:DataTypes.DATE,
+        allowNull:false,
+      },
+      admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      }, */
       // here would be the idProf reference
     },
+    
     {
       timestamps: false,
       createdAt: false,
