@@ -15,7 +15,6 @@ import {
   LOGIN,
   LOGOUT,
   ID_SESSION,
-  GET_USER_DETAIL,
   ////////// CARRITO//////////
   ADD_TO_CART,
   GET_USER_DETAIL,
