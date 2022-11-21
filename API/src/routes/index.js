@@ -8,6 +8,7 @@ const {
   getDbInfoCourses,
 } = require("../controllers/controllers");
 const cat = require("./category.js");
+const apiPayment = require("./payment.js");
 const user = require("./user");
 const userCredencial = require("./userCredential");
 
@@ -19,8 +20,9 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/category", cat);
+router.use("/api", apiPayment);
 router.use("/user", user);
-router.use("/userCresential", userCredencial);
+router.use("/userCredential", userCredencial);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 

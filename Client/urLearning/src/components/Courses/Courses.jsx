@@ -13,12 +13,14 @@ import {
 import { Button, Select, Dropdown, Rating, Label } from "flowbite-react";
 import { Link } from "react-router-dom";
 import Searchbar from "../searchBar/SearchBar";
+import Error404 from "../404/Error404";
 
 const Courses = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category);
   const [order, setOrder] = useState("");
   const subCategories = useSelector((state) => state.subCategories);
+  const courses = useSelector((state) => state.courses);
 
   useEffect(() => {
     dispatch(getCourses());
@@ -169,7 +171,12 @@ const Courses = () => {
           <Button gradientMonochrome="success">Crear curso</Button>
         </Link>
       </section>
-      <Paginado />
+
+      {
+        courses.length ? (<Paginado />) : (<Error404 />)
+      }
+
+
     </main>
   );
 };

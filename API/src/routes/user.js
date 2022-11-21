@@ -9,19 +9,23 @@ router.post("/create", async (req, res) => {
     const token = req.body.authorization.split(" ")[1];
     console.log(token);
     const decodeValue = await admin.auth().verifyIdToken(token);
+    console.log(decodeValue);
 
-    const { email, user_id } = decodeValue;
+    const { email, user_id, picture } = decodeValue;
     let name;
+
     if (decodeValue.name) name = decodeValue.name;
     else {
       name = "Usuario";
     }
+
     if (!decodeValue) return new Error("no se pudio");
     let newUser = await User.findOrCreate({
       where: { id: user_id },
       defaults: {
         email,
         name,
+        image: picture,
       },
     });
     res.status(200).send(newUser);

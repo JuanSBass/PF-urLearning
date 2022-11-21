@@ -7,6 +7,7 @@ import Courses from "./components/Courses/Courses.jsx";
 import Nav from "./components/nav/Nav";
 import userDetail from "./components/userDetail/userDetail.jsx";
 import Footer from "./components/footer/Footer";
+import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
 import ContactUs from "./components/Contact Us/ContactUs.jsx"
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./fireBase/credenciales";
@@ -43,6 +44,7 @@ function App() {
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path={`/${user.name}`} component={userDetail}/>
+        <Route exact path="/formpage" component={PruebaStripe} />
 
         <Footer />
       </div>
