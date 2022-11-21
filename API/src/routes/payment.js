@@ -117,8 +117,8 @@ router.put("/updateUserCourseRelations", async (req, res) => {
   try {
     const decodeValue = await admin.auth().verifyIdToken(token);
     if (!decodeValue) return new Error("no se pudio");
-
     const userId = decodeValue.uid;
+
     const lastOrder = await Order.findAll({
       where: { userId },
       order: [["createdAt", "DESC"]],
