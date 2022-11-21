@@ -1,5 +1,5 @@
 import styles from "./CardsCourses.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 import { useState } from "react";
@@ -12,12 +12,16 @@ const CardsCourses = () => {
     title: "",
     price: ""
   })
+  const user = useSelector(state => state.user)
+  console.log(user);
+  const navigate = useHistory();
 
   const userTokken = window.localStorage.getItem("tokken");
   console.log(userTokken);
 
   const dispatch = useDispatch()
   const handleClick = (id) => {
+    if (!user.name) return navigate.push("/register")
     dispatch(postProductCart(id, userTokken))
   }
 
@@ -42,7 +46,7 @@ const CardsCourses = () => {
               {card.rating} out of 5
             </p>
           </Rating>
-          <button onClick={() => handleClick(card)}>ADD</button>
+          <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleClick(card)}>Add to Cart</button>
         </div>
       ))}
     </section>

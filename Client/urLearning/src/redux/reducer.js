@@ -11,10 +11,13 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  /////login//////////
   LOGIN,
   LOGOUT,
-  ADD_TO_CART,
+  ID_SESSION,
   GET_USER_DETAIL,
+  ////////// CARRITO//////////
+  ADD_TO_CART,
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
@@ -172,23 +175,25 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
+
+    //////////////LOGIN //////////////////
     case LOGIN:
       return { ...state, user: action.payload, log: true };
 
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
+    ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find(
-        (cursoId) => cursoId.id === action.payload.id
-      );
-      console.log(product);
-
+      const product = cursos.find((cursoId) => cursoId.id === action.payload);
       return {
         ...state,
         carrito: [...state.carrito, product],
       };
+    case ID_SESSION:
+      return { ...state, idSession: action.payload };
+
     case GET_CART:
       return {
         ...state,

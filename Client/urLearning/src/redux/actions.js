@@ -21,6 +21,7 @@ export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const ID_SESSION = "ID_SESSION";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
@@ -229,6 +230,12 @@ export function postProductCart(carrito, userTokken) {
   };
 }
 
+export function updatePaymentStatus(token) {
+  return async function () {
+    const json = await axios.put("api/updateLastOrer", { token });
+    return;
+  };
+}
 export function clearCart() {
   try {
     // const item = userTokken;
@@ -307,5 +314,15 @@ export function removeItemCart(id) {
     } catch (error) {
       console.error({ error });
     }
+  };
+}
+
+export function saveCoursesAtUser(token, carrito) {
+  return async function () {
+    const json = await axios.put("api/updateUserCourseRelations", {
+      token,
+      carrito,
+    });
+    return;
   };
 }
