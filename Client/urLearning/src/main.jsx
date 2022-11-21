@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
-import 'virtual:windi.css'
 
 
 
@@ -16,7 +15,7 @@ import 'virtual:windi.css'
 // import dotenv from "dotenv";
 
 // dotenv.config();
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = import.meta.env.VITE_API || "http://localhost:3001";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

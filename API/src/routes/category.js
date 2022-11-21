@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 const { Category, SubCategory } = require("../db");
-const middleware = require("../middleware/index");
 
 router.post("/category", async (req, res) => {
   const { name } = req.body;
@@ -36,8 +35,13 @@ router.post("/subCategory", async (req, res) => {
 
 router.get("/allCategories", async (req, res) => {
   let { categoryId } = req.body;
-  console.log(categoryId);
+
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodeValue = await admin.auth().verifyIdToken(token);
+    console.log(decodeValue);
+    if (!decodeValue) return new Error("no se pudio");
+
     let allCategories = await Category.findAll({});
     res.status(200).send(allCategories);
   } catch (error) {

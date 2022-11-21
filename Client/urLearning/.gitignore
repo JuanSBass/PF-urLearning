@@ -32,3 +32,4 @@ dist-ssr
 .env.staging
 **/.env
 
+/src/fireBase/serviceAccount.json

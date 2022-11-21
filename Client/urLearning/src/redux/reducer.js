@@ -7,6 +7,7 @@ import {
   FILTER_BY_CATEGORY,
   SET_CURRENT_PAGE,
   CLEAN_DETAIL,
+  CLEAN_CATEGORIES,
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
@@ -84,6 +85,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         course: {},
       };
+
+      case CLEAN_CATEGORIES:
+        return {
+          ...state,
+          category: [],
+        };
     case GET_COURSES_NAME:
       return {
         ...state,
