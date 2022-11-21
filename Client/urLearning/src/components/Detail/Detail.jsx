@@ -81,7 +81,7 @@ const Detail = (props) => {
                   <p>{course.description}</p>
                 </div>
 
-                <video controls autoPlay id{s.vid}>
+                <video controls autoPlay id={s.vid}>
                   <source src={course.videos[0].fileURL} type="video/mp4" />
                 </video>
 
