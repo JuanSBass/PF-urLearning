@@ -231,14 +231,18 @@ router.get("/courseBySubCategory", async (req, res) => {
 });
 
 router.post("/cart", async (req, res) => {
-  const { title, image, description, price, name_prof } = req.body[0];
+  //console.log(req.body);
+  const { id, title, image, description, price, name_prof } = req.body[0];
   const token = req.body[1];
-  console.log(token);
   const userId = await admin.auth().verifyIdToken(token);
   if (!userId) return new Error("no se pudio");
+  const papaya = await Cart.findAll();
+  // console.log(papaya);
 
   try {
+    // if (papaya.length === 0) {
     let newCartItem = await Cart.create({
+      idCourse: id,
       title,
       image,
       description,
@@ -247,6 +251,32 @@ router.post("/cart", async (req, res) => {
       userId: userId.uid,
     });
     res.status(200).send("Cart creado correctamente");
+    // } else {
+    //   for (let i = 0; i < papaya.length; i++) {
+    //     //console.log(papaya[i].idCourse);
+    //     if (papaya[i].idCourse !== id) {
+    //       let newCartItem = await Cart.create({
+    //         idCourse: id,
+    //         title,
+    //         image,
+    //         description,
+    //         price,
+    //         name_prof,
+    //         userId: userId.uid,
+    //       });
+    //       res.status(200).send("Cart creado correctamente");
+    //     } else {
+    //       console.log("ya existe el id en la BBDD");
+    //       res.status(404).send("ya existe el id en la BBDD");
+    //     }
+    //   }
+    //   console.log("ya estoy afuera del for");
+    //   res.status(404).send("ya estoy afuera del for");
+    // }
+    //  else
+    //   console.log("no podes pa");
+    //   res.status(404).send("elemento ya existente en la BBBD");
+    // }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post Cart");
@@ -284,7 +314,6 @@ router.delete("/cart/:id", async (req, res) => {
 ///////// Route DELETE para BORRAR TODO el carrito de compras ////////
 router.delete("/cart", async (req, res) => {
   const clear = await getPrueba(req);
-  console.log(clear, "uuuuuuuuuuuu");
 
   try {
     await Cart.destroy({
@@ -293,7 +322,6 @@ router.delete("/cart", async (req, res) => {
       },
     });
     const result = await getCartCourseDb(req);
-    console.log(result, "soielarai");
     res.send(200, result, "Borrado exitoso");
   } catch (error) {
     console.log(error + "error del delete /cart");
