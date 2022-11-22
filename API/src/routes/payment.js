@@ -38,8 +38,8 @@ router.post("/checkoutcart", async (req, res) => {
     payment_method_types: ["card"],
     line_items: arrayProducts,
     mode: "payment",
-    success_url: "https://pf-ur-learning.vercel.app/formpage/success",
-    cancel_url: "https://pf-ur-learning.vercel.app/formpage/failed",
+    success_url: "http://localhost:5173/formpage/success",
+    cancel_url: "http://localhost:5173/formpage/failed",
   });
 
   let comprobanteAsociado = await Order.create({
@@ -77,9 +77,9 @@ router.get("/checkout/:id", async (req, res) => {
  * OBS: Habría que recibir el acces token, validarlo y de ahi sacar el user_id
  */
 router.put("/updateLastOrer", async (req, res) => {
-  const { token } = req.body;
+  const { tokken } = req.body;
   try {
-    const decodeValue = await admin.auth().verifyIdToken(token);
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
 
     const userId = decodeValue.uid;
@@ -123,26 +123,24 @@ router.put("/updateUserCourseRelations", async (req, res) => {
       where: { userId },
       order: [["createdAt", "DESC"]],
     });
+    //console.log("ordenes ordenadas: ", lastOrder[1].dataValues.payment_status);
     if (!lastOrder[0])
-      throw new Error("theres a prblem with the user's las order");
+      throw new Error("there is a prblem with the user's las order");
     const { order_id } = lastOrder[0];
-
     const stripeOrder = await stripe.checkout.sessions.retrieve(order_id);
     const { payment_status } = stripeOrder;
 
     if (payment_status === "paid") {
-      //aca hago las relaciones en la tabla intermedia con el id del curso y del usuario
       let currentUser = await User.findByPk(userId);
-      console.log("currentUser: ", currentUser);
-      console.log("carrito: ", carrito);
-
-      await currentUser.addCourse(carrito);
-
       message = "Relation successfull";
+      carrito.forEach(async (element) => {
+        let oneCurse = await Course.findByPk(element.idCourse);
+        await currentUser.addCourse(oneCurse);
+      });
     } else {
       message = "Relation failed, check if payment status is paid";
     }
-
+    console.log(message);
     res.status(200).send(message);
   } catch (error) {
     console.log(error.message);
