@@ -28,7 +28,7 @@ const CardsCourses = () => {
   return (
     <section className={styles.cardscontainer}>
       {courses?.map((card) => (
-        <div className={styles.card}>
+        <div className={styles.card} key={card.id}>
           <Link to={`/course/${card.id}`} key={card.id}>
             <div className={styles.imgcard}>
               <img src={card.image} alt="miniatura" />
