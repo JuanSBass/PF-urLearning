@@ -197,7 +197,6 @@ router.put("/course/:id", async (req, res) => {
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
-  console.log("hola");
   try {
     const { categ } = req.query;
     console.log(categ);
@@ -214,7 +213,6 @@ router.get("/courseByCategory", async (req, res) => {
 });
 
 router.get("/courseBySubCategory", async (req, res) => {
-  console.log("hola");
   try {
     const { subcateg } = req.query;
     console.log(subcateg);
