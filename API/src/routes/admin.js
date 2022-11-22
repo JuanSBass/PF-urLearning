@@ -4,6 +4,15 @@ const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
 
 //Courses
 
+router.get("/allCourses", async (req, res) => {
+  try {
+    let allCourses = await Course.findAll({});
+    res.status(200).send(allCourses);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 router.delete("/deleteCourseId", async (req, res) => {
   const { deleteCourseId } = req.body;
   console.log(deleteCourseId);
