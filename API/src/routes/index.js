@@ -26,12 +26,14 @@ const stripe = require("stripe")(API_KEY_PAYMENT);
 const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
+const administrator = require("./admin.js");
 const admin = require("../firebase/config");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
 router.use("/userCresential", userCredencial);
+router.use("/admin", administrator);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {

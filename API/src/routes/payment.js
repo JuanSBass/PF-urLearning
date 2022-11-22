@@ -111,11 +111,11 @@ router.put("/updateLastOrer", async (req, res) => {
 });
 
 router.put("/updateUserCourseRelations", async (req, res) => {
-  const { token, carrito } = req.body;
-  console.log("carrito", carrito);
+  const { tokken, carrito } = req.body;
+
   let message;
   try {
-    const decodeValue = await admin.auth().verifyIdToken(token);
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
     const userId = decodeValue.uid;
 
@@ -133,11 +133,11 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     if (payment_status === "paid") {
       //aca hago las relaciones en la tabla intermedia con el id del curso y del usuario
       let currentUser = await User.findByPk(userId);
-      console.log("currentUser", currentUser);
-      // let currentCourse = await Course.findByPk(carrito);
-      await currentUser.addCourses(carrito);
-      //await currentCourse.addUser(currentUser); CREO que esta linea no hace falta
-      console.log("ldkflsdkflskd", await currentUser.getCourses());
+      console.log("currentUser: ", currentUser);
+      console.log("carrito: ", carrito);
+
+      await currentUser.addCourse(carrito);
+
       message = "Relation successfull";
     } else {
       message = "Relation failed, check if payment status is paid";
