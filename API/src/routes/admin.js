@@ -48,11 +48,39 @@ router.get("/allUsersWithCourses", async (req, res) => {
 });
 
 //Orders
-
+//todas
 router.get("/allOrders", async (req, res) => {
   try {
     let allOrders = await Order.findAll({});
     res.status(200).send(allOrders);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//filtro por estado
+router.get("/allOrders/:currentStatus", async (req, res) => {
+  const { currentStatus } = req.params;
+  try {
+    let allOrders = await Order.findAll({
+      where: {
+        payment_status: currentStatus,
+      },
+    });
+    res.status(200).send(allOrders);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//cambio del estado
+router.put("/modifyOrderStatus", async (req, res) => {
+  const { order_id, payment_status } = req.body;
+  try {
+    let oldOrder = await Order.findByPk(order_id);
+    let updatedOrder = await oldOrder.update({ payment_status });
+    console.log(updatedOrder);
+    res.status(200).send(updatedOrder);
   } catch (error) {
     res.status(400).send(error);
   }
