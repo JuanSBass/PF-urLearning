@@ -280,7 +280,6 @@ export const getUserDetail = () => {
 export function getCart() {
   return async function (dispatch) {
     try {
-      console.log("aaaaaaaaa");
       const tokken = window.localStorage.getItem("tokken");
       const json = await axios.get("/cart", {
         headers: {

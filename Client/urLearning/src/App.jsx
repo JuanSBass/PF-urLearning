@@ -8,7 +8,7 @@ import Nav from "./components/nav/Nav";
 import userDetail from "./components/userDetail/userDetail.jsx";
 import Footer from "./components/footer/Footer";
 import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
-import ContactUs from "./components/Contact Us/ContactUs.jsx"
+import ContactUs from "./components/ContactUs/ContactUs.jsx"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fireBase/credenciales";
 import { useDispatch, useSelector } from "react-redux"
