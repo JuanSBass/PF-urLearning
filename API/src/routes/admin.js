@@ -3,7 +3,7 @@ const router = Router();
 const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
 
 //Courses
-
+//todos
 router.get("/allCourses", async (req, res) => {
   try {
     let allCourses = await Course.findAll({});
@@ -26,7 +26,7 @@ router.delete("/deleteCourseId", async (req, res) => {
 });
 
 //Usuarios
-
+//todos
 router.get("/allUsers", async (req, res) => {
   try {
     let allUsers = await User.findAll({});
@@ -35,7 +35,7 @@ router.get("/allUsers", async (req, res) => {
     res.status(400).send(error);
   }
 });
-
+//todos con sus cursos comprados
 router.get("/allUsersWithCourses", async (req, res) => {
   try {
     let allUsers = await User.findAll({
