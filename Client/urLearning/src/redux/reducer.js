@@ -11,6 +11,7 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  GET_USER_COURSES,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -35,7 +36,9 @@ const initialState = {
   user: {},
   log: false,
   carrito: [],
+  copyCarrito: [],
   userDetail: {},
+  userCourses: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -198,6 +201,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
+        copyCarrito: action.payload,
       };
 
     case REMOVE_FROM_CART:
@@ -214,6 +218,12 @@ function rootReducer(state = initialState, action) {
 
     case GET_USER_DETAIL:
       return { ...state, userDetail: action.payload };
+
+    case GET_USER_COURSES:
+      return {
+        ...state,
+        userCourses: action.payload[0].courses,
+      };
 
     default:
       return { ...state };
