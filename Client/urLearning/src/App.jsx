@@ -20,6 +20,7 @@ import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
 import { Shop } from "./components/Shop/Shop.jsx";
 import About from "./components/About/About"
 import CursosComprados from "./components/CursosComprados/CursosComprados.jsx";
+import EditCurso from "./components/EditCurso/EditCurso.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +64,8 @@ function App() {
         <Route exact path="/formpage/failed" component={PagoDenegado} />
         <Route exact path="/shop" component={Shop} />
         <Route exact path="/mycourses" component={CursosComprados} />
+        <Route exact path="/course/editcourse/:id" component={EditCurso} />
+
 
 
 
