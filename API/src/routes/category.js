@@ -18,15 +18,13 @@ router.post("/category", async (req, res) => {
 });
 
 router.post("/subCategory", async (req, res) => {
-  let { name, categoryId } = req.body;
-  console.log(categoryId);
-
   try {
+    const { name, categoryId } = req.body;
+    console.log(name)
     let newSubCategory = await SubCategory.create({
-      name,
-      categoryId,
+      name: name,
+      categoryId: categoryId
     });
-
     res.status(200).send("SUBcategory creado correctamente");
   } catch (error) {
     console.log(error.message);

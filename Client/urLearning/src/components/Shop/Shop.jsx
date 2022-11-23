@@ -7,26 +7,20 @@ import styles from "./Shop.module.css";
 
 export const Shop = () => {
     const cart = useSelector((state) => state.carrito)
-    console.log(cart.length)
     const dispatch = useDispatch()
 
     const handleDeleteAll = (e) => {
         e.preventDefault()
-        console.log('Soy el handleDeleteALll')
         dispatch(clearCart())
-        console.log("Vengo luego del hanldeDeleteAll")
     }
 
     useEffect(() => {
-        console.log('soy getCart')
-        console.log(getCart())
         dispatch(getCart());
     }, [dispatch]);
 
     const handleDelete = (e) => {
         e.preventDefault()
         dispatch(removeItemCart(e.target.value))
-        console.log(e.target.value, 'eeeeeeeee')
     }
 
     return cart.length ? (
