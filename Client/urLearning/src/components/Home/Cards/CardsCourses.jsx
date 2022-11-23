@@ -13,11 +13,11 @@ const CardsCourses = () => {
     price: ""
   })
   const user = useSelector(state => state.user)
-  console.log(user);
+  // console.log(user);
   const navigate = useHistory();
 
   const userTokken = window.localStorage.getItem("tokken");
-  console.log(userTokken);
+  // console.log(userTokken);
 
   const dispatch = useDispatch()
   const handleClick = (id) => {

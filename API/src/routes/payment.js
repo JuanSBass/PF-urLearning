@@ -15,8 +15,8 @@ router.post("/checkoutcart", async (req, res) => {
   const decodeValue = await admin.auth().verifyIdToken(tuki);
   if (!decodeValue) return new Error("no se pudio");
   const userId = decodeValue.uid;
-  console.log(products);
-  console.log(cart);
+  // console.log(products);
+  // console.log(cart);
 
   let arrayProducts = [];
   cart.forEach((product) => {
@@ -76,6 +76,7 @@ router.get("/checkout/:id", async (req, res) => {
  *
  * OBS: Habría que recibir el acces token, validarlo y de ahi sacar el user_id
  */
+
 router.put("/updateLastOrer", async (req, res) => {
   const { tokken } = req.body;
   try {
