@@ -243,26 +243,26 @@ router.post("/cart", async (req, res) => {
   });
 
   try {
-    if (result.find((e) => e.id === id)) {
-      console.log("ya esta comprado");
-      res.status(404).send("elemento ya comprado");
-    } else {
-      let newCartItem = await Cart.findOrCreate({
-        where: {
-          idCourse: id,
-        },
-        defaults: {
-          idCourse: id,
-          title,
-          image,
-          description,
-          price,
-          name_prof,
-          userId: userId.uid,
-        },
-      });
-      res.status(200).send(newCartItem);
-    }
+    // if (result.find((e) => e.id === id)) {
+    //   console.log("ya esta comprado");
+    //   res.status(404).send("elemento ya comprado");
+    // } else {
+    let newCartItem = await Cart.findOrCreate({
+      where: {
+        idCourse: id,
+      },
+      defaults: {
+        idCourse: id,
+        title,
+        image,
+        description,
+        price,
+        name_prof,
+        userId: userId.uid,
+      },
+    });
+    res.status(200).send(newCartItem);
+    // }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post Cart");
