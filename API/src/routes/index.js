@@ -232,29 +232,37 @@ router.get("/courseBySubCategory", async (req, res) => {
 });
 
 router.post("/cart", async (req, res) => {
-  //console.log(req.body);
   const { id, title, image, description, price, name_prof } = req.body[0];
   const token = req.body[1];
   const userId = await admin.auth().verifyIdToken(token);
   if (!userId) return new Error("no se pudio");
 
+  let currentUser = await User.findByPk(userId.uid);
+  let result = await currentUser.getCourses({
+    attributes: ["title", "id"],
+  });
+
   try {
-    let newCartItem = await Cart.findOrCreate({
-      where: {
-        idCourse: id,
-      },
-      defaults: {
-        idCourse: id,
-        title,
-        image,
-        description,
-        price,
-        name_prof,
-        userId: userId.uid,
-      },
-    });
-    console.log(newCartItem);
-    res.status(200).send(newCartItem, "Curso creado correctamente");
+    if (result.find((e) => e.id === id)) {
+      console.log("ya esta comprado");
+      res.status(404).send("elemento ya comprado");
+    } else {
+      let newCartItem = await Cart.findOrCreate({
+        where: {
+          idCourse: id,
+        },
+        defaults: {
+          idCourse: id,
+          title,
+          image,
+          description,
+          price,
+          name_prof,
+          userId: userId.uid,
+        },
+      });
+      res.status(200).send(newCartItem);
+    }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post Cart");
