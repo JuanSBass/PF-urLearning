@@ -38,10 +38,10 @@ router.post("/checkoutcart", async (req, res) => {
     payment_method_types: ["card"],
     line_items: arrayProducts,
     mode: "payment",
-    success_url: "https://pf-ur-learning.vercel.app/formpage/success",
-    cancel_url: "https://pf-ur-learning.vercel.app/formpage/failed",
-  });
-
+    success_url: "http://localhost:5173/formpage/success",// "https://pf-ur-learning.vercel.app/formpage/success",
+    cancel_url: "http://localhost:5173/formpage/failed", // "https://pf-ur-learning.vercel.app/formpage/failed",
+ });
+  
   let comprobanteAsociado = await Order.create({
     order_id: session.id,
     status: session.status,
