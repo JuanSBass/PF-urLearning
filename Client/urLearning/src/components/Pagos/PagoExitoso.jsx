@@ -3,6 +3,7 @@ import style from "../Pagos/PagoExitoso.module.css"
 import { Button } from "flowbite-react"
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, getCart, saveCoursesAtUser, updatePaymentStatus } from '../../redux/actions';
+import { Link } from "react-router-dom";
 
 
 
@@ -11,10 +12,10 @@ function PagoExitoso() {
     const user = useSelector(state => state.user)
     const tokken = window.localStorage.getItem("tokken")
     const cart = useSelector(state => state.carrito)
-    console.log(cart);
+    // console.log(cart);
     useEffect(() => {
-        console.log(user);
-        console.log(tokken);
+        // console.log(user);
+        // console.log(tokken);
         dispatch(updatePaymentStatus(tokken))
         dispatch(saveCoursesAtUser(tokken, cart))
         dispatch(getCart())
@@ -39,11 +40,13 @@ function PagoExitoso() {
                     })}
                 </div>
                 <div className={style.texto2}>Comienza a disfrutar</div>
-                <Button
-                    gradientDuoTone="purpleToBlue"
-                    className={style.buttonGo} >
-                    Ir a mis cursos
-                </Button>
+                <Link to="/mycourses">
+                    <Button
+                        gradientDuoTone="purpleToBlue"
+                        className={style.buttonGo} >
+                        Ir a mis cursos
+                    </Button>
+                </Link>
             </div>
         </div>
     )

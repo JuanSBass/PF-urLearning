@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
 
-      console.log(user)
+      // console.log(user)
       if (user?.uid) {
         const token = user.accessToken;
         dispatch(logIn(token))
