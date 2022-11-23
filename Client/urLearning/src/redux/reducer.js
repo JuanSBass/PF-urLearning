@@ -36,6 +36,7 @@ const initialState = {
   user: {},
   log: false,
   carrito: [],
+  copyCarrito: [],
   userDetail: {},
   userCourses: [],
 };
@@ -200,6 +201,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
+        copyCarrito: action.payload,
       };
 
     case REMOVE_FROM_CART:
