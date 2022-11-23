@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { User } = require("../db");
 const admin = require("../firebase/config");
+const sendMailRegister = require("./sendemail");
 
 router.post("/create", async (req, res) => {
   try {
@@ -13,7 +14,7 @@ router.post("/create", async (req, res) => {
     let name;
     if (decodeValue.name) name = decodeValue.name;
     else {
-      name = "Usuario";
+      name = email.split("@")[0]; // El nombre del usuario será el email sin @
     }
     if (!decodeValue) return new Error("no se pudio");
     let newUser = await User.findOrCreate({
@@ -23,6 +24,9 @@ router.post("/create", async (req, res) => {
         name,
       },
     });
+
+    sendMailRegister(name, email);
+
     res.status(200).send(newUser);
   } catch (error) {
     res.status(404).send(error.message);
