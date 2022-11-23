@@ -5,29 +5,32 @@ import { Route, BrowserRouter } from "react-router-dom";
 import Detail from "./components/Detail/Detail.jsx";
 import Courses from "./components/Courses/Courses.jsx";
 import Nav from "./components/nav/Nav";
+import userDetail from "./components/userDetail/userDetail.jsx";
 import Footer from "./components/footer/Footer";
 import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
 import ContactUs from "./components/Contact Us/ContactUs.jsx"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fireBase/credenciales";
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { logIn, logOut } from "./redux/actions"
 import { useEffect } from "react"
+import UploadVideo from "./components/UploadVideo/UploadVideo.jsx";
+import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
+import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
+import { Shop } from "./components/Shop/Shop.jsx";
+import About from "./components/About/About"
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
 
-
+      console.log(user)
       if (user?.uid) {
         const token = user.accessToken;
-        console.log(user)
-        dispatch(logIn(
-          user.uid,
-          user.email,
-          user.displayName,
-          user.photoURL))
+        dispatch(logIn(token))
         window.localStorage.setItem("tokken", token)
       }
       else {
@@ -37,17 +40,30 @@ function App() {
     })
   }, [dispatch])
 
+
+
   return (
     <BrowserRouter>
       <div className="App">
         <Nav />
+        {/* <hr />
+        <ShoppingCart />
+        <hr /> */}
         <Route exact path="/" component={Home} />
         <Route exact path="/allcourses" component={Courses} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/contact" component={ContactUs} />
+        <Route exact path="/about" component={About} />
         <Route exact path="/form" component={Form} />
         <Route exact path="/course/:id" component={Detail} />
         <Route exact path="/formpage" component={PruebaStripe} />
+        <Route exact path="/uploadvideo" component={UploadVideo} />
+        <Route exact path="/formpage/success" component={PagoExitoso} />
+        <Route exact path="/formpage/failed" component={PagoDenegado} />
+        <Route exact path="/shop" component={Shop} />
+
+
+        <Route exact path={`/${user.name}`} component={userDetail} />
 
         <Footer />
       </div>

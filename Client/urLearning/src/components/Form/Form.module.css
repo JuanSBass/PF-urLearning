@@ -15,27 +15,19 @@
 }
 
 .formulario {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   font-weight: 200;
   font-size: 15px;
   gap: 1.5rem;
 }
 
-.izq {
-  display: flex;
-  flex-direction: column;
-  width: 45%;
-  gap: 1.3rem;
-  padding-top: 0.9rem;
-}
-
+.izq,
 .der {
   display: flex;
   flex-direction: column;
-  width: 45%;
   gap: 1.3rem;
-  padding-top: 2rem;
+  padding: 1rem;
 }
 
 .mitadInputs {
@@ -72,4 +64,30 @@
 
 .desc {
   padding-bottom: 1rem;
+}
+
+.contenedorupload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0rem auto;
+  text-align: center;
+  justify-content: space-evenly;
+  grid-column: 1/3;
+}
+
+.dropzone {
+  text-align: center;
+  padding: 2rem;
+  border: 3px dashed #eeeeee;
+  border-color: #d0c5c5;
+  color: #bababa;
+  margin-bottom: 2rem;
+}
+
+.videos {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
 }

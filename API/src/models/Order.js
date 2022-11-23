@@ -1,28 +1,22 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define(
-    "order",
-    {
-      id: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true,
-      },
-      amount_subtotal: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-      },
-      customer_email: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      payment_status: {
-        type: DataTypes.STRING,
-      },
+  sequelize.define("order", {
+    order_id: {
+      type: DataTypes.STRING,
+      primaryKey: true,
     },
-    {
-      timestamps: false,
-    }
-  );
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    payment_status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    amount_total: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+    },
+  });
 };
