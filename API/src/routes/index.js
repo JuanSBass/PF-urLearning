@@ -27,6 +27,7 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const admin = require("../firebase/config");
+const { card } = require("mercadopago");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -236,47 +237,24 @@ router.post("/cart", async (req, res) => {
   const token = req.body[1];
   const userId = await admin.auth().verifyIdToken(token);
   if (!userId) return new Error("no se pudio");
-  const papaya = await Cart.findAll();
-  // console.log(papaya);
 
   try {
-    // if (papaya.length === 0) {
-    let newCartItem = await Cart.create({
-      idCourse: id,
-      title,
-      image,
-      description,
-      price,
-      name_prof,
-      userId: userId.uid,
+    let newCartItem = await Cart.findOrCreate({
+      where: {
+        idCourse: id,
+      },
+      defaults: {
+        idCourse: id,
+        title,
+        image,
+        description,
+        price,
+        name_prof,
+        userId: userId.uid,
+      },
     });
-    res.status(200).send("Cart creado correctamente");
-    // } else {
-    //   for (let i = 0; i < papaya.length; i++) {
-    //     //console.log(papaya[i].idCourse);
-    //     if (papaya[i].idCourse !== id) {
-    //       let newCartItem = await Cart.create({
-    //         idCourse: id,
-    //         title,
-    //         image,
-    //         description,
-    //         price,
-    //         name_prof,
-    //         userId: userId.uid,
-    //       });
-    //       res.status(200).send("Cart creado correctamente");
-    //     } else {
-    //       console.log("ya existe el id en la BBDD");
-    //       res.status(404).send("ya existe el id en la BBDD");
-    //     }
-    //   }
-    //   console.log("ya estoy afuera del for");
-    //   res.status(404).send("ya estoy afuera del for");
-    // }
-    //  else
-    //   console.log("no podes pa");
-    //   res.status(404).send("elemento ya existente en la BBBD");
-    // }
+    console.log(newCartItem);
+    res.status(200).send(newCartItem, "Curso creado correctamente");
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post Cart");

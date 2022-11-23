@@ -287,11 +287,13 @@ export function getCart() {
           Authorization: "Bearer " + tokken,
         },
       });
+      console.log("vengo antes del return");
       return dispatch({
         type: GET_CART,
         payload: json.data,
       });
     } catch (error) {
+      console.log("oh oh la cagaste");
       console.log({ error });
     }
   };

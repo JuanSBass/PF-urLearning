@@ -181,6 +181,7 @@ const getCartCourseDb = async (req) => {
       price: e.price,
       name_prof: e.name_prof,
       userId: e.userId,
+      idCourse: e.idCourse,
     };
   });
   return newCartDb;
