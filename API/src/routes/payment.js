@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 const Stripe = require("stripe");
-const { Order } = require("../db");
 const apiKeyPayment = process.env.API_KEY_PAYMENT;
 const { Order, User, Course } = require("../db.js");
 const admin = require("../firebase/config");
