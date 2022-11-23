@@ -28,6 +28,7 @@ const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
 const admin = require("../firebase/config");
+const { card } = require("mercadopago");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -231,52 +232,37 @@ router.get("/courseBySubCategory", async (req, res) => {
 });
 
 router.post("/cart", async (req, res) => {
-  //console.log(req.body);
   const { id, title, image, description, price, name_prof } = req.body[0];
   const token = req.body[1];
   const userId = await admin.auth().verifyIdToken(token);
   if (!userId) return new Error("no se pudio");
-  const papaya = await Cart.findAll();
-  // console.log(papaya);
+
+  let currentUser = await User.findByPk(userId.uid);
+  let result = await currentUser.getCourses({
+    attributes: ["title", "id"],
+  });
 
   try {
-    // if (papaya.length === 0) {
-    let newCartItem = await Cart.create({
-      idCourse: id,
-      title,
-      image,
-      description,
-      price,
-      name_prof,
-      userId: userId.uid,
-    });
-    res.status(200).send("Cart creado correctamente");
-    // } else {
-    //   for (let i = 0; i < papaya.length; i++) {
-    //     //console.log(papaya[i].idCourse);
-    //     if (papaya[i].idCourse !== id) {
-    //       let newCartItem = await Cart.create({
-    //         idCourse: id,
-    //         title,
-    //         image,
-    //         description,
-    //         price,
-    //         name_prof,
-    //         userId: userId.uid,
-    //       });
-    //       res.status(200).send("Cart creado correctamente");
-    //     } else {
-    //       console.log("ya existe el id en la BBDD");
-    //       res.status(404).send("ya existe el id en la BBDD");
-    //     }
-    //   }
-    //   console.log("ya estoy afuera del for");
-    //   res.status(404).send("ya estoy afuera del for");
-    // }
-    //  else
-    //   console.log("no podes pa");
-    //   res.status(404).send("elemento ya existente en la BBBD");
-    // }
+    if (result.find((e) => e.id === id)) {
+      console.log("ya esta comprado");
+      res.status(404).send("elemento ya comprado");
+    } else {
+      let newCartItem = await Cart.findOrCreate({
+        where: {
+          idCourse: id,
+        },
+        defaults: {
+          idCourse: id,
+          title,
+          image,
+          description,
+          price,
+          name_prof,
+          userId: userId.uid,
+        },
+      });
+      res.status(200).send(newCartItem);
+    }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post Cart");
