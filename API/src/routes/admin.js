@@ -99,6 +99,18 @@ router.delete("/deleteOrderId", async (req, res) => {
 });
 
 //Categories y subCategories
+router.post("/category", async (req, res) => {
+  const { name } = req.body;
+  try {
+    let newCategory = await Category.create({
+      name,
+    });
+    res.status(200).send("category creado correctamente");
+  } catch (error) {
+    console.log(error);
+    res.status(404).send("no se creo la category");
+  }
+});
 
 router.delete("/deleteCategorie", async (req, res) => {
   //OJO ver lo de borrado logico
@@ -109,6 +121,41 @@ router.delete("/deleteCategorie", async (req, res) => {
     res.status(200).send(categorieToDelete, " destruida");
   } catch (error) {
     res.status(401).send(error);
+  }
+});
+
+router.get("/allCategories", async (req, res) => {
+  try {
+    let allCategories = await Category.findAll({});
+    res.status(200).send(allCategories);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/subCategory", async (req, res) => {
+  let { name, categoryId } = req.body;
+  try {
+    let newSubCategory = await SubCategory.create({
+      name,
+      categoryId,
+    });
+    res.status(200).send("SUBcategory creado correctamente");
+  } catch (error) {
+    console.log(error.message);
+    res.status(404).send("no se creo la SUBcategory");
+  }
+});
+
+router.get("/childCategoriesFrom", async (req, res) => {
+  let { categoryId } = req.query;
+  try {
+    let childCategories = await SubCategory.findAll({
+      where: { categoryId },
+    });
+    res.status(200).send(childCategories);
+  } catch (error) {
+    console.log(error);
   }
 });
 
