@@ -1,0 +1,10 @@
+.navcart{
+    position:fixed;
+    top: 10;
+    right: 170px;
+    background-color:rgb(255, 111, 0);
+    padding: 2px 4px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1;
+  }

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 import { useState } from "react";
 import { postProductCart } from "../../../redux/actions";
+import { Toaster, toast } from 'react-hot-toast';
 
 
 const CardsCourses = () => {
@@ -12,7 +13,6 @@ const CardsCourses = () => {
     title: "",
     price: ""
   })
-
   const userTokken = window.localStorage.getItem("tokken");
   console.log(userTokken);
 
@@ -42,8 +42,12 @@ const CardsCourses = () => {
               {card.rating} out of 5
             </p>
           </Rating>
-          <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleClick(card)}>Add to Cart</button>
+          <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => toast.success('Added Course!') && handleClick(card)}>Add to Cart</button>
+          <Toaster
+            position="bottom-right"
+          />
         </div>
+
       ))}
     </section>
   );

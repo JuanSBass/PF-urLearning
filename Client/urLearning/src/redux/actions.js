@@ -214,18 +214,15 @@ export const loginEmailAuth = (email, password) => {
   }
 };
 
-export function addToCart(id) {
-  return {
-    type: ADD_TO_CART,
-    payload: id,
-  };
-}
-
 export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
-  return async function () {
+  return async (dispatch) => {
     const json = await axios.post("/cart", item);
     console.log(item);
+    return dispatch({
+      type: ADD_TO_CART,
+      payload: json.data
+    });
   };
 }
 
