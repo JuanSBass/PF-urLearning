@@ -24,7 +24,8 @@ export const Shop = () => {
     }
 
     return cart.length ? (
-        <div class={styles.Table}>
+        <div class={styles.contenedorGeneral}>
+        <div class={styles.contenedor}>
             <p class="text-3xl text-gray-900 dark:text-white">Your Cart</p>
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -77,7 +78,9 @@ export const Shop = () => {
                 <PruebaStripe />
 
             </div>
+
         </div>
+    </div>
     ) : (
         <div class={styles.contenedorGeneral}>
             <div class={styles.contenedor}>
