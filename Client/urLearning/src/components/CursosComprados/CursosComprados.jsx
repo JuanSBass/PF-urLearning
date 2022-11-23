@@ -2,6 +2,9 @@ import React, { useEffect } from 'react'
 import style from "../CursosComprados/CursosComprados.module.css"
 import { useSelector, useDispatch } from "react-redux";
 import { getCourses, getUserCourses } from '../../redux/actions';
+import { Button } from "flowbite-react"
+import { Link } from "react-router-dom";
+
 
 
 function CursosComprados() {
@@ -22,7 +25,7 @@ function CursosComprados() {
             <div className={style.contCursos} >
                 <div className={style.lineaVioleta}>Mis cursos</div>
                 <div className={style.cursos}>
-                    {cursosUser?.map((c) => {
+                    {cursosUser.length ? (cursosUser.map((c) => {
                         return (
                             <div className={style.curso}>
                                 <img src={c.image} alt="imagen" />
@@ -30,7 +33,18 @@ function CursosComprados() {
                                 <div className={style.profe}>{c.name_prof}</div>
                             </div>
                         )
-                    })}
+                    })) : (<div className={style.compraCurso}>
+                        <div className={style.tituloCompra}>No tienes cursos comprados...</div>
+                        <Link to="/allcourses">
+                            <Button
+                                gradientDuoTone="purpleToBlue"
+                                className={style.buttonGo} >
+                                Ir a cursos
+                            </Button>
+                        </Link>
+                    </div>
+
+                    )}
                 </div>
             </div>
         </div>
