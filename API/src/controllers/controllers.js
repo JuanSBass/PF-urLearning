@@ -175,6 +175,7 @@ const getCartCourseDb = async (req) => {
   const newCartDb = await cartDb.map((e) => {
     return {
       ID: e.ID,
+      idCourse: e.idCourse,
       title: e.title,
       image: e.image,
       description: e.description,

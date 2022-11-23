@@ -26,6 +26,7 @@ const stripe = require("stripe")(API_KEY_PAYMENT);
 const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
+const administrator = require("./admin.js");
 const admin = require("../firebase/config");
 const { card } = require("mercadopago");
 
@@ -33,6 +34,7 @@ router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
 router.use("/userCresential", userCredencial);
+router.use("/admin", administrator);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -198,7 +200,6 @@ router.put("/course/:id", async (req, res) => {
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
-  console.log("hola");
   try {
     const { categ } = req.query;
     console.log(categ);
@@ -215,7 +216,6 @@ router.get("/courseByCategory", async (req, res) => {
 });
 
 router.get("/courseBySubCategory", async (req, res) => {
-  console.log("hola");
   try {
     const { subcateg } = req.query;
     console.log(subcateg);
