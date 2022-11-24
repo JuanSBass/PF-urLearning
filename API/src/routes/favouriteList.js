@@ -1,17 +1,12 @@
 const { Router } = require("express");
 const router = Router();
-const {
-  User,
-  Course,
-  Cart,
-  Category,
-  SubCategory,
-  Order,
-  FavouriteList,
-} = require("../db");
+const { User, Course, FavouriteList } = require("../db");
 
 /**
- * Crea una lista de favoritos vacia y se la asigna al usuario cuyo id viene por bodu
+ * PRE: el usuario debe estar creado.
+ *
+ * POST: Busca el usuario por su id, instancia una FavouriteList y la relaciona con el
+ * usuario. Retorna la lista (vacía).
  */
 router.post("/new", async (req, res) => {
   const { userId } = req.body;
@@ -31,8 +26,11 @@ router.post("/new", async (req, res) => {
 });
 
 /**
- * Pasandole el id del usuario y el id del curso agrega el curso a la lista de favotiros
- * del usuario
+ * PRE: usuario y lista previamente creados y relacionados. Curso previamente creado.
+ * Recibe el id del usuario y el id del curso.
+ *
+ * POST: Busca la lista de favoritos de dicho usuario y relaiciona la lista al curso.
+ * Retorna la lista actualizada.
  */
 router.post("/addCourse", async (req, res) => {
   const { userId, courseId } = req.body;
@@ -60,3 +58,9 @@ router.get("/all", async (req, res) => {
   }
 });
 module.exports = router;
+
+/**
+ * Falta:
+ * 1. Devolver solo los cursos favoritos del usuario
+ * 2. Remover un curso de la lista de favoritos (desrelacionar)
+ */
