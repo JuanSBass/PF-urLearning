@@ -8,6 +8,7 @@ class Middleware {
       const decodeValue = await admin.auth().verifyIdToken(token);
 
       if (decodeValue) {
+        req.userId = decodeValue.uid;
         return next();
       }
       return res.json({ message: "can not authoize" });

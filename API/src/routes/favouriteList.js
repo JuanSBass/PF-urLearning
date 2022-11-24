@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const router = Router();
 const { User, Course, FavouriteList } = require("../db");
+const middleware = require("../middleware");
+router.use(middleware.decodeToken);
 
 /**Crear lista de favoritos:
  * PRE: el usuario debe estar creado.
