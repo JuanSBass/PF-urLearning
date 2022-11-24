@@ -29,7 +29,6 @@ const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
-const { card } = require("mercadopago");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
