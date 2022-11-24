@@ -29,12 +29,10 @@ const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
-// const sendemail = require("./sendemail");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-// router.use("/sendemail", sendemail);
 router.use("/userCresential", userCredencial);
 router.use("/admin", administrator);
 router.use("/favouriteList", favouriteList);
