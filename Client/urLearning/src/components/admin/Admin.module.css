@@ -1,0 +1,11 @@
+.container{
+    width: 100vw;
+    height: 50vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nom{
+    padding: 10px;
+}

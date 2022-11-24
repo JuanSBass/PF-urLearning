@@ -8,19 +8,26 @@ router.post("/create", async (req, res) => {
   try {
     const token = req.body.authorization.split(" ")[1];
     const decodeValue = await admin.auth().verifyIdToken(token);
+    console.log(decodeValue);
 
-    const { email, user_id } = decodeValue;
+    const { email, user_id, picture } = decodeValue;
+    const valid = user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3";
+    console.log();
     let name;
+
     if (decodeValue.name) name = decodeValue.name;
     else {
       name = email.split("@")[0]; // El nombre del usuario será el email sin @
     }
+
     if (!decodeValue) return new Error("no se pudio");
     let newUser = await User.findOrCreate({
       where: { id: user_id },
       defaults: {
         email,
         name,
+        image: picture,
+        admin: valid,
       },
     });
 

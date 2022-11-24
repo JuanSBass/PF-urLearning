@@ -17,6 +17,7 @@ import {
   LOGOUT,
   ID_SESSION,
   GET_USER_DETAIL,
+  PUT_USER,
   ////////// CARRITO//////////
   ADD_TO_CART,
   GET_CART,
@@ -217,6 +218,9 @@ function rootReducer(state = initialState, action) {
 
     case GET_USER_DETAIL:
       return { ...state, userDetail: action.payload };
+
+    case PUT_USER:
+      return { ...state };
 
     case GET_USER_COURSES:
       return {
