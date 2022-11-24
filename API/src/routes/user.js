@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { User, Course, FavouriteList } = require("../db");
 const admin = require("../firebase/config");
-const sendMailRegister = require("./sendemail");
+const { sendMailRegister } = require("./sendemail");
 
 router.post("/create", async (req, res) => {
   try {
