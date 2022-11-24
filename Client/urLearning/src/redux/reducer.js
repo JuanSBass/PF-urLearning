@@ -201,7 +201,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
-        copyCarrito: action.payload,
       };
 
     case REMOVE_FROM_CART:

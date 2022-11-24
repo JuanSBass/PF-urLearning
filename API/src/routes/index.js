@@ -197,6 +197,8 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
+///////// Route DELETE para Course -> ADMIN////////
+
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
@@ -250,6 +252,7 @@ router.post("/cart", async (req, res) => {
       let newCartItem = await Cart.findOrCreate({
         where: {
           idCourse: id,
+          userId: userId.uid,
         },
         defaults: {
           idCourse: id,
@@ -313,9 +316,5 @@ router.delete("/cart", async (req, res) => {
     console.log(error + "error del delete /cart");
   }
 });
-
-///////// Route name_prof /////////
-
-//router.get("/course")
 
 module.exports = router;
