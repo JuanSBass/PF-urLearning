@@ -24,6 +24,28 @@ import { useHistory } from "react-router-dom";
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
 
+function validate(input) {
+  const errors = {};
+  if (!input.title) {
+    errors.title = "Debe ingresar un titulo";
+  }
+
+  if (!input.name_prof) {
+    errors.name_prof = "Debe ingresar el nombre del profesor";
+  }
+
+  if (!input.description || input.description.length < 15 || input.description.length > 200) {
+    errors.description = "Debe tener entre 15 y 200 caracteres";
+  }
+
+  if (!input.category) {
+    errors.category = "Debe ingresar una categoría";
+  }
+
+
+  return errors;
+}
+
 const Form = () => {
   const category = useSelector((state) => state.category);
   const subCategories = useSelector((state) => state.subCategories);
@@ -48,6 +70,8 @@ const Form = () => {
     name_prof: "",
     videos: []
   });
+  const [errors, setErrors] = useState({});
+
 
   let btnDisabled = !(
     input.title.length &&
@@ -58,17 +82,34 @@ const Form = () => {
     input.name_prof.length &&
     input.subCategory.length &&
     input.language.length
-  );
+  ) ||
+    input.description.length > 200 ||
+    input.description.length < 15
 
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
+
+  useEffect(() => {
+    setErrors(
+      validate({
+        ...input,
+      })
+    );
+  }, [input]);
 
   const handleChange = (ev) => {
     setInput({
       ...input,
       [ev.target.name]: ev.target.value,
     });
+
+    setErrors(
+      validate({
+        ...input,
+        [ev.target.name]: ev.target.value,
+      })
+    );
   };
 
   const handleSelect = (ev) => {
@@ -165,7 +206,7 @@ const Form = () => {
 
   }
 
-  console.log(input);
+  // console.log(input);
 
 
   return (
@@ -190,6 +231,9 @@ const Form = () => {
                     onChange={(e) => handleChange(e)}
                     name="title"
                   />
+                  {errors.title && (
+                    <div className={style.errores}>{errors.title}</div>
+                  )}
                 </div>
 
                 <div className={style.cate}>
@@ -203,6 +247,9 @@ const Form = () => {
                     onChange={(e) => handleChange(e)}
                     name="name_prof"
                   />
+                  {errors.name_prof && (
+                    <div className={style.errores}>{errors.name_prof}</div>
+                  )}
                 </div>
               </div>
               <div className={style.categoriasJuntas}>
@@ -229,6 +276,9 @@ const Form = () => {
                       );
                     })}
                   </Select>
+                  {errors.category && (
+                    <div className={style.errores}>{errors.category}</div>
+                  )}
                 </div>
 
 
@@ -269,6 +319,9 @@ const Form = () => {
                   onChange={(e) => handleChange(e)}
                   name="description"
                 />
+                {errors.description && (
+                  <div className={style.errores}>{errors.description}</div>
+                )}
               </div>
             </div>
 

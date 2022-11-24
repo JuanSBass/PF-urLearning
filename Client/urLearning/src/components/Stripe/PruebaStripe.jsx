@@ -18,7 +18,7 @@ export const FormPago = () => {
     event.preventDefault();
     try {
       const tuki = window.localStorage.getItem("tokken")
-      console.log(tuki)
+      // console.log(tuki)
       const products = [
         {
           id: 1,

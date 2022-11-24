@@ -17,7 +17,8 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-     /* fecha:{
+
+      /* fecha:{
         type:DataTypes.DATE,
         allowNull:false,
       },
@@ -28,9 +29,9 @@ module.exports = (sequelize) => {
       }, */
       // here would be the idProf reference
     },
-    
+
     {
-      timestamps: false,
+      paranoid: true,
       createdAt: false,
     }
   );

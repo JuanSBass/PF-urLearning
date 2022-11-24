@@ -26,12 +26,17 @@ const stripe = require("stripe")(API_KEY_PAYMENT);
 const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
+const administrator = require("./admin.js");
+const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
+const { card } = require("mercadopago");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
 router.use("/userCresential", userCredencial);
+router.use("/admin", administrator);
+router.use("/favouriteList", favouriteList);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -194,10 +199,11 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
+///////// Route DELETE para Course -> ADMIN////////
+
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
-  console.log("hola");
   try {
     const { categ } = req.query;
     console.log(categ);
@@ -214,7 +220,6 @@ router.get("/courseByCategory", async (req, res) => {
 });
 
 router.get("/courseBySubCategory", async (req, res) => {
-  console.log("hola");
   try {
     const { subcateg } = req.query;
     console.log(subcateg);
@@ -231,22 +236,38 @@ router.get("/courseBySubCategory", async (req, res) => {
 });
 
 router.post("/cart", async (req, res) => {
-  const { title, image, description, price, name_prof } = req.body[0];
+  const { id, title, image, description, price, name_prof } = req.body[0];
   const token = req.body[1];
-  console.log(token);
   const userId = await admin.auth().verifyIdToken(token);
   if (!userId) return new Error("no se pudio");
 
+  let currentUser = await User.findByPk(userId.uid);
+  let result = await currentUser.getCourses({
+    attributes: ["title", "id"],
+  });
+
   try {
-    let newCartItem = await Cart.create({
-      title,
-      image,
-      description,
-      price,
-      name_prof,
-      userId: userId.uid,
-    });
-    res.status(200).send("Cart creado correctamente");
+    if (result.find((e) => e.id === id)) {
+      console.log("ya esta comprado");
+      res.status(404).send("elemento ya comprado");
+    } else {
+      let newCartItem = await Cart.findOrCreate({
+        where: {
+          idCourse: id,
+          userId: userId.uid,
+        },
+        defaults: {
+          idCourse: id,
+          title,
+          image,
+          description,
+          price,
+          name_prof,
+          userId: userId.uid,
+        },
+      });
+      res.status(200).send(newCartItem);
+    }
   } catch (error) {
     console.log(error);
     res.status(404).send(error + " error del /Post Cart");
@@ -284,7 +305,6 @@ router.delete("/cart/:id", async (req, res) => {
 ///////// Route DELETE para BORRAR TODO el carrito de compras ////////
 router.delete("/cart", async (req, res) => {
   const clear = await getPrueba(req);
-  console.log(clear, "uuuuuuuuuuuu");
 
   try {
     await Cart.destroy({
@@ -293,15 +313,10 @@ router.delete("/cart", async (req, res) => {
       },
     });
     const result = await getCartCourseDb(req);
-    console.log(result, "soielarai");
     res.send(200, result, "Borrado exitoso");
   } catch (error) {
     console.log(error + "error del delete /cart");
   }
 });
-
-///////// Route name_prof /////////
-
-//router.get("/course")
 
 module.exports = router;

@@ -26,6 +26,7 @@ export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
+export const GET_USER_COURSES = "GET_USER_COURSES";
 
 export const getCourses = () => {
   try {
@@ -179,7 +180,6 @@ export const startGoogleAuth = () => {
   try {
     return async (dispatch) => {
       const user = await loginWithGoogle();
-      console.log(user);
       const tokken = user.accessToken;
 
       dispatch(logIn(tokken));
@@ -226,30 +226,26 @@ export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
   return async function () {
     const json = await axios.post("/cart", item);
-    console.log(item);
   };
 }
 
-export function updatePaymentStatus(token) {
+export function updatePaymentStatus(tokken) {
   return async function () {
-    const json = await axios.put("api/updateLastOrer", { token });
+    const json = await axios.put("api/updateLastOrer", { tokken });
     return;
   };
 }
+
 export function clearCart() {
   try {
     // const item = userTokken;
     const tokken2 = window.localStorage.getItem("tokken");
-    console.log(tokken2, "soy el item del token en la action");
-    console.log(tokken2);
     return async function (dispatch) {
-      console.log("estoy en el medio");
       const json = await axios.delete(`/cart`, {
         headers: {
           Authorization: "Bearer " + tokken2,
         },
       });
-      console.log("soy el segundo Item");
       return dispatch({
         type: CLEAR_CART,
         payload: json.data,
@@ -280,7 +276,6 @@ export const getUserDetail = () => {
 export function getCart() {
   return async function (dispatch) {
     try {
-      console.log("aaaaaaaaa");
       const tokken = window.localStorage.getItem("tokken");
       const json = await axios.get("/cart", {
         headers: {
@@ -301,7 +296,6 @@ export function removeItemCart(id) {
   return async function (dispatch) {
     try {
       const tokken = window.localStorage.getItem("tokken");
-      console.log(id);
       const response = await axios.delete(`/cart/${id}`, {
         headers: {
           Authorization: "Bearer " + tokken,
@@ -317,12 +311,29 @@ export function removeItemCart(id) {
   };
 }
 
-export function saveCoursesAtUser(token, carrito) {
+export function saveCoursesAtUser(tokken, carrito) {
   return async function () {
     const json = await axios.put("api/updateUserCourseRelations", {
-      token,
+      tokken,
       carrito,
     });
     return;
+  };
+}
+
+//? <--------- Toma los cursos comprados por el user -------->
+
+export function getUserCourses() {
+  return async function (dispatch) {
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.get("/user/allUsersWithCourses", {
+      headers: {
+        Authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_USER_COURSES,
+      payload: json.data,
+    });
   };
 }
