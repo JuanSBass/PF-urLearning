@@ -22,13 +22,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      {
-        timestamps: false,
-        createdAt: false,
-      }
-
-      },
-  )
-      // here would be the idProf reference
     },
-    
+    {
+      timestamps: false,
+      createdAt: false,
+    }
+  );
+  // here would be the idProf reference
+};
