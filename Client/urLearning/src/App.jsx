@@ -20,7 +20,7 @@ import UploadVideo from "./components/UploadVideo/UploadVideo.jsx";
 import PagoExitoso from "./components/Pagos/PagoExitoso.jsx";
 import PagoDenegado from "./components/Pagos/PagoDenegado.jsx";
 import { Shop } from "./components/Shop/Shop.jsx";
-import About from "./components/About/About"
+import About from "./components/About/About.jsx"
 import CursosComprados from "./components/CursosComprados/CursosComprados.jsx";
 import EditCurso from "./components/EditCurso/EditCurso.jsx";
 import DetalleCursoComprado from "./components/CursosComprados/DetalleCursoComprado.jsx";
