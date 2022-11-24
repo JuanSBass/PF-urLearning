@@ -18,15 +18,13 @@ router.post("/category", async (req, res) => {
 });
 
 router.post("/subCategory", async (req, res) => {
-  let { name, categoryId } = req.body;
-  console.log(categoryId);
-
   try {
+    const { name, categoryId } = req.body;
+    console.log(name)
     let newSubCategory = await SubCategory.create({
-      name,
-      categoryId,
+      name: name,
+      categoryId: categoryId
     });
-
     res.status(200).send("SUBcategory creado correctamente");
   } catch (error) {
     console.log(error.message);
@@ -40,6 +38,8 @@ router.get("/allCategories", async (req, res) => {
   try {
     // const token = req.headers.authorization.split(" ")[1];
     // const decodeValue = await admin.auth().verifyIdToken(token);
+    // console.log(token);
+
     // console.log(decodeValue);
     // if (!decodeValue) return new Error("no se pudio");
 

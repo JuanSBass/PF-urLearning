@@ -11,12 +11,14 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  GET_USER_COURSES,
   /////login//////////
   LOGIN,
   LOGOUT,
+  ID_SESSION,
+  GET_USER_DETAIL,
   ////////// CARRITO//////////
   ADD_TO_CART,
-  GET_USER_DETAIL,
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
@@ -34,7 +36,9 @@ const initialState = {
   user: {},
   log: false,
   carrito: [],
+  copyCarrito: [],
   userDetail: {},
+  userCourses: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -190,6 +194,9 @@ function rootReducer(state = initialState, action) {
         ...state,
         carrito: [...state.carrito, product],
       };
+    case ID_SESSION:
+      return { ...state, idSession: action.payload };
+
     case GET_CART:
       return {
         ...state,
@@ -210,6 +217,12 @@ function rootReducer(state = initialState, action) {
 
     case GET_USER_DETAIL:
       return { ...state, userDetail: action.payload };
+
+    case GET_USER_COURSES:
+      return {
+        ...state,
+        userCourses: action.payload[0].courses,
+      };
 
     default:
       return { ...state };

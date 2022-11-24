@@ -75,7 +75,7 @@ module.exports = (sequelize) => {
       // here would be the idProf reference and students
     },
     {
-      timestamps: false,
+      paranoid: true,
       createdAt: false,
     }
   );
