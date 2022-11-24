@@ -20,18 +20,35 @@ function DetalleCursoComprado() {
 
 
             <div className={style.contVideo}>
+                <div className={style.contenedorArriba}>
 
-                <div className={style.title}>{detalle.title}</div>
-                <video controls autoPlay id={style.video}>
-                    <source src={detalle.videos.linksVideos[0].fileURL} type="video/mp4" />
-                </video>
+                    <div className={style.title}>{detalle.title}</div>
+                    <video controls autoPlay id={style.video}>
+                        <source src={detalle.videos.linksVideos[0].fileURL} type="video/mp4" />
+                    </video>
+                </div>
+
                 <div className={style.acercaCurso}>Acerca de este curso</div>
-                <div>{detalle.name_prof}</div>
-                <div>{detalle.category} {detalle.subCategory}</div>
-                <div>{detalle.duration}hr</div>
-                <div>{detalle.language}</div>
-                <div>{detalle.level}</div>
-                <div>{detalle.description}</div>
+                <div className={style.contenedorAbajo}>
+
+                    <div className={style.izq}>
+
+                        <div> <small className={style.prueba}>Profesor</small> {detalle.name_prof}</div>
+                        <hr className={style.linea} />
+                        <div> <small className={style.prueba}>Duration</small> {detalle.duration}hr</div>
+                        <hr className={style.linea} />
+
+                        <div> <small className={style.prueba}>Language</small> {detalle.language}</div>
+                        <hr className={style.linea} />
+
+                        <div> <small className={style.prueba}>Level</small> {detalle.level}</div>
+                    </div>
+                    <hr className={style.lineaMedio} />
+                    <div className={style.der}>
+
+                        <div>{detalle.description}</div>
+                    </div>
+                </div>
             </div>
 
             : "Cargando..."}</div>

@@ -2,36 +2,99 @@
   display: flex;
   justify-content: center;
   margin-top: 81px;
-  height: calc(150vh - 149px);
+  height: calc(300vh - 149px);
 }
 
 #video {
-  margin: 0 auto;
-  /* height: 50%;
-  width: 50%; */
   border-radius: 20px;
+  width: 100%;
 }
 
 .contVideo {
+  margin: 5rem;
   background-color: #fff;
-  padding: 5rem;
+  padding: 4rem;
   border-radius: 50px;
   margin-top: 3rem;
   margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 5rem;
+  height: fit-content;
 }
 
 .acercaCurso {
   font-size: 3em;
-  margin-top: 5rem;
   font-weight: 900;
   color: #6d6aee;
 }
 
 .title {
-  font-size: 3em;
+  font-size: 3.5em;
   font-weight: 800;
   margin-bottom: 3rem;
+  margin-left: 2.5rem;
+  margin-top: 1rem;
+}
+
+.contenedorAbajo {
+  display: flex;
+  gap: 3rem;
+  font-size: 2em;
+  align-items: center;
+  position: relative;
+}
+
+.contenedorArriba {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.izq {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  font-weight: 550;
+  margin-left: 3rem;
+  width: 100%;
+}
+
+.desc {
+  font-size: 25px;
+  font-weight: 400;
+  background-color: rgb(243, 243, 243);
+  padding: 1rem;
+  border-radius: 40px;
+  text-align: center;
+}
+
+.lineaMedio {
+  position: absolute;
+  width: 20vw;
+  right: 50%;
+  left: 35%;
+  transform: rotate(90deg);
+}
+
+.prueba {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  padding: 1rem;
+  border-radius: 30px;
+  margin-left: -1rem;
+  color: #6d6aee;
+}
+
+.linea {
+  width: 30vw;
+  transform: rotate(180deg);
+  margin-left: -3rem;
+}
+
+.der {
+  width: 100%;
+  line-height: 1.5em;
 }
