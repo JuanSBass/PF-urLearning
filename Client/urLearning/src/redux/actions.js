@@ -228,6 +228,7 @@ export function postProductCart(carrito, userTokken) {
   return async function () {
     const json = await axios.post("/cart", item);
     console.log(item);
+    console.log(json);
   };
 }
 

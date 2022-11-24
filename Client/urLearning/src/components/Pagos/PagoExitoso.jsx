@@ -9,8 +9,6 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 
 function PagoExitoso() {
     const dispatch = useDispatch()
-    const history = useHistory()
-    const location = useLocation()
     const [payment, setPayment] = useState([])
     const user = useSelector(state => state.user)
     const tokken = window.localStorage.getItem("tokken")
@@ -20,27 +18,17 @@ function PagoExitoso() {
     useEffect(() => {
         if (cart && cart.length && !payment.length) {
             const copyCart = [...cart]
-            console.log(copyCart)
+            console.log({ copyCart })
             setPayment([...copyCart])
         }
     }, [cart])
 
     useEffect(() => {
-        console.log('voy al pricipio')
         dispatch(updatePaymentStatus(tokken))
         dispatch(saveCoursesAtUser(tokken, cart))
         dispatch(getCart())
         return () => { dispatch(clearCart()) }
     }, [dispatch, user, tokken]);
-    // const handleDeleteAll = (e) => {
-    //     e.preventDefault()
-    //     dispatch(clearCart())
-    //     history.push("/")
-    // }
-
-    // if (location.pathname === "/formpage/success") {
-    //     dispatch(clearCart())
-    // }
 
     return (
         <div className={style.contenedorGeneral}>
