@@ -4,6 +4,7 @@ const Stripe = require("stripe");
 const apiKeyPayment = process.env.API_KEY_PAYMENT;
 const { Order, User, Course } = require("../db.js");
 const admin = require("../firebase/config");
+const { sendMailPurchase } = require("./sendemail.js");
 
 const stripe = new Stripe(apiKeyPayment);
 
@@ -118,7 +119,10 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     const decodeValue = await admin.auth().verifyIdToken(token);
     if (!decodeValue) return new Error("no se pudio");
 
+    // aqui modifico para el nodemailer
     const userId = decodeValue.uid;
+    const userEmail = decodeValue.email;
+    const userName = decodeValue.name;
     const lastOrder = await Order.findAll({
       where: { userId },
       order: [["createdAt", "DESC"]],
@@ -138,6 +142,8 @@ router.put("/updateUserCourseRelations", async (req, res) => {
       await currentUser.addCourses(carrito);
       //await currentCourse.addUser(currentUser); CREO que esta linea no hace falta
       console.log("ldkflsdkflskd", await currentUser.getCourses());
+      sendMailPurchase(userName, userEmail);
+
       message = "Relation successfull";
     } else {
       message = "Relation failed, check if payment status is paid";

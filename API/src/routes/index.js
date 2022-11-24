@@ -27,10 +27,12 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const admin = require("../firebase/config");
+// const sendemail = require("./sendemail");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
+// router.use("/sendemail", sendemail);
 router.use("/userCresential", userCredencial);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////

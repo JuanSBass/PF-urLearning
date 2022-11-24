@@ -7,7 +7,7 @@ const sendMailRegister = require("./sendemail");
 router.post("/create", async (req, res) => {
   try {
     const token = req.body.authorization.split(" ")[1];
-    console.log(token);
+    // console.log(token);
     const decodeValue = await admin.auth().verifyIdToken(token);
 
     const { email, user_id } = decodeValue;
@@ -15,6 +15,7 @@ router.post("/create", async (req, res) => {
     if (decodeValue.name) name = decodeValue.name;
     else {
       name = email.split("@")[0]; // El nombre del usuario será el email sin @
+      // name = "Usuario";
     }
     if (!decodeValue) return new Error("no se pudio");
     let newUser = await User.findOrCreate({
@@ -25,7 +26,7 @@ router.post("/create", async (req, res) => {
       },
     });
 
-    sendMailRegister(name, email);
+    if (newUser[1]) sendMailRegister(name, email);
 
     res.status(200).send(newUser);
   } catch (error) {

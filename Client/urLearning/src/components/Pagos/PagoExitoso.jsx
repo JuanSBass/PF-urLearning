@@ -13,8 +13,6 @@ function PagoExitoso() {
     const cart = useSelector(state => state.carrito)
     console.log(cart);
     useEffect(() => {
-        console.log(user);
-        console.log(tokken);
         dispatch(updatePaymentStatus(tokken))
         dispatch(saveCoursesAtUser(tokken, cart))
         dispatch(getCart())
