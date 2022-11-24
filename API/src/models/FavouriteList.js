@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "category",
+    "favouriteList",
     {
       id: {
         type: DataTypes.UUID,
@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       },
     },
     {
-      paranoid: true,
+      timestamps: false,
       createdAt: false,
     }
   );
