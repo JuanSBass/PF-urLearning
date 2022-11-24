@@ -22,6 +22,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      admin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        default: false,
+      },
     },
     {
       timestamps: false,

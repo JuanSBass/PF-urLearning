@@ -160,6 +160,7 @@ export const logIn = (tokken) => {
         image: semiOldUser[0].image,
         email: semiOldUser[0].email,
         name: semiOldUser[0].name,
+        admin: semiOldUser[0].admin,
       },
       //ojo que aca solo devuelve el nombre de la base de datos
       //y el resto se lo proporciona google
@@ -230,6 +231,7 @@ export function postProductCart(carrito, userTokken) {
   return async function () {
     const json = await axios.post("/cart", item);
     console.log(item);
+    console.log(json);
   };
 }
 
@@ -307,11 +309,13 @@ export function getCart() {
           Authorization: "Bearer " + tokken,
         },
       });
+      console.log("vengo antes del return");
       return dispatch({
         type: GET_CART,
         payload: json.data,
       });
     } catch (error) {
+      console.log("oh oh la cagaste");
       console.log({ error });
     }
   };

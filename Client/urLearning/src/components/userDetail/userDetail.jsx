@@ -21,6 +21,7 @@ const handleSubmit=()=>{
     setEdit(!edit);
     setInputs({name:"",image:""});
     dispatch(getUserDetail());
+    history.push("/");
     
 }
 const handleChange = (e) => {

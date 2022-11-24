@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Dropdown, Avatar } from "flowbite-react"
 import { logOut } from "../../redux/actions";
+
 // import ShoppingCart from "../Shopping/ShoppingCart";
 
 
@@ -52,6 +53,11 @@ export default function Nav() {
 						<Dropdown.Item>
 							Earnings
 						</Dropdown.Item>
+						{user.admin&&<Link to="/admin">
+							<Dropdown.Item>
+							Admin
+						</Dropdown.Item>
+						</Link>}
 						<Dropdown.Divider />
 						<button onClick={handleLogOut} type="button">
 							<Dropdown.Item>

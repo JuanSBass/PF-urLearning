@@ -37,6 +37,7 @@ const initialState = {
   user: {},
   log: false,
   carrito: [],
+  copyCarrito: [],
   userDetail: {},
   userCourses: [],
 };

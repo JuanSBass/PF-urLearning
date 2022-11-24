@@ -10,6 +10,8 @@ router.post("/create", async (req, res) => {
     console.log(decodeValue);
 
     const { email, user_id, picture } = decodeValue;
+    const valid = user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3";
+    console.log();
     let name;
 
     if (decodeValue.name) name = decodeValue.name;
@@ -24,6 +26,7 @@ router.post("/create", async (req, res) => {
         email,
         name,
         image: picture,
+        admin: valid,
       },
     });
     res.status(200).send(newUser);

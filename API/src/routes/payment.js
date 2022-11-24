@@ -34,6 +34,8 @@ router.post("/checkoutcart", async (req, res) => {
     arrayProducts.push(lineProduct);
   });
 
+  console.log(arrayProducts);
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: arrayProducts,
@@ -42,12 +44,14 @@ router.post("/checkoutcart", async (req, res) => {
     cancel_url: "http://localhost:5173/formpage/failed",
   });
 
+  console.log(session);
   let comprobanteAsociado = await Order.create({
     order_id: session.id,
     status: session.status,
     payment_status: session.payment_status,
     amount_total: session.amount_total,
     userId,
+    items: arrayProducts,
   });
 
   res.json({ id: session.id });
@@ -65,6 +69,18 @@ router.get("/checkout/:id", async (req, res) => {
     expand: ["line_items"],
   });
   res.send(session);
+});
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const payment = await Order.findOne({ where: { order_id: id } });
+    return res.send(payment);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ error });
+  }
 });
 
 /**PRE: El usuario previamente cargado en la base de datos y la compra
