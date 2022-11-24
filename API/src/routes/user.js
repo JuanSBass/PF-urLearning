@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const { where } = require("sequelize");
 const router = Router();
 const { User, Course } = require("../db");
 const admin = require("../firebase/config");
@@ -7,7 +6,6 @@ const admin = require("../firebase/config");
 router.post("/create", async (req, res) => {
   try {
     const token = req.body.authorization.split(" ")[1];
-    console.log(token);
     const decodeValue = await admin.auth().verifyIdToken(token);
     console.log(decodeValue);
 
@@ -71,4 +69,20 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.get("/allUsersWithCourses", async (req, res) => {
+  const tokken = req.headers.authorization.split(" ")[1];
+  const decodeValue = await admin.auth().verifyIdToken(tokken);
+  const { user_id } = decodeValue;
+  try {
+    let allUsers = await User.findAll({
+      include: Course,
+      where: {
+        id: user_id,
+      },
+    });
+    res.status(200).send(allUsers);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 module.exports = router;

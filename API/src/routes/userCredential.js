@@ -8,7 +8,6 @@ const admin = require("../firebase/config");
 router.get("/detail", async (req, res) => {
   try {
     const tokken = req.headers.authorization.split(" ")[1];
-
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     const { user_id } = decodeValue;
     const UserS = await User.findByPk(user_id);

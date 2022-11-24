@@ -4,31 +4,20 @@ module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
-      id: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      email: {
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-
-      image: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      {
-        timestamps: false,
-        createdAt: false,
-      }
-
-      },
-  )
       // here would be the idProf reference
     },
-    
+    {
+      timestamps: false,
+      createdAt: false,
+    }
+  );
+};

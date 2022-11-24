@@ -1,13 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Label, TextInput, Textarea, Button } from "flowbite-react";
-import style from "../Contact Us/ContactUs.module.css"
+import style from "./ContactUs.module.css"
 import img from "../../img/chicoformulario.jpg"
 
-
 function ContactUs() {
-
-
-
     return (
         <div className={style.contenedorGeneral}>
             <div className={style.contenedorFormulario}>
@@ -16,8 +12,6 @@ function ContactUs() {
                     <div className={style.textTitulo}>¡Contactate con nosotros!</div>
                 </div>
                 <div className={style.form}>
-
-
                     <div className="flex flex-col gap-4">
                         <div>
                             <div className="mb-2 block">
@@ -70,7 +64,7 @@ function ContactUs() {
                     >
                         Enviar
                     </Button>
-                
+
                 </div>
             </div>
         </div>

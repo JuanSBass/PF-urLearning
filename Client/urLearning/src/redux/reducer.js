@@ -11,10 +11,18 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  GET_USER_COURSES,
+  /////login//////////
   LOGIN,
   LOGOUT,
+  ID_SESSION,
   GET_USER_DETAIL,
   PUT_USER,
+  ////////// CARRITO//////////
+  ADD_TO_CART,
+  GET_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
 } from "./actions";
 
 const initialState = {
@@ -28,7 +36,9 @@ const initialState = {
   coursesForRating: [],
   user: {},
   log: false,
+  carrito: [],
   userDetail: {},
+  userCourses: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -86,11 +96,11 @@ function rootReducer(state = initialState, action) {
         course: {},
       };
 
-      case CLEAN_CATEGORIES:
-        return {
-          ...state,
-          category: [],
-        };
+    case CLEAN_CATEGORIES:
+      return {
+        ...state,
+        category: [],
+      };
     case GET_COURSES_NAME:
       return {
         ...state,
@@ -168,16 +178,55 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
+
+    //////////////LOGIN //////////////////
     case LOGIN:
       return { ...state, user: action.payload, log: true };
 
     case LOGOUT:
       return { ...state, user: {}, log: false };
+
+    ////////////////CARRITO/////////////
+    case ADD_TO_CART:
+      const cursos = state.courses;
+      const product = cursos.find((cursoId) => cursoId.id === action.payload);
+      return {
+        ...state,
+        carrito: [...state.carrito, product],
+      };
+    case ID_SESSION:
+      return { ...state, idSession: action.payload };
+
+    case GET_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
+    case CLEAR_CART:
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
     case GET_USER_DETAIL:
       return { ...state, userDetail: action.payload };
 
     case PUT_USER:
       return { ...state };
+
+    case GET_USER_COURSES:
+      return {
+        ...state,
+        userCourses: action.payload[0].courses,
+      };
+
     default:
       return { ...state };
   }
