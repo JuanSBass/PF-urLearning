@@ -56,6 +56,7 @@ router.post("/user", async (req, res) => {
         email,
         name,
       });
+
       res.status(200).send("Usuario creado correctamente");
     }
   } catch (error) {
