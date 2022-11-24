@@ -91,8 +91,6 @@ router.post("/course", async (req, res) => {
     name_prof,
     videos,
   } = req.body;
-
-  //console.log(newCourse);
   const validTitle = await validateTitle(title);
   const validDescription = await validateDescription(description);
   const validPrice = await validatePrice(price);
@@ -100,10 +98,6 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
-    console.log(description.length);
-    console.log(validTitle);
-    console.log(level);
-    //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
       res.status(404).send({ message: "Titulo invalido o inexistente" });
     } else if (category === "") {
@@ -136,7 +130,6 @@ router.post("/course", async (req, res) => {
         name_prof,
         videos,
       });
-      //console.log(newCourse);
       res.status(200).send("Curso creado correctamente");
     }
   } catch (error) {
@@ -149,7 +142,6 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  console.log(info);
   const tokken = req.headers;
 
   let allCourses;
@@ -190,7 +182,6 @@ router.get("/course/:id", async (req, res) => {
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
   const { rating } = req.body;
-  //console.log(rating);
   try {
     return res.send(await changeCourseById(id, rating));
   } catch (error) {
@@ -205,7 +196,6 @@ router.put("/course/:id", async (req, res) => {
 router.get("/courseByCategory", async (req, res) => {
   try {
     const { categ } = req.query;
-    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
@@ -221,7 +211,6 @@ router.get("/courseByCategory", async (req, res) => {
 router.get("/courseBySubCategory", async (req, res) => {
   try {
     const { subcateg } = req.query;
-    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,
