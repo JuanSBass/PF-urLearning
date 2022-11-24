@@ -1,0 +1,37 @@
+.contenedorGeneral {
+  display: flex;
+  justify-content: center;
+  margin-top: 81px;
+  height: calc(150vh - 149px);
+}
+
+#video {
+  margin: 0 auto;
+  /* height: 50%;
+  width: 50%; */
+  border-radius: 20px;
+}
+
+.contVideo {
+  background-color: #fff;
+  padding: 5rem;
+  border-radius: 50px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.acercaCurso {
+  font-size: 3em;
+  margin-top: 5rem;
+  font-weight: 900;
+  color: #6d6aee;
+}
+
+.title {
+  font-size: 3em;
+  font-weight: 800;
+  margin-bottom: 3rem;
+}

@@ -30,17 +30,10 @@ function PagoExitoso() {
         dispatch(updatePaymentStatus(tokken))
         dispatch(saveCoursesAtUser(tokken, cart))
         dispatch(getCart())
-        return () => { dispatch(clearCart()) }
-    }, [dispatch, user, tokken]);
-    // const handleDeleteAll = (e) => {
-    //     e.preventDefault()
-    //     dispatch(clearCart())
-    //     history.push("/")
-    // }
 
-    // if (location.pathname === "/formpage/success") {
-    //     dispatch(clearCart())
-    // }
+
+
+    }, [dispatch, cart, tokken]);
 
     return (
         <div className={style.contenedorGeneral}>
