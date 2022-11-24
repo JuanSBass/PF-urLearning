@@ -21,10 +21,12 @@ export const GET_COURSES_NAME = "GET_COURSES_NAME";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const ID_SESSION = "ID_SESSION";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
+export const GET_USER_COURSES = "GET_USER_COURSES";
 
 export const getCourses = () => {
   try {
@@ -226,6 +228,13 @@ export function postProductCart(carrito, userTokken) {
   };
 }
 
+export function updatePaymentStatus(tokken) {
+  return async function () {
+    const json = await axios.put("api/updateLastOrer", { tokken });
+    return;
+  };
+}
+
 export function clearCart() {
   try {
     // const item = userTokken;
@@ -270,18 +279,19 @@ export const getUserDetail = () => {
 export function getCart() {
   return async function (dispatch) {
     try {
-      console.log("aaaaaaaaa");
       const tokken = window.localStorage.getItem("tokken");
       const json = await axios.get("/cart", {
         headers: {
           Authorization: "Bearer " + tokken,
         },
       });
+      console.log("vengo antes del return");
       return dispatch({
         type: GET_CART,
         payload: json.data,
       });
     } catch (error) {
+      console.log("oh oh la cagaste");
       console.log({ error });
     }
   };
@@ -304,5 +314,32 @@ export function removeItemCart(id) {
     } catch (error) {
       console.error({ error });
     }
+  };
+}
+
+export function saveCoursesAtUser(tokken, carrito) {
+  return async function () {
+    const json = await axios.put("api/updateUserCourseRelations", {
+      tokken,
+      carrito,
+    });
+    return;
+  };
+}
+
+//? <--------- Toma los cursos comprados por el user -------->
+
+export function getUserCourses() {
+  return async function (dispatch) {
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.get("/user/allUsersWithCourses", {
+      headers: {
+        Authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_USER_COURSES,
+      payload: json.data,
+    });
   };
 }

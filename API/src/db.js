@@ -77,6 +77,9 @@ Cart.belongsTo(User);
 User.hasMany(Order);
 Order.belongsTo(User);
 
+User.belongsToMany(Course, { through: "userCourse" });
+Course.belongsToMany(User, { through: "userCourse" });
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

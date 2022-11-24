@@ -1,6 +1,8 @@
 import React from "react";
+import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Label,
@@ -21,6 +23,28 @@ import { useHistory } from "react-router-dom";
 
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
+
+function validate(input) {
+  const errors = {};
+  if (!input.title) {
+    errors.title = "Debe ingresar un titulo";
+  }
+
+  if (!input.name_prof) {
+    errors.name_prof = "Debe ingresar el nombre del profesor";
+  }
+
+  if (!input.description || input.description.length < 15 || input.description.length > 200) {
+    errors.description = "Debe tener entre 15 y 200 caracteres";
+  }
+
+  if (!input.category) {
+    errors.category = "Debe ingresar una categoría";
+  }
+
+
+  return errors;
+}
 
 const Form = () => {
   const category = useSelector((state) => state.category);
@@ -43,8 +67,11 @@ const Form = () => {
     language: "",
     price: "",
     level: "",
-    name_prof: ""
+    name_prof: "",
+    videos: []
   });
+  const [errors, setErrors] = useState({});
+
 
   let btnDisabled = !(
     input.title.length &&
@@ -55,17 +82,34 @@ const Form = () => {
     input.name_prof.length &&
     input.subCategory.length &&
     input.language.length
-  );
+  ) ||
+    input.description.length > 200 ||
+    input.description.length < 15
 
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
+
+  useEffect(() => {
+    setErrors(
+      validate({
+        ...input,
+      })
+    );
+  }, [input]);
 
   const handleChange = (ev) => {
     setInput({
       ...input,
       [ev.target.name]: ev.target.value,
     });
+
+    setErrors(
+      validate({
+        ...input,
+        [ev.target.name]: ev.target.value,
+      })
+    );
   };
 
   const handleSelect = (ev) => {
@@ -108,10 +152,62 @@ const Form = () => {
       price: "",
       level: "",
       name_prof: "",
+      videos: []
     });
     history.push("/");
     dispatch(getCourses());
   };
+
+
+
+  const [video, setVideo] = useState({ linksVideos: [] });
+  const [loading, setLoading] = useState(false);
+
+  const handleDrop = (files) => {
+    const uploaders = files.map(file => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("tags", `codeinfuse, medium, gist`);
+      formData.append("upload_preset", "urLearning");
+      formData.append("api_key", "983694461673571");
+      formData.append("timestamp", (Date.now() / 1000) | 0);
+      setLoading(true);
+      return axios
+        .post("https://api.cloudinary.com/v1_1/dv2xlr9k0/video/upload", formData, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then(response => {
+          const data = response.data;
+          console.log(data);
+          const fileURL = data.secure_url;
+          const height = data.height;
+          const width = data.width;
+          // console.log(fileURL);
+
+
+          video.linksVideos.push({
+            fileURL,
+            height,
+            width
+          });
+          const newObj = { ...video }
+          setVideo(newObj)
+          setInput({
+            ...input,
+            videos: newObj
+          })
+          console.log(video);
+        })
+
+    })
+    axios.all(uploaders).then(() => {
+      setLoading(false)
+    }).catch(error => console.log(error.response.data.error));
+
+  }
+
+  // console.log(input);
+
 
   return (
     <div className={style.contenedorGeneral}>
@@ -135,6 +231,9 @@ const Form = () => {
                     onChange={(e) => handleChange(e)}
                     name="title"
                   />
+                  {errors.title && (
+                    <div className={style.errores}>{errors.title}</div>
+                  )}
                 </div>
 
                 <div className={style.cate}>
@@ -148,6 +247,9 @@ const Form = () => {
                     onChange={(e) => handleChange(e)}
                     name="name_prof"
                   />
+                  {errors.name_prof && (
+                    <div className={style.errores}>{errors.name_prof}</div>
+                  )}
                 </div>
               </div>
               <div className={style.categoriasJuntas}>
@@ -174,6 +276,9 @@ const Form = () => {
                       );
                     })}
                   </Select>
+                  {errors.category && (
+                    <div className={style.errores}>{errors.category}</div>
+                  )}
                 </div>
 
 
@@ -214,6 +319,9 @@ const Form = () => {
                   onChange={(e) => handleChange(e)}
                   name="description"
                 />
+                {errors.description && (
+                  <div className={style.errores}>{errors.description}</div>
+                )}
               </div>
             </div>
 
@@ -322,6 +430,50 @@ const Form = () => {
 
               </>
             </div>
+
+
+            <div className={style.contenedorupload}>
+              <h1>Aqui subirás 2 videos. <br /> Tu <b>Video de introducción</b> y tu video de curso.</h1>
+              <p>El video de introducción debe durar máximo 1 minuto. Trata de resumir el contenido de tu curso en este video</p>
+              <Dropzone
+                className={style.dropzone}
+                onDrop={handleDrop}
+                onChange={e => setImage(e.target.value)}
+                value={video}
+              >
+
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div
+                      {...getRootProps({ className: "dropzone" })}
+                      className={style.dropzone}
+                    >
+                      <input {...getInputProps()} />
+                      <span>📁</span>
+                      <p>Carga tu video aqui o click para seleccionar</p>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+              {loading ?
+                (
+                  <div className={style.loading}><h3>Cargando video...</h3></div>
+                ) :
+                (<></>
+                )}
+              <div className={style.videos}>
+                {video.linksVideos.length <= 0
+                  ? "Aun no subes tu video..."
+                  : video.linksVideos.map(vid =>
+                    <video controls autoPlay key={vid} height={vid.height / 10} width={vid.width / 10}>
+                      <source src={vid.fileURL} type="video/mp4" />
+                    </video>
+                  )
+                }
+              </div>
+            </div>
+
+
           </div>
         </form>
       </div>

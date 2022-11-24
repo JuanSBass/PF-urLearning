@@ -1,5 +1,5 @@
 import styles from "./CardsCourses.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 import { useState } from "react";
@@ -13,18 +13,23 @@ const CardsCourses = () => {
     title: "",
     price: ""
   })
+  const user = useSelector(state => state.user)
+  // console.log(user);
+  const navigate = useHistory();
+
   const userTokken = window.localStorage.getItem("tokken");
-  console.log(userTokken);
+  // console.log(userTokken);
 
   const dispatch = useDispatch()
   const handleClick = (id) => {
+    if (!user.name) return navigate.push("/register")
     dispatch(postProductCart(id, userTokken))
   }
 
   return (
     <section className={styles.cardscontainer}>
       {courses?.map((card) => (
-        <div className={styles.card}>
+        <div className={styles.card} key={card.id}>
           <Link to={`/course/${card.id}`} key={card.id}>
             <div className={styles.imgcard}>
               <img src={card.image} alt="miniatura" />

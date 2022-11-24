@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
         allowNull: false,
         autoIncrement: true,
       },
+      idCourse: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -11,12 +11,14 @@ import {
   FILTER_BY_SUBCATEGORY,
   ORDER_BY_ANY,
   GET_COURSES_NAME,
+  GET_USER_COURSES,
   /////login//////////
   LOGIN,
   LOGOUT,
+  ID_SESSION,
+  GET_USER_DETAIL,
   ////////// CARRITO//////////
   ADD_TO_CART,
-  GET_USER_DETAIL,
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
@@ -34,8 +36,10 @@ const initialState = {
   user: {},
   log: false,
   carrito: [],
+  copyCarrito: [],
   userDetail: {},
-  cartNumber : 0,
+  userCourses: [],
+  cartNumber: 0,
 };
 
 function rootReducer(state = initialState, action) {
@@ -176,29 +180,30 @@ function rootReducer(state = initialState, action) {
         });
       }
 
-      //////////////LOGIN //////////////////
+    //////////////LOGIN //////////////////
     case LOGIN:
       return { ...state, user: action.payload, log: true };
 
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
-
-      ////////////////CARRITO//////////////
-   case ADD_TO_CART:
+    ////////////////CARRITO/////////////
+    case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find(
-        (cursoId) => cursoId.id === action.payload.id
-      );
+      const product = cursos.find((cursoId) => cursoId.id === action.payload);
       return {
         ...state,
         carrito: [...state.carrito, product],
         cartNumber: state.cartNumber += 1,
-      }; 
+      };
+    case ID_SESSION:
+      return { ...state, idSession: action.payload };
+
     case GET_CART:
       return {
         ...state,
         carrito: action.payload,
+        copyCarrito: action.payload,
       };
 
     case REMOVE_FROM_CART:
@@ -217,6 +222,12 @@ function rootReducer(state = initialState, action) {
 
     case GET_USER_DETAIL:
       return { ...state, userDetail: action.payload };
+
+    case GET_USER_COURSES:
+      return {
+        ...state,
+        userCourses: action.payload[0].courses,
+      };
 
     default:
       return { ...state };

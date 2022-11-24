@@ -99,6 +99,7 @@ const getCourseById = async (id) => {
       description: coursejson.description,
       price: coursejson.price,
       rating: coursejson.rating,
+      videos: coursejson.videos.linksVideos,
       ratingUserNumber: coursejson.ratingUserNumber,
       ratingHistory: coursejson.ratingHistory,
     };
@@ -132,8 +133,6 @@ const changeCourseById = async (id, rating) => {
     return change;
   }
 };
-
-
 
 ///////// Route Add Course ID CART /////////
 //id -> courses
@@ -176,12 +175,14 @@ const getCartCourseDb = async (req) => {
   const newCartDb = await cartDb.map((e) => {
     return {
       ID: e.ID,
+      idCourse: e.idCourse,
       title: e.title,
       image: e.image,
       description: e.description,
       price: e.price,
       name_prof: e.name_prof,
       userId: e.userId,
+      idCourse: e.idCourse,
     };
   });
   return newCartDb;
