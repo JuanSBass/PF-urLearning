@@ -2,26 +2,37 @@ const { Router } = require("express");
 const router = Router();
 const { User, Course, FavouriteList } = require("../db");
 const admin = require("../firebase/config");
+const { sendMailRegister } = require("./sendemail");
 
 router.post("/create", async (req, res) => {
   try {
     const token = req.body.authorization.split(" ")[1];
     const decodeValue = await admin.auth().verifyIdToken(token);
+    console.log(decodeValue);
 
-    const { email, user_id } = decodeValue;
+    const { email, user_id, picture } = decodeValue;
+    const valid = user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3";
+    console.log();
     let name;
+
     if (decodeValue.name) name = decodeValue.name;
     else {
-      name = "Usuario";
+      name = email.split("@")[0]; // El nombre del usuario será el email sin @
     }
+
     if (!decodeValue) return new Error("no se pudio");
     let newUser = await User.findOrCreate({
       where: { id: user_id },
       defaults: {
         email,
         name,
+        image: picture,
+        admin: valid,
       },
     });
+
+    if (newUser[1]) sendMailRegister(name, email);
+
     res.status(200).send(newUser);
   } catch (error) {
     res.status(404).send(error.message);

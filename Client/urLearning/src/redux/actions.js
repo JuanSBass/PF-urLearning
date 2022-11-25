@@ -23,6 +23,7 @@ export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const ID_SESSION = "ID_SESSION";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const PUT_USER = "PUT_USER";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
@@ -157,8 +158,10 @@ export const logIn = (tokken) => {
     dispatch({
       type: LOGIN,
       payload: {
+        image: semiOldUser[0].image,
         email: semiOldUser[0].email,
         name: semiOldUser[0].name,
+        admin: semiOldUser[0].admin,
       },
       //ojo que aca solo devuelve el nombre de la base de datos
       //y el resto se lo proporciona google
@@ -261,13 +264,30 @@ export const getUserDetail = () => {
   try {
     return async function (dispatch) {
       const tokken = window.localStorage.getItem("tokken");
-      const response = await axios.get("/userCresential/detail", {
+      const response = await axios.get("/userCredential/detail", {
         headers: {
           Authorization: "Bearer " + tokken,
         },
       });
 
       dispatch({ type: GET_USER_DETAIL, payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const putUser = (payload) => {
+  try {
+    return async function (dispatch) {
+      const tokken = window.localStorage.getItem("tokken");
+      const response = await axios.put("/userCredential", {
+        authorization: "Bearer " + tokken,
+        name: payload.name,
+        image: payload.image,
+      });
+      console.log(tokken);
+      dispatch({ type: PUT_USER });
     };
   } catch (error) {
     console.log(error.message);
