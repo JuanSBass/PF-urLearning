@@ -14,6 +14,7 @@ const CardsCourses = () => {
     price: ""
   })
   const user = useSelector(state => state.user)
+  const cart = useSelector(state => state.carrito)
   // console.log(user);
   const navigate = useHistory();
 
@@ -21,9 +22,17 @@ const CardsCourses = () => {
   // console.log(userTokken);
 
   const dispatch = useDispatch()
-  const handleClick = (id) => {
+  const handleClick = (card) => {
     if (!user.name) return navigate.push("/register")
-    dispatch(postProductCart(id, userTokken))
+    const cardId = card?.id
+    const courseExits = cart.filter((e) => {
+      return (e?.id === cardId)
+    })?.length > 0
+    if (courseExits) {
+      toast.error('Course exits!')
+      return
+    }
+    dispatch(postProductCart(card, userTokken))
     toast.success('Added Course!')
   }
 

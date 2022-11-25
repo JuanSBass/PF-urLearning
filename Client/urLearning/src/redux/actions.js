@@ -219,6 +219,10 @@ export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
   return async (dispatch) => {
     const json = await axios.post("/cart", item);
+    return dispatch({
+      type : ADD_TO_CART,
+      payload : carrito
+    })
   };
 }
 

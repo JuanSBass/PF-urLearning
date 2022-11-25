@@ -189,7 +189,8 @@ function rootReducer(state = initialState, action) {
     ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find((cursoId) => cursoId.id === action.payload);
+      const product = cursos.find((cursoId) => cursoId.id === action.payload.id);
+     // console.log("weon",cursos,product,action.payload)
       return {
         ...state,
         carrito: [...state.carrito, product],
