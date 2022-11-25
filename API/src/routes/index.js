@@ -93,7 +93,8 @@ router.post("/course", async (req, res) => {
     level,
     name_prof,
     videos,
-  } = req.body;
+  } = req.body.dataCourse;
+  const { tokken } = req.body;
 
   //console.log(newCourse);
   const validTitle = await validateTitle(title);
@@ -104,8 +105,8 @@ router.post("/course", async (req, res) => {
 
   try {
     //traemos datos de user para el email
-    const token = req.body.authorization.split(" ")[1];
-    const decodeValue = await admin.auth().verifyIdToken(token);
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
+    if (!decodeValue) return new Error("no se pudio");
     const { name, email } = decodeValue;
 
     //console.log(price.length, "dddddd");

@@ -42,8 +42,15 @@ export const getCourses = () => {
 
 export function postCourse(dataCourse) {
   return async function () {
-    const json = await axios.post("/course", dataCourse);
-    return;
+    //modifico para mandar token al back (para sendmail)
+    try {
+      const tokken = window.localStorage.getItem("tokken");
+      console.log(tokken);
+      const json = await axios.post("/course", { dataCourse, tokken });
+      return;
+    } catch (error) {
+      return error;
+    }
   };
 }
 
