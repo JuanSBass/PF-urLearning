@@ -40,7 +40,7 @@
 
 .contenedor {
   background-color: #fafafa;
-  max-width: 1000px;
+  max-width: 10000px;
   width: 90000px;
   border-radius: 25px;
   height: 700px;
@@ -61,4 +61,5 @@
 .buttonscontainer {
   display: flex;
   justify-content: center;
+  margin-top: 40px;
 }

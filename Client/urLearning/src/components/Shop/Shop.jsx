@@ -13,9 +13,11 @@ export const Shop = () => {
     const handleDeleteAll = (e) => {
         e.preventDefault()
         dispatch(clearCart())
+        toast.error('Cart Cleaned!')
     }
 
     useEffect(() => {
+        console.log({ cart })
         dispatch(getCart());
     }, [dispatch]);
 
@@ -23,6 +25,7 @@ export const Shop = () => {
     const handleDelete = (e) => {
         e.preventDefault()
         dispatch(removeItemCart(e.target.value))
+        toast.error('Deleted Course!')
     }
 
     return cart.length ? (
@@ -66,7 +69,7 @@ export const Shop = () => {
                                         {card.description}
                                     </td>
                                     <td class="py-4 px-6">
-                                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={card.ID} onClick={(e) => toast.error('Deleted Course!') && handleDelete(e)}>Remove</button>
+                                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={card.ID} onClick={(e) => handleDelete(e)}>Remove</button>
                                     </td>
                                 </tr>
                             ))}
@@ -75,14 +78,13 @@ export const Shop = () => {
                 </div>
                 <div className={styles.buttonscontainer}>
                     <br />
-                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => toast.error('Cart Cleaned!') && handleDeleteAll(e)}>Clear Cart</button>
+                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => handleDeleteAll(e)}>Clear Cart</button>
 
                     <PruebaStripe />
-
+                    <Toaster
+                        position="bottom-right"
+                    />
                 </div>
-                <Toaster
-                    position="bottom-right"
-                />
             </div>
         </div>
     ) : (

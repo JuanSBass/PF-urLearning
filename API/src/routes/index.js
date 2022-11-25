@@ -27,6 +27,7 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
+const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
 const { card } = require("mercadopago");
 
@@ -35,6 +36,7 @@ router.use("/api", apiPayment);
 router.use("/user", user);
 router.use("/userCresential", userCredencial);
 router.use("/admin", administrator);
+router.use("/favouriteList", favouriteList);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -197,6 +199,8 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
+///////// Route DELETE para Course -> ADMIN////////
+
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
@@ -250,6 +254,7 @@ router.post("/cart", async (req, res) => {
       let newCartItem = await Cart.findOrCreate({
         where: {
           idCourse: id,
+          userId: userId.uid,
         },
         defaults: {
           idCourse: id,
@@ -313,9 +318,5 @@ router.delete("/cart", async (req, res) => {
     console.log(error + "error del delete /cart");
   }
 });
-
-///////// Route name_prof /////////
-
-//router.get("/course")
 
 module.exports = router;

@@ -39,7 +39,6 @@ const initialState = {
   copyCarrito: [],
   userDetail: {},
   userCourses: [],
-  cartNumber: 0,
 };
 
 function rootReducer(state = initialState, action) {
@@ -194,7 +193,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: [...state.carrito, product],
-        cartNumber: state.cartNumber += 1,
       };
     case ID_SESSION:
       return { ...state, idSession: action.payload };
@@ -210,14 +208,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: state.cartNumber -= 1,
       };
 
     case CLEAR_CART:
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: 0,
       };
 
     case GET_USER_DETAIL:
