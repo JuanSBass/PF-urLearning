@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourses, cleanCategory } from "../../redux/actions";
+import { getCourses, cleanCategory, getFavorite } from "../../redux/actions";
 import styles from "./Home.module.css";
 import { HeaderHome } from "./Header/HeaderHome";
 import CardsCourses from "./Cards/CardsCourses";
@@ -13,10 +13,12 @@ import PruebaStripe from "../Stripe/PruebaStripe";
 
 const Home = (props) => {
   const dispatch = useDispatch();
+  const id = "PsPEdPVdoEX2ufdRp7tmugEZW2b2"
   useEffect(() => {
     dispatch(getCourses());
     dispatch(cleanCategory())
-  }, [dispatch]);
+    dispatch(getFavorite(id))
+  }, [dispatch, id]);
 
   return (
     <main className={styles}>

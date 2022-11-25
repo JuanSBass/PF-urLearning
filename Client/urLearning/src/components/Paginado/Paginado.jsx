@@ -7,8 +7,9 @@ import { Spinner } from "flowbite-react";
 import left from "../../img/IoIosArrowDropleftCircle.svg"
 import right from "../../img/IoIosArrowDroprightCircle.svg"
 
-const renderData = (data) => {
+const renderData = (data, favoritos) => {
   return data.map((p) => {
+    const isFavorite = favoritos.some(e => e.id === p.id)
     return (
       <Card
         image={p.image}
@@ -17,6 +18,7 @@ const renderData = (data) => {
         key={p.id}
         id={p.id}
         rating={p.rating}
+        isFavorite={isFavorite}
       />
     );
   });
@@ -28,6 +30,11 @@ function Paginado() {
   const allCourses = useSelector((state) => state.courses);
 
   const currentPage = useSelector((state) => state.currentPage);
+
+  const favoritos = useSelector((state) => state.favorites);
+
+
+
 
   const [cardsPerPage] = useState(9);
 
@@ -77,7 +84,7 @@ function Paginado() {
     <>
       <div className={styles.contCards}>
         {allCourses.length ? (
-          renderData(currentCards)
+          renderData(currentCards, favoritos)
         ) : (
           <Spinner aria-label="Default status example" />
         )}

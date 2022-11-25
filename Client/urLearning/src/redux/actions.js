@@ -27,6 +27,7 @@ export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_COURSES = "GET_USER_COURSES";
+export const GET_FAVORITE = "GET_FAVORITE";
 
 export const getCourses = () => {
   try {
@@ -337,3 +338,14 @@ export function getUserCourses() {
     });
   };
 }
+
+export const getFavorite = (id) => {
+  try {
+    return async function (dispatch) {
+      const response = await axios.get(`/favouriteList/fromUser/${id}`);
+      dispatch({ type: GET_FAVORITE, payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
