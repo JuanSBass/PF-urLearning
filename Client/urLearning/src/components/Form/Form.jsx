@@ -439,7 +439,7 @@ const Form = () => {
                 onDrop={handleDrop}
                 onChange={e => setImage(e.target.value)}
                 value={video}
-                disabled={input.videos.linksVideos.length === 2}
+                disabled={input.videos.linksVideos?.length === 2}
               >
 
                 {({ getRootProps, getInputProps }) => (
