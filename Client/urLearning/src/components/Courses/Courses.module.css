@@ -12,3 +12,9 @@
   height: 70%;
   margin: auto;
 }
+
+#toast {
+  height: 1rem;
+  width: 16rem;
+  margin: 5px 0 0 1rem;
+}
