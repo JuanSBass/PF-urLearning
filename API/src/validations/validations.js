@@ -21,7 +21,6 @@ const validateEmail = async (email) => {
 
 //////////// Validation Password /////////////
 const validatePassword = async (password) => {
-  console.log(password);
   if (
     !password.match(uppercase) ||
     !password.match(numericValue) ||
@@ -69,7 +68,6 @@ const validatePrice = async (price) => {
 //////////// Validation Level /////////////
 const validateLevel = async (level) => {
   if (level !== "easy" && level !== "medium" && level !== "advanced") {
-    console.log(level);
     return false;
   } else {
     return true;

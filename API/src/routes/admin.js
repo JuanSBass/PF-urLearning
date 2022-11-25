@@ -15,7 +15,6 @@ router.get("/allCourses", async (req, res) => {
 
 router.delete("/deleteCourseId", async (req, res) => {
   const { deleteCourseId } = req.body;
-  console.log(deleteCourseId);
   try {
     let courseToDelete = await Course.findByPk(deleteCourseId);
     await courseToDelete.destroy();
@@ -24,6 +23,27 @@ router.delete("/deleteCourseId", async (req, res) => {
     res.status(401).send(error);
   }
 });
+
+///////// Route PUT para modificar Course -> ADMIN////////
+// router.put("/modify/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const {
+//     rating,
+//     title,
+//     image,
+//     category,
+//     subCategory,
+//     duration,
+//     description,
+//     language,
+//     price,
+//     level,
+//     name_prof,
+//     videos,
+//   } = req.body;
+
+//   console.log(req.body);
+// });
 
 //Usuarios
 
@@ -79,7 +99,6 @@ router.put("/modifyOrderStatus", async (req, res) => {
   try {
     let oldOrder = await Order.findByPk(order_id);
     let updatedOrder = await oldOrder.update({ payment_status });
-    console.log(updatedOrder);
     res.status(200).send(updatedOrder);
   } catch (error) {
     res.status(400).send(error);
@@ -88,7 +107,6 @@ router.put("/modifyOrderStatus", async (req, res) => {
 
 router.delete("/deleteOrderId", async (req, res) => {
   const { deleteOrderId } = req.body;
-  console.log(deleteOrderId);
   try {
     let orderToDelete = await Order.findByPk(deleteOrderId);
     await orderToDelete.destroy();

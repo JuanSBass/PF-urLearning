@@ -41,7 +41,6 @@ const getDbInfo = async (email) => {
         },
       })
     : await User.findAll();
-  //console.log(userDb);
 
   const newUserDb = await userDb.map((e) => {
     return {
@@ -50,7 +49,6 @@ const getDbInfo = async (email) => {
       name: e.name,
     };
   });
-  //console.log(newUserDb);
   return newUserDb;
 };
 
@@ -115,16 +113,11 @@ const changeCourseById = async (id, rating) => {
     //traigo por BBDD
     let currentCourse = await Course.findOne({ where: { id: id } });
     let courseRatingNumber = currentCourse.ratingUserNumber;
-    //console.log(courseRatingNumber);
     await currentCourse.update({ ratingUserNumber: courseRatingNumber + 1 });
     changeRating.push(currentCourse);
-    //console.log(currentCourse.ratingUserNumber);
     let ratingNew = parseInt(currentCourse.rating) + parseInt(rating);
     await currentCourse.update({ rating: ratingNew });
-    //console.log(ratingNew);
-
     let promedio = currentCourse.rating / currentCourse.ratingUserNumber;
-    //console.log(promedio);
 
     let change = await Course.update(
       { ratingHistory: Math.floor(promedio) },
@@ -182,19 +175,15 @@ const getCartCourseDb = async (req) => {
       price: e.price,
       name_prof: e.name_prof,
       userId: e.userId,
-      idCourse: e.idCourse,
     };
   });
   return newCartDb;
 };
 
 const getPrueba = async (req) => {
-  // console.log(req.body);
   const token2 = req.headers.authorization.split(" ")[1];
-  // console.log(token2);
   const cartUserTokken2 = await admin.auth().verifyIdToken(token2);
   if (!cartUserTokken2) return new Error("no se pudio");
-  // console.log(cartUserTokken2);
   return cartUserTokken2;
 };
 

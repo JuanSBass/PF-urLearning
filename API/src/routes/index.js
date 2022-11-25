@@ -40,13 +40,9 @@ router.use("/admin", administrator);
 router.post("/user", async (req, res) => {
   const { email, name, id } = req.body;
   const validEmail = await validateEmail(email);
-  //const validPassword = await validatePassword(password);
-  console.log(email);
-  console.log(name);
 
   try {
     if (!validEmail || email === "") {
-      console.log(email);
       res.status(404).send({ message: "Email invalida o campo vacio" });
     } else {
       let newUser = await User.create({
@@ -99,10 +95,6 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
-    console.log(description.length);
-    console.log(validTitle);
-    console.log(level);
-    //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
       res.status(404).send({ message: "Titulo invalido o inexistente" });
     } else if (category === "") {
@@ -148,7 +140,6 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  console.log(info);
   const tokken = req.headers;
 
   let allCourses;
@@ -197,14 +188,11 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
-///////// Route DELETE para Course -> ADMIN////////
-
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
   try {
     const { categ } = req.query;
-    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
@@ -220,7 +208,6 @@ router.get("/courseByCategory", async (req, res) => {
 router.get("/courseBySubCategory", async (req, res) => {
   try {
     const { subcateg } = req.query;
-    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,
@@ -246,7 +233,6 @@ router.post("/cart", async (req, res) => {
 
   try {
     if (result.find((e) => e.id === id)) {
-      console.log("ya esta comprado");
       res.status(404).send("elemento ya comprado");
     } else {
       let newCartItem = await Cart.findOrCreate({

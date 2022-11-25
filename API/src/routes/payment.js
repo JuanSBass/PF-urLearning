@@ -9,14 +9,9 @@ const stripe = new Stripe(apiKeyPayment);
 
 router.post("/checkoutcart", async (req, res) => {
   const { products, tuki, cart } = req.body;
-
-  // console.log("tuki", tuki);
-
   const decodeValue = await admin.auth().verifyIdToken(tuki);
   if (!decodeValue) return new Error("no se pudio");
   const userId = decodeValue.uid;
-  // console.log(products);
-  // console.log(cart);
 
   let arrayProducts = [];
   cart.forEach((product) => {
@@ -34,8 +29,6 @@ router.post("/checkoutcart", async (req, res) => {
     arrayProducts.push(lineProduct);
   });
 
-  console.log(arrayProducts);
-
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: arrayProducts,
@@ -44,7 +37,6 @@ router.post("/checkoutcart", async (req, res) => {
     cancel_url: "http://localhost:5173/formpage/failed",
   });
 
-  console.log(session);
   let comprobanteAsociado = await Order.create({
     order_id: session.id,
     status: session.status,
@@ -140,7 +132,6 @@ router.put("/updateUserCourseRelations", async (req, res) => {
       where: { userId },
       order: [["createdAt", "DESC"]],
     });
-    //console.log("ordenes ordenadas: ", lastOrder[1].dataValues.payment_status);
     if (!lastOrder[0])
       throw new Error("there is a prblem with the user's las order");
     const { order_id } = lastOrder[0];
@@ -157,7 +148,6 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     } else {
       message = "Relation failed, check if payment status is paid";
     }
-    console.log(message);
     res.status(200).send(message);
   } catch (error) {
     console.log(error.message);

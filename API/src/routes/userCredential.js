@@ -13,7 +13,6 @@ router.get("/detail", async (req, res) => {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     const { user_id } = decodeValue;
     const UserS = await User.findByPk(user_id);
-    console.log("es el usuario", UserS.dataValues);
     res.status(200).send(UserS.dataValues);
   } catch (error) {
     console.log(error.message);
