@@ -187,7 +187,6 @@ const getPrueba = async (req) => {
   return cartUserTokken2;
 };
 
-<<<<<<< HEAD
 //////////// Contact Us /////////////////
 const getContactUs = async (email) => {
   //busco por email
@@ -229,11 +228,6 @@ const getCommentDb = async (comment) => {
   });
   return newCommentDb;
 };
-=======
-
-
-
->>>>>>> 25324612eb63e949cf658f6933dc96ac3ce293ab
 
 module.exports = {
   allInfo,
