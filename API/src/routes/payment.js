@@ -136,6 +136,8 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
     const userId = decodeValue.uid;
+    const userEmail = decodeValue.email;
+    const userName = decodeValue.name;
 
     const lastOrder = await Order.findAll({
       where: { userId },
@@ -150,6 +152,7 @@ router.put("/updateUserCourseRelations", async (req, res) => {
 
     if (payment_status === "paid") {
       let currentUser = await User.findByPk(userId);
+      sendMailPurchase(userName, userEmail);
       message = "Relation successfull";
       carrito.forEach(async (element) => {
         let oneCurse = await Course.findByPk(element.idCourse);
