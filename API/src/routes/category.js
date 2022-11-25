@@ -3,7 +3,7 @@ const router = Router();
 const { Category, SubCategory } = require("../db");
 const admin = require("../firebase/config");
 
-router.post("/", async (req, res) => {
+router.post("/category", async (req, res) => {
   const { name } = req.body;
   try {
     let newCategory = await Category.create({

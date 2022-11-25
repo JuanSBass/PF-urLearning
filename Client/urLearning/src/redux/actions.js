@@ -23,6 +23,7 @@ export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const ID_SESSION = "ID_SESSION";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const PUT_USER = "PUT_USER";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
@@ -156,8 +157,10 @@ export const logIn = (tokken) => {
     dispatch({
       type: LOGIN,
       payload: {
+        image: semiOldUser[0].image,
         email: semiOldUser[0].email,
         name: semiOldUser[0].name,
+        admin: semiOldUser[0].admin,
       },
       //ojo que aca solo devuelve el nombre de la base de datos
       //y el resto se lo proporciona google
@@ -180,7 +183,6 @@ export const startGoogleAuth = () => {
   try {
     return async (dispatch) => {
       const user = await loginWithGoogle();
-      console.log(user);
       const tokken = user.accessToken;
 
       dispatch(logIn(tokken));
@@ -227,7 +229,6 @@ export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
   return async function () {
     const json = await axios.post("/cart", item);
-    console.log(item);
   };
 }
 
@@ -242,16 +243,12 @@ export function clearCart() {
   try {
     // const item = userTokken;
     const tokken2 = window.localStorage.getItem("tokken");
-    console.log(tokken2, "soy el item del token en la action");
-    console.log(tokken2);
     return async function (dispatch) {
-      console.log("estoy en el medio");
       const json = await axios.delete(`/cart`, {
         headers: {
           Authorization: "Bearer " + tokken2,
         },
       });
-      console.log("soy el segundo Item");
       return dispatch({
         type: CLEAR_CART,
         payload: json.data,
@@ -266,13 +263,30 @@ export const getUserDetail = () => {
   try {
     return async function (dispatch) {
       const tokken = window.localStorage.getItem("tokken");
-      const response = await axios.get("/userCresential/detail", {
+      const response = await axios.get("/userCredential/detail", {
         headers: {
           Authorization: "Bearer " + tokken,
         },
       });
 
       dispatch({ type: GET_USER_DETAIL, payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const putUser = (payload) => {
+  try {
+    return async function (dispatch) {
+      const tokken = window.localStorage.getItem("tokken");
+      const response = await axios.put("/userCredential", {
+        authorization: "Bearer " + tokken,
+        name: payload.name,
+        image: payload.image,
+      });
+      console.log(tokken);
+      dispatch({ type: PUT_USER });
     };
   } catch (error) {
     console.log(error.message);
@@ -288,13 +302,11 @@ export function getCart() {
           Authorization: "Bearer " + tokken,
         },
       });
-      console.log("vengo antes del return");
       return dispatch({
         type: GET_CART,
         payload: json.data,
       });
     } catch (error) {
-      console.log("oh oh la cagaste");
       console.log({ error });
     }
   };
@@ -304,7 +316,6 @@ export function removeItemCart(id) {
   return async function (dispatch) {
     try {
       const tokken = window.localStorage.getItem("tokken");
-      console.log(id);
       const response = await axios.delete(`/cart/${id}`, {
         headers: {
           Authorization: "Bearer " + tokken,

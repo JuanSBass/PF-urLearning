@@ -27,11 +27,13 @@ function CursosComprados() {
                 <div className={style.cursos}>
                     {cursosUser.length ? (cursosUser.map((c) => {
                         return (
-                            <div className={style.curso}>
-                                <img src={c.image} alt="imagen" />
-                                <div className={style.title}>{c.title}</div>
-                                <div className={style.profe}>{c.name_prof}</div>
-                            </div>
+                            <Link to={`/mycourses/${c.id}`}>
+                                <div className={style.curso}>
+                                    <img src={c.image} alt="imagen" />
+                                    <div className={style.title}>{c.title}</div>
+                                    <div className={style.profe}>{c.name_prof}</div>
+                                </div>
+                            </Link>
                         )
                     })) : (<div className={style.compraCurso}>
                         <div className={style.tituloCompra}>No tienes cursos comprados...</div>

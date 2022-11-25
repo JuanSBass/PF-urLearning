@@ -85,4 +85,3 @@ const PruebaStripe = () => {
 }
 
 export default PruebaStripe
-

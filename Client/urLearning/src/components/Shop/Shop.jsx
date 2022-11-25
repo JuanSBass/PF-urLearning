@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { clearCart, getCart, removeItemCart } from '../../redux/actions';
 import PruebaStripe from '../Stripe/PruebaStripe';
 import styles from "./Shop.module.css";
+import { Toaster, toast } from 'react-hot-toast'
 
 export const Shop = () => {
     const cart = useSelector((state) => state.carrito)
@@ -15,8 +16,10 @@ export const Shop = () => {
     }
 
     useEffect(() => {
+        console.log({ cart })
         dispatch(getCart());
     }, [dispatch]);
+
 
     const handleDelete = (e) => {
         e.preventDefault()
@@ -25,62 +28,62 @@ export const Shop = () => {
 
     return cart.length ? (
         <div class={styles.contenedorGeneral}>
-        <div class={styles.contenedor}>
-            <p class="text-3xl text-gray-900 dark:text-white">Your Cart</p>
-            <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="py-3 px-6">
-                                <span class="sr-only">Image</span>
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Course
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Price
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Descripcion
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cart?.map((card) => (
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="p-4 w-32">
-                                    <img src={card.image} alt="miniatura" />
-                                </td>
-                                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                    {card.title}
-                                </td>
-                                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                    {card.price}
-                                </td>
-                                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                    {card.description}
-                                </td>
-                                <td class="py-4 px-6">
-                                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={card.ID} onClick={(e) => handleDelete(e)}>Remove</button>
-                                </td>
+            <div class={styles.contenedor}>
+                <p class="text-3xl text-gray-900 dark:text-white">Your Cart</p>
+                <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="py-3 px-6">
+                                    <span class="sr-only">Image</span>
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    Course
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    Price
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    Descripcion
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    Action
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className={styles.buttonscontainer}>
+                        </thead>
+                        <tbody>
+                            {cart?.map((card) => (
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="p-4 w-32">
+                                        <img src={card.image} alt="miniatura" />
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {card.title}
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {card.price}
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {card.description}
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={card.ID} onClick={(e) => toast.error('Deleted Course!') && handleDelete(e)}>Remove</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
                 <br />
-                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => handleDeleteAll(e)}>Clear Cart</button>
-
-                <PruebaStripe />
-
+                <div className={styles.buttonscontainer}>
+                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => toast.error('Cart Cleaned!') && handleDeleteAll(e)}>Clear Cart</button>
+                    <PruebaStripe />
+                </div>
+                <Toaster
+                    position="bottom-right"
+                />
             </div>
-
         </div>
-    </div>
     ) : (
         <div class={styles.contenedorGeneral}>
             <div class={styles.contenedor}>
