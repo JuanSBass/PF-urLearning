@@ -215,6 +215,13 @@ router.get("/courseByCategory", async (req, res) => {
 /////////////// POST a comment /////////////////
 
 router.put("/comment/:id", async (req, res) => {
+  const userId = await admin.auth().verifyIdToken(token);
+  if (!userId) return new Error("no se pudio");
+
+  let currentUser = await User.findByPk(userId.uid);
+  let result = await currentUser.getCourses({
+    attributes: ["title", "id"],
+  });
   const { comment } = req.body;
   const { id } = req.params;
 
