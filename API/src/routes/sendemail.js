@@ -235,4 +235,3 @@ const sendMailCreateCourse = (name, email, title, image) => {
   });
 };
 
-module.exports = { sendMailRegister, sendMailPurchase, sendMailCreateCourse };
