@@ -96,8 +96,8 @@ router.get("/all", async (req, res) => {
  *
  * POST: Mediante su id por params retorna la info del usuario con sus cursos favoritos.
  */
-router.get("/fromUser/:userId", async (req, res) => {
-  const { userId } = req.params;
+router.get("/fromUser", async (req, res) => {
+  const { userId } = req.body;
   try {
     let currentUser = await User.findByPk(userId);
     let currentList = await currentUser.getFavouriteList({
