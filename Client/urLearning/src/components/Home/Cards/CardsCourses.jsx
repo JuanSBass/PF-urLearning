@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 import { useState } from "react";
 import { postProductCart } from "../../../redux/actions";
+import corazonlleno from "../../../img/IoIosHeart.svg"
+import corazonvacio from "../../../img/IoIosHeartEmpty.svg"
 
 
 const CardsCourses = () => {
@@ -34,12 +36,12 @@ const CardsCourses = () => {
         const isFavorite = favoritos.some(e => e.id === card.id)
         return (
           <div className={styles.card} key={card.id}>
+            {isFavorite ? <img src={corazonlleno} alt="fav" className={styles.corazones} /> : <img src={corazonvacio} alt="NOfav" className={styles.corazones} />}
             <Link to={`/course/${card.id}`} key={card.id}>
               <div className={styles.imgcard}>
-                <img src={card.image} alt="miniatura" />
+                <img className="img" src={card.image} alt="miniatura" />
               </div>
             </Link>
-            {isFavorite ? <div>soy fav</div> : <div>no soy fav</div>}
             <h3>{card.title}</h3>
             <p>{card.name_prof}</p>
             <Rating>

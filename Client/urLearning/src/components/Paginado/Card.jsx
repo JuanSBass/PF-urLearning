@@ -1,12 +1,14 @@
 import styles from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { Rating } from "flowbite-react";
+import corazonlleno from "../../img/IoIosHeart.svg"
+import corazonvacio from "../../img/IoIosHeartEmpty.svg"
 
 const Card = ({ title, image, id, rating, name_prof, isFavorite }) => {
   return (
     <Link to={`/course/${id}`} key={id} className={styles.contCard}>
+      {isFavorite ? <img src={corazonlleno} alt="fav" className={styles.corazones} /> : <img src={corazonvacio} alt="NOfav" className={styles.corazones} />}
       <div className={styles.card}>
-        {isFavorite ? <div>soy fav</div> : <div>no soy fav</div>}
         <div className={styles.imgcard}>
           <img src={image} alt="miniatura" />
         </div>
