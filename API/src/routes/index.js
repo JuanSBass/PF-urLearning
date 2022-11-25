@@ -29,6 +29,7 @@ const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
+const edit = require("./edit.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -37,6 +38,7 @@ router.use("/user", user);
 router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
+router.use("/edit", edit);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
