@@ -4,6 +4,7 @@ const Stripe = require("stripe");
 const apiKeyPayment = process.env.API_KEY_PAYMENT;
 const { Order, User, Course } = require("../db.js");
 const admin = require("../firebase/config");
+const { sendMailPurchase } = require("./sendemail.js");
 
 const stripe = new Stripe(apiKeyPayment);
 
@@ -135,6 +136,8 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
     const userId = decodeValue.uid;
+    const userEmail = decodeValue.email;
+    const userName = decodeValue.name;
 
     const lastOrder = await Order.findAll({
       where: { userId },
@@ -149,6 +152,7 @@ router.put("/updateUserCourseRelations", async (req, res) => {
 
     if (payment_status === "paid") {
       let currentUser = await User.findByPk(userId);
+      sendMailPurchase(userName, userEmail);
       message = "Relation successfull";
       carrito.forEach(async (element) => {
         let oneCurse = await Course.findByPk(element.idCourse);
@@ -164,7 +168,4 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     res.status(405).send(error);
   }
 });
-
 module.exports = router;
-
-// GUARDAR USERID, SESIONID, ORDER
