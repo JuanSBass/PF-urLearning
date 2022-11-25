@@ -197,6 +197,10 @@ const getPrueba = async (req) => {
   return cartUserTokken2;
 };
 
+
+
+
+
 module.exports = {
   allInfo,
   allInfoCourses,
