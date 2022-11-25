@@ -14,7 +14,7 @@ router.post("/new", async (req, res) => {
   const { userId } = req.body;
   try {
     const currentUser = await User.findByPk(userId);
-    if (currentUser.getFavouriteList())
+    if (await currentUser.getFavouriteList())
       throw new Error("el usuario ya tiene lista de favs");
     let userName = currentUser.name;
     let newFavoutiteList = await FavouriteList.create({
