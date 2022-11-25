@@ -33,8 +33,9 @@ const admin = require("../firebase/config");
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-router.use("/userCresential", userCredencial);
+
 router.use("/admin", administrator);
+router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
@@ -55,6 +56,7 @@ router.post("/user", async (req, res) => {
         email,
         name,
       });
+
       res.status(200).send("Usuario creado correctamente");
     }
   } catch (error) {
