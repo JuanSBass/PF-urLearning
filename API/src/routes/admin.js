@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
+const ContactUs = require("../models/ContactUs");
 
 ///////////////////Courses///////////////////
 ///////////////////todos///////////////////
@@ -30,6 +31,42 @@ router.delete("/deleteCourseId", async (req, res) => {
     let courseToDelete = await Course.findByPk(deleteCourseId);
     await courseToDelete.destroy();
     res.status(200).send("Curso eliminado");
+  } catch (error) {
+    res.status(401).send(error);
+  }
+});
+
+router.delete("/comment", async (req, res) => {
+  const { comment } = req.body;
+  console.log(comment);
+
+  let newComment = await Course.findOne({ where: { comment } });
+  console.log(newComment.dataValues.comment);
+
+  // delete newComment.dataValues.comment === comment;
+
+  console.log(newComment.dataValues.comment);
+
+  try {
+    Course.delete({
+      where: {
+        comment: comment,
+      },
+    });
+    res.send("Comentario borrado");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.delete("/deleteContactUs", async (req, res) => {
+  const { messageId } = req.body;
+  console.log(messageId);
+  try {
+    let messageToDelete = await ContactUs.findByPk(messageId);
+    console.log(messageToDelete);
+    await messageToDelete.destroy();
+    res.status(200).send("Message borrado");
   } catch (error) {
     res.status(401).send(error);
   }
