@@ -29,6 +29,7 @@ const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
+const { sendMailCreateCourse } = require("./sendemail");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -101,9 +102,11 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
-    console.log(description.length);
-    console.log(validTitle);
-    console.log(level);
+    //traemos datos de user para el email
+    const token = req.body.authorization.split(" ")[1];
+    const decodeValue = await admin.auth().verifyIdToken(token);
+    const { name, email } = decodeValue;
+
     //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
       res.status(404).send({ message: "Titulo invalido o inexistente" });
@@ -137,7 +140,9 @@ router.post("/course", async (req, res) => {
         name_prof,
         videos,
       });
-      //console.log(newCourse);
+      // envia mail una vez creado
+      sendMailCreateCourse(name, email, title, image);
+
       res.status(200).send("Curso creado correctamente");
     }
   } catch (error) {
