@@ -34,8 +34,9 @@ const { sendMailCreateCourse } = require("./sendemail");
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-router.use("/userCresential", userCredencial);
+
 router.use("/admin", administrator);
+router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////

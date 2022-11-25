@@ -170,7 +170,4 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     res.status(405).send(error);
   }
 });
-
 module.exports = router;
-
-// GUARDAR USERID, SESIONID, ORDER

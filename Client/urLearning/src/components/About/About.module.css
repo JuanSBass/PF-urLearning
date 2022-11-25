@@ -1,0 +1,45 @@
+.headercontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 1400px;
+    margin: 4rem auto;
+  }
+  
+  .sideleft {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(270deg, #c6a2fe 0%, #aeacff 89.62%);
+    width: 721px;
+    height: 429px;
+  }
+  
+  .sideleft h1 {
+    font-size: 61px;
+    font-weight: 700;
+    width: 619px;
+    margin: 0 auto;
+    line-height: 74px;
+    letter-spacing: -0.005em;
+  }
+  
+  .sideleft p {
+    width: 625px;
+    margin: 0 auto;
+    padding: 18px 0;
+  }
+  
+  .sideright img {
+   height: 429px;
+   width: 670px;
+  }
+  
+  .up{
+    color: #fff;
+  }
+
+  .imagen{
+  margin-top: 20px;
+  height: 625px;
+  }
+  
