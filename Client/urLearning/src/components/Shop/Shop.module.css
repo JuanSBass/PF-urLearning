@@ -40,13 +40,12 @@
 
 .contenedor {
   background-color: #fafafa;
-  max-width: 1000px;
+  max-width: 10000px;
   width: 90000px;
   border-radius: 25px;
   height: 700px;
   padding-inline: 1rem;
   gap: 2rem;
-  margin: 0 auto;
 }
 
 .contenedorGeneral {
@@ -55,10 +54,4 @@
   margin-top: 81px;
   height: calc(100vh - 149px);
   text-align: center;
-}
-
-
-.buttonscontainer {
-  display: flex;
-  justify-content: center;
 }

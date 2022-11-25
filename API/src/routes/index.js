@@ -27,14 +27,16 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
+const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
-const { card } = require("mercadopago");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-router.use("/userCresential", userCredencial);
+
 router.use("/admin", administrator);
+router.use("/userCredential", userCredencial);
+router.use("/favouriteList", favouriteList);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -50,6 +52,7 @@ router.post("/user", async (req, res) => {
         email,
         name,
       });
+
       res.status(200).send("Usuario creado correctamente");
     }
   } catch (error) {

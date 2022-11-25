@@ -17,21 +17,21 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-     /* fecha:{
-        type:DataTypes.DATE,
-        allowNull:false,
+
+      image: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       admin: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
         allowNull: false,
-      }, */
-      // here would be the idProf reference
+        default: false,
+      },
     },
-    
     {
-      timestamps: false,
+      paranoid: true,
       createdAt: false,
     }
   );
+  // here would be the idProf reference
 };
