@@ -24,6 +24,7 @@ const CardsCourses = () => {
   const dispatch = useDispatch()
 
   const favoritos = useSelector((state) => state.favorites);
+  const cursosComprados = useSelector(state => state.userCourses)
 
   const handleClick = (id) => {
     if (!user.name) return navigate.push("/register")
@@ -54,6 +55,7 @@ const CardsCourses = () => {
                 {card.rating} out of 5
               </p>
             </Rating>
+
             <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleClick(card)}>Add to Cart</button>
           </div>
         )

@@ -339,13 +339,28 @@ export function getUserCourses() {
   };
 }
 
-export const getFavorite = (id) => {
-  try {
-    return async function (dispatch) {
-      const response = await axios.get(`/favouriteList/fromUser/${id}`);
-      dispatch({ type: GET_FAVORITE, payload: response.data });
-    };
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+// export const getFavorite = (id) => {
+//   try {
+//     return async function (dispatch) {
+//       const response = await axios.get(`/favouriteList/fromUser/${id}`);
+//       dispatch({ type: GET_FAVORITE, payload: response.data });
+//     };
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+
+export function getFavorite() {
+  return async function (dispatch) {
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.get("/favouriteList/fromUser/", {
+      headers: {
+        Authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_FAVORITE,
+      payload: json.data,
+    });
+  };
+}
