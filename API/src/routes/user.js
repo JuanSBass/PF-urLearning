@@ -31,7 +31,7 @@ router.post("/create", async (req, res) => {
       },
     });
 
-    sendMailRegister(name, email);
+    if (newUser[1]) sendMailRegister(name, email);
 
     res.status(200).send(newUser);
   } catch (error) {
