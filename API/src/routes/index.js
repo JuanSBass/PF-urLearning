@@ -8,6 +8,7 @@ const {
   getDbInfoCourses,
   getCartCourseDb,
   getPrueba,
+  getCommentDb,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -30,15 +31,16 @@ const administrator = require("./admin.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
 const edit = require("./edit.js");
+const contactUs = require("./contactUs.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-
 router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
 router.use("/edit", edit);
+router.use("/contactUs", contactUs);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -207,6 +209,42 @@ router.get("/courseByCategory", async (req, res) => {
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
+  }
+});
+
+/////////////// POST a comment /////////////////
+
+router.put("/comment/:id", async (req, res) => {
+  const { comment } = req.body;
+  const { id } = req.params;
+
+  try {
+    let newComment = await Course.update(
+      { comment: comment },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).send("Comentario creado correctamente");
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error + " error del /Post comment");
+  }
+});
+
+/////////////// GET a comment /////////////////
+router.get("/comment", async (req, res) => {
+  const { comment } = req.query;
+
+  try {
+    const allComments = await getCommentDb(comment);
+    return allComments
+      ? res.status(200).send(allComments)
+      : res.status(404).send("No existe el comentario buscado");
+  } catch (error) {
+    console.log(error + "error del get /comment");
   }
 });
 

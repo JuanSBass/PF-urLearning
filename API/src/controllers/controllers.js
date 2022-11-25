@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
-const { Course, User, Cart } = require("../db");
+const { Course, User, Cart, ContactUs } = require("../db");
 const admin = require("../firebase/config");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
@@ -187,6 +187,48 @@ const getPrueba = async (req) => {
   return cartUserTokken2;
 };
 
+//////////// Contact Us /////////////////
+const getContactUs = async (email) => {
+  //busco por email
+  const contactUsDb = email
+    ? await ContactUs.findAll({
+        where: {
+          email: { email },
+        },
+      })
+    : await ContactUs.findAll();
+
+  const newMessageDb = await contactUsDb.map((e) => {
+    return {
+      id: e.id,
+      email: e.email,
+      name: e.name,
+      message: e.message,
+    };
+  });
+  return newMessageDb;
+};
+
+//////////// Comment /////////////////
+const getCommentDb = async (comment) => {
+  //busco por email
+  const commentDb = comment
+    ? await Course.findAll({
+        where: {
+          comment: { comment },
+        },
+      })
+    : await Course.findAll();
+
+  const newCommentDb = await commentDb.map((e) => {
+    return {
+      id: e.id,
+      comment: e.comment,
+    };
+  });
+  return newCommentDb;
+};
+
 module.exports = {
   allInfo,
   allInfoCourses,
@@ -196,4 +238,6 @@ module.exports = {
   addCartItem,
   getCartCourseDb,
   getPrueba,
+  getContactUs,
+  getCommentDb,
 };

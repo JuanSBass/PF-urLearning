@@ -72,6 +72,10 @@ module.exports = (sequelize) => {
       videos: {
         type: DataTypes.JSON,
       },
+      comment: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       // here would be the idProf reference and students
     },
     {
