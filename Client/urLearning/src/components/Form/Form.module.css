@@ -2,8 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 81px;
-  height: calc(100vh - 149px);
+  margin: 6rem auto;
 }
 
 .contenedorFormulario {
@@ -89,7 +88,7 @@
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .errores {

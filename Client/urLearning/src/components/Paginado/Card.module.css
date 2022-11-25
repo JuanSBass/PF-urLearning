@@ -12,6 +12,11 @@
   font-weight: 700;
   font-size: 18px;
 }
+
+.card h2 {
+  font-weight: 600;
+}
+
 .card img {
   object-fit: cover;
   width: 238px;

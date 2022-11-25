@@ -2,7 +2,7 @@ import styles from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { Rating } from "flowbite-react";
 
-const Card = ({ title, image, id, rating, name_prof }) => {
+const Card = ({ title, image, id, rating, name_prof, price }) => {
   return (
     <Link to={`/course/${id}`} key={id} className={styles.contCard}>
       <div className={styles.card}>
@@ -11,6 +11,7 @@ const Card = ({ title, image, id, rating, name_prof }) => {
         </div>
         <h3>{title}</h3>
         <p>{name_prof}</p>
+        <h2>${price} USD</h2>
         <Rating>
           <Rating.Star filled={rating > 0} />
           <Rating.Star filled={rating > 1} />

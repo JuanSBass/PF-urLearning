@@ -17,6 +17,7 @@ const renderData = (data) => {
         key={p.id}
         id={p.id}
         rating={p.rating}
+        price={p.price}
       />
     );
   });
