@@ -12,16 +12,15 @@ router.use(middleware.decodeToken);
  */
 router.post("/new", async (req, res) => {
   const { userId } = req.body;
-  console.log(userId);
   try {
-    let user = await User.findByPk(userId);
-    if (user.getFavouriteList())
+    const currentUser = await User.findByPk(userId);
+    if (currentUser.getFavouriteList())
       throw new Error("el usuario ya tiene lista de favs");
-    let userName = user.name;
+    let userName = currentUser.name;
     let newFavoutiteList = await FavouriteList.create({
       name: `${userName}'s favourite list`,
     });
-    user.setFavouriteList(newFavoutiteList);
+    currentUser.setFavouriteList(newFavoutiteList);
     res.status(200).send(newFavoutiteList);
   } catch (error) {
     console.log(error);
