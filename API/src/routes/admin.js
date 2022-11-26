@@ -1,7 +1,14 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
-const ContactUs = require("../models/ContactUs");
+const {
+  User,
+  Course,
+  Cart,
+  Category,
+  SubCategory,
+  Order,
+  ContactUs,
+} = require("../db");
 
 ///////////////////Courses///////////////////
 ///////////////////todos///////////////////
@@ -48,12 +55,12 @@ router.delete("/comment", async (req, res) => {
   console.log(newComment.dataValues.comment);
 
   try {
-    Course.delete({
+    Course.update({
       where: {
         comment: comment,
       },
     });
-    res.send("Comentario borrado");
+    res.send("Comentario actualizado");
   } catch (error) {
     console.log(error);
   }
@@ -63,8 +70,9 @@ router.delete("/deleteContactUs", async (req, res) => {
   const { messageId } = req.body;
   console.log(messageId);
   try {
+    console.log("vengo antes");
     let messageToDelete = await ContactUs.findByPk(messageId);
-    console.log(messageToDelete);
+    console.log(messageToDelete, "aaaaaaaaaa");
     await messageToDelete.destroy();
     res.status(200).send("Message borrado");
   } catch (error) {

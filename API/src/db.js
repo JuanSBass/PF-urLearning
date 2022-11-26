@@ -68,6 +68,7 @@ const {
   Order,
   FavouriteList,
   ContactUs,
+  Comments,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
