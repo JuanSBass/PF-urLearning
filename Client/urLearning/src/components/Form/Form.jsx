@@ -81,7 +81,8 @@ const Form = () => {
     input.level.length &&
     input.name_prof.length &&
     input.subCategory.length &&
-    input.language.length
+    input.language.length &&
+    input.videos?.linksVideos?.length === 2
   ) ||
     input.description.length > 200 ||
     input.description.length < 15
@@ -439,7 +440,7 @@ const Form = () => {
                 onDrop={handleDrop}
                 onChange={e => setImage(e.target.value)}
                 value={video}
-                disabled={input.videos.linksVideos?.length === 2}
+                disabled={input.videos.linksVideos?.length >= 2}
               >
 
                 {({ getRootProps, getInputProps }) => (
@@ -457,11 +458,10 @@ const Form = () => {
               </Dropzone>
               {loading ?
                 (
-                  // <div className={style.loading}><h3>Cargando video...</h3></div>
                   <Button color="gray">
                     <Spinner aria-label="Alternate spinner button example" />
                     <span className="pl-3">
-                      Loading...
+                      Cargando...
                     </span>
                   </Button>
                 ) :
