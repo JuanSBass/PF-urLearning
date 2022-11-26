@@ -32,6 +32,7 @@ const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
 const edit = require("./edit.js");
 const contactUs = require("./contactUs.js");
+const comments = require("./commets.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -41,6 +42,7 @@ router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
 router.use("/edit", edit);
 router.use("/contactUs", contactUs);
+router.use("/comment", comments);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -212,28 +214,6 @@ router.get("/courseByCategory", async (req, res) => {
   }
 });
 
-/////////////// PUT a comment /////////////////
-
-router.put("/comment/:id", async (req, res) => {
-  const { comment } = req.body;
-  const { id } = req.params;
-
-  try {
-    let newComment = await Course.update(
-      { comment: comment },
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
-    res.status(200).send("Comentario creado correctamente");
-  } catch (error) {
-    console.log(error);
-    res.status(404).send(error + " error del /Post comment");
-  }
-});
-
 /////////////// GET a comment /////////////////
 router.get("/comment", async (req, res) => {
   const { comment } = req.query;
@@ -262,6 +242,8 @@ router.get("/courseBySubCategory", async (req, res) => {
     console.log("error");
   }
 });
+
+////////////////////////// CART
 
 router.post("/cart", async (req, res) => {
   const { id, title, image, description, price, name_prof } = req.body[0];

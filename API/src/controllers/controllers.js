@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
-const { Course, User, Cart, ContactUs } = require("../db");
+const { Course, User, Cart, ContactUs, Comments } = require("../db");
 const admin = require("../firebase/config");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
@@ -104,6 +104,20 @@ const getCourseById = async (id) => {
   }
 };
 
+///////// Route Comment ID /////////
+
+const getCommentById = async (id) => {
+  console.log(id);
+  const coursejson = await Comments.findByPk(id);
+  console.log(coursejson);
+  return {
+    ID: coursejson.ID,
+    courseId: coursejson.idCourse,
+    userId: coursejson.userId,
+    comment: coursejson.comment,
+  };
+};
+
 ///////// Route Course Modify Rating by ID /////////
 
 const changeCourseById = async (id, rating) => {
@@ -187,6 +201,29 @@ const getPrueba = async (req) => {
   return cartUserTokken2;
 };
 
+///////// Route Get para el carrito de compras ////////
+const getCommentCourseDb = async (req) => {
+  const { id } = req.query;
+
+  const commentDb = id
+    ? await Comments.findAll({
+        where: {
+          idCourse: id,
+        },
+      })
+    : await Comments.findAll();
+
+  const newCommentDb = await commentDb.map((e) => {
+    return {
+      ID: e.ID,
+      idCourse: e.idCourse,
+      comment: e.comment,
+      userId: e.userId,
+    };
+  });
+  return newCommentDb;
+};
+
 //////////// Contact Us /////////////////
 const getContactUs = async (email) => {
   //busco por email
@@ -240,4 +277,6 @@ module.exports = {
   getPrueba,
   getContactUs,
   getCommentDb,
+  getCommentCourseDb,
+  getCommentById,
 };
