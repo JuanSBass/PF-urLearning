@@ -175,7 +175,7 @@ const Courses = () => {
               <HiExclamation className="h-5 w-5" />
             </div>
             <div className="ml-3 text-sm font-normal">
-              Accede o crea cuenta para crear
+              Accede o crea una cuenta para crear
             </div>
             <Toast.Toggle />
           </Toast>}
