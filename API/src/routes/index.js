@@ -27,16 +27,17 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
+const professor = require("./professorRole.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-
 router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
+router.use("/professor", professor);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {

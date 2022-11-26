@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const router = Router();
 const { User, Course, FavouriteList } = require("../db");
+const middleware = require("../middleware");
+router.use(middleware.decodeToken);
 
 /**Crear lista de favoritos:
  * PRE: el usuario debe estar creado.
@@ -10,18 +12,19 @@ const { User, Course, FavouriteList } = require("../db");
  */
 router.post("/new", async (req, res) => {
   const { userId } = req.body;
-  console.log(userId);
   try {
-    let user = await User.findByPk(userId);
-    let userName = user.name;
+    const currentUser = await User.findByPk(userId);
+    if (await currentUser.getFavouriteList())
+      throw new Error("el usuario ya tiene lista de favs");
+    let userName = currentUser.name;
     let newFavoutiteList = await FavouriteList.create({
       name: `${userName}'s favourite list`,
     });
-    user.setFavouriteList(newFavoutiteList);
+    currentUser.setFavouriteList(newFavoutiteList);
     res.status(200).send(newFavoutiteList);
   } catch (error) {
     console.log(error);
-    res.status(404).send(error);
+    res.status(404).send(error.message);
   }
 });
 
@@ -92,8 +95,8 @@ router.get("/all", async (req, res) => {
  *
  * POST: Mediante su id por params retorna la info del usuario con sus cursos favoritos.
  */
-router.get("/fromUser/:userId", async (req, res) => {
-  const { userId } = req.params;
+router.get("/fromUser", async (req, res) => {
+  const { userId } = req.body;
   try {
     let currentUser = await User.findByPk(userId);
     let currentList = await currentUser.getFavouriteList({
