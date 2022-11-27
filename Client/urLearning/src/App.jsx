@@ -24,6 +24,7 @@ import About from "./components/About/About.jsx"
 import CursosComprados from "./components/CursosComprados/CursosComprados.jsx";
 import EditCurso from "./components/EditCurso/EditCurso.jsx";
 import DetalleCursoComprado from "./components/CursosComprados/DetalleCursoComprado.jsx";
+import AddFavorite from "./components/AddFavorite/AddFavorite.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,9 @@ function App() {
         <Route exact path={`/${user.name}`} component={userDetail} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/cursos" component={AdminCursos} />
+        <Route exact path="/favourites" component={AddFavorite} />
+
+
 
 
         <Footer />

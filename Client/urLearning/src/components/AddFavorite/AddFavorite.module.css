@@ -20,21 +20,6 @@
   padding-inline: 3rem;
 }
 
-.contCursos {
-  border-radius: 30px;
-  position: relative;
-  background-color: #fff;
-  height: 35rem;
-  width: 90rem;
-}
-
-.cursos {
-  display: flex;
-  align-items: center;
-  margin-top: 3rem;
-  padding-inline: 2rem;
-  gap: 2rem;
-}
 .hr {
   width: 40px;
   margin: 0;
@@ -52,6 +37,22 @@
   font-size: 2em;
   font-weight: 500;
   margin-left: 3rem;
+}
+
+.contCursos {
+  border-radius: 30px;
+  position: relative;
+  background-color: #fff;
+  height: 35rem;
+  width: 90rem;
+}
+
+.cursos {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  padding-inline: 2rem;
+  gap: 2rem;
 }
 
 .curso {
