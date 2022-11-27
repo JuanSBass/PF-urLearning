@@ -37,8 +37,16 @@
   background-color: #fff;
   min-width: 250px;
   margin: 0.5rem;
+  position: relative;
 }
 
 .contCard .img {
   max-width: 50%;
+}
+
+.corazones {
+  position: absolute;
+  height: 30px;
+  right: 13px;
+  bottom: 15px;
 }

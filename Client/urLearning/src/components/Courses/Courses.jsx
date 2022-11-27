@@ -8,6 +8,7 @@ import {
   getCategory,
   getChildCategory,
   getCourses,
+  getFavorite,
   orderByAny,
 } from "../../redux/actions";
 import { Button, Select, Dropdown, Rating, Label } from "flowbite-react";
@@ -21,11 +22,15 @@ const Courses = () => {
   const [order, setOrder] = useState("");
   const subCategories = useSelector((state) => state.subCategories);
   const courses = useSelector((state) => state.courses);
+  const favoritos = useSelector((state) => state.favorites);
+  const tokken = window.localStorage.getItem("tokken");
+
 
   useEffect(() => {
     dispatch(getCourses());
     dispatch(getCategory());
-  }, [dispatch]);
+    dispatch(getFavorite(tokken))
+  }, [dispatch, tokken]);
 
   const filterCategos = (event) => {
     dispatch(filteredByCategories(event.target.value));

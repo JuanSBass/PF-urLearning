@@ -11,7 +11,7 @@ class Middleware {
       }
       return res.json({ message: "can not authoize" });
     } catch (error) {
-      return res.status(404).send(error.message);
+      return res.status(401).send(error.message);
     }
   }
 }

@@ -28,6 +28,9 @@ export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_COURSES = "GET_USER_COURSES";
+export const GET_FAVORITE = "GET_FAVORITE";
+export const NEW_FAVORITE = "NEW_FAVORITE";
+export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE";
 
 export const getCourses = () => {
   try {
@@ -353,6 +356,44 @@ export function getUserCourses() {
     });
     return dispatch({
       type: GET_USER_COURSES,
+      payload: json.data,
+    });
+  };
+}
+
+// export const getFavorite = (id) => {
+//   try {
+//     return async function (dispatch) {
+//       const response = await axios.get(`/favouriteList/fromUser/${id}`);
+//       dispatch({ type: GET_FAVORITE, payload: response.data });
+//     };
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+
+export function getFavorite(tokken) {
+  return async function (dispatch) {
+    const json = await axios.get("/favouriteList/fromUser", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_FAVORITE,
+      payload: json.data,
+    });
+  };
+}
+
+export function addRemoveFavorite(tokken, courseId) {
+  return async function (dispatch) {
+    const json = await axios.put("/favouriteListNew/addRemoveCourse", {
+      userTokken: tokken,
+      courseId: courseId,
+    });
+    return dispatch({
+      type: ADD_REMOVE_FAVORITE,
       payload: json.data,
     });
   };

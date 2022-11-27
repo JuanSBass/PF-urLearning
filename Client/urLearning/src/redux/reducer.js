@@ -12,6 +12,8 @@ import {
   ORDER_BY_ANY,
   GET_COURSES_NAME,
   GET_USER_COURSES,
+  GET_FAVORITE,
+  ADD_REMOVE_FAVORITE,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -41,6 +43,7 @@ const initialState = {
   userDetail: {},
   cartNumber: 0,
   userCourses: [],
+  favorites: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -229,6 +232,18 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userCourses: action.payload[0].courses,
+      };
+
+    case GET_FAVORITE:
+      return {
+        ...state,
+        favorites: action.payload.courses,
+      };
+
+    case ADD_REMOVE_FAVORITE:
+      return {
+        ...state,
+        favorites: action.payload.courses,
       };
 
     default:

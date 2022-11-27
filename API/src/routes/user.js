@@ -35,6 +35,12 @@ router.post("/create", async (req, res) => {
 
     if (newUser[1]) {
       sendMailRegister(name, email);
+      const currentUser = await User.findByPk(user_id);
+      let userName = currentUser.name;
+      let newFavoutiteList = await FavouriteList.create({
+        name: `${userName}'s favourite list`,
+      });
+      await currentUser.setFavouriteList(newFavoutiteList);
     }
 
     res.status(200).send(newUser);
