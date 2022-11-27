@@ -12,7 +12,7 @@ function Admin(props) {
         {user.admin ? <div className={s.container}>
             <Link to="/admin/cursos"><div className={s.nom}>cursos</div></Link>
             <Link to="/admin/usuarios"><div className={s.nom}>usuarios</div></Link>
-            <Link to="/admin/pagos"><div className={s.nom}>pagos</div></Link>
+            <Link to="/admin/ordenes"><div className={s.nom}>pagos</div></Link>
         </div> : <h1>No tienes acceso</h1>}
 
 
