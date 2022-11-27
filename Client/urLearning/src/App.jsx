@@ -25,6 +25,8 @@ import About from "./components/About/About.jsx"
 import CursosComprados from "./components/CursosComprados/CursosComprados.jsx";
 import EditCurso from "./components/EditCurso/EditCurso.jsx";
 import DetalleCursoComprado from "./components/CursosComprados/DetalleCursoComprado.jsx";
+import AdminUser from "./components/admin/AdminUser/AdminUser.jsx";
+import AdminPagos from "./components/admin/AdminPagos/AdminPagos.jsx";
 import AddFavorite from "./components/AddFavorite/AddFavorite.jsx";
 
 function App() {
@@ -77,7 +79,9 @@ function App() {
         <Route exact path="/favourites" component={AddFavorite} />
 
 
-        <Route exact path="/admin/usuarios" component={AdminUsuarios} />
+
+        <Route exact path="/admin/usuarios" component={AdminUser} />
+        <Route exact path="/admin/ordenes" component={AdminPagos} />
 
 
         <Footer />
