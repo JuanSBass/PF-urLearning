@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Rating } from "flowbite-react";
 import { useState } from "react";
-import { addRemoveFavorite, newFavorite, postProductCart } from "../../../redux/actions";
+import { addRemoveFavorite, postProductCart } from "../../../redux/actions";
 import corazonlleno from "../../../img/IoIosHeart.svg"
 import corazonvacio from "../../../img/IoIosHeartEmpty.svg"
 import { Toaster, toast } from 'react-hot-toast';
@@ -33,7 +33,7 @@ const CardsCourses = () => {
   }
 
   const handleFav = (e) => {
-    dispatch(newFavorite(userTokken))
+    dispatch(addRemoveFavorite(userTokken, e))
 
   }
 
@@ -43,7 +43,8 @@ const CardsCourses = () => {
         const isFavorite = favoritos?.some(e => e.id === card.id)
         return (
           <div className={styles.card} key={card.id}>
-            {isFavorite ? <button onClick={() => handleFav()}><img src={corazonlleno} alt="fav" className={styles.corazones} /></button> : <button onClick={() => handleFav()}> <img src={corazonvacio} alt="NOfav" className={styles.corazones} /></button>}
+            <button onClick={() => handleFav(card.id)}> {isFavorite ? <img src={corazonlleno} alt="fav" className={styles.corazones} /> : <img src={corazonvacio} alt="NOfav" className={styles.corazones} />}</button>
+            {/* {isFavorite ? <button onClick={() => handleFav(card.id)}><img src={corazonlleno} alt="fav" className={styles.corazones} /></button> : <button onClick={() => handleFav(card.id)}> <img src={corazonvacio} alt="NOfav" className={styles.corazones} /></button>} */}
             <Link to={`/course/${card.id}`} key={card.id}>
               <div className={styles.imgcard}>
                 <img className="img" src={card.image} alt="miniatura" />

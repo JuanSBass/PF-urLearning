@@ -25,7 +25,6 @@ import {
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
-  NEW_FAVORITE,
 } from "./actions";
 
 const initialState = {
@@ -238,20 +237,14 @@ function rootReducer(state = initialState, action) {
     case GET_FAVORITE:
       return {
         ...state,
-        favorites: action.payload.course,
+        favorites: action.payload.courses,
       };
 
-    case NEW_FAVORITE: {
+    case ADD_REMOVE_FAVORITE:
       return {
         ...state,
+        favorites: action.payload.courses,
       };
-    }
-
-    // case ADD_REMOVE_FAVORITE:
-    //   return {
-    //     ...state,
-    //     favorites: action.payload,
-    //   };
 
     default:
       return { ...state };

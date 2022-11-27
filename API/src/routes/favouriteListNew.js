@@ -26,8 +26,39 @@ router.post("/new", async (req, res) => {
     currentUser.setFavouriteList(newFavoutiteList);
     res.status(200).send(newFavoutiteList);
   } catch (error) {
+    // console.log(error);
+    res.status(404).send("el usuario ya tiene lista de favoritos");
+  }
+});
+
+router.put("/addRemoveCourse", async (req, res) => {
+  const { userTokken, courseId } = req.body;
+  try {
+    const decodeValue = await admin.auth().verifyIdToken(userTokken);
+    const userId = decodeValue.uid;
+
+    let currentUser = await User.findByPk(userId);
+    let currentList = await currentUser.getFavouriteList();
+    let currentCourse = await Course.findByPk(courseId);
+    if (await currentList.hasCourse(currentCourse)) {
+      await currentList.removeCourse(currentCourse);
+    } else {
+      await currentList.addCourse(currentCourse);
+    }
+    let finalList = await currentUser.getFavouriteList({
+      include: {
+        model: Course,
+        attributes: ["title", "id"],
+        //en el arreglo de arriba se ponen los items que se quieren mostrar
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    res.status(200).send(finalList);
+  } catch (error) {
     console.log(error);
-    res.status(404).send(error.message);
+    res.status(404).send(error);
   }
 });
 

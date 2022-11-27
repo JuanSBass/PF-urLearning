@@ -386,13 +386,10 @@ export function getFavorite(tokken) {
   };
 }
 
-export function addRemoveFavorite(courseId) {
+export function addRemoveFavorite(tokken, courseId) {
   return async function (dispatch) {
-    const tokken = window.localStorage.getItem("tokken");
-    const json = await axios.put("/favouriteList/addRemoveCourse", {
-      headers: {
-        Authorization: "Bearer " + tokken,
-      },
+    const json = await axios.put("/favouriteListNew/addRemoveCourse", {
+      userTokken: tokken,
       courseId: courseId,
     });
     return dispatch({
@@ -401,15 +398,3 @@ export function addRemoveFavorite(courseId) {
     });
   };
 }
-
-export const newFavorite = (tokken) => {
-  return async function (dispatch) {
-    const oldUser = await axios.post("/favouriteListNew/new", {
-      userTokken: tokken,
-    });
-    dispatch({
-      type: NEW_FAVORITE,
-      payload: oldUser.data,
-    });
-  };
-};
