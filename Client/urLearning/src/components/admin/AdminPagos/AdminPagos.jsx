@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useEffect,useState } from "react";
-import styles from "./AdminUser.module.css";
+import styles from "./AdminPagos.module.css";
 import {Link} from "react-router-dom";
 import { Rating,Card,Button,Spinner} from "flowbite-react";
 import { async } from "@firebase/util";

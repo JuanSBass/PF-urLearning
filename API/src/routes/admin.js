@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { where, Op } = require("sequelize");
 const router = Router();
 const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
 
@@ -6,7 +7,9 @@ const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
 ///////////////////todos///////////////////
 router.get("/allCourses", async (req, res) => {
   try {
-    let allCourses = await Course.findAll({});
+    let allCourses = await Course.findAll({
+      paranoid: true,
+    });
     res.status(200).send(allCourses);
   } catch (error) {
     res.status(400).send(error);
@@ -18,7 +21,8 @@ router.get("/allDeletedCourses", async (req, res) => {
     let allCourses = await Course.findAll({
       paranoid: false,
     });
-    res.status(200).send(allCourses);
+    let finalCourse = allCourses.filter((course) => course.deletedAt !== null);
+    res.status(200).send(finalCourse);
   } catch (error) {
     console.log(error);
   }
@@ -46,6 +50,17 @@ router.get("/allUsers", async (req, res) => {
     res.status(400).send(error);
   }
 });
+router.get("/detail", async (req, res) => {
+  try {
+    const id = req.headers.id;
+    console.log(id);
+    const UserS = await User.findByPk(id, { paranoid: false });
+    console.log(UserS);
+    res.status(200).send(UserS);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 //todos con sus cursos comprados
 router.get("/allUsersWithCourses", async (req, res) => {
   try {
@@ -63,7 +78,8 @@ router.get("/allDeletedUsers", async (req, res) => {
     let allUsers = await User.findAll({
       paranoid: false,
     });
-    res.status(200).send(allUsers);
+    let finalUsers = allUsers.filter((user) => user.deletedAt !== null);
+    res.status(200).send(finalUsers);
   } catch (error) {
     console.log(error);
   }

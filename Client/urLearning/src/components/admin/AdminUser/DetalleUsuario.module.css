@@ -1,0 +1,92 @@
+.landingLeft{
+
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
+    height: 70%;
+    width: 50%;
+    color: #fff;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.landingRight{
+    display: flex;
+    height: 70%;
+    min-height: 70vh;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+}
+.landing{
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: #fafafa;
+    height: 60vh;
+    width: 80vw;
+    margin-left: 10%;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+    
+}
+
+.userImg{
+    height: 300px;
+    width: 300px;
+    border-radius: 10px;
+    padding-bottom: 10%;
+}
+.head{
+
+    font-family: 'Montserrat';
+    color: #3a3738;
+    font-weight: bold;
+    font-size: 30px;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+   
+    
+
+ 
+    
+}
+.main{
+    margin-top: 5%;
+   height: 80vh;
+
+
+
+
+}
+
+.labe{
+    font-family: 'Montserrat';
+    font-size: 22px;
+    font-weight: bold;
+    color: #3a3738;
+}
+.name{
+ 
+    width: 31.5vw;
+    margin-bottom: 10%;
+}
+.email{
+ 
+    width: 31.5vw;
+    margin-bottom: 10%;
+}
+
+
+.edit{
+    margin-top: 10%;
+}
+
+.icon{
+    margin-bottom: 10%;
+}
+  

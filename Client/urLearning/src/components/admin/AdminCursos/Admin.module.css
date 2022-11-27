@@ -1,35 +1,19 @@
 .cardscontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+  margin-bottom: 5%;
+    }
+.filtro{
+
 display: flex;
+
+margin: 0 2% 7% 0 ;
+}
+.main{
+display: flex;
+flex-direction: row;
 align-items: center;
 justify-content: center;
-margin-top: 10%;
-margin-bottom: 5%;
-  }
-  
-  .card {
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
-    width: 283px;
-    height: 286px;
-    border-radius: 34px 34px 10px 10px;
-    padding: 1rem;
-  }
-  
-  .card h3 {
-    font-weight: 700;
-    font-size: 18px;
-  }
-  .card img {
-    object-fit: cover;
-    width: 238px;
-    height: 129px;
-    border-radius: 34px;
-  }
-  
-  .imgcard {
-    width: 238px;
-    height: 129px;
-    border-radius: 34px;
-  }
-  
+}
