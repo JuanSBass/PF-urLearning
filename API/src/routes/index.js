@@ -27,6 +27,7 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
+const professor = require("./professorRole.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
 const { sendMailCreateCourse } = require("./sendemail");
@@ -34,10 +35,10 @@ const { sendMailCreateCourse } = require("./sendemail");
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-
 router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
+router.use("/professor", professor);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -157,7 +158,6 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  console.log(info);
   const tokken = req.headers;
 
   let allCourses;
@@ -198,7 +198,6 @@ router.get("/course/:id", async (req, res) => {
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
   const { rating } = req.body;
-  //console.log(rating);
   try {
     return res.send(await changeCourseById(id, rating));
   } catch (error) {
@@ -213,7 +212,6 @@ router.put("/course/:id", async (req, res) => {
 router.get("/courseByCategory", async (req, res) => {
   try {
     const { categ } = req.query;
-    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
@@ -229,7 +227,6 @@ router.get("/courseByCategory", async (req, res) => {
 router.get("/courseBySubCategory", async (req, res) => {
   try {
     const { subcateg } = req.query;
-    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,

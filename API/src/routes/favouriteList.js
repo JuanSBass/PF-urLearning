@@ -1,46 +1,115 @@
 const { Router } = require("express");
 const router = Router();
-const {
-  User,
-  Course,
-  Cart,
-  Category,
-  SubCategory,
-  Order,
-  FavouriteList,
-} = require("../db");
+const { User, Course, FavouriteList } = require("../db");
+const middleware = require("../middleware");
+router.use(middleware.decodeToken);
 
-/**
- * Crea una lista de favoritos vacia y se la asigna al usuario cuyo id viene por bodu
+/**Crear lista de favoritos:
+ * PRE: el usuario debe estar creado.
+ *
+ * POST: Busca el usuario por su id, instancia una FavouriteList y la relaciona con el
+ * usuario. Retorna la lista (vacía).
  */
 router.post("/new", async (req, res) => {
   const { userId } = req.body;
-  console.log();
   try {
-    let user = await User.findByPk(userId);
-    let userName = user.name;
+    const currentUser = await User.findByPk(userId);
+    if (await currentUser.getFavouriteList())
+      throw new Error("el usuario ya tiene lista de favs");
+    let userName = currentUser.name;
     let newFavoutiteList = await FavouriteList.create({
       name: `${userName}'s favourite list`,
     });
-    user.setFavouriteList(newFavoutiteList);
+    currentUser.setFavouriteList(newFavoutiteList);
     res.status(200).send(newFavoutiteList);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error.message);
+  }
+});
+
+/**Agregar curso a la lista de favoritos:
+ * PRE: el usuario debe estar creado y tener una lista asignada. El curso debe existir.
+ *
+ * POST: Busca el usuario por su id, busca la lista de favotitos del
+ * usuario, busca el curso por id y lo agrega a la lista. Retorna la lista actualizada.
+ */
+router.put("/addCourse", async (req, res) => {
+  const { userId, courseId } = req.body;
+  try {
+    let currentUser = await User.findByPk(userId);
+    let currentList = await currentUser.getFavouriteList();
+    let currentCourse = await Course.findByPk(courseId);
+    await currentList.addCourse(currentCourse);
+    let finalList = await currentUser.getFavouriteList({
+      include: {
+        model: Course,
+        attributes: ["title", "id"],
+        //en el arreglo de arriba se ponen los items que se quieren mostrar
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    res.status(200).send(finalList);
   } catch (error) {
     console.log(error);
     res.status(404).send(error);
   }
 });
 
-/**
- * Pasandole el id del usuario y el id del curso agrega el curso a la lista de favotiros
- * del usuario
+/**Sacar curso de la lista de favoritos:
+ * PRE: el usuario debe estar creado y tener una lista asignada. El curso debe existir.
+ *
+ * POST: Busca el usuario por su id, busca la lista de favotitos del
+ * usuario, busca el curso por id y lo remueve de la lista. Retorna la lista actualizada.
  */
-router.post("/addCourse", async (req, res) => {
+router.put("/removeCourse", async (req, res) => {
   const { userId, courseId } = req.body;
   try {
     let currentUser = await User.findByPk(userId);
-    let list = await currentUser.getFavouriteList();
+    let currentList = await currentUser.getFavouriteList();
     let currentCourse = await Course.findByPk(courseId);
-    let finalList = await list.addCourse(currentCourse);
+    await currentList.removeCourse(currentCourse);
+    let finalList = await currentUser.getFavouriteList({
+      include: {
+        model: Course,
+        attributes: ["title", "id"],
+        //en el arreglo de arriba se ponen los items que se quieren mostrar
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    res.status(200).send(finalList);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error);
+  }
+});
+
+// si el curso pertenece a la lista de favoritos lo remueve, sino lo agrega
+router.put("/addRemoveCourse", async (req, res) => {
+  const { userId, courseId } = req.body;
+  try {
+    let currentUser = await User.findByPk(userId);
+    let currentList = await currentUser.getFavouriteList();
+    let currentCourse = await Course.findByPk(courseId);
+    if (await currentList.hasCourse(currentCourse)) {
+      await currentList.removeCourse(currentCourse);
+    } else {
+      await currentList.addCourse(currentCourse);
+    }
+    let finalList = await currentUser.getFavouriteList({
+      include: {
+        model: Course,
+        attributes: ["title", "id"],
+        //en el arreglo de arriba se ponen los items que se quieren mostrar
+        through: {
+          attributes: [],
+        },
+      },
+    });
     res.status(200).send(finalList);
   } catch (error) {
     console.log(error);
@@ -59,4 +128,36 @@ router.get("/all", async (req, res) => {
     console.log(error);
   }
 });
+
+/**Traer una lista con sus cursos
+ * PRE: Debe haber un usuario, con un una lista de favoritos relacionada al mismo.
+ *
+ * POST: Mediante su id por params retorna la info del usuario con sus cursos favoritos.
+ */
+router.get("/fromUser", async (req, res) => {
+  const { userId } = req.body;
+  try {
+    let currentUser = await User.findByPk(userId);
+    let currentList = await currentUser.getFavouriteList({
+      include: {
+        model: Course,
+        attributes: ["title", "id", "image", "name_prof"],
+        //en el arreglo de arriba se ponen los items que se quieren mostrar
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    res.status(200).send(currentList);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
+
+/**
+ * FALTA:
+ * 1. que las rutas usen el token.
+ *
+ */

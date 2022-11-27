@@ -2,22 +2,24 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "user",
+    "professorRole",
     {
-      email: {
-        type: DataTypes.STRING,
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
-      password: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // here would be the idProf reference
     },
     {
-      timestamps: false,
+      paranoid: true,
       createdAt: false,
     }
   );
 };
+
+//1:1 con usuario falta

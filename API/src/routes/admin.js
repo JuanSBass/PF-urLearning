@@ -4,6 +4,7 @@ const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
 
 ///////////////////Courses///////////////////
 ///////////////////todos///////////////////
+
 router.get("/allCourses", async (req, res) => {
   try {
     let allCourses = await Course.findAll({});
@@ -29,8 +30,26 @@ router.delete("/deleteCourseId", async (req, res) => {
   console.log(deleteCourseId);
   try {
     let courseToDelete = await Course.findByPk(deleteCourseId);
-    await courseToDelete.destroy();
+    if (!courseToDelete) {
+      throw new Error("Curso no encontrado");
+    } else {
+      await courseToDelete.destroy();
+    }
     res.status(200).send("Curso eliminado");
+  } catch (error) {
+    res.status(401).send(error.message);
+  }
+});
+
+router.put("/restoreCourse", async (req, res) => {
+  const { restoreCourseId } = req.body;
+  //console.log(restoreCourseId);
+  try {
+    let courseToRestore = await Course.findByPk(restoreCourseId, {
+      paranoid: false,
+    });
+    await courseToRestore.restore();
+    res.status(200).send("Curso restaurado");
   } catch (error) {
     res.status(401).send(error);
   }
@@ -88,10 +107,15 @@ router.delete("/deleteUserId", async (req, res) => {
   //console.log(deleteUserId);
   try {
     let userToDelete = await User.findByPk(deleteUserId);
-    await userToDelete.destroy();
-    res.status(200).send("Usuario eliminado");
+    if (!userToDelete) {
+      //usuario a borrar
+      throw new Error("Usuario no encontrado");
+    } else {
+      await userToDelete.destroy();
+    }
+    res.send("Usuario eliminado");
   } catch (error) {
-    res.status(401).send(error);
+    res.status(401).send(error.message);
   }
 });
 
@@ -139,8 +163,13 @@ router.delete("/deleteOrderId", async (req, res) => {
   console.log(deleteOrderId);
   try {
     let orderToDelete = await Order.findByPk(deleteOrderId);
-    await orderToDelete.destroy();
-    res.status(200).send(orderToDelete);
+    if (!orderToDelete) {
+      //orden a borrar
+      throw new Error("Orden no encontrada");
+    } else {
+      await orderToDelete.destroy();
+    }
+    res.send("Orden eliminada");
   } catch (error) {
     res.status(401).send(error);
   }
@@ -206,18 +235,6 @@ router.post("/subCategory", async (req, res) => {
   }
 });
 
-router.delete("/deleteCategorie", async (req, res) => {
-  //OJO ver lo de borrado logico
-  const { deleteCategorieId } = req.body;
-  try {
-    let categorieToDelete = await Course.findByPk(deleteCategorieId);
-    await categorieToDelete.destroy();
-    res.status(200).send(categorieToDelete, " destruida");
-  } catch (error) {
-    res.status(401).send(error);
-  }
-});
-
 router.delete("/deleteCategory", async (req, res) => {
   const { deleteCategoryId } = req.body;
   console.log(deleteCategoryId);
@@ -225,6 +242,18 @@ router.delete("/deleteCategory", async (req, res) => {
     let categoryToDelete = await Category.findByPk(deleteCategoryId);
     await categoryToDelete.destroy();
     res.status(200).send("Categoria Borrada");
+  } catch (error) {
+    res.status(401).send(error);
+  }
+});
+
+router.delete("/deleteSubCategory", async (req, res) => {
+  const { deleteSubCategoryId } = req.body;
+  console.log(deleteSubCategoryId);
+  try {
+    let subCategoryToDelete = await Category.findByPk(deleteSubCategoryId);
+    await subCategoryToDelete.destroy();
+    res.status(200).send("sub-Categoria Borrada");
   } catch (error) {
     res.status(401).send(error);
   }
