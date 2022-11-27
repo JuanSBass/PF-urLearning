@@ -82,7 +82,8 @@ router.get("/allDeletedUsers", async (req, res) => {
     let allUsers = await User.findAll({
       paranoid: false,
     });
-    res.status(200).send(allUsers);
+    let finalUsers = allUsers.filter((user) => user.deletedAt !== null);
+    res.status(200).send(finalUsers);
   } catch (error) {
     console.log(error);
   }
@@ -119,11 +120,30 @@ router.delete("/deleteUserId", async (req, res) => {
   }
 });
 
+/**
+ * 		"order_id": "cs_test_b1k3rTAsQ25xKSOcEawMVri7jkgrusGtwNAFqIil3i07O78ayWGqElcZoK",
+		"status": "open",
+		"payment_status": "paid",
+		"amount_total": "3000",
+ */
+
 ///////////////////Orders///////////////////
 ///////////////////todas///////////////////
 router.get("/allOrders", async (req, res) => {
   try {
-    let allOrders = await Order.findAll({});
+    let allOrders = await Order.findAll({
+      attributes: ["order_id", "payment_status", "amount_total"],
+      include: [
+        {
+          model: Course,
+          attributes: ["title", "id"],
+        },
+        {
+          model: User,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
     res.status(200).send(allOrders);
   } catch (error) {
     res.status(400).send(error);

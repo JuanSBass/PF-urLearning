@@ -153,12 +153,14 @@ router.put("/updateUserCourseRelations", async (req, res) => {
 
     if (payment_status === "paid") {
       let currentUser = await User.findByPk(userId);
+      let currentOrder = await Order.findByPk(order_id);
       sendMailPurchase(userName, userEmail);
 
       message = "Relation successfull";
       carrito.forEach(async (element) => {
         let oneCurse = await Course.findByPk(element.idCourse);
         await currentUser.addCourse(oneCurse);
+        await currentOrder.addCourse(oneCurse);
       });
     } else {
       message = "Relation failed, check if payment status is paid";
