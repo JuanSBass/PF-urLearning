@@ -87,7 +87,7 @@ Cart.belongsTo(User);
 User.hasMany(Order);
 Order.belongsTo(User);
 
-Order.hasMany(Course);
+Order.belongsToMany(Course, { through: "orderCourse" });
 Course.belongsToMany(Order, { through: "orderCourse" });
 
 User.belongsToMany(Course, { through: "userCourse" });
