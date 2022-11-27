@@ -6,7 +6,7 @@ import corazonvacio from "../../img/IoIosHeartEmpty.svg"
 import { addRemoveFavorite } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
-const Card = ({ title, image, id, rating, name_prof, isFavorite }) => {
+const Card = ({ title, image, id, rating, name_prof, isFavorite, price }) => {
   const dispatch = useDispatch()
   const userTokken = window.localStorage.getItem("tokken");
 
