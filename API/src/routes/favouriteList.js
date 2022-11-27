@@ -10,23 +10,27 @@ router.use(middleware.decodeToken);
  * POST: Busca el usuario por su id, instancia una FavouriteList y la relaciona con el
  * usuario. Retorna la lista (vacía).
  */
-router.post("/new", async (req, res) => {
-  const { userId } = req.body;
-  try {
-    const currentUser = await User.findByPk(userId);
-    if (await currentUser.getFavouriteList())
-      throw new Error("el usuario ya tiene lista de favs");
-    let userName = currentUser.name;
-    let newFavoutiteList = await FavouriteList.create({
-      name: `${userName}'s favourite list`,
-    });
-    currentUser.setFavouriteList(newFavoutiteList);
-    res.status(200).send(newFavoutiteList);
-  } catch (error) {
-    console.log(error);
-    res.status(404).send(error.message);
-  }
-});
+// router.post("/new", async (req, res) => {
+//   const { userTokken } = req.body;
+
+//   try {
+//     const decodeValue = await admin.auth().verifyIdToken(userTokken);
+//     const userId = decodeValue.uid;
+
+//     const currentUser = await User.findByPk(userId);
+//     if (await currentUser.getFavouriteList())
+//       throw new Error("el usuario ya tiene lista de favs");
+//     let userName = currentUser.name;
+//     let newFavoutiteList = await FavouriteList.create({
+//       name: `${userName}'s favourite list`,
+//     });
+//     currentUser.setFavouriteList(newFavoutiteList);
+//     res.status(200).send(newFavoutiteList);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).send(error.message);
+//   }
+// });
 
 /**Agregar curso a la lista de favoritos:
  * PRE: el usuario debe estar creado y tener una lista asignada. El curso debe existir.
@@ -40,7 +44,17 @@ router.put("/addCourse", async (req, res) => {
     let currentUser = await User.findByPk(userId);
     let currentList = await currentUser.getFavouriteList();
     let currentCourse = await Course.findByPk(courseId);
-    let finalList = await currentList.addCourse(currentCourse);
+    await currentList.addCourse(currentCourse);
+    let finalList = await currentUser.getFavouriteList({
+      include: {
+        model: Course,
+        attributes: ["title", "id"],
+        //en el arreglo de arriba se ponen los items que se quieren mostrar
+        through: {
+          attributes: [],
+        },
+      },
+    });
     res.status(200).send(finalList);
   } catch (error) {
     console.log(error);
@@ -112,6 +126,34 @@ router.get("/fromUser", async (req, res) => {
     res.status(200).send(currentList);
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.put("/addRemoveCourse", async (req, res) => {
+  const { userId, courseId } = req.body;
+  try {
+    let currentUser = await User.findByPk(userId);
+    let currentList = await currentUser.getFavouriteList();
+    let currentCourse = await Course.findByPk(courseId);
+    if (await currentList.hasCourse(currentCourse)) {
+      await currentList.removeCourse(currentCourse);
+    } else {
+      await currentList.addCourse(currentCourse);
+    }
+    let finalList = await currentUser.getFavouriteList({
+      include: {
+        model: Course,
+        attributes: ["title", "id"],
+        //en el arreglo de arriba se ponen los items que se quieren mostrar
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    res.status(200).send(finalList);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error);
   }
 });
 

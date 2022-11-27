@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourses, cleanCategory, getFavorite } from "../../redux/actions";
+import { getCourses, cleanCategory, getFavorite, newFavorite } from "../../redux/actions";
 import styles from "./Home.module.css";
 import { HeaderHome } from "./Header/HeaderHome";
 import CardsCourses from "./Cards/CardsCourses";
@@ -13,12 +13,20 @@ import PruebaStripe from "../Stripe/PruebaStripe";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const id = "PsPEdPVdoEX2ufdRp7tmugEZW2b2"
+  const favoritos = useSelector((state) => state.favorites);
+  const tokken = window.localStorage.getItem("tokken");
+
+
   useEffect(() => {
     dispatch(getCourses());
     dispatch(cleanCategory())
-    dispatch(getFavorite(id))
-  }, [dispatch, id]);
+    dispatch(getFavorite(tokken))
+  }, [dispatch, tokken]);
+
+
+
+
+
 
   return (
     <main className={styles}>

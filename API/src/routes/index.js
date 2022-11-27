@@ -29,6 +29,7 @@ const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
 const professor = require("./professorRole.js");
 const favouriteList = require("./favouriteList.js");
+const favouriteListNew = require("./favouriteListNew.js");
 const admin = require("../firebase/config");
 
 router.use("/category", cat);
@@ -38,6 +39,7 @@ router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
 router.use("/professor", professor);
+router.use("/favouriteListNew", favouriteListNew);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {

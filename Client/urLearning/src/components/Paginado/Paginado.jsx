@@ -9,7 +9,7 @@ import right from "../../img/IoIosArrowDroprightCircle.svg"
 
 const renderData = (data, favoritos) => {
   return data.map((p) => {
-    const isFavorite = favoritos.some(e => e.id === p.id)
+    const isFavorite = favoritos?.some(e => e.id === p.id)
     return (
       <Card
         image={p.image}

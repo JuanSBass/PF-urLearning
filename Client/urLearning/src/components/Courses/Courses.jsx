@@ -23,13 +23,14 @@ const Courses = () => {
   const subCategories = useSelector((state) => state.subCategories);
   const courses = useSelector((state) => state.courses);
   const favoritos = useSelector((state) => state.favorites);
-  const id = "PsPEdPVdoEX2ufdRp7tmugEZW2b2"
+  const tokken = window.localStorage.getItem("tokken");
+
 
   useEffect(() => {
     dispatch(getCourses());
     dispatch(getCategory());
-    dispatch(getFavorite(id))
-  }, [dispatch, id]);
+    dispatch(getFavorite(tokken))
+  }, [dispatch, tokken]);
 
   const filterCategos = (event) => {
     dispatch(filteredByCategories(event.target.value));
