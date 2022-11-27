@@ -50,7 +50,7 @@ useEffect(()=>{
                  Editar
                 </Button>
                 </Link>
-                <Button color="failure">
+                <Button  color="failure">
                     Eliminar
                 </Button>
                 </div>

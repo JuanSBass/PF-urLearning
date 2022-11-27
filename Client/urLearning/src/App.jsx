@@ -25,6 +25,7 @@ import CursosComprados from "./components/CursosComprados/CursosComprados.jsx";
 import EditCurso from "./components/EditCurso/EditCurso.jsx";
 import DetalleCursoComprado from "./components/CursosComprados/DetalleCursoComprado.jsx";
 import AdminUser from "./components/admin/AdminUser/AdminUser.jsx";
+import AdminPagos from "./components/admin/AdminPagos/AdminPagos.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,7 @@ function App() {
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/cursos" component={AdminCursos} />
         <Route exact path="/admin/usuarios" component={AdminUser} />
+        <Route exact path="/admin/ordenes" component={AdminPagos} />
 
 
         <Footer />
