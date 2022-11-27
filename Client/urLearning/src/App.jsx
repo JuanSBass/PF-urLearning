@@ -11,6 +11,7 @@ import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
 import ContactUs from "./components/ContactUs/ContactUs.jsx"
 import Admin from "./components/admin/Admin.jsx";
 import AdminCursos from "./components/admin/AdminCursos/AdminCursos.jsx";
+import AdminUsuarios from "./components/admin/AdminUsuarios/AdminUsuarios.jsx";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./fireBase/credenciales";
 import { useDispatch, useSelector } from "react-redux"
@@ -72,6 +73,7 @@ function App() {
         <Route exact path={`/${user.name}`} component={userDetail} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/cursos" component={AdminCursos} />
+        <Route exact path="/admin/usuarios" component={AdminUsuarios} />
 
 
         <Footer />
