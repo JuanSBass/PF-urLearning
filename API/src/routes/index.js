@@ -31,6 +31,7 @@ const professor = require("./professorRole.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
 const { sendMailCreateCourse } = require("./sendemail");
+const professorNew = require("./professorRoleNew.js")
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -39,6 +40,7 @@ router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
 router.use("/professor", professor);
+router.use("/professorNew", professorNew);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
