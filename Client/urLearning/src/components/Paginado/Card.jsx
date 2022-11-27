@@ -27,6 +27,7 @@ const Card = ({ title, image, id, rating, name_prof, isFavorite }) => {
         </Link>
         <h3>{title}</h3>
         <p>{name_prof}</p>
+        <h2>${price} USD</h2>
         <Rating>
           <Rating.Star filled={rating > 0} />
           <Rating.Star filled={rating > 1} />

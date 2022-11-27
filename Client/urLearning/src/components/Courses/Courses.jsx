@@ -11,7 +11,8 @@ import {
   getFavorite,
   orderByAny,
 } from "../../redux/actions";
-import { Button, Select, Dropdown, Rating, Label } from "flowbite-react";
+import { Button, Select, Dropdown, Rating, Label, Toast } from "flowbite-react";
+import { HiExclamation } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import Searchbar from "../searchBar/SearchBar";
 import Error404 from "../404/Error404";
@@ -25,6 +26,7 @@ const Courses = () => {
   const favoritos = useSelector((state) => state.favorites);
   const tokken = window.localStorage.getItem("tokken");
 
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
     dispatch(getCourses());
@@ -51,25 +53,21 @@ const Courses = () => {
     setOrder(event.target.value)
   }
 
+
   const handleOrderUno = () => {
     dispatch(orderByAny("1"));
-    console.log("aqui apretó uno");
   };
   const handleOrderDos = () => {
     dispatch(orderByAny("2"))
-    console.log("aqui apretó dos");
   };
   const handleOrderTres = () => {
     dispatch(orderByAny("3"))
-    console.log("aqui apretó tres");
   };
   const handleOrderCuatro = () => {
     dispatch(orderByAny("4"))
-    console.log("aqui apretó cuatro");
   };
   const handleOrderCinco = () => {
     dispatch(orderByAny("5"))
-    console.log("aqui apretó cinco");
   };
   // const arrIds = [];
   // console.log(arrIds);
@@ -172,9 +170,22 @@ const Courses = () => {
 
         </Select>
 
-        <Link to="/form">
-          <Button gradientMonochrome="success">Crear curso</Button>
-        </Link>
+        <div id="containerbutontoast">
+          <Link to={user.name && "/form"}>
+            <Button gradientMonochrome="success" disabled={!user.name}
+            >Crear curso</Button>
+          </Link>
+          {!user.name && <Toast id={styles.toast}>
+            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
+              <HiExclamation className="h-5 w-5" />
+            </div>
+            <div className="ml-3 text-sm font-normal">
+              Accede o crea una cuenta para crear
+            </div>
+            <Toast.Toggle />
+          </Toast>}
+        </div>
+
       </section>
 
       {

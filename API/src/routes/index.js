@@ -31,6 +31,8 @@ const professor = require("./professorRole.js");
 const favouriteList = require("./favouriteList.js");
 const favouriteListNew = require("./favouriteListNew.js");
 const admin = require("../firebase/config");
+const { sendMailCreateCourse } = require("./sendemail");
+const professorNew = require("./professorRoleNew.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -39,6 +41,7 @@ router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
 router.use("/professor", professor);
+router.use("/professorNew", professorNew);
 router.use("/favouriteListNew", favouriteListNew);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
@@ -95,7 +98,10 @@ router.post("/course", async (req, res) => {
     level,
     name_prof,
     videos,
-  } = req.body;
+  } = req.body.dataCourse;
+  const { tokken } = req.body;
+
+  //console.log(newCourse);
   const validTitle = await validateTitle(title);
   const validDescription = await validateDescription(description);
   const validPrice = await validatePrice(price);
@@ -103,6 +109,12 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
+    //traemos datos de user para el email
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
+    if (!decodeValue) return new Error("no se pudio");
+    const { name, email } = decodeValue;
+
+    //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
       res.status(404).send({ message: "Titulo invalido o inexistente" });
     } else if (category === "") {
@@ -135,6 +147,9 @@ router.post("/course", async (req, res) => {
         name_prof,
         videos,
       });
+      // envia mail una vez creado
+      sendMailCreateCourse(name, email, title, image);
+
       res.status(200).send("Curso creado correctamente");
     }
   } catch (error) {

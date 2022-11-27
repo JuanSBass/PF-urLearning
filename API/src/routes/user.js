@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Course, FavouriteList } = require("../db");
+const { User, Course, FavouriteList, ProfessorRole } = require("../db");
 const admin = require("../firebase/config");
 const { sendMailRegister } = require("./sendemail");
 
@@ -20,6 +20,7 @@ router.post("/create", async (req, res) => {
     if (decodeValue.name) name = decodeValue.name;
     else {
       name = email.split("@")[0]; // El nombre del usuario será el email sin @
+      // name = "Usuario";
     }
 
     if (!decodeValue) return new Error("no se pudio");
@@ -37,6 +38,10 @@ router.post("/create", async (req, res) => {
       sendMailRegister(name, email);
       const currentUser = await User.findByPk(user_id);
       let userName = currentUser.name;
+      let newProfessorRole = await ProfessorRole.create({
+        name: `Prof. ${userName}`,
+      });
+      await currentUser.setProfessorRole(newProfessorRole);
       let newFavoutiteList = await FavouriteList.create({
         name: `${userName}'s favourite list`,
       });

@@ -135,6 +135,7 @@ router.put("/updateUserCourseRelations", async (req, res) => {
   try {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
+    // aqui modifico para el nodemailer
     const userId = decodeValue.uid;
     const userEmail = decodeValue.email;
     const userName = decodeValue.name;
@@ -153,6 +154,7 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     if (payment_status === "paid") {
       let currentUser = await User.findByPk(userId);
       sendMailPurchase(userName, userEmail);
+
       message = "Relation successfull";
       carrito.forEach(async (element) => {
         let oneCurse = await Course.findByPk(element.idCourse);

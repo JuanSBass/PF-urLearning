@@ -50,7 +50,7 @@ router.put("/addCourse", async (req, res) => {
     console.log(error);
     res.status(404).send(error);
   }
-});
+}); //Agrega curso al profe (RapidApi) despacharse cuando el usuario crea un curso
 
 /**Sacar curso de la lista del professorRole:
  * PRE: el usuario debe estar creado y tener un professorRole asignado.
@@ -96,7 +96,7 @@ router.get("/all", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+}); // Trae todos los profes
 
 /**Traer una lista con sus cursos
  * PRE: Debe haber un usuario, con un un ProfessorRol relacionada al mismo.
@@ -119,7 +119,7 @@ router.get("/fromUser", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+}); //Muestra los cursos del profesor DEBE DESPACHARSE en el useEffect de Mi Enseñanza (icono de la Nav)
 
 module.exports = router;
 

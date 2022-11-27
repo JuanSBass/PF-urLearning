@@ -170,13 +170,13 @@ function rootReducer(state = initialState, action) {
           if (b.rating > a.rating) return 1;
           return 0;
         });
-      } else if (action.payload === "price+") {
+      } else if (action.payload === "price-") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return 1;
           if (b.price > a.price) return -1;
           return 0;
         });
-      } else if (action.payload === "price-") {
+      } else if (action.payload === "price+") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return -1;
           if (b.price > a.price) return 1;

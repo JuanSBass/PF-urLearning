@@ -18,6 +18,7 @@ const renderData = (data, favoritos) => {
         key={p.id}
         id={p.id}
         rating={p.rating}
+        price={p.price}
         isFavorite={isFavorite}
       />
     );
