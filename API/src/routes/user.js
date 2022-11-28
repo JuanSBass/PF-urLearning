@@ -13,7 +13,8 @@ router.post("/create", async (req, res) => {
     const { email, user_id, picture } = decodeValue;
     const valid =
       user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3" ||
-      user_id === "0Ji78Vnn0gaMUpM7m6611eO9oec2";
+      user_id === "0Ji78Vnn0gaMUpM7m6611eO9oec2" ||
+      user_id === "PsPEdPVdoEX2ufdRp7tmugEZW2b2";
     console.log();
     let name;
 

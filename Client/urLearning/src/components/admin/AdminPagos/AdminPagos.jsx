@@ -17,6 +17,10 @@ function AdminPagos(props) {
         axiosData();
     }, [])
 
+    const handleInput = () => {
+
+    }
+
     console.log(ordenes)
     return (<div className={styles.cardscontainer}>
 
@@ -59,8 +63,9 @@ function AdminPagos(props) {
                         </Table.Cell>
                         <Table.Cell>
                             <a
-                                href="/tables"
+                                // href="/tables"
                                 className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+
                             >
                                 Edit
                             </a>
