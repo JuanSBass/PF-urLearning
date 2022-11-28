@@ -33,6 +33,7 @@ const favouriteListNew = require("./favouriteListNew.js");
 const admin = require("../firebase/config");
 const { sendMailCreateCourse } = require("./sendemail");
 const professorNew = require("./professorRoleNew.js");
+const edit = require("./edit.js")
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -43,6 +44,7 @@ router.use("/favouriteList", favouriteList);
 router.use("/professor", professor);
 router.use("/professorNew", professorNew);
 router.use("/favouriteListNew", favouriteListNew);
+router.use("/edit", edit);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
