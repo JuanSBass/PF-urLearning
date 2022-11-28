@@ -2,8 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 81px;
-  height: calc(100vh - 149px);
+  margin: 6rem auto;
 }
 
 .contenedorFormulario {
@@ -74,6 +73,7 @@
   text-align: center;
   justify-content: space-evenly;
   grid-column: 1/3;
+  margin-bottom: 1.5rem;
 }
 
 .dropzone {
@@ -89,7 +89,7 @@
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .errores {

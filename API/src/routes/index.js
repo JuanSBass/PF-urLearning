@@ -8,6 +8,7 @@ const {
   getDbInfoCourses,
   getCartCourseDb,
   getPrueba,
+  getCommentDb,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -27,28 +28,36 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
+const professor = require("./professorRole.js");
 const favouriteList = require("./favouriteList.js");
+const favouriteListNew = require("./favouriteListNew.js");
 const admin = require("../firebase/config");
+const { sendMailCreateCourse } = require("./sendemail");
+const professorNew = require("./professorRoleNew.js");
+const edit = require("./edit.js");
+const contactUs = require("./contactUs.js");
+const commets = require("./commets.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-
 router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
+router.use("/professor", professor);
+router.use("/professorNew", professorNew);
+router.use("/favouriteListNew", favouriteListNew);
+router.use("/edit", edit);
+router.use("/contactUs", contactUs);
+router.use("/comment", commets);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
   const { email, name, id } = req.body;
   const validEmail = await validateEmail(email);
-  //const validPassword = await validatePassword(password);
-  console.log(email);
-  console.log(name);
 
   try {
     if (!validEmail || email === "") {
-      console.log(email);
       res.status(404).send({ message: "Email invalida o campo vacio" });
     } else {
       let newUser = await User.create({
@@ -92,7 +101,8 @@ router.post("/course", async (req, res) => {
     level,
     name_prof,
     videos,
-  } = req.body;
+  } = req.body.dataCourse;
+  const { tokken } = req.body;
 
   //console.log(newCourse);
   const validTitle = await validateTitle(title);
@@ -102,9 +112,11 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
-    console.log(description.length);
-    console.log(validTitle);
-    console.log(level);
+    //traemos datos de user para el email
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
+    if (!decodeValue) return new Error("no se pudio");
+    const { name, email } = decodeValue;
+
     //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
       res.status(404).send({ message: "Titulo invalido o inexistente" });
@@ -138,7 +150,9 @@ router.post("/course", async (req, res) => {
         name_prof,
         videos,
       });
-      //console.log(newCourse);
+      // envia mail una vez creado
+      sendMailCreateCourse(name, email, title, image);
+
       res.status(200).send("Curso creado correctamente");
     }
   } catch (error) {
@@ -151,9 +165,8 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  console.log(info);
   const tokken = req.headers;
-
+  console.log(info);
   let allCourses;
   try {
     info
@@ -192,7 +205,6 @@ router.get("/course/:id", async (req, res) => {
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
   const { rating } = req.body;
-  //console.log(rating);
   try {
     return res.send(await changeCourseById(id, rating));
   } catch (error) {
@@ -200,14 +212,11 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
-///////// Route DELETE para Course -> ADMIN////////
-
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
   try {
     const { categ } = req.query;
-    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
@@ -220,10 +229,23 @@ router.get("/courseByCategory", async (req, res) => {
   }
 });
 
+/////////////// GET a comment /////////////////
+router.get("/comment", async (req, res) => {
+  const { comment } = req.query;
+
+  try {
+    const allComments = await getCommentDb(comment);
+    return allComments
+      ? res.status(200).send(allComments)
+      : res.status(404).send("No existe el comentario buscado");
+  } catch (error) {
+    console.log(error + "error del get /comment");
+  }
+});
+
 router.get("/courseBySubCategory", async (req, res) => {
   try {
     const { subcateg } = req.query;
-    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,
@@ -235,6 +257,8 @@ router.get("/courseBySubCategory", async (req, res) => {
     console.log("error");
   }
 });
+
+////////////////////////// CART
 
 router.post("/cart", async (req, res) => {
   const { id, title, image, description, price, name_prof } = req.body[0];
@@ -249,7 +273,6 @@ router.post("/cart", async (req, res) => {
 
   try {
     if (result.find((e) => e.id === id)) {
-      console.log("ya esta comprado");
       res.status(404).send("elemento ya comprado");
     } else {
       let newCartItem = await Cart.findOrCreate({

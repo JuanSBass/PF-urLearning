@@ -11,24 +11,30 @@
   justify-content: space-evenly;
   flex-direction: column;
   width: 283px;
-  height: 286px;
+  height: 340px;
   border-radius: 34px 34px 10px 10px;
   padding: 1rem;
+  position: relative;
+  box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
 }
 
 .card h3 {
   font-weight: 700;
   font-size: 18px;
 }
-.card img {
-  object-fit: cover;
-  width: 238px;
-  height: 129px;
-  border-radius: 34px;
-}
 
 .imgcard {
-  width: 238px;
-  height: 129px;
   border-radius: 34px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.corazones {
+  position: absolute;
+  height: 30px;
+  right: 20px;
+  bottom: 70px;
+}
+.card h2 {
+  font-weight: 600;
 }

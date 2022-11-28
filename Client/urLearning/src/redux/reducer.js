@@ -12,6 +12,8 @@ import {
   ORDER_BY_ANY,
   GET_COURSES_NAME,
   GET_USER_COURSES,
+  GET_FAVORITE,
+  ADD_REMOVE_FAVORITE,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -23,6 +25,10 @@ import {
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
+  POST_MESSAGES,
+  GET_MESSAGES,
+  DELETE_MESSAGES,
+  
 } from "./actions";
 
 const initialState = {
@@ -39,8 +45,10 @@ const initialState = {
   carrito: [],
   copyCarrito: [],
   userDetail: {},
-  cartNumber: 0,
+  cartNumber : 0,
   userCourses: [],
+  messages:[],
+  favorites: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -167,13 +175,13 @@ function rootReducer(state = initialState, action) {
           if (b.rating > a.rating) return 1;
           return 0;
         });
-      } else if (action.payload === "price+") {
+      } else if (action.payload === "price-") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return 1;
           if (b.price > a.price) return -1;
           return 0;
         });
-      } else if (action.payload === "price-") {
+      } else if (action.payload === "price+") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return -1;
           if (b.price > a.price) return 1;
@@ -188,28 +196,33 @@ function rootReducer(state = initialState, action) {
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
-    ////////////////CARRITO//////////////
+
+
+    ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find(
-        (cursoId) => cursoId.id === action.payload.id
-      );
+      const product = cursos.find((cursoId) => cursoId.id === action.payload.id);
       return {
         ...state,
         carrito: [...state.carrito, product],
         cartNumber: (state.cartNumber += 1),
       };
+    case ID_SESSION:
+      return { ...state, idSession: action.payload };
+
+
     case GET_CART:
       return {
         ...state,
         carrito: action.payload,
+        copyCarrito: action.payload,
       };
 
     case REMOVE_FROM_CART:
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: (state.cartNumber -= 1),
+        cartNumber: state.cartNumber -= 1,
       };
 
     case CLEAR_CART:
@@ -229,6 +242,34 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userCourses: action.payload[0].courses,
+      };
+
+//////////////Contact Us/////////////
+case GET_MESSAGES:
+  return {
+    ...state,
+    messages: action.payload,
+  };
+  case POST_MESSAGES:
+      return {
+        ...state, 
+      }
+ case  DELETE_MESSAGES:
+  return {
+    ...state,
+    messages:action.payload
+    
+  }
+    case GET_FAVORITE:
+      return {
+        ...state,
+        favorites: action.payload.courses,
+      };
+
+    case ADD_REMOVE_FAVORITE:
+      return {
+        ...state,
+        favorites: action.payload.courses,
       };
 
     default:

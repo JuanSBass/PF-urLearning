@@ -21,7 +21,6 @@ const validateEmail = async (email) => {
 
 //////////// Validation Password /////////////
 const validatePassword = async (password) => {
-  console.log(password);
   if (
     !password.match(uppercase) ||
     !password.match(numericValue) ||
@@ -36,7 +35,7 @@ const validatePassword = async (password) => {
 /////////////////////// COURSE ////////////////////////
 
 //////////// Regex Title /////////////
-const maxLengthTitle = /(?=.{5,20})/; ///Must contain between 5 and 20 charcters
+const maxLengthTitle = /(?=.{5,30})/; ///Must contain between 5 and 20 charcters
 
 //////////// Validation Title /////////////
 const validateTitle = async (title) => {
@@ -69,7 +68,6 @@ const validatePrice = async (price) => {
 //////////// Validation Level /////////////
 const validateLevel = async (level) => {
   if (level !== "easy" && level !== "medium" && level !== "advanced") {
-    console.log(level);
     return false;
   } else {
     return true;

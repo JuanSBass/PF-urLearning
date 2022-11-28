@@ -3,14 +3,14 @@ import style from "../CursosComprados/CursosComprados.module.css"
 import { useSelector, useDispatch } from "react-redux";
 import { getCourses, getUserCourses } from '../../redux/actions';
 import { Button } from "flowbite-react"
-import { Link } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
 
 
 function CursosComprados() {
     // const cursosPrueba = useSelector(state => state.courses)
     const cursosUser = useSelector(state => state.userCourses)
     const dispatch = useDispatch()
+
 
 
     useEffect(() => {
@@ -23,12 +23,21 @@ function CursosComprados() {
     return (
         <div className={style.contenedorGeneral}>
             <div className={style.contCursos} >
-                <div className={style.lineaVioleta}>Mis cursos</div>
+                <div className={style.lineaVioleta}>
+                    <Link to="/mycourses" className={`${style.tab} ${style.active}`}>
+                        Mis Cursos
+                    </Link>
+                    <hr className={style.hr} />
+                    <Link to="/favourites" className={style.tab}>
+                        Mis Favoritos
+                    </Link>
+                </div>
+                <div className={style.subTitle}>Mis Cursos</div>
                 <div className={style.cursos}>
                     {cursosUser.length ? (cursosUser.map((c) => {
                         return (
-                            <Link to={`/mycourses/${c.id}`}>
-                                <div className={style.curso}>
+                            <Link to={`/mycourses/${c.id}`} key={c.id}>
+                                <div className={style.curso} key={c.id}>
                                     <img src={c.image} alt="imagen" />
                                     <div className={style.title}>{c.title}</div>
                                     <div className={style.profe}>{c.name_prof}</div>

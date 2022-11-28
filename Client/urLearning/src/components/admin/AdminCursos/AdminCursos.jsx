@@ -3,14 +3,10 @@ import axios from "axios";
 import { useEffect,useState } from "react";
 import styles from "./Admin.module.css";
 import {Link} from "react-router-dom";
-import { Rating } from "flowbite-react";
+import { Rating,Card,Button,Spinner,Select} from "flowbite-react";
 import { async } from "@firebase/util";
 function AdminCursos(props){
 const [cursos,setCursos]=useState([]);
-const getCourse=async()=>{
-    const response=await axios.get("/admin/allCourses");
-    return response.data;
-}
 
 
 useEffect(()=>{
@@ -24,33 +20,86 @@ useEffect(()=>{
      
     
 },[])
+const handleChange=(e)=>{
+    e.preventDefault()
+if(e.target.value==="Activo"){
+    const axiosData = async () => {
+        let response = await axios.get('/admin/allCourses');
+        response=await response.data;
+        setCursos(response);
+        
+      }
+   axiosData();
+     
+}
+else if(e.target.value==="Inactivo"){
+    const axiosData = async () => {
+        let response = await axios.get('/admin/allDeletedCourses');
+        response=await response.data;
+        setCursos(response);
+        
+      }
+   axiosData();
+     
+}
+}
 console.log(cursos);
-    return(<div className={styles.cardscontainer}>
-            {cursos?.map((card)=>(
-                <div className={styles.card} key={card.id}>
-                <Link to={`/admin/${card.id}`} key={card.id}>
-                  <div className={styles.imgcard}>
-                    <img src={card.image} alt="miniatura" />
-                  </div>
+    return(
+        <div className={styles.main}>
+        <div className={styles.filtro}>
+      <Select
+        defaultValue="Activo"
+       onChange={e=>handleChange(e)}
+      > 
+        <option value="Activo">
+        Activo
+        </option>
+        <option value="Inactivo">
+        Inactivo
+        </option>
+      </Select>
+    </div>
+    <div className={styles.cardscontainer}>
+       <Card>
+    <div class="flex items-center justify-between mb-4">
+        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Cursos</h5>
+    </div>
+
+   <div class="flow-root">
+        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+          {cursos.length?cursos.map((c)=>{
+            return(<li class="py-3 sm:py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" src={c.image} alt="icon"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                        {c.title}
+                    </p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                        {c.name_prof}
+                    </p>
+                </div>
+                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                <Link to={`/admin/cursos/${c.id}`}>
+                <Button color="purple">
+                 Editar
+                </Button>
                 </Link>
-                <h3>{card.title}</h3>
-                <p>{card.name_prof}</p>
-                <Rating>
-                  <Rating.Star filled={card.rating > 0} />
-                  <Rating.Star filled={card.rating > 1} />
-                  <Rating.Star filled={card.rating > 2} />
-                  <Rating.Star filled={card.rating > 3} />
-                  <Rating.Star filled={card.rating > 4} />
-                  <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                    {card.rating} out of 5
-                  </p>
-                </Rating>
-                <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleClick(card)}>Add to Cart</button>
-              </div>
-            ))
-                
-            }
-    </div>)
+                </div>
+            </div>
+        </li>)
+          }):<Spinner
+          color="purple"
+          aria-label="Purple spinner example"
+        />}
+            
+        </ul>
+   </div>
+   </Card>
+</div>
+</div>)
 }
 
 export default AdminCursos;

@@ -1,0 +1,117 @@
+.contenedorGeneral {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 81px;
+  height: calc(100vh - 149px);
+}
+
+.lineaVioleta {
+  background-color: #6d6aee;
+  height: 6rem;
+  width: 100%;
+  position: absolute;
+  border-radius: 30px 30px 0px 0px;
+  color: #fff;
+  font-size: 2em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  padding-inline: 3rem;
+  padding-left: 4.65rem;
+}
+
+.hr {
+  width: 40px;
+  margin: 0;
+  padding: 0;
+  transform: rotate(90deg);
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.subTitle {
+  margin-top: 8rem;
+  color: #6d6aee;
+  font-size: 2em;
+  font-weight: 500;
+  margin-left: 3rem;
+}
+
+.active {
+  background-color: #504de1;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16rem;
+  border-radius: 10px;
+}
+
+.contCursos {
+  border-radius: 30px;
+  position: relative;
+  background-color: #fff;
+  height: 35rem;
+  width: 90rem;
+}
+
+.cursos {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  padding-inline: 2rem;
+  gap: 2rem;
+}
+
+.curso {
+  display: flex;
+  flex-direction: column;
+  width: 16rem;
+  height: 17rem;
+  border-radius: 10px;
+  border: 1px solid #f1f1f5;
+  gap: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.curso:hover {
+  transform: scale(1.03);
+}
+
+.curso img {
+  border-radius: 9px 9px 0px 0px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  padding-inline: 1rem;
+}
+
+.profe {
+  padding-inline: 1rem;
+  font-size: 20px;
+}
+
+.compraCurso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  right: 38%;
+  top: 50%;
+  gap: 2rem;
+}
+
+.tituloCompra {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #c6a2fe;
+}
+
+.buttonGo {
+  font-weight: 600;
+}

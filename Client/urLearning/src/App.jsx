@@ -9,6 +9,7 @@ import userDetail from "./components/userDetail/userDetail.jsx";
 import Footer from "./components/footer/Footer";
 import PruebaStripe from "./components/Stripe/PruebaStripe.jsx";
 import ContactUs from "./components/ContactUs/ContactUs.jsx"
+import { ContactUsd } from "./components/ContacUsD/ContactUsd.jsx";
 import Admin from "./components/admin/Admin.jsx";
 import AdminCursos from "./components/admin/AdminCursos/AdminCursos.jsx";
 import { onAuthStateChanged } from "firebase/auth";
@@ -24,6 +25,10 @@ import About from "./components/About/About.jsx"
 import CursosComprados from "./components/CursosComprados/CursosComprados.jsx";
 import EditCurso from "./components/EditCurso/EditCurso.jsx";
 import DetalleCursoComprado from "./components/CursosComprados/DetalleCursoComprado.jsx";
+import AdminUser from "./components/admin/AdminUser/AdminUser.jsx";
+import AdminPagos from "./components/admin/AdminPagos/AdminPagos.jsx";
+import AddFavorite from "./components/AddFavorite/AddFavorite.jsx";
+import AdminUserDetail from "./components/admin/AdminUser/DetalleUser.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,7 +77,11 @@ function App() {
         <Route exact path={`/${user.name}`} component={userDetail} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/cursos" component={AdminCursos} />
-
+        <Route exact path="/favourites" component={AddFavorite} />
+        <Route exact path="/admin/usuarios" component={AdminUser} />
+        <Route exact path="/admin/ordenes" component={AdminPagos} />
+        <Route exact path="/admin/user/:id" component={AdminUserDetail} />
+        <Route exact path="/ContactUsd" component={ContactUsd} />
 
         <Footer />
       </div>

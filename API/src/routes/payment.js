@@ -11,13 +11,9 @@ const stripe = new Stripe(apiKeyPayment);
 router.post("/checkoutcart", async (req, res) => {
   const { products, tuki, cart } = req.body;
 
-  // console.log("tuki", tuki);
-
   const decodeValue = await admin.auth().verifyIdToken(tuki);
   if (!decodeValue) return new Error("no se pudio");
   const userId = decodeValue.uid;
-  // console.log(products);
-  // console.log(cart);
 
   let arrayProducts = [];
   cart.forEach((product) => {
@@ -35,17 +31,14 @@ router.post("/checkoutcart", async (req, res) => {
     arrayProducts.push(lineProduct);
   });
 
-  console.log(arrayProducts);
-
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: arrayProducts,
     mode: "payment",
-    success_url: "https://pf-ur-learning.vercel.app/formpage/success",
+success_url: "https://pf-ur-learning.vercel.app/formpage/success",
     cancel_url: "https://pf-ur-learning.vercel.app/formpage/failed",
   });
 
-  console.log(session);
   let comprobanteAsociado = await Order.create({
     order_id: session.id,
     status: session.status,
@@ -55,6 +48,12 @@ router.post("/checkoutcart", async (req, res) => {
     items: arrayProducts,
   });
 
+  //asocio cada curso del carrito a la orden
+  cart.forEach(async (element) => {
+    let oneCurse = await Course.findByPk(element.idCourse);
+    let currentOrder = await Order.findByPk(session.id);
+    await currentOrder.addCourse(oneCurse);
+  });
   res.json({ id: session.id });
 });
 
@@ -74,7 +73,6 @@ router.get("/checkout/:id", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-
   try {
     const payment = await Order.findOne({ where: { order_id: id } });
     return res.send(payment);
@@ -99,19 +97,14 @@ router.put("/updateLastOrer", async (req, res) => {
   try {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
-
     const userId = decodeValue.uid;
-
     const lastOrder = await Order.findAll({
       where: { userId },
       order: [["createdAt", "DESC"]],
     });
     const { order_id } = lastOrder[0];
-
     const stripeOrder = await stripe.checkout.sessions.retrieve(order_id);
-
     const { payment_status } = stripeOrder;
-
     const finalUpdate = await Order.update(
       { payment_status },
       {
@@ -120,7 +113,6 @@ router.put("/updateLastOrer", async (req, res) => {
         },
       }
     );
-
     res.status(200).send(finalUpdate);
   } catch (error) {
     console.log(error.message);
@@ -130,11 +122,11 @@ router.put("/updateLastOrer", async (req, res) => {
 
 router.put("/updateUserCourseRelations", async (req, res) => {
   const { tokken, carrito } = req.body;
-
   let message;
   try {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
+    // aqui modifico para el nodemailer
     const userId = decodeValue.uid;
     const userEmail = decodeValue.email;
     const userName = decodeValue.name;
@@ -143,7 +135,6 @@ router.put("/updateUserCourseRelations", async (req, res) => {
       where: { userId },
       order: [["createdAt", "DESC"]],
     });
-    //console.log("ordenes ordenadas: ", lastOrder[1].dataValues.payment_status);
     if (!lastOrder[0])
       throw new Error("there is a prblem with the user's las order");
     const { order_id } = lastOrder[0];
@@ -151,17 +142,17 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     const { payment_status } = stripeOrder;
 
     if (payment_status === "paid") {
-      let currentUser = await User.findByPk(userId);
       sendMailPurchase(userName, userEmail);
-      message = "Relation successfull";
+      let currentUser = await User.findByPk(userId);
+      //asocio acada curso del carrito ya pagado al usuario
       carrito.forEach(async (element) => {
         let oneCurse = await Course.findByPk(element.idCourse);
         await currentUser.addCourse(oneCurse);
       });
+      message = "Relation successfull";
     } else {
       message = "Relation failed, check if payment status is paid";
     }
-    console.log(message);
     res.status(200).send(message);
   } catch (error) {
     console.log(error.message);
