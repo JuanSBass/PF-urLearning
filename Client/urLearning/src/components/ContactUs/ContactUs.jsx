@@ -2,6 +2,9 @@ import React, { useEffect } from 'react'
 import { Label, TextInput, Textarea, Button } from "flowbite-react";
 import style from "./ContactUs.module.css"
 import img from "../../img/chicoformulario.jpg"
+import { Toaster, toast } from 'react-hot-toast'
+
+
 
 function ContactUs() {
     return (
