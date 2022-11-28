@@ -3,14 +3,10 @@ import axios from "axios";
 import { useEffect,useState } from "react";
 import styles from "./Admin.module.css";
 import {Link} from "react-router-dom";
-import { Rating,Card,Button,Spinner} from "flowbite-react";
+import { Rating,Card,Button,Spinner,Select} from "flowbite-react";
 import { async } from "@firebase/util";
 function AdminCursos(props){
 const [cursos,setCursos]=useState([]);
-const getCourse=async()=>{
-    const response=await axios.get("/admin/allCourses");
-    return response.data;
-}
 
 
 useEffect(()=>{
@@ -24,8 +20,46 @@ useEffect(()=>{
      
     
 },[])
+const handleChange=(e)=>{
+    e.preventDefault()
+if(e.target.value==="Activo"){
+    const axiosData = async () => {
+        let response = await axios.get('/admin/allCourses');
+        response=await response.data;
+        setCursos(response);
+        
+      }
+   axiosData();
+     
+}
+else if(e.target.value==="Inactivo"){
+    const axiosData = async () => {
+        let response = await axios.get('/admin/allDeletedCourses');
+        response=await response.data;
+        setCursos(response);
+        
+      }
+   axiosData();
+     
+}
+}
 console.log(cursos);
-    return(<div className={styles.cardscontainer}>
+    return(
+        <div className={styles.main}>
+        <div className={styles.filtro}>
+      <Select
+        defaultValue="Activo"
+       onChange={e=>handleChange(e)}
+      > 
+        <option value="Activo">
+        Activo
+        </option>
+        <option value="Inactivo">
+        Inactivo
+        </option>
+      </Select>
+    </div>
+    <div className={styles.cardscontainer}>
        <Card>
     <div class="flex items-center justify-between mb-4">
         <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Cursos</h5>
@@ -64,6 +98,7 @@ console.log(cursos);
         </ul>
    </div>
    </Card>
+</div>
 </div>)
 }
 

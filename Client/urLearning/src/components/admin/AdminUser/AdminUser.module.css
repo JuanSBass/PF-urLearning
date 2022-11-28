@@ -5,3 +5,15 @@
     margin-top: 10%;
     margin-bottom: 5%;
       }
+.filtro{
+
+  display: flex;
+
+  margin: 0 2% 7% 0 ;
+}
+.main{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

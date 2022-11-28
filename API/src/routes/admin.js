@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { where, Op } = require("sequelize");
 const router = Router();
 const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
 
@@ -7,7 +8,9 @@ const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
 
 router.get("/allCourses", async (req, res) => {
   try {
-    let allCourses = await Course.findAll({});
+    let allCourses = await Course.findAll({
+      paranoid: true,
+    });
     res.status(200).send(allCourses);
   } catch (error) {
     res.status(400).send(error);
@@ -19,7 +22,8 @@ router.get("/allDeletedCourses", async (req, res) => {
     let allCourses = await Course.findAll({
       paranoid: false,
     });
-    res.status(200).send(allCourses);
+    let finalCourse = allCourses.filter((course) => course.deletedAt !== null);
+    res.status(200).send(finalCourse);
   } catch (error) {
     console.log(error);
   }
@@ -63,6 +67,17 @@ router.get("/allUsers", async (req, res) => {
     res.status(200).send(allUsers);
   } catch (error) {
     res.status(400).send(error);
+  }
+});
+router.get("/detail", async (req, res) => {
+  try {
+    const id = req.headers.id;
+    console.log(id);
+    const UserS = await User.findByPk(id, { paranoid: false });
+    console.log(UserS);
+    res.status(200).send(UserS);
+  } catch (error) {
+    console.log(error.message);
   }
 });
 //todos con sus cursos comprados
@@ -305,6 +320,17 @@ router.put("/restoreCourse", async (req, res) => {
   } catch (error) {
     res.status(401).send(error);
   }
+});
+
+router.put("/makeAdmin", async (req, res) => {
+  const { userAdminId } = req.body;
+  try {
+    let userAdmin = await User.findByPk(userAdminId, {
+      paranoid: false,
+    });
+    let usernew = await userAdmin.update({ admin: true });
+    res.status(200).send("admin creado");
+  } catch (error) {}
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "./AdminPagos.module.css";
 import { Link } from "react-router-dom";
-import { Spinner, Table } from "flowbite-react";
+import { Rating, Card, Button, Spinner, Table } from "flowbite-react";
 import { async } from "@firebase/util";
 function AdminPagos(props) {
     const [ordenes, setOrdenes] = useState([]);
