@@ -19,7 +19,19 @@ router.post("/", async (req, res) => {
   }
 });
 
-
+router.delete("/", async (req, res) => {
+  const { messageId } = req.body;
+  console.log(messageId);
+  try {
+    console.log("vengo antes");
+    let messageToDelete = await ContactUs.findByPk(messageId);
+    console.log(messageToDelete, "aaaaaaaaaa");
+    await messageToDelete.destroy();
+    res.status(200).send("Message borrado");
+  } catch (error) {
+    res.status(401).send(error);
+  }
+});
 
 router.get("/", async (req, res) => {
   const { email } = req.query;

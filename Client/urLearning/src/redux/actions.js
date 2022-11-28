@@ -32,6 +32,7 @@ export const GET_MESSAGES = "GET_MESSEGES"
 export const POST_MESSAGES = "POST_MESSAGES"
 export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE"
 export const GET_FAVORITE = "GET_FAVORITE"
+export const  DELETE_MESSAGES = "DELETE_MESSAGES"
 
 export const getCourses = () => {
   try {
@@ -371,7 +372,7 @@ export function getUserCourses() {
 export function getMessages () {
   try {
     return async function (dispatch) {
-      const response = await axios.get("/contacUS");
+      const response = await axios.get("/contactUS");
       dispatch({ 
         type: GET_MESSAGES, 
         payload: response.data });
@@ -394,6 +395,21 @@ export function getMessages () {
     }
   } catch (error){
     console.log(error.message)
+  }
+}
+
+
+export function deleteMessages (id) {
+  try {
+    return async function (dispatch) {
+      const response = await axios.delete(`/ContactUs${id}`)
+      dispatch({
+        type: DELETE_MESSAGES,
+        payload: response.data
+      })
+    }
+  } catch (error){
+    console.log(error.menssage)
   }
 }
 
@@ -430,3 +446,5 @@ export function addRemoveFavorite(tokken, courseId) {
     });
   };
 }
+
+

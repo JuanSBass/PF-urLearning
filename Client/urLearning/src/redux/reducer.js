@@ -27,6 +27,7 @@ import {
   CLEAR_CART,
   POST_MESSAGES,
   GET_MESSAGES,
+  DELETE_MESSAGES,
   
 } from "./actions";
 
@@ -253,6 +254,12 @@ case GET_MESSAGES:
       return {
         ...state, 
       }
+ case  DELETE_MESSAGES:
+  return {
+    ...state,
+    messages:action.payload
+    
+  }
     case GET_FAVORITE:
       return {
         ...state,
