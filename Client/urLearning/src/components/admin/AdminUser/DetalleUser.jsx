@@ -24,6 +24,31 @@ const handleSubmit=()=>{
 
     
 }
+const handleDes=()=>{
+    const axiosData = async () => {
+        let response = await axios.delete('/admin//deleteUserId',{deleteUserId:id});
+
+        
+      }
+   axiosData();
+}
+const handlehab=()=>{
+    const axiosData = async () => {
+        let response = await axios.put('/admin/restoreUser',{restoreUserId:id});
+
+        
+      }
+   axiosData();
+}
+const handleAdmin=()=>{
+    const axiosData = async () => {
+        let response = await axios.put('/admin/makeAdmin',{userAdminId:id});
+
+
+        
+      }
+   axiosData();
+}
 const handleChange = (e) => {
     e.preventDefault();
     setInputs({ ...inputs, [e.target.name]: e.target.value })
@@ -65,16 +90,27 @@ return (
 
 <h1 className={s.labe}>{user.email}</h1>
 </div>
-{edit?<Button className={s.edit} gradientMonochrome="purple" onClick={handleSubmit}>
+<div>
+
+</div>
+<div className={s.but}>
+{edit?<Button  gradientMonochrome="purple" onClick={handleSubmit}>
         Enviar
-</Button>:<Button className={s.edit} gradientMonochrome="purple" onClick={handleClick}>
+</Button>:<Button  gradientMonochrome="purple" onClick={handleClick}>
         Editar
 </Button >}
-{user.deletedAt?<Button color="success">
+{user.deletedAt?<Button onClick={handlehab} color="success">
     Habilitar
-</Button>:<Button color="failure">
+</Button>:<Button onClick={handleDes} color="failure">
     Deshabilitar
 </Button>}
+{!user.admin&&<Button onClick={handleAdmin} size="sm" >
+    Hacer admin
+</Button>}
+
+</div>
+
+
 
     
 

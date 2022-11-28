@@ -274,4 +274,15 @@ router.put("/restoreCourse", async (req, res) => {
   }
 });
 
+router.put("/makeAdmin", async (req, res) => {
+  const { userAdminId } = req.body;
+  try {
+    let userAdmin = await User.findByPk(userAdminId, {
+      paranoid: false,
+    });
+    let usernew = await userAdmin.update({ admin: true });
+    res.status(200).send("admin creado");
+  } catch (error) {}
+});
+
 module.exports = router;
