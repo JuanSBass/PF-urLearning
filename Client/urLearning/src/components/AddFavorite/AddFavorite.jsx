@@ -43,7 +43,7 @@ function AddFavorite() {
                             </Link>
                         )
                     })) : (<div className={style.compraCurso}>
-                        <div className={style.tituloCompra}>No tienes cursos comprados...</div>
+                        <div className={style.tituloCompra}>No tienes cursos en favoritos...</div>
                         <Link to="/allcourses">
                             <Button
                                 gradientDuoTone="purpleToBlue"
