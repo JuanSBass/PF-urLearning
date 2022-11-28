@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { where, Op } = require("sequelize");
 const router = Router();
 const {
   User,
@@ -12,9 +13,12 @@ const {
 
 ///////////////////Courses///////////////////
 ///////////////////todos///////////////////
+
 router.get("/allCourses", async (req, res) => {
   try {
-    let allCourses = await Course.findAll({});
+    let allCourses = await Course.findAll({
+      paranoid: true,
+    });
     res.status(200).send(allCourses);
   } catch (error) {
     res.status(400).send(error);
@@ -26,7 +30,8 @@ router.get("/allDeletedCourses", async (req, res) => {
     let allCourses = await Course.findAll({
       paranoid: false,
     });
-    res.status(200).send(allCourses);
+    let finalCourse = allCourses.filter((course) => course.deletedAt !== null);
+    res.status(200).send(finalCourse);
   } catch (error) {
     console.log(error);
   }
@@ -36,8 +41,26 @@ router.delete("/deleteCourseId", async (req, res) => {
   const { deleteCourseId } = req.body;
   try {
     let courseToDelete = await Course.findByPk(deleteCourseId);
-    await courseToDelete.destroy();
+    if (!courseToDelete) {
+      throw new Error("Curso no encontrado");
+    } else {
+      await courseToDelete.destroy();
+    }
     res.status(200).send("Curso eliminado");
+  } catch (error) {
+    res.status(401).send(error.message);
+  }
+});
+
+router.put("/restoreCourse", async (req, res) => {
+  const { restoreCourseId } = req.body;
+  //console.log(restoreCourseId);
+  try {
+    let courseToRestore = await Course.findByPk(restoreCourseId, {
+      paranoid: false,
+    });
+    await courseToRestore.restore();
+    res.status(200).send("Curso restaurado");
   } catch (error) {
     res.status(401).send(error);
   }
@@ -90,6 +113,17 @@ router.get("/allUsers", async (req, res) => {
     res.status(400).send(error);
   }
 });
+router.get("/detail", async (req, res) => {
+  try {
+    const id = req.headers.id;
+    console.log(id);
+    const UserS = await User.findByPk(id, { paranoid: false });
+    console.log(UserS);
+    res.status(200).send(UserS);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 //todos con sus cursos comprados
 router.get("/allUsersWithCourses", async (req, res) => {
   try {
@@ -107,7 +141,8 @@ router.get("/allDeletedUsers", async (req, res) => {
     let allUsers = await User.findAll({
       paranoid: false,
     });
-    res.status(200).send(allUsers);
+    let finalUsers = allUsers.filter((user) => user.deletedAt !== null);
+    res.status(200).send(finalUsers);
   } catch (error) {
     console.log(error);
   }
@@ -128,10 +163,11 @@ router.put("/restoreUser", async (req, res) => {
 });
 
 router.delete("/deleteUserId", async (req, res) => {
-  const { deleteUserId } = req.body;
+  const id = req.headers.id;
   //console.log(deleteUserId);
   try {
-    let userToDelete = await User.findByPk(deleteUserId);
+    console.log(id);
+    let userToDelete = await User.findByPk(id);
     await userToDelete.destroy();
     res.status(200).send("Usuario eliminado");
   } catch (error) {
@@ -139,11 +175,30 @@ router.delete("/deleteUserId", async (req, res) => {
   }
 });
 
+/**
+ * 		"order_id": "cs_test_b1k3rTAsQ25xKSOcEawMVri7jkgrusGtwNAFqIil3i07O78ayWGqElcZoK",
+		"status": "open",
+		"payment_status": "paid",
+		"amount_total": "3000",
+ */
+
 ///////////////////Orders///////////////////
 ///////////////////todas///////////////////
 router.get("/allOrders", async (req, res) => {
   try {
-    let allOrders = await Order.findAll({});
+    let allOrders = await Order.findAll({
+      attributes: ["order_id", "payment_status", "amount_total"],
+      include: [
+        {
+          model: Course,
+          attributes: ["title", "id"],
+        },
+        {
+          model: User,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
     res.status(200).send(allOrders);
   } catch (error) {
     res.status(400).send(error);
@@ -181,8 +236,13 @@ router.delete("/deleteOrderId", async (req, res) => {
   const { deleteOrderId } = req.body;
   try {
     let orderToDelete = await Order.findByPk(deleteOrderId);
-    await orderToDelete.destroy();
-    res.status(200).send(orderToDelete);
+    if (!orderToDelete) {
+      //orden a borrar
+      throw new Error("Orden no encontrada");
+    } else {
+      await orderToDelete.destroy();
+    }
+    res.send("Orden eliminada");
   } catch (error) {
     res.status(401).send(error);
   }
@@ -248,18 +308,6 @@ router.post("/subCategory", async (req, res) => {
   }
 });
 
-router.delete("/deleteCategorie", async (req, res) => {
-  //OJO ver lo de borrado logico
-  const { deleteCategorieId } = req.body;
-  try {
-    let categorieToDelete = await Course.findByPk(deleteCategorieId);
-    await categorieToDelete.destroy();
-    res.status(200).send(categorieToDelete, " destruida");
-  } catch (error) {
-    res.status(401).send(error);
-  }
-});
-
 router.delete("/deleteCategory", async (req, res) => {
   const { deleteCategoryId } = req.body;
   console.log(deleteCategoryId);
@@ -267,6 +315,18 @@ router.delete("/deleteCategory", async (req, res) => {
     let categoryToDelete = await Category.findByPk(deleteCategoryId);
     await categoryToDelete.destroy();
     res.status(200).send("Categoria Borrada");
+  } catch (error) {
+    res.status(401).send(error);
+  }
+});
+
+router.delete("/deleteSubCategory", async (req, res) => {
+  const { deleteSubCategoryId } = req.body;
+  console.log(deleteSubCategoryId);
+  try {
+    let subCategoryToDelete = await Category.findByPk(deleteSubCategoryId);
+    await subCategoryToDelete.destroy();
+    res.status(200).send("sub-Categoria Borrada");
   } catch (error) {
     res.status(401).send(error);
   }
@@ -298,6 +358,17 @@ router.put("/restoreCourse", async (req, res) => {
   } catch (error) {
     res.status(401).send(error);
   }
+});
+
+router.put("/makeAdmin", async (req, res) => {
+  const { userAdminId } = req.body;
+  try {
+    let userAdmin = await User.findByPk(userAdminId, {
+      paranoid: false,
+    });
+    let usernew = await userAdmin.update({ admin: true });
+    res.status(200).send("admin creado");
+  } catch (error) {}
 });
 
 module.exports = router;

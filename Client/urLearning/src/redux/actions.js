@@ -28,8 +28,10 @@ export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_COURSES = "GET_USER_COURSES";
-export const GET_MESSAGES = "GET_MESSAGES";
-export const POST_MESSAGES = "GET_MESSAGES"
+export const GET_MESSAGES = "GET_MESSEGES"
+export const POST_MESSAGES = "POST_MESSAGES"
+export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE"
+export const GET_FAVORITE = "GET_FAVORITE"
 
 export const getCourses = () => {
   try {
@@ -44,8 +46,15 @@ export const getCourses = () => {
 
 export function postCourse(dataCourse) {
   return async function () {
-    const json = await axios.post("/course", dataCourse);
-    return;
+    //modifico para mandar token al back (para sendmail)
+    try {
+      const tokken = window.localStorage.getItem("tokken");
+      console.log(tokken);
+      const json = await axios.post("/course", { dataCourse, tokken });
+      return;
+    } catch (error) {
+      return error;
+    }
   };
 }
 
@@ -389,3 +398,35 @@ export function getMessages () {
 }
 
 
+
+
+
+
+
+//////////////FAVORTOS/////////////// 
+export function getFavorite(tokken) {
+  return async function (dispatch) {
+    const json = await axios.get("/favouriteList/fromUser", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_FAVORITE,
+      payload: json.data,
+    });
+  };
+}
+
+export function addRemoveFavorite(tokken, courseId) {
+  return async function (dispatch) {
+    const json = await axios.put("/favouriteListNew/addRemoveCourse", {
+      userTokken: tokken,
+      courseId: courseId,
+    });
+    return dispatch({
+      type: ADD_REMOVE_FAVORITE,
+      payload: json.data,
+    });
+  };
+}

@@ -1,24 +1,22 @@
+import style from "../AddFavorite/AddFavorite.module.css"
 import React, { useEffect } from 'react'
-import style from "../CursosComprados/CursosComprados.module.css"
 import { useSelector, useDispatch } from "react-redux";
-import { getCourses, getUserCourses } from '../../redux/actions';
+import { getCourses, getFavorite, getUserCourses } from '../../redux/actions';
 import { Button } from "flowbite-react"
 import { Link } from "react-router-dom";
 
+function AddFavorite() {
 
-
-function CursosComprados() {
-    // const cursosPrueba = useSelector(state => state.courses)
-    const cursosUser = useSelector(state => state.userCourses)
+    const cursosFav = useSelector(state => state.favorites)
     const dispatch = useDispatch()
+    const tokken = window.localStorage.getItem("tokken");
 
 
     useEffect(() => {
         dispatch(getCourses())
         dispatch(getUserCourses())
-    }, [dispatch]);
-
-    // console.log(cursosUser)
+        dispatch(getFavorite(tokken))
+    }, [dispatch, tokken]);
 
     return (
         <div className={style.contenedorGeneral}>
@@ -32,11 +30,11 @@ function CursosComprados() {
                         Mis Favoritos
                     </Link>
                 </div>
-                <div className={style.subTitle}>Mis Cursos</div>
+                <div className={style.subTitle}>Mis Favoritos</div>
                 <div className={style.cursos}>
-                    {cursosUser.length ? (cursosUser.map((c) => {
+                    {cursosFav.length ? (cursosFav.map((c) => {
                         return (
-                            <Link to={`/mycourses/${c.id}`} key={c.id}>
+                            <Link to={`/course/${c.id}`} key={c.id}>
                                 <div className={style.curso} key={c.id}>
                                     <img src={c.image} alt="imagen" />
                                     <div className={style.title}>{c.title}</div>
@@ -45,7 +43,7 @@ function CursosComprados() {
                             </Link>
                         )
                     })) : (<div className={style.compraCurso}>
-                        <div className={style.tituloCompra}>No tienes cursos comprados...</div>
+                        <div className={style.tituloCompra}>No tienes cursos en favoritos...</div>
                         <Link to="/allcourses">
                             <Button
                                 gradientDuoTone="purpleToBlue"
@@ -62,4 +60,4 @@ function CursosComprados() {
     )
 }
 
-export default CursosComprados
+export default AddFavorite

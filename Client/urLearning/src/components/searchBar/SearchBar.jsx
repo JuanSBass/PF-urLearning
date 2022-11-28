@@ -8,7 +8,7 @@ export default function Searchbar() {
 	const dispatch = useDispatch();
 	const [name, setName] = useState("")
 
-	console.log(name)
+	// console.log(name)
 
 	const handleInput = (ev) => {
 		setName(ev.target.value)

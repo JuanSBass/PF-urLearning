@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Course, FavouriteList } = require("../db");
+const { User, Course, FavouriteList, ProfessorRole } = require("../db");
 const admin = require("../firebase/config");
 const { sendMailRegister } = require("./sendemail");
 
@@ -11,13 +11,18 @@ router.post("/create", async (req, res) => {
     console.log(decodeValue);
 
     const { email, user_id, picture } = decodeValue;
-    const valid = user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3";
+    const valid =
+      user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3" ||
+      user_id === "0Ji78Vnn0gaMUpM7m6611eO9oec2" ||
+      user_id === "PsPEdPVdoEX2ufdRp7tmugEZW2b2" ||
+      user_id === "GiiayYyFMwckAmLJAJGMcaqBwmp1";
     console.log();
     let name;
 
     if (decodeValue.name) name = decodeValue.name;
     else {
       name = email.split("@")[0]; // El nombre del usuario será el email sin @
+      // name = "Usuario";
     }
 
     if (!decodeValue) return new Error("no se pudio");
@@ -31,7 +36,19 @@ router.post("/create", async (req, res) => {
       },
     });
 
-    if (newUser[1]) sendMailRegister(name, email);
+    if (newUser[1]) {
+      sendMailRegister(name, email);
+      const currentUser = await User.findByPk(user_id);
+      let userName = currentUser.name;
+      let newProfessorRole = await ProfessorRole.create({
+        name: `Prof. ${userName}`,
+      });
+      await currentUser.setProfessorRole(newProfessorRole);
+      let newFavoutiteList = await FavouriteList.create({
+        name: `${userName}'s favourite list`,
+      });
+      await currentUser.setFavouriteList(newFavoutiteList);
+    }
 
     res.status(200).send(newUser);
   } catch (error) {

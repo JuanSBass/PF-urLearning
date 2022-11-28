@@ -12,6 +12,8 @@ import {
   ORDER_BY_ANY,
   GET_COURSES_NAME,
   GET_USER_COURSES,
+  GET_FAVORITE,
+  ADD_REMOVE_FAVORITE,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -25,6 +27,7 @@ import {
   CLEAR_CART,
   POST_MESSAGES,
   GET_MESSAGES,
+  
 } from "./actions";
 
 const initialState = {
@@ -44,6 +47,7 @@ const initialState = {
   cartNumber : 0,
   userCourses: [],
   messages:[],
+  favorites: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -170,13 +174,13 @@ function rootReducer(state = initialState, action) {
           if (b.rating > a.rating) return 1;
           return 0;
         });
-      } else if (action.payload === "price+") {
+      } else if (action.payload === "price-") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return 1;
           if (b.price > a.price) return -1;
           return 0;
         });
-      } else if (action.payload === "price-") {
+      } else if (action.payload === "price+") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return -1;
           if (b.price > a.price) return 1;
@@ -247,7 +251,18 @@ case GET_MESSAGES:
   };
   case POST_MESSAGES:
       return {
+        ...state, 
+      }
+    case GET_FAVORITE:
+      return {
         ...state,
+        favorites: action.payload.courses,
+      };
+
+    case ADD_REMOVE_FAVORITE:
+      return {
+        ...state,
+        favorites: action.payload.courses,
       };
 
     default:

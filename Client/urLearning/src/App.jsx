@@ -24,6 +24,10 @@ import About from "./components/About/About.jsx"
 import CursosComprados from "./components/CursosComprados/CursosComprados.jsx";
 import EditCurso from "./components/EditCurso/EditCurso.jsx";
 import DetalleCursoComprado from "./components/CursosComprados/DetalleCursoComprado.jsx";
+import AdminUser from "./components/admin/AdminUser/AdminUser.jsx";
+import AdminPagos from "./components/admin/AdminPagos/AdminPagos.jsx";
+import AddFavorite from "./components/AddFavorite/AddFavorite.jsx";
+import AdminUserDetail from "./components/admin/AdminUser/DetalleUser.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,7 +76,10 @@ function App() {
         <Route exact path={`/${user.name}`} component={userDetail} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/cursos" component={AdminCursos} />
-
+        <Route exact path="/favourites" component={AddFavorite} />
+        <Route exact path="/admin/usuarios" component={AdminUser} />
+        <Route exact path="/admin/ordenes" component={AdminPagos} />
+        <Route exact path="/admin/user/:id" component={AdminUserDetail} />
 
         <Footer />
       </div>
