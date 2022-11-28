@@ -35,7 +35,7 @@ const validatePassword = async (password) => {
 /////////////////////// COURSE ////////////////////////
 
 //////////// Regex Title /////////////
-const maxLengthTitle = /(?=.{5,20})/; ///Must contain between 5 and 20 charcters
+const maxLengthTitle = /(?=.{5,30})/; ///Must contain between 5 and 20 charcters
 
 //////////// Validation Title /////////////
 const validateTitle = async (title) => {

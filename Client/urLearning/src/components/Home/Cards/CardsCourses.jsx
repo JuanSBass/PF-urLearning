@@ -52,6 +52,8 @@ const CardsCourses = () => {
             </Link>
             <h3>{card.title}</h3>
             <p>{card.name_prof}</p>
+            <h2>${card.price} USD</h2>
+
             <Rating>
               <Rating.Star filled={card.rating > 0} />
               <Rating.Star filled={card.rating > 1} />
@@ -63,7 +65,7 @@ const CardsCourses = () => {
               </p>
             </Rating>
 
-            <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => toast.success('Added Course!') && handleClick(card)}>Add to Cart</button>
+            <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => toast.success('Added Course!') && handleClick(card)} >Add to Cart</button>
             <Toaster
               position="bottom-right"
             />
