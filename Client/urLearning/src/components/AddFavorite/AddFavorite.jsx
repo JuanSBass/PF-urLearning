@@ -26,7 +26,7 @@ function AddFavorite() {
                         Mis Cursos
                     </Link>
                     <hr className={style.hr} />
-                    <Link to="/favourites" className={style.tab}>
+                    <Link to="/favourites" className={`${style.tab} ${style.active}`} >
                         Mis Favoritos
                     </Link>
                 </div>

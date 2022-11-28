@@ -3,14 +3,14 @@ import style from "../CursosComprados/CursosComprados.module.css"
 import { useSelector, useDispatch } from "react-redux";
 import { getCourses, getUserCourses } from '../../redux/actions';
 import { Button } from "flowbite-react"
-import { Link } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
 
 
 function CursosComprados() {
     // const cursosPrueba = useSelector(state => state.courses)
     const cursosUser = useSelector(state => state.userCourses)
     const dispatch = useDispatch()
+
 
 
     useEffect(() => {
@@ -24,7 +24,7 @@ function CursosComprados() {
         <div className={style.contenedorGeneral}>
             <div className={style.contCursos} >
                 <div className={style.lineaVioleta}>
-                    <Link to="/mycourses" className={style.tab}>
+                    <Link to="/mycourses" className={`${style.tab} ${style.active}`}>
                         Mis Cursos
                     </Link>
                     <hr className={style.hr} />

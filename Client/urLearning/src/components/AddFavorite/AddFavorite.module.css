@@ -18,6 +18,7 @@
   display: flex;
   align-items: center;
   padding-inline: 3rem;
+  padding-left: 4.65rem;
 }
 
 .hr {
@@ -37,6 +38,16 @@
   font-size: 2em;
   font-weight: 500;
   margin-left: 3rem;
+}
+
+.active {
+  background-color: #504de1;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16rem;
+  border-radius: 10px;
 }
 
 .contCursos {
