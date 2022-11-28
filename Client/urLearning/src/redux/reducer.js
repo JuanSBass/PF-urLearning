@@ -17,11 +17,14 @@ import {
   LOGOUT,
   ID_SESSION,
   GET_USER_DETAIL,
+  PUT_USER,
   ////////// CARRITO//////////
   ADD_TO_CART,
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
+  POST_MESSAGES,
+  GET_MESSAGES,
 } from "./actions";
 
 const initialState = {
@@ -38,8 +41,9 @@ const initialState = {
   carrito: [],
   copyCarrito: [],
   userDetail: {},
+  cartNumber : 0,
   userCourses: [],
-  cartNumber: 0
+  messages:[],
 };
 
 function rootReducer(state = initialState, action) {
@@ -187,6 +191,8 @@ function rootReducer(state = initialState, action) {
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
+
+
     ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
@@ -199,6 +205,7 @@ function rootReducer(state = initialState, action) {
     case ID_SESSION:
       return { ...state, idSession: action.payload };
 
+
     case GET_CART:
       return {
         ...state,
@@ -210,7 +217,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: (state.cartNumber -= 1),
+        cartNumber: state.cartNumber -= 1,
       };
 
     case CLEAR_CART:
@@ -223,10 +230,24 @@ function rootReducer(state = initialState, action) {
     case GET_USER_DETAIL:
       return { ...state, userDetail: action.payload };
 
+    case PUT_USER:
+      return { ...state };
+
     case GET_USER_COURSES:
       return {
         ...state,
         userCourses: action.payload[0].courses,
+      };
+
+//////////////Contact Us/////////////
+case GET_MESSAGES:
+  return {
+    ...state,
+    messages: action.payload,
+  };
+  case POST_MESSAGES:
+      return {
+        ...state,
       };
 
     default:

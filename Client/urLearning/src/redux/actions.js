@@ -23,10 +23,13 @@ export const LOGOUT = "LOGOUT";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const ID_SESSION = "ID_SESSION";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const PUT_USER = "PUT_USER";
 export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_COURSES = "GET_USER_COURSES";
+export const GET_MESSAGES = "GET_MESSAGES";
+export const POST_MESSAGES = "GET_MESSAGES"
 
 export const getCourses = () => {
   try {
@@ -156,8 +159,10 @@ export const logIn = (tokken) => {
     dispatch({
       type: LOGIN,
       payload: {
+        image: semiOldUser[0].image,
         email: semiOldUser[0].email,
         name: semiOldUser[0].name,
+        admin: semiOldUser[0].admin,
       },
       //ojo que aca solo devuelve el nombre de la base de datos
       //y el resto se lo proporciona google
@@ -215,6 +220,7 @@ export const loginEmailAuth = (email, password) => {
   }
 };
 
+
 export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
   return async (dispatch) => {
@@ -257,13 +263,30 @@ export const getUserDetail = () => {
   try {
     return async function (dispatch) {
       const tokken = window.localStorage.getItem("tokken");
-      const response = await axios.get("/userCresential/detail", {
+      const response = await axios.get("/userCredential/detail", {
         headers: {
           Authorization: "Bearer " + tokken,
         },
       });
 
       dispatch({ type: GET_USER_DETAIL, payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const putUser = (payload) => {
+  try {
+    return async function (dispatch) {
+      const tokken = window.localStorage.getItem("tokken");
+      const response = await axios.put("/userCredential", {
+        authorization: "Bearer " + tokken,
+        name: payload.name,
+        image: payload.image,
+      });
+      console.log(tokken);
+      dispatch({ type: PUT_USER });
     };
   } catch (error) {
     console.log(error.message);
@@ -335,5 +358,34 @@ export function getUserCourses() {
   };
 }
 
+/////////////////Contact Us ///////////////////
+export function getMessages () {
+  try {
+    return async function (dispatch) {
+      const response = await axios.get("/contacUS");
+      dispatch({ 
+        type: GET_MESSAGES, 
+        payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+
+ export function postMessages (payload) {
+  try {
+    return async function (dispatch) {
+      const response = await axios.post("/contactUS",payload)
+      dispatch({
+        type: POST_MESSAGES,
+        payload: response.data
+      })
+    }
+  } catch (error){
+    console.log(error.message)
+  }
+}
 
 

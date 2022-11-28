@@ -1,10 +1,17 @@
+
+/*.inputStripe {
+  display: flex;
+=========
 .inputStripe {
   /* display: flex;
+>>>>>>>>> Temporary merge branch 2
   justify-content: center;
   align-items: center;
   margin-top: 81px;
   height: calc(100vh - 149px); */
-}
+
+
+
 
 .input {
   /* width: 40rem; */

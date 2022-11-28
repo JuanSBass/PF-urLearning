@@ -4,19 +4,15 @@ const Stripe = require("stripe");
 const apiKeyPayment = process.env.API_KEY_PAYMENT;
 const { Order, User, Course } = require("../db.js");
 const admin = require("../firebase/config");
+const { sendMailPurchase } = require("./sendemail.js");
 
 const stripe = new Stripe(apiKeyPayment);
 
 router.post("/checkoutcart", async (req, res) => {
   const { products, tuki, cart } = req.body;
-
-  // console.log("tuki", tuki);
-
   const decodeValue = await admin.auth().verifyIdToken(tuki);
   if (!decodeValue) return new Error("no se pudio");
   const userId = decodeValue.uid;
-  // console.log(products);
-  // console.log(cart);
 
   let arrayProducts = [];
   cart.forEach((product) => {
@@ -34,8 +30,6 @@ router.post("/checkoutcart", async (req, res) => {
     arrayProducts.push(lineProduct);
   });
 
-  console.log(arrayProducts);
-
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: arrayProducts,
@@ -44,7 +38,6 @@ router.post("/checkoutcart", async (req, res) => {
     cancel_url: "https://pf-ur-learning.vercel.app/formpage/failed",
   });
 
-  console.log(session);
   let comprobanteAsociado = await Order.create({
     order_id: session.id,
     status: session.status,
@@ -135,12 +128,13 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     if (!decodeValue) return new Error("no se pudio");
     const userId = decodeValue.uid;
+    const userEmail = decodeValue.email;
+    const userName = decodeValue.name;
 
     const lastOrder = await Order.findAll({
       where: { userId },
       order: [["createdAt", "DESC"]],
     });
-    //console.log("ordenes ordenadas: ", lastOrder[1].dataValues.payment_status);
     if (!lastOrder[0])
       throw new Error("there is a prblem with the user's las order");
     const { order_id } = lastOrder[0];
@@ -149,6 +143,7 @@ router.put("/updateUserCourseRelations", async (req, res) => {
 
     if (payment_status === "paid") {
       let currentUser = await User.findByPk(userId);
+      sendMailPurchase(userName, userEmail);
       message = "Relation successfull";
       carrito.forEach(async (element) => {
         let oneCurse = await Course.findByPk(element.idCourse);
@@ -157,14 +152,10 @@ router.put("/updateUserCourseRelations", async (req, res) => {
     } else {
       message = "Relation failed, check if payment status is paid";
     }
-    console.log(message);
     res.status(200).send(message);
   } catch (error) {
     console.log(error.message);
     res.status(405).send(error);
   }
 });
-
 module.exports = router;
-
-// GUARDAR USERID, SESIONID, ORDER

@@ -10,8 +10,8 @@ import styles from "./Nav.module.css"
 
 export default function Nav() {
 	const dispatch = useDispatch();
-	const user = useSelector(state => state.user);
 	const navigate = useHistory();
+	const user = useSelector(state => state.user);
 	const handleLogOut = () => {
 		if (user.name) navigate.push("/");
 		dispatch(logOut())
@@ -37,7 +37,7 @@ export default function Nav() {
 						{cartNumber}
 					</span> : ""}</button> </Link>
 					{log ? <Dropdown
-						label={<Avatar alt="User settings" img={user.photo} rounded={true} />}
+						label={<Avatar alt="User settings" img={user.image} rounded={true} />}
 						arrowIcon={false}
 						inline={true}
 					>
@@ -60,6 +60,11 @@ export default function Nav() {
 						<Dropdown.Item>
 							Earnings
 						</Dropdown.Item>
+						{user.admin && <Link to="/admin">
+							<Dropdown.Item>
+								Admin
+							</Dropdown.Item>
+						</Link>}
 						<Dropdown.Divider />
 						<button onClick={handleLogOut} type="button">
 							<Dropdown.Item>

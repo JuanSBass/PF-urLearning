@@ -8,6 +8,7 @@ const {
   getDbInfoCourses,
   getCartCourseDb,
   getPrueba,
+  getCommentDb,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -29,26 +30,27 @@ const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
 const favouriteList = require("./favouriteList.js");
 const admin = require("../firebase/config");
-const { card } = require("mercadopago");
+const edit = require("./edit.js");
+const contactUs = require("./contactUs.js");
+const comments = require("./commets.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
 router.use("/user", user);
-router.use("/userCresential", userCredencial);
 router.use("/admin", administrator);
+router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
+router.use("/edit", edit);
+router.use("/contactUs", contactUs);
+router.use("/comment", comments);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
   const { email, name, id } = req.body;
   const validEmail = await validateEmail(email);
-  //const validPassword = await validatePassword(password);
-  console.log(email);
-  console.log(name);
 
   try {
     if (!validEmail || email === "") {
-      console.log(email);
       res.status(404).send({ message: "Email invalida o campo vacio" });
     } else {
       let newUser = await User.create({
@@ -56,6 +58,7 @@ router.post("/user", async (req, res) => {
         email,
         name,
       });
+
       res.status(200).send("Usuario creado correctamente");
     }
   } catch (error) {
@@ -101,10 +104,6 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
-    console.log(description.length);
-    console.log(validTitle);
-    console.log(level);
-    //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
       res.status(404).send({ message: "Titulo invalido o inexistente" });
     } else if (category === "") {
@@ -150,9 +149,8 @@ router.post("/course", async (req, res) => {
 
 router.get("/course", async (req, res) => {
   const { info } = req.query;
-  console.log(info);
   const tokken = req.headers;
-
+  console.log(info);
   let allCourses;
   try {
     info
@@ -199,14 +197,11 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
-///////// Route DELETE para Course -> ADMIN////////
-
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
   try {
     const { categ } = req.query;
-    console.log(categ);
     let respuesta = await Course.findAll({
       where: {
         category: categ,
@@ -219,10 +214,23 @@ router.get("/courseByCategory", async (req, res) => {
   }
 });
 
+/////////////// GET a comment /////////////////
+router.get("/comment", async (req, res) => {
+  const { comment } = req.query;
+
+  try {
+    const allComments = await getCommentDb(comment);
+    return allComments
+      ? res.status(200).send(allComments)
+      : res.status(404).send("No existe el comentario buscado");
+  } catch (error) {
+    console.log(error + "error del get /comment");
+  }
+});
+
 router.get("/courseBySubCategory", async (req, res) => {
   try {
     const { subcateg } = req.query;
-    console.log(subcateg);
     let respuesta = await Course.findAll({
       where: {
         subCategory: subcateg,
@@ -234,6 +242,8 @@ router.get("/courseBySubCategory", async (req, res) => {
     console.log("error");
   }
 });
+
+////////////////////////// CART
 
 router.post("/cart", async (req, res) => {
   const { id, title, image, description, price, name_prof } = req.body[0];
@@ -248,7 +258,6 @@ router.post("/cart", async (req, res) => {
 
   try {
     if (result.find((e) => e.id === id)) {
-      console.log("ya esta comprado");
       res.status(404).send("elemento ya comprado");
     } else {
       let newCartItem = await Cart.findOrCreate({

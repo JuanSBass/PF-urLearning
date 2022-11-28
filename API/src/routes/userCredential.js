@@ -2,10 +2,8 @@ const { Router } = require("express");
 const { where } = require("sequelize");
 const router = Router();
 const { User, Course } = require("../db");
-const middleware = require("../middleware/index");
-const admin = require("../firebase/config");
 
-router.use(middleware.decodeToken);
+const admin = require("../firebase/config");
 
 router.get("/detail", async (req, res) => {
   try {
@@ -13,19 +11,23 @@ router.get("/detail", async (req, res) => {
     const decodeValue = await admin.auth().verifyIdToken(tokken);
     const { user_id } = decodeValue;
     const UserS = await User.findByPk(user_id);
-    console.log("es el usuario", UserS.dataValues);
     res.status(200).send(UserS.dataValues);
   } catch (error) {
     console.log(error.message);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/", async (req, res) => {
   try {
-    const id = req.params.id;
-    const { newName } = req.body;
+    const tokken = req.body.authorization.split(" ")[1];
+
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
+    const { user_id } = decodeValue;
+    const id = user_id;
+    const { name, image } = req.body;
+    console.log(id);
     let response = await User.update(
-      { name: newName },
+      { name, image },
       {
         where: {
           id: id,

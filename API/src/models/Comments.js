@@ -2,36 +2,31 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "user",
+    "comments",
     {
-      id: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      ID: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
       },
-      email: {
+      idCourse: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      name: {
+      userId: {
         type: DataTypes.STRING,
-        allowNull: true,
-      },
-
-      image: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      admin: {
-        type: DataTypes.BOOLEAN,
         allowNull: false,
-        default: false,
       },
+      comment: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      // here would be the idProf reference
     },
     {
-      paranoid: true,
+      timestamps: false,
       createdAt: false,
     }
   );
-  // here would be the idProf reference
 };

@@ -1,6 +1,14 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Course, Cart, Category, SubCategory, Order } = require("../db");
+const {
+  User,
+  Course,
+  Cart,
+  Category,
+  SubCategory,
+  Order,
+  ContactUs,
+} = require("../db");
 
 ///////////////////Courses///////////////////
 ///////////////////todos///////////////////
@@ -26,11 +34,47 @@ router.get("/allDeletedCourses", async (req, res) => {
 
 router.delete("/deleteCourseId", async (req, res) => {
   const { deleteCourseId } = req.body;
-  console.log(deleteCourseId);
   try {
     let courseToDelete = await Course.findByPk(deleteCourseId);
     await courseToDelete.destroy();
     res.status(200).send("Curso eliminado");
+  } catch (error) {
+    res.status(401).send(error);
+  }
+});
+
+router.delete("/comment", async (req, res) => {
+  const { comment } = req.body;
+  console.log(comment);
+
+  let newComment = await Course.findOne({ where: { comment } });
+  console.log(newComment.dataValues.comment);
+
+  // delete newComment.dataValues.comment === comment;
+
+  console.log(newComment.dataValues.comment);
+
+  try {
+    Course.update({
+      where: {
+        comment: comment,
+      },
+    });
+    res.send("Comentario actualizado");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.delete("/deleteContactUs", async (req, res) => {
+  const { messageId } = req.body;
+  console.log(messageId);
+  try {
+    console.log("vengo antes");
+    let messageToDelete = await ContactUs.findByPk(messageId);
+    console.log(messageToDelete, "aaaaaaaaaa");
+    await messageToDelete.destroy();
+    res.status(200).send("Message borrado");
   } catch (error) {
     res.status(401).send(error);
   }
@@ -127,7 +171,6 @@ router.put("/modifyOrderStatus", async (req, res) => {
   try {
     let oldOrder = await Order.findByPk(order_id);
     let updatedOrder = await oldOrder.update({ payment_status });
-    console.log(updatedOrder);
     res.status(200).send(updatedOrder);
   } catch (error) {
     res.status(400).send(error);
@@ -136,7 +179,6 @@ router.put("/modifyOrderStatus", async (req, res) => {
 
 router.delete("/deleteOrderId", async (req, res) => {
   const { deleteOrderId } = req.body;
-  console.log(deleteOrderId);
   try {
     let orderToDelete = await Order.findByPk(deleteOrderId);
     await orderToDelete.destroy();
