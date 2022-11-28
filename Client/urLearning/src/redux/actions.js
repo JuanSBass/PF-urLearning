@@ -32,6 +32,7 @@ export const GET_FAVORITE = "GET_FAVORITE";
 export const NEW_FAVORITE = "NEW_FAVORITE";
 export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE";
 
+
 export const getCourses = () => {
   try {
     return async function (dispatch) {
@@ -48,7 +49,6 @@ export function postCourse(dataCourse) {
     //modifico para mandar token al back (para sendmail)
     try {
       const tokken = window.localStorage.getItem("tokken");
-      console.log(tokken);
       const json = await axios.post("/course", { dataCourse, tokken });
       return;
     } catch (error) {
@@ -405,3 +405,5 @@ export function addRemoveFavorite(tokken, courseId) {
     });
   };
 }
+
+

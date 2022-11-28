@@ -98,8 +98,8 @@ router.post("/course", async (req, res) => {
     level,
     name_prof,
     videos,
-  } = req.body;
-  //const { tokken } = req.body;
+  } = req.body.dataCourse;
+  const { tokken } = req.body;
 
   //console.log(newCourse);
   const validTitle = await validateTitle(title);
@@ -109,10 +109,10 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
-    //traemos datos de user para el email
-    // const decodeValue = await admin.auth().verifyIdToken(tokken);
-    // if (!decodeValue) return new Error("no se pudio");
-    // const { name, email } = decodeValue;
+    // traemos datos de user para el email
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
+    if (!decodeValue) return new Error("no se pudio");
+    const { name, email, uid } = decodeValue;
 
     //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
@@ -148,9 +148,13 @@ router.post("/course", async (req, res) => {
         videos,
       });
       // envia mail una vez creado
-      //sendMailCreateCourse(name, email, title, image);
+      // sendMailCreateCourse(name, email, title, image);
 
-      res.status(200).send("Curso creado correctamente");
+      let currentUser = await User.findByPk(uid);
+      let currentProf = await currentUser.getProfessorRole();
+      await currentProf.addCourse(newCourse);
+
+      res.status(200).send(newCourse);
     }
   } catch (error) {
     console.log(error);

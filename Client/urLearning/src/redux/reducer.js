@@ -25,6 +25,7 @@ import {
   GET_CART,
   REMOVE_FROM_CART,
   CLEAR_CART,
+
 } from "./actions";
 
 const initialState = {
@@ -44,6 +45,7 @@ const initialState = {
   cartNumber: 0,
   userCourses: [],
   favorites: [],
+  coursePosted: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -245,6 +247,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         favorites: action.payload.courses,
       };
+
 
     default:
       return { ...state };

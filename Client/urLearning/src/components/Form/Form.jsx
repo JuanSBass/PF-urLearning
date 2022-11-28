@@ -206,7 +206,6 @@ const Form = () => {
 
   }
 
-  console.log(input);
 
 
   return (
