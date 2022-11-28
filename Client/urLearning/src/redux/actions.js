@@ -31,6 +31,7 @@ export const GET_USER_COURSES = "GET_USER_COURSES";
 export const GET_FAVORITE = "GET_FAVORITE";
 export const NEW_FAVORITE = "NEW_FAVORITE";
 export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE";
+export const GET_COURSES_PROF = "GET_COURSES_PROF";
 
 
 export const getCourses = () => {
@@ -406,4 +407,16 @@ export function addRemoveFavorite(tokken, courseId) {
   };
 }
 
-
+export function getProfe(tokken){
+  return async function (dispatch){
+    const response = await axios.get("/professor/fromUser", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_COURSES_PROF,
+      payload: response.data.courses
+    })
+  }
+}
