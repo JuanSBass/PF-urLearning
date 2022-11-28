@@ -83,7 +83,9 @@ const Detail = (props) => {
 
                 <video controls autoPlay id={s.vid} height={course.videos[0].height / 2} width={course.videos[0].width / 2}>
                   <source src={course.videos[0].fileURL} type="video/mp4" />
+                  {/* pendiente para revisar con Juan */}
                 </video>
+                {console.log(course.videos)}
 
               </div>
 
