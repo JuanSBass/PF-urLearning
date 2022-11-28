@@ -9,7 +9,7 @@ const { sendMailPurchase } = require("./sendemail.js");
 const stripe = new Stripe(apiKeyPayment);
 
 router.post("/checkoutcart", async (req, res) => {
-  const { products, tuki, cart } = req.body;
+  const { tuki, cart } = req.body;
   const decodeValue = await admin.auth().verifyIdToken(tuki);
   if (!decodeValue) return new Error("no se pudio");
   const userId = decodeValue.uid;

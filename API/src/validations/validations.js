@@ -9,7 +9,6 @@ const numericValue = /(?=.*[0-9])/;
 const maxCharcters = /(?=.{8,12})/; //Must contain between 8 and 12 charcters
 
 //////////// Validation Email /////////////
-
 const validateEmail = async (email) => {
   //si no matchea
   if (!email.match(regexEmail)) {

@@ -1,8 +1,48 @@
 const { Router } = require("express");
+const { allInfo } = require("../controllers/controllers");
 const router = Router();
 const { User, Course, FavouriteList } = require("../db");
 const admin = require("../firebase/config");
+const { validateEmail } = require("../validations/validations");
 const { sendMailRegister } = require("./sendemail");
+
+/////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
+router.post("/", async (req, res) => {
+  const { email, name, id } = req.body;
+  const validEmail = await validateEmail(email);
+
+  try {
+    if (!validEmail || email === "") {
+      res.status(404).send({ message: "Email invalida o campo vacio" });
+    } else {
+      let newUser = await User.create({
+        id,
+        email,
+        name,
+      });
+
+      res.status(200).send("Usuario creado correctamente");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).send(error + " error del /Post User");
+  }
+});
+
+router.get("/", async (req, res) => {
+  const { email } = req.query;
+
+  try {
+    const allUsers = await allInfo(email);
+    return allUsers
+      ? res.status(200).send(allUsers)
+      : res.status(404).send("No existe el usuario buscado");
+  } catch (error) {
+    console.log(error + "error del get /user");
+  }
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.post("/create", async (req, res) => {
   try {
@@ -128,8 +168,5 @@ router.get("/withFavouriteList", async (req, res) => {
     res.status(400).send(error);
   }
 });
-
-
-
 
 module.exports = router;

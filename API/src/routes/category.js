@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 const { Category, SubCategory } = require("../db");
-const admin = require("../firebase/config");
 
 router.post("/category", async (req, res) => {
   const { name } = req.body;
@@ -20,10 +19,10 @@ router.post("/category", async (req, res) => {
 router.post("/subCategory", async (req, res) => {
   try {
     const { name, categoryId } = req.body;
-    console.log(name)
+    console.log(name);
     let newSubCategory = await SubCategory.create({
       name: name,
-      categoryId: categoryId
+      categoryId: categoryId,
     });
     res.status(200).send("SUBcategory creado correctamente");
   } catch (error) {

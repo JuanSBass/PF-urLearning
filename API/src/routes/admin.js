@@ -3,7 +3,6 @@ const router = Router();
 const {
   User,
   Course,
-  Cart,
   Category,
   SubCategory,
   Order,

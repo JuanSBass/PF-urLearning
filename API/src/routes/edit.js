@@ -1,11 +1,9 @@
 const { Router } = require("express");
 const router = Router();
-const { User, Course } = require("../db");
-const admin = require("../firebase/config");
+const { Course } = require("../db");
 const { getCourseById } = require("../controllers/controllers");
 
-///////// Route editar para el Curso que Compras ////////
-
+///////// Route GET para el Curso que Compras ////////
 router.get("/editCourse/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -15,6 +13,7 @@ router.get("/editCourse/:id", async (req, res) => {
   }
 });
 
+///////// Route PUT para el Curso que Compras ////////
 router.put("/editCourse/:id", async (req, res) => {
   try {
     const { id } = req.params;

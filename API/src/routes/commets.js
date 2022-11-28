@@ -8,7 +8,6 @@ const { Comments } = require("../db");
 const admin = require("../firebase/config.js");
 
 /////////////// POST a comment /////////////////
-
 router.post("/", async (req, res) => {
   console.log(req.body);
   const { id, comment } = req.body;

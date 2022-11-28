@@ -1,7 +1,6 @@
 const { Router } = require("express");
-const { where } = require("sequelize");
 const router = Router();
-const { User, Course } = require("../db");
+const { User } = require("../db");
 
 const admin = require("../firebase/config");
 

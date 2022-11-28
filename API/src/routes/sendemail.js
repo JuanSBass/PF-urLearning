@@ -183,4 +183,3 @@ const sendMailPurchase = (name, email) => {
 };
 
 module.exports = { sendMailRegister, sendMailPurchase };
-
