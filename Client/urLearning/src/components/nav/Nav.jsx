@@ -56,7 +56,9 @@ export default function Nav() {
 							</Dropdown.Item>
 						</Link>
 						<Dropdown.Item>
-							Settings
+							<Link to="/mycourses">
+								My Courses
+							</Link>
 						</Dropdown.Item>
 						<Dropdown.Item>
 							Earnings
