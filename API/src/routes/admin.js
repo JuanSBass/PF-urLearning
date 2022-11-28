@@ -163,19 +163,15 @@ router.put("/restoreUser", async (req, res) => {
 });
 
 router.delete("/deleteUserId", async (req, res) => {
-  const { deleteUserId } = req.body;
+  const id = req.headers.id;
   //console.log(deleteUserId);
   try {
-    let userToDelete = await User.findByPk(deleteUserId);
-    if (!userToDelete) {
-      //usuario a borrar
-      throw new Error("Usuario no encontrado");
-    } else {
-      await userToDelete.destroy();
-    }
-    res.send("Usuario eliminado");
+    console.log(id);
+    let userToDelete = await User.findByPk(id);
+    await userToDelete.destroy();
+    res.status(200).send("Usuario eliminado");
   } catch (error) {
-    res.status(401).send(error.message);
+    res.status(401).send(error);
   }
 });
 

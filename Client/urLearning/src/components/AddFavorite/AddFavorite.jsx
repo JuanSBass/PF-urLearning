@@ -34,7 +34,7 @@ function AddFavorite() {
                 <div className={style.cursos}>
                     {cursosFav.length ? (cursosFav.map((c) => {
                         return (
-                            <Link to={`/mycourses/${c.id}`} key={c.id}>
+                            <Link to={`/course/${c.id}`} key={c.id}>
                                 <div className={style.curso} key={c.id}>
                                     <img src={c.image} alt="imagen" />
                                     <div className={style.title}>{c.title}</div>

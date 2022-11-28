@@ -36,7 +36,7 @@ const { sendMailCreateCourse } = require("./sendemail");
 const professorNew = require("./professorRoleNew.js");
 const edit = require("./edit.js");
 const contactUs = require("./contactUs.js");
-const comments = require("./comments.js");
+const commets = require("./commets.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -49,7 +49,7 @@ router.use("/professorNew", professorNew);
 router.use("/favouriteListNew", favouriteListNew);
 router.use("/edit", edit);
 router.use("/contactUs", contactUs);
-router.use("/comment", comments);
+router.use("/comment", commets);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
