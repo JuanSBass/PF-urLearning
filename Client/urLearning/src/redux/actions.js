@@ -28,9 +28,10 @@ export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_COURSES = "GET_USER_COURSES";
-export const GET_FAVORITE = "GET_FAVORITE";
-export const NEW_FAVORITE = "NEW_FAVORITE";
-export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE";
+export const GET_MESSAGES = "GET_MESSEGES"
+export const POST_MESSAGES = "POST_MESSAGES"
+export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE"
+export const GET_FAVORITE = "GET_FAVORITE"
 
 export const getCourses = () => {
   try {
@@ -228,17 +229,15 @@ export const loginEmailAuth = (email, password) => {
   }
 };
 
-export function addToCart(id) {
-  return {
-    type: ADD_TO_CART,
-    payload: id,
-  };
-}
 
 export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
-  return async function () {
+  return async (dispatch) => {
     const json = await axios.post("/cart", item);
+    return dispatch({
+      type : ADD_TO_CART,
+      payload : carrito
+    })
   };
 }
 
@@ -368,17 +367,43 @@ export function getUserCourses() {
   };
 }
 
-// export const getFavorite = (id) => {
-//   try {
-//     return async function (dispatch) {
-//       const response = await axios.get(`/favouriteList/fromUser/${id}`);
-//       dispatch({ type: GET_FAVORITE, payload: response.data });
-//     };
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+/////////////////Contact Us ///////////////////
+export function getMessages () {
+  try {
+    return async function (dispatch) {
+      const response = await axios.get("/contacUS");
+      dispatch({ 
+        type: GET_MESSAGES, 
+        payload: response.data });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
+
+
+ export function postMessages (payload) {
+  try {
+    return async function (dispatch) {
+      const response = await axios.post("/contactUS",payload)
+      dispatch({
+        type: POST_MESSAGES,
+        payload: response.data
+      })
+    }
+  } catch (error){
+    console.log(error.message)
+  }
+}
+
+
+
+
+
+
+
+//////////////FAVORTOS/////////////// 
 export function getFavorite(tokken) {
   return async function (dispatch) {
     const json = await axios.get("/favouriteList/fromUser", {

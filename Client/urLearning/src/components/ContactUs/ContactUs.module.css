@@ -54,3 +54,12 @@
 .buttonSubmit {
   margin-top: 1.5rem;
 }
+
+.errores {
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  color: #eb544d;
+}
