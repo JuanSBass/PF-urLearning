@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: calc(120vh - 149px);
 }
 .nom{
     padding: 10px;

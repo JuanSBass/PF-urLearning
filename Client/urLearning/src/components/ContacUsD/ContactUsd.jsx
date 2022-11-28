@@ -1,33 +1,32 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { } from '../../redux/actions';
-import PruebaStripe from '../Stripe/PruebaStripe';
-import styles from "./ContactUsd.module.css";
+import { deleteMessages, getMessages } from '../../redux/actions';
+import styles from "./ContacUsd.module.css"
 import { Toaster, toast } from 'react-hot-toast'
 
 export const ContactUsd = () => {
-    const mail = useSelector((state) => state.mail)
+    const mail = useSelector((state) => state.messages)
     const dispatch = useDispatch()
 
-    const handleDeleteAll = (e) => {
-        e.preventDefault()
-        dispatch(clearCart())
-        toast.error('Cleaned!')
-    }
+    /*  const handleDeleteAll = (e) => {
+          e.preventDefault()
+          dispatch(clearCart())
+          toast.error('Cleaned!')
+      } */
 
     useEffect(() => {
-        dispatch(getCart());
+        dispatch(getMessages());
     }, [dispatch]);
 
 
     const handleDelete = (e) => {
         e.preventDefault()
-        dispatch(removeItemCart(e.target.value))
+        dispatch(deleteMessages(e.target.value))
         toast.error('Deleted message!')
     }
 
-    return cart.length ? (
+    return mail.length ? (
         <div class={styles.contenedorGeneral}>
             <div class={styles.contenedor}>
                 <p class="text-3xl text-gray-900 dark:text-white">Your Mail</p>
@@ -37,15 +36,15 @@ export const ContactUsd = () => {
                             <tr>
                                 <th scope="col" class="py-3 px-6">
                                     <span class="sr-only">Mail</span>
+                                    <th scope="col" class="py-3 px-6">
+                                        E-Mail
+                                    </th>
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Course
+                                    Name
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Price
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Descripcion
+                                    Message
                                 </th>
                                 <th scope="col" class="py-3 px-6">
                                     Action
@@ -53,22 +52,19 @@ export const ContactUsd = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cart?.map((mail) => (
+                            {mail?.map((mail) => (
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="p-4 w-32">
-                                        <img src={mail.image} alt="miniatura" />
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {mail?.email}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {mail.title}
+                                        {mail?.name}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {mail.price}
-                                    </td>
-                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {mail.description}
+                                        {mail?.message}
                                     </td>
                                     <td class="py-4 px-6">
-                                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={mail.ID} onClick={(e) => handleDelete(e)}>Remove</button>
+                                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={mail?.id} onClick={(e) => handleDelete(e)}>Remove</button>
                                     </td>
                                 </tr>
                             ))}
@@ -77,9 +73,8 @@ export const ContactUsd = () => {
                 </div>
                 <div className={styles.buttonscontainer}>
                     <br />
-                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => handleDeleteAll(e)}>Clear Cart</button>
+                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => handleDeleteAll(e)}>Clear Mail</button>
 
-                    <PruebaStripe />
                     <Toaster
                         position="bottom-right"
                     />
@@ -89,10 +84,10 @@ export const ContactUsd = () => {
     ) : (
         <div class={styles.contenedorGeneral}>
             <div class={styles.contenedor}>
-                <p class="text-3xl text-gray-900 dark:text-white">Your cart is empty..</p>
+                <p class="text-3xl text-gray-900 dark:text-white">Your mail is empty..</p>
                 <br />
                 <div>
-                    <Link to="/allcourses"><button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Add Courses</button></Link>
+                    <Link to="/home"><button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Home</button></Link>
                 </div>
             </div>
         </div>
