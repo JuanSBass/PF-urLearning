@@ -27,7 +27,7 @@ function DetalleCursoComprado() {
 
     }, [dispatch, cursosComprados.length, comentarios]);
 
-    console.log(userActivo)
+    // console.log(userActivo)
     const handlerDelete = (id) => {
         dispatch(deleteComment(id))
         dispatch(getComment())
