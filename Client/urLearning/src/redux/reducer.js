@@ -48,6 +48,7 @@ const initialState = {
   cartNumber : 0,
   userCourses: [],
   messages:[],
+  copyMessages:[],
   favorites: [],
 };
 
@@ -257,8 +258,6 @@ case GET_MESSAGES:
  case  DELETE_MESSAGES:
   return {
     ...state,
-    messages:action.payload
-    
   }
     case GET_FAVORITE:
       return {

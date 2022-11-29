@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { where, Op } = require("sequelize");
+const { getContactUs } = require("../controllers/controllers");
 const router = Router();
 const {
   User,
@@ -89,17 +90,19 @@ router.delete("/comment", async (req, res) => {
   }
 });
 
-router.delete("/deleteContactUs", async (req, res) => {
-  const { messageId } = req.body;
-  console.log(messageId);
+router.delete("/deleteContactUs/:messageId", async (req, res) => {
+  console.log("hola weon",req.params)
+  const { messageId } = req.params;
   try {
-    console.log("vengo antes");
-    let messageToDelete = await ContactUs.findByPk(messageId);
-    console.log(messageToDelete, "aaaaaaaaaa");
-    await messageToDelete.destroy();
-    res.status(200).send("Message borrado");
+    await ContactUs.destroy({
+      where: {
+        id: messageId,
+      },
+    });
+    const result = await getContactUs(messageId);
+    res.status(200).send(result);
   } catch (error) {
-    res.status(401).send(error);
+    console.log(error + "error del delete /contactus");
   }
 });
 

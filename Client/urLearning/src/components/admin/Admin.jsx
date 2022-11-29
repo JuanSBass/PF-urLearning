@@ -13,7 +13,7 @@ function Admin(props) {
             <Link to="/admin/cursos"><div className={s.nom}>cursos</div></Link>
             <Link to="/admin/usuarios"><div className={s.nom}>usuarios</div></Link>
             <Link to="/admin/ordenes"><div className={s.nom}>pagos</div></Link>
-            <Link to="/ContactUsd"><div className={s.nom}>Mensajes</div></Link>
+            <Link to="/admin/ContactUsd"><div className={s.nom}>Mensajes</div></Link>
         </div> : <h1>No tienes acceso</h1>}
 
 

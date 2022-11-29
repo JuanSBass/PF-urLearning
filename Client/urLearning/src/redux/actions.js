@@ -399,10 +399,11 @@ export function getMessages () {
 }
 
 
-export function deleteMessages (id) {
+export function deleteMessages (messageId) {
   try {
     return async function (dispatch) {
-      const response = await axios.delete(`/ContactUs${id}`)
+      console.log(messageId)
+      const response = await axios.delete(`/admin/deleteContactUs/${messageId}`)
       dispatch({
         type: DELETE_MESSAGES,
         payload: response.data
@@ -410,12 +411,8 @@ export function deleteMessages (id) {
     }
   } catch (error){
     console.log(error.menssage)
-  }
+  } 
 }
-
-
-
-
 
 
 
