@@ -3,6 +3,7 @@ import s from "./DetalleUsuario.module.css"
 import axios from "axios"
 import { useEffect, useState } from "react";
 
+
 import { Button } from "flowbite-react";
 import { TextInput } from "flowbite-react";
 import { useHistory, useParams } from "react-router-dom";
@@ -21,10 +22,16 @@ const AdminUserDetail = (props) => {
     const handleSubmit = () => {
 
         setEdit(!edit);
+
+        const axiosData = async () => {
+            let response = await axios.put('/admin/changeUser', { id: id, name: inputs.name, image: inputs.image });
+
+
+
+
+        }
         setInputs({ name: "", image: "" });
-
-
-
+        axiosData();
     }
     const handleDes = () => {
         const axiosData = async () => {
