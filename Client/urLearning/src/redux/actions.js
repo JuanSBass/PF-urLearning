@@ -36,6 +36,8 @@ export const DELETE_MESSAGES = "DELETE_MESSAGES";
 export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENT = "GET_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const GET_COURSES_PROF = "GET_COURSES_PROF";
+
 
 export const getCourses = () => {
   try {
@@ -53,7 +55,6 @@ export function postCourse(dataCourse) {
     //modifico para mandar token al back (para sendmail)
     try {
       const tokken = window.localStorage.getItem("tokken");
-      console.log(tokken);
       const json = await axios.post("/course", { dataCourse, tokken });
       return;
     } catch (error) {
@@ -445,6 +446,20 @@ export function addRemoveFavorite(tokken, courseId) {
       payload: json.data,
     });
   };
+}
+
+export function getProfe(tokken){
+  return async function (dispatch){
+    const response = await axios.get("/professor/fromUser", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_COURSES_PROF,
+      payload: response.data.courses
+    })
+  }
 }
 
 export function postComment(id, comment) {

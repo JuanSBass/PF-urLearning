@@ -30,6 +30,7 @@ import {
   POST_MESSAGES,
   GET_MESSAGES,
   DELETE_MESSAGES,
+  GET_COURSES_PROF,
 } from "./actions";
 
 const initialState = {
@@ -50,6 +51,7 @@ const initialState = {
   userCourses: [],
   messages: [],
   favorites: [],
+  coursesCreated: [],
   comments: [],
 };
 
@@ -270,6 +272,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         favorites: action.payload.courses,
+      };
+
+    case GET_COURSES_PROF:
+      return {
+        ...state,
+        coursesCreated: action.payload,
       };
 
     case GET_COMMENT:

@@ -18,6 +18,7 @@ import {
   postCourse,
   getCategory,
   getCourses,
+  getProfe,
 } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import { Toaster, toast } from 'react-hot-toast'
@@ -53,6 +54,7 @@ const Form = () => {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const tokken = window.localStorage.getItem("tokken");
 
   const showModal = () => {
     setModal(!modal);
@@ -99,6 +101,7 @@ const Form = () => {
         ...input,
       })
     );
+    return () => dispatch(getProfe(tokken))
   }, [input]);
 
   const handleChange = (ev) => {
@@ -208,7 +211,6 @@ const Form = () => {
 
   }
 
-  console.log(input);
 
 
   return (
@@ -442,7 +444,7 @@ const Form = () => {
                 onDrop={handleDrop}
                 onChange={e => setImage(e.target.value)}
                 value={video}
-                disabled={input.videos.linksVideos?.length >= 2}
+                disabled={input.videos.linksVideos?.length >= 2 || loading}
               >
 
                 {({ getRootProps, getInputProps }) => (
@@ -453,7 +455,7 @@ const Form = () => {
                     >
                       <input {...getInputProps()} />
                       <span>📁</span>
-                      <p>Carga tu video aqui o click para seleccionar</p>
+                      <p>Carga tus 2 videos aqui o click para seleccionar</p>
                     </div>
                   </section>
                 )}
