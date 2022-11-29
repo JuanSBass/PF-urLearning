@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 81px;
-  height: calc(500vh - 149px);
+  height: calc(600vh - 149px);
 }
 
 #video {
@@ -35,6 +35,29 @@
   margin-bottom: 3rem;
   margin-left: 2.5rem;
   margin-top: 1rem;
+}
+
+.comentarios {
+  overflow: auto;
+  max-height: 30rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 6px;
+  /* background-color: #f1f1f5; */
+  padding: 3rem;
+  border-radius: 20px;
+}
+
+.comentario {
+  height: 100px;
+  /* border: 1px solid grey; */
+  margin-block: 1rem;
+}
+
+.comentUser {
+  font-weight: 600;
+}
+
+.hr {
+  margin-block: 2rem;
 }
 
 .contenedorAbajo {

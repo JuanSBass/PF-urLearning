@@ -15,6 +15,7 @@ import {
   GET_FAVORITE,
   ADD_REMOVE_FAVORITE,
   GET_COMMENT,
+  DELETE_COMMENT,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -275,6 +276,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         comments: action.payload,
+      };
+
+    case DELETE_COMMENT:
+      return {
+        ...state,
       };
 
     default:

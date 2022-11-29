@@ -1,7 +1,8 @@
+import { Button } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getComment, getUserCourses } from '../../redux/actions'
+import { deleteComment, getComment, getUserCourses } from '../../redux/actions'
 import AddComment from '../AddComment/AddComment'
 import style from "../CursosComprados/DetalleCursoComprado.module.css"
 
@@ -12,7 +13,9 @@ function DetalleCursoComprado() {
     const dispatch = useDispatch()
     const cursosComprados = useSelector((state) => state.userCourses);
     const comentarios = useSelector((state) => state.comments);
-    console.log(comentarios)
+    const [userActivo, setUserActivo] = useState()
+
+
 
     const [detalle, setDetalle] = useState()
 
@@ -20,7 +23,15 @@ function DetalleCursoComprado() {
         dispatch(getComment())
         !cursosComprados.length && dispatch(getUserCourses())
         cursosComprados.length && setDetalle(cursosComprados.find(e => e.id === id))
-    }, [dispatch, cursosComprados.length]);
+        cursosComprados.length && setUserActivo((cursosComprados[0].userCourse.userId))
+
+    }, [dispatch, cursosComprados.length, comentarios]);
+
+    console.log(userActivo)
+    const handlerDelete = (id) => {
+        dispatch(deleteComment(id))
+        dispatch(getComment())
+    }
 
     return (
         <div className={style.contenedorGeneral}>{detalle ?
@@ -55,12 +66,20 @@ function DetalleCursoComprado() {
                         <div>{detalle.description}</div>
                     </div>
                 </div>
-                {comentarios?.map((c) => {
-                    return (
-                        <div>{c.comment}</div>
-                    )
-                })}
-                <AddComment>X</AddComment>
+                <div className={style.comentarios}>
+                    {comentarios.map((comentario) => {
+                        return (
+                            <div className={style.comentario}>
+                                <div className={style.comentUser}>{comentario.userId}</div>
+                                <div>{comentario.comment}</div>
+                                {comentario.userId === userActivo && <button onClick={() => handlerDelete(comentario.ID)}>X</button>}
+                            </div>
+                        )
+                    })}
+
+
+                </div>
+                <AddComment></AddComment>
             </div>
 
             : "Cargando..."}</div>

@@ -35,6 +35,7 @@ export const GET_FAVORITE = "GET_FAVORITE";
 export const DELETE_MESSAGES = "DELETE_MESSAGES";
 export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENT = "GET_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
 
 export const getCourses = () => {
   try {
@@ -463,6 +464,20 @@ export function getComment() {
       const response = await axios.get("/comment");
       dispatch({
         type: GET_COMMENT,
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export function deleteComment(id) {
+  try {
+    return async function (dispatch) {
+      const response = await axios.delete(`/comment/${id}`);
+      dispatch({
+        type: DELETE_COMMENT,
         payload: response.data,
       });
     };

@@ -3,14 +3,18 @@ import { Label, Textarea, Button } from "flowbite-react"
 import { useState } from 'react'
 import { useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { postComment } from '../../redux/actions';
+import { getComment, postComment } from '../../redux/actions';
 
 
 function AddComment() {
-    const [input, setInput] = useState("")
+    const [input, setInput] = useState({
+        comment: ""
+    })
 
     const { id } = useParams()
     const dispatch = useDispatch()
+
+
     const handleChange = (ev) => {
         setInput({
             ...input,
@@ -22,7 +26,10 @@ function AddComment() {
     const handleSubmit = (ev) => {
         ev.preventDefault();
         dispatch(postComment(id, input));
-        setInput("");
+        setInput({
+            comment: ""
+        });
+        dispatch(getComment())
 
     };
 
@@ -43,16 +50,17 @@ function AddComment() {
                         placeholder="Deja un comentario..."
                         required={true}
                         rows={4}
-                        name="comment"
                         onChange={(e) => handleChange(e)}
+                        name="comment"
+                        value={input.comment}
                     />
-                    <Button
-                        gradientDuoTone="purpleToBlue"
-                        type="submit"
-                    >
-                        Comentar
-                    </Button>
                 </div>
+                <Button
+                    gradientDuoTone="purpleToBlue"
+                    type="submit"
+                >
+                    Comentar
+                </Button>
             </form>
         </div>
     )
