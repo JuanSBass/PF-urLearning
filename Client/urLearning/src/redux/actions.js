@@ -165,21 +165,26 @@ export const getSubCategoriesName = (name) => {
 
 export const logIn = (tokken) => {
   return async function (dispatch) {
-    const oldUser = await axios.post("/user/create", {
-      authorization: "Bearer " + tokken,
-    });
-    const semiOldUser = oldUser.data;
-    dispatch({
-      type: LOGIN,
-      payload: {
-        image: semiOldUser[0].image,
-        email: semiOldUser[0].email,
-        name: semiOldUser[0].name,
-        admin: semiOldUser[0].admin,
-      },
-      //ojo que aca solo devuelve el nombre de la base de datos
-      //y el resto se lo proporciona google
-    });
+    try {
+      const oldUser = await axios.post("/user/create", {
+        authorization: "Bearer " + tokken,
+      });
+      const semiOldUser = oldUser.data;
+      dispatch({
+        type: LOGIN,
+        payload: {
+          image: semiOldUser[0].image,
+          email: semiOldUser[0].email,
+          name: semiOldUser[0].name,
+          admin: semiOldUser[0].admin,
+        },
+        //ojo que aca solo devuelve el nombre de la base de datos
+        //y el resto se lo proporciona google
+      });
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data);
+    }
   };
 };
 

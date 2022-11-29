@@ -27,7 +27,7 @@ function PagoExitoso() {
         dispatch(getCart())
         dispatch(updatePaymentStatus(tokken))
         dispatch(saveCoursesAtUser(tokken, cart))
-        return () => { dispatch(clearCart()) }
+        setTimeout(() => { dispatch(clearCart()) }, 3000)
     }, [dispatch, user, tokken]);
 
     return (
