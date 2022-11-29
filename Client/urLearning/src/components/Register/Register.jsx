@@ -86,7 +86,6 @@ const Register = (props) => {
                 <Button type="submit" className={s.loginb} gradientDuoTone="purpleToPink">
                   {isLoggin ? "Inicia Sesion" : "Registrate"}
                 </Button>
-                <button className={s.change} onClick={() => setIsLoggin(!isLoggin)}>{isLoggin ? "Registrate" : "Accede"}</button>
               </div>
 
 
@@ -97,6 +96,7 @@ const Register = (props) => {
                 </button>
               </div>
             </form>
+                <button className={s.change} onClick={() => setIsLoggin(!isLoggin)}>{isLoggin ? "Registrate" : "Accede"}</button>
 
 
           </div>

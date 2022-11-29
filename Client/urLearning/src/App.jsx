@@ -29,7 +29,8 @@ import AdminUser from "./components/admin/AdminUser/AdminUser.jsx";
 import AdminPagos from "./components/admin/AdminPagos/AdminPagos.jsx";
 import AddFavorite from "./components/AddFavorite/AddFavorite.jsx";
 import AdminUserDetail from "./components/admin/AdminUser/DetalleUser.jsx";
-import { CoursesCreated } from "./components/CoursesCreated/CoursesCreated.jsx";
+import CoursesCreated from "./components/CoursesCreated/CoursesCreated.jsx";
+
 
 function App() {
   const dispatch = useDispatch();

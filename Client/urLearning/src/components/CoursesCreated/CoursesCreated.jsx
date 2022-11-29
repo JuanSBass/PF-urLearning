@@ -103,9 +103,9 @@ export const CoursesCreated = () => {
             </Table.Body>
           )
         }
-
-
       </Table>
     </section>
   )
 }
+
+export default CoursesCreated;
