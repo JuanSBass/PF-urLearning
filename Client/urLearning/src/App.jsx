@@ -28,6 +28,7 @@ import AdminUser from "./components/admin/AdminUser/AdminUser.jsx";
 import AdminPagos from "./components/admin/AdminPagos/AdminPagos.jsx";
 import AddFavorite from "./components/AddFavorite/AddFavorite.jsx";
 import AdminUserDetail from "./components/admin/AdminUser/DetalleUser.jsx";
+import { CoursesCreated } from "./components/CoursesCreated/CoursesCreated.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ function App() {
         <Route exact path="/admin/usuarios" component={AdminUser} />
         <Route exact path="/admin/ordenes" component={AdminPagos} />
         <Route exact path="/admin/user/:id" component={AdminUserDetail} />
+        <Route exact path="/coursescreated" component={CoursesCreated} />
 
         <Footer />
       </div>

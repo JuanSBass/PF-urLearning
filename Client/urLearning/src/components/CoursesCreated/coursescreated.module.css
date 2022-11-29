@@ -1,0 +1,28 @@
+.containercourses {
+  margin: 7rem auto;
+  width: 1280px;
+}
+
+.imgcard {
+  object-fit: cover;
+  width: 238px;
+  height: 129px;
+  transition: all 0.6s ease-in-out;
+  
+}
+
+.imgcard img {
+  transition: inherit;
+  border-radius: 34px;
+  width: 238px;
+  height: 129px;
+  
+}
+
+.imgcard img:hover{
+  transform: scale(1.1);
+}
+
+#title {
+  font-weight: 800;
+}
