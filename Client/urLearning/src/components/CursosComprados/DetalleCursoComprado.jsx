@@ -70,9 +70,17 @@ function DetalleCursoComprado() {
                     {comentarios.map((comentario) => {
                         return (
                             <div className={style.comentario}>
-                                <div className={style.comentUser}>{comentario.userId}</div>
-                                <div>{comentario.comment}</div>
-                                {comentario.userId === userActivo && <button onClick={() => handlerDelete(comentario.ID)}>X</button>}
+
+                                <div>
+                                    <div className={style.comentUser}>{comentario.userId}</div>
+                                    <div>{comentario.comment}</div>
+                                </div>
+
+                                <div >
+                                    {comentario.userId === userActivo && <button onClick={() => handlerDelete(comentario.ID)} className={style.delete}>Eliminar comentario</button>}
+                                </div>
+                                <hr className={style.hr} />
+
                             </div>
                         )
                     })}
