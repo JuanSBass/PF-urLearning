@@ -1,7 +1,7 @@
 .main{
  
     color: #fcf9f2;
-   
+    height: calc(150vh - 149px);
 }
 
 
@@ -86,12 +86,13 @@ width: 85%;
 
 .login{
   
-  
     padding-bottom: 10%;
-   
+    display: grid;
+    justify-content: center;
 }
 .loginb{
-    width: 250px;
+    width: 195px;
+    justify-content: center;
 }
 .google{
     display: flex;
@@ -103,4 +104,13 @@ width: 85%;
     color: rgb(219, 61, 61);
     font-size: small;
 }
-.change{color: black;}
+.change{color: black;
+    width: 195px;
+    justify-content: center;
+}
+
+
+.letra{
+    color: black;
+    text-align: center;
+}

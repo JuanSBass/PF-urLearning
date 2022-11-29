@@ -90,19 +90,19 @@ router.delete("/comment", async (req, res) => {
   }
 });
 
-router.delete("/deleteContactUs/:messageId", async (req, res) => {
-  console.log("hola weon",req.params)
-  const { messageId } = req.params;
+router.delete("/deleteContactUs/:id", async (req, res) => {
+  const { id } = req.params;
+
   try {
     await ContactUs.destroy({
       where: {
-        id: messageId,
+        id: id,
       },
     });
-    const result = await getContactUs(messageId);
+    const result = await getContactUs(id);
     res.status(200).send(result);
   } catch (error) {
-    console.log(error + "error del delete /contactus");
+    console.log(error + " error del delete /contactus");
   }
 });
 

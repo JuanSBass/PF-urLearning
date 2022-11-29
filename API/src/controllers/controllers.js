@@ -226,19 +226,17 @@ const getCommentCourseDb = async (req) => {
 
 //////////// Contact Us /////////////////
 const getContactUs = async (id) => {
-  //busco por id
   const contactUsDb = id
     ? await ContactUs.findAll({
         where: {
-          id: { id },
+          id: id,
         },
       })
     : await ContactUs.findAll();
-
   const newMessageDb = await contactUsDb.map((e) => {
     return {
       id: e.id,
-      id: e.id,
+      email: e.email,
       name: e.name,
       message: e.message,
     };

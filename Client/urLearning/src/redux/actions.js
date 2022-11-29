@@ -375,8 +375,9 @@ export function getMessages () {
       const response = await axios.get("/contactUS");
       dispatch({ 
         type: GET_MESSAGES, 
-        payload: response.data });
-    };
+        payload: response.data 
+      });
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -399,11 +400,15 @@ export function getMessages () {
 }
 
 
-export function deleteMessages (messageId) {
+export function deleteMessages (id) {
   try {
+    console.log(id)
     return async function (dispatch) {
-      console.log(messageId)
-      const response = await axios.delete(`/admin/deleteContactUs/${messageId}`)
+      const response = await axios.delete(`/admin/deleteContactUs/${id}`)  .then(async ()=>{
+        const messages = await axios.get("/contactUS");
+        return messages
+      }) 
+      console.log(response.data)
       dispatch({
         type: DELETE_MESSAGES,
         payload: response.data

@@ -6,15 +6,8 @@ import styles from "./ContacUsd.module.css"
 import { Toaster, toast } from 'react-hot-toast'
 
 export const ContactUsd = () => {
-    const mail = useSelector((state) => state.messages)
-    console.log(mail)
     const dispatch = useDispatch()
-
-    /*  const handleDeleteAll = (e) => {
-          e.preventDefault()
-          dispatch(clearCart())
-          toast.error('Cleaned!')
-      } */
+    const mail = useSelector((state) => state.messages)
 
     useEffect(() => {
         dispatch(getMessages());
@@ -22,8 +15,7 @@ export const ContactUsd = () => {
 
 
     const handleDelete = (e) => {
-        e.preventDefault();
-        console.log(e.target.value)
+        e.preventDefault()
         dispatch(deleteMessages(e.target.value))
         toast.error('Deleted message!')
     }
@@ -89,7 +81,7 @@ export const ContactUsd = () => {
                 <p class="text-3xl text-gray-900 dark:text-white">Your mail is empty..</p>
                 <br />
                 <div>
-                    <Link to="/home"><button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Home</button></Link>
+                    <Link to="/"><button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Home</button></Link>
                 </div>
             </div>
         </div>

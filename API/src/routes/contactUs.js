@@ -22,10 +22,10 @@ router.post("/", async (req, res) => {
 
 
 router.get("/", async (req, res) => {
-  const { email } = req.query;
+  const { id } = req.query;
 
   try {
-    const allMessage = await getContactUs(email);
+    const allMessage = await getContactUs(id);
     return allMessage
       ? res.status(200).send(allMessage)
       : res.status(404).send("No existe el mensaje buscado");
