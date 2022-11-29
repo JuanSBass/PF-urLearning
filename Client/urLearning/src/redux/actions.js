@@ -28,11 +28,13 @@ export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_COURSES = "GET_USER_COURSES";
-export const GET_MESSAGES = "GET_MESSEGES"
-export const POST_MESSAGES = "POST_MESSAGES"
-export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE"
-export const GET_FAVORITE = "GET_FAVORITE"
-export const  DELETE_MESSAGES = "DELETE_MESSAGES"
+export const GET_MESSAGES = "GET_MESSEGES";
+export const POST_MESSAGES = "POST_MESSAGES";
+export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE";
+export const GET_FAVORITE = "GET_FAVORITE";
+export const DELETE_MESSAGES = "DELETE_MESSAGES";
+export const POST_COMMENT = "POST_COMMENT";
+export const GET_COMMENT = "GET_COMMENT";
 
 export const getCourses = () => {
   try {
@@ -230,15 +232,14 @@ export const loginEmailAuth = (email, password) => {
   }
 };
 
-
 export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
   return async (dispatch) => {
     const json = await axios.post("/cart", item);
     return dispatch({
-      type : ADD_TO_CART,
-      payload : carrito
-    })
+      type: ADD_TO_CART,
+      payload: carrito,
+    });
   };
 }
 
@@ -369,57 +370,49 @@ export function getUserCourses() {
 }
 
 /////////////////Contact Us ///////////////////
-export function getMessages () {
+export function getMessages() {
   try {
     return async function (dispatch) {
       const response = await axios.get("/contactUS");
-      dispatch({ 
-        type: GET_MESSAGES, 
-        payload: response.data });
+      dispatch({
+        type: GET_MESSAGES,
+        payload: response.data,
+      });
     };
   } catch (error) {
     console.log(error.message);
   }
-};
+}
 
-
-
- export function postMessages (payload) {
+export function postMessages(payload) {
   try {
     return async function (dispatch) {
-      const response = await axios.post("/contactUS",payload)
+      const response = await axios.post("/contactUS", payload);
       dispatch({
         type: POST_MESSAGES,
-        payload: response.data
-      })
-    }
-  } catch (error){
-    console.log(error.message)
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
-
-export function deleteMessages (id) {
+export function deleteMessages(id) {
   try {
     return async function (dispatch) {
-      const response = await axios.delete(`/ContactUs${id}`)
+      const response = await axios.delete(`/ContactUs${id}`);
       dispatch({
         type: DELETE_MESSAGES,
-        payload: response.data
-      })
-    }
-  } catch (error){
-    console.log(error.menssage)
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.menssage);
   }
 }
 
-
-
-
-
-
-
-//////////////FAVORTOS/////////////// 
+//////////////FAVORTOS///////////////
 export function getFavorite(tokken) {
   return async function (dispatch) {
     const json = await axios.get("/favouriteList/fromUser", {
@@ -447,4 +440,33 @@ export function addRemoveFavorite(tokken, courseId) {
   };
 }
 
+export function postComment(id, comment) {
+  return async function (dispatch) {
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.post("/comment", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+      id,
+      comment: comment.comment,
+    });
+    return dispatch({
+      type: POST_COMMENT,
+      payload: json.data,
+    });
+  };
+}
 
+export function getComment() {
+  try {
+    return async function (dispatch) {
+      const response = await axios.get("/comment");
+      dispatch({
+        type: GET_COMMENT,
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+}

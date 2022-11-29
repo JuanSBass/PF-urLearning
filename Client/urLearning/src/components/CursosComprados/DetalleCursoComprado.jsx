@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getUserCourses } from '../../redux/actions'
+import { getComment, getUserCourses } from '../../redux/actions'
 import AddComment from '../AddComment/AddComment'
 import style from "../CursosComprados/DetalleCursoComprado.module.css"
+
+
 
 function DetalleCursoComprado() {
     const { id } = useParams()
     const dispatch = useDispatch()
     const cursosComprados = useSelector((state) => state.userCourses);
+    const comentarios = useSelector((state) => state.comments);
+    console.log(comentarios)
+
     const [detalle, setDetalle] = useState()
 
     useEffect(() => {
+        dispatch(getComment())
         !cursosComprados.length && dispatch(getUserCourses())
         cursosComprados.length && setDetalle(cursosComprados.find(e => e.id === id))
     }, [dispatch, cursosComprados.length]);
@@ -49,6 +55,11 @@ function DetalleCursoComprado() {
                         <div>{detalle.description}</div>
                     </div>
                 </div>
+                {comentarios?.map((c) => {
+                    return (
+                        <div>{c.comment}</div>
+                    )
+                })}
                 <AddComment>X</AddComment>
             </div>
 

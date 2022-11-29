@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 81px;
-  height: calc(300vh - 149px);
+  height: calc(500vh - 149px);
 }
 
 #video {

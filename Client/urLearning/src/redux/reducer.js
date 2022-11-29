@@ -14,6 +14,7 @@ import {
   GET_USER_COURSES,
   GET_FAVORITE,
   ADD_REMOVE_FAVORITE,
+  GET_COMMENT,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -28,7 +29,6 @@ import {
   POST_MESSAGES,
   GET_MESSAGES,
   DELETE_MESSAGES,
-  
 } from "./actions";
 
 const initialState = {
@@ -45,10 +45,11 @@ const initialState = {
   carrito: [],
   copyCarrito: [],
   userDetail: {},
-  cartNumber : 0,
+  cartNumber: 0,
   userCourses: [],
-  messages:[],
+  messages: [],
   favorites: [],
+  comments: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -196,12 +197,12 @@ function rootReducer(state = initialState, action) {
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
-
-
     ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find((cursoId) => cursoId.id === action.payload.id);
+      const product = cursos.find(
+        (cursoId) => cursoId.id === action.payload.id
+      );
       return {
         ...state,
         carrito: [...state.carrito, product],
@@ -209,7 +210,6 @@ function rootReducer(state = initialState, action) {
       };
     case ID_SESSION:
       return { ...state, idSession: action.payload };
-
 
     case GET_CART:
       return {
@@ -222,7 +222,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: state.cartNumber -= 1,
+        cartNumber: (state.cartNumber -= 1),
       };
 
     case CLEAR_CART:
@@ -244,22 +244,21 @@ function rootReducer(state = initialState, action) {
         userCourses: action.payload[0].courses,
       };
 
-//////////////Contact Us/////////////
-case GET_MESSAGES:
-  return {
-    ...state,
-    messages: action.payload,
-  };
-  case POST_MESSAGES:
+    //////////////Contact Us/////////////
+    case GET_MESSAGES:
       return {
-        ...state, 
-      }
- case  DELETE_MESSAGES:
-  return {
-    ...state,
-    messages:action.payload
-    
-  }
+        ...state,
+        messages: action.payload,
+      };
+    case POST_MESSAGES:
+      return {
+        ...state,
+      };
+    case DELETE_MESSAGES:
+      return {
+        ...state,
+        messages: action.payload,
+      };
     case GET_FAVORITE:
       return {
         ...state,
@@ -270,6 +269,12 @@ case GET_MESSAGES:
       return {
         ...state,
         favorites: action.payload.courses,
+      };
+
+    case GET_COMMENT:
+      return {
+        ...state,
+        comments: action.payload,
       };
 
     default:
