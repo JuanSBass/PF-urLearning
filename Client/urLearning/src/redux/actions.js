@@ -28,11 +28,16 @@ export const GET_CART = "GET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_COURSES = "GET_USER_COURSES";
-export const GET_MESSAGES = "GET_MESSEGES"
-export const POST_MESSAGES = "POST_MESSAGES"
-export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE"
-export const GET_FAVORITE = "GET_FAVORITE"
-export const  DELETE_MESSAGES = "DELETE_MESSAGES"
+export const GET_MESSAGES = "GET_MESSEGES";
+export const POST_MESSAGES = "POST_MESSAGES";
+export const ADD_REMOVE_FAVORITE = "ADD_REMOVE_FAVORITE";
+export const GET_FAVORITE = "GET_FAVORITE";
+export const DELETE_MESSAGES = "DELETE_MESSAGES";
+export const POST_COMMENT = "POST_COMMENT";
+export const GET_COMMENT = "GET_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const GET_COURSES_PROF = "GET_COURSES_PROF";
+
 
 export const getCourses = () => {
   try {
@@ -50,7 +55,6 @@ export function postCourse(dataCourse) {
     //modifico para mandar token al back (para sendmail)
     try {
       const tokken = window.localStorage.getItem("tokken");
-      console.log(tokken);
       const json = await axios.post("/course", { dataCourse, tokken });
       return;
     } catch (error) {
@@ -162,21 +166,29 @@ export const getSubCategoriesName = (name) => {
 
 export const logIn = (tokken) => {
   return async function (dispatch) {
-    const oldUser = await axios.post("/user/create", {
-      authorization: "Bearer " + tokken,
-    });
-    const semiOldUser = oldUser.data;
-    dispatch({
-      type: LOGIN,
-      payload: {
-        image: semiOldUser[0].image,
-        email: semiOldUser[0].email,
-        name: semiOldUser[0].name,
-        admin: semiOldUser[0].admin,
-      },
-      //ojo que aca solo devuelve el nombre de la base de datos
-      //y el resto se lo proporciona google
-    });
+    try {
+      const oldUser = await axios.post("/user/create", {
+        authorization: "Bearer " + tokken,
+      });
+      const semiOldUser = oldUser.data;
+      dispatch({
+        type: LOGIN,
+        payload: {
+          image: semiOldUser[0].image,
+          email: semiOldUser[0].email,
+          name: semiOldUser[0].name,
+          admin: semiOldUser[0].admin,
+        },
+        //ojo que aca solo devuelve el nombre de la base de datos
+        //y el resto se lo proporciona google
+      });
+    } catch (error) {
+      // error.response.data === "Usuario ha sido deshabilitado por Admin"
+      //   ? alert(error.response.data)
+      //   : console.log(error, "error de la action", error.response.data.name);
+      if(error.response.data === "Usuario ha sido deshabilitado por Admin") alert(error.response.data)
+      else if(error.response.data.name === 'SequelizeUniqueConstraintError') alert("Usuario ha sido deshabilitado por Admin")
+    }
   };
 };
 
@@ -230,15 +242,14 @@ export const loginEmailAuth = (email, password) => {
   }
 };
 
-
 export function postProductCart(carrito, userTokken) {
   const item = [carrito, userTokken];
   return async (dispatch) => {
     const json = await axios.post("/cart", item);
     return dispatch({
-      type : ADD_TO_CART,
-      payload : carrito
-    })
+      type: ADD_TO_CART,
+      payload: carrito,
+    });
   };
 }
 
@@ -369,7 +380,7 @@ export function getUserCourses() {
 }
 
 /////////////////Contact Us ///////////////////
-export function getMessages () {
+export function getMessages() {
   try {
     return async function (dispatch) {
       const response = await axios.get("/contactUS");
@@ -381,26 +392,23 @@ export function getMessages () {
   } catch (error) {
     console.log(error.message);
   }
-};
+}
 
-
-
- export function postMessages (payload) {
+export function postMessages(payload) {
   try {
     return async function (dispatch) {
-      const response = await axios.post("/contactUS",payload)
+      const response = await axios.post("/contactUS", payload);
       dispatch({
         type: POST_MESSAGES,
-        payload: response.data
-      })
-    }
-  } catch (error){
-    console.log(error.message)
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
-
-export function deleteMessages (id) {
+export function deleteMessages(id) {
   try {
     console.log(id)
     return async function (dispatch) {
@@ -449,4 +457,61 @@ export function addRemoveFavorite(tokken, courseId) {
   };
 }
 
+export function getProfe(tokken){
+  return async function (dispatch){
+    const response = await axios.get("/professor/fromUser", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_COURSES_PROF,
+      payload: response.data.courses
+    })
+  }
+}
 
+export function postComment(id, comment) {
+  return async function (dispatch) {
+    const tokken = window.localStorage.getItem("tokken");
+    const json = await axios.post("/comment", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+      id,
+      comment: comment.comment,
+    });
+    return dispatch({
+      type: POST_COMMENT,
+      payload: json.data,
+    });
+  };
+}
+
+export function getComment() {
+  try {
+    return async function (dispatch) {
+      const response = await axios.get("/comment");
+      dispatch({
+        type: GET_COMMENT,
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export function deleteComment(id) {
+  try {
+    return async function (dispatch) {
+      const response = await axios.delete(`/comment/${id}`);
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+}

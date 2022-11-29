@@ -12,6 +12,7 @@ export default function Nav() {
 	const dispatch = useDispatch();
 	const navigate = useHistory();
 	const user = useSelector(state => state.user);
+	const profe = useSelector(state => state.coursesCreated)
 	const handleLogOut = () => {
 		if (user.name) navigate.push("/");
 		dispatch(logOut())
@@ -58,6 +59,11 @@ export default function Nav() {
 								My Courses
 							</Link>
 						</Dropdown.Item>
+						{profe.length >= 1 && <Dropdown.Item>
+							<Link to="/coursescreated">
+								Courses Created
+							</Link>
+						</Dropdown.Item>}
 						<Dropdown.Item>
 							Earnings
 						</Dropdown.Item>

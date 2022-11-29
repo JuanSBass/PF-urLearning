@@ -11,7 +11,7 @@
   justify-content: space-evenly;
   flex-direction: column;
   width: 283px;
-  height: 286px;
+  height: 340px;
   border-radius: 34px 34px 10px 10px;
   padding: 1rem;
   position: relative;
@@ -34,4 +34,7 @@
   height: 30px;
   right: 20px;
   bottom: 70px;
+}
+.card h2 {
+  font-weight: 600;
 }

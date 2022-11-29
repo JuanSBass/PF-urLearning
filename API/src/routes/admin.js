@@ -178,12 +178,23 @@ router.delete("/deleteUserId", async (req, res) => {
   }
 });
 
-/**
- * 		"order_id": "cs_test_b1k3rTAsQ25xKSOcEawMVri7jkgrusGtwNAFqIil3i07O78ayWGqElcZoK",
-		"status": "open",
-		"payment_status": "paid",
-		"amount_total": "3000",
- */
+router.put("/changeUser", async (req, res) => {
+  try {
+    const { name, image, id } = req.body;
+    console.log(name, image, id);
+    let response = await User.update(
+      { name, image },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(401).send(error.message);
+  }
+});
 
 ///////////////////Orders///////////////////
 ///////////////////todas///////////////////

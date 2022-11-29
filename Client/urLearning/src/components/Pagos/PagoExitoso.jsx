@@ -14,7 +14,7 @@ function PagoExitoso() {
     const tokken = window.localStorage.getItem("tokken")
     const cart = useSelector(state => state.carrito)
 
-    console.log({ cart })
+    // console.log({ cart })
     useEffect(() => {
         if (cart && cart.length && !payment.length) {
             const copyCart = [...cart]
@@ -24,10 +24,10 @@ function PagoExitoso() {
     }, [cart])
 
     useEffect(() => {
+        dispatch(getCart())
         dispatch(updatePaymentStatus(tokken))
         dispatch(saveCoursesAtUser(tokken, cart))
-        dispatch(getCart())
-        return () => { dispatch(clearCart()) }
+        setTimeout(() => { dispatch(clearCart()) }, 3000)
     }, [dispatch, user, tokken]);
 
     return (

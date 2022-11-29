@@ -14,6 +14,8 @@ import {
   GET_USER_COURSES,
   GET_FAVORITE,
   ADD_REMOVE_FAVORITE,
+  GET_COMMENT,
+  DELETE_COMMENT,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -28,7 +30,7 @@ import {
   POST_MESSAGES,
   GET_MESSAGES,
   DELETE_MESSAGES,
-  
+  GET_COURSES_PROF,
 } from "./actions";
 
 const initialState = {
@@ -47,8 +49,9 @@ const initialState = {
   userDetail: {},
   userCourses: [],
   messages:[],
-  copyMessages:[],
   favorites: [],
+  coursesCreated: [],
+  comments: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -196,19 +199,18 @@ function rootReducer(state = initialState, action) {
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
-
-
     ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find((cursoId) => cursoId.id === action.payload.id);
+      const product = cursos.find(
+        (cursoId) => cursoId.id === action.payload.id
+      );
       return {
         ...state,
         carrito: [...state.carrito, product],
       };
     case ID_SESSION:
       return { ...state, idSession: action.payload };
-
 
     case GET_CART:
       return {
@@ -241,15 +243,11 @@ function rootReducer(state = initialState, action) {
         userCourses: action.payload[0].courses,
       };
 
-//////////////Contact Us/////////////
-case GET_MESSAGES:
-  return {
-    ...state,
-    messages: action.payload,
-  };
-  case POST_MESSAGES:
+    //////////////Contact Us/////////////
+    case GET_MESSAGES:
       return {
         ...state, 
+        messages: action.payload
       }
  case  DELETE_MESSAGES:
   return {
@@ -266,6 +264,23 @@ case GET_MESSAGES:
       return {
         ...state,
         favorites: action.payload.courses,
+      };
+
+    case GET_COURSES_PROF:
+      return {
+        ...state,
+        coursesCreated: action.payload,
+      };
+
+    case GET_COMMENT:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+
+    case DELETE_COMMENT:
+      return {
+        ...state,
       };
 
     default:

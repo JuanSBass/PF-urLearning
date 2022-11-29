@@ -103,7 +103,6 @@ const Register = (props) => {
 
             </form>
 
-
           </div>
         </div>
         <div className={s.landingRight}>
