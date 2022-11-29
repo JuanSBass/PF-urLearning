@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getUserCourses } from '../../redux/actions'
+import AddComment from '../AddComment/AddComment'
 import style from "../CursosComprados/DetalleCursoComprado.module.css"
 
 function DetalleCursoComprado() {
@@ -17,7 +18,6 @@ function DetalleCursoComprado() {
 
     return (
         <div className={style.contenedorGeneral}>{detalle ?
-
 
             <div className={style.contVideo}>
                 <div className={style.contenedorArriba}>
@@ -49,6 +49,7 @@ function DetalleCursoComprado() {
                         <div>{detalle.description}</div>
                     </div>
                 </div>
+                <AddComment>X</AddComment>
             </div>
 
             : "Cargando..."}</div>
