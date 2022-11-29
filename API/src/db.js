@@ -67,6 +67,7 @@ const {
   Cart,
   Order,
   FavouriteList,
+  ProfessorRole,
   ContactUs,
   Comments,
 } = sequelize.models;
@@ -80,6 +81,7 @@ Category.hasMany(SubCategory, {
   },
 });
 SubCategory.belongsTo(Category);
+
 User.hasMany(Cart);
 Cart.belongsTo(User);
 
@@ -90,6 +92,9 @@ Cart.belongsTo(User);
 User.hasMany(Order);
 Order.belongsTo(User);
 
+Order.belongsToMany(Course, { through: "orderCourse" });
+Course.belongsToMany(Order, { through: "orderCourse" });
+
 User.belongsToMany(Course, { through: "userCourse" });
 Course.belongsToMany(User, { through: "userCourse" });
 
@@ -98,6 +103,12 @@ FavouriteList.belongsTo(User);
 
 FavouriteList.belongsToMany(Course, { through: "favouriteListCourse" });
 Course.belongsToMany(FavouriteList, { through: "favouriteListCourse" });
+
+User.hasOne(ProfessorRole);
+ProfessorRole.belongsTo(User);
+
+ProfessorRole.hasMany(Course);
+Course.belongsTo(ProfessorRole);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

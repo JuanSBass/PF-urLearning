@@ -12,6 +12,11 @@
   font-weight: 700;
   font-size: 18px;
 }
+
+.card h2 {
+  font-weight: 600;
+}
+
 .card img {
   object-fit: cover;
   width: 238px;
@@ -37,8 +42,16 @@
   background-color: #fff;
   min-width: 250px;
   margin: 0.5rem;
+  position: relative;
 }
 
 .contCard .img {
   max-width: 50%;
+}
+
+.corazones {
+  position: absolute;
+  height: 30px;
+  right: 13px;
+  bottom: 15px;
 }

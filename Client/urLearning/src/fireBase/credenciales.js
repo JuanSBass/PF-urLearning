@@ -1,5 +1,3 @@
-
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -9,15 +7,19 @@ import { getAuth } from "firebase/auth";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBmfVVMl6AW_uFIwDP9KkasUVHTLbzVP20",
-    authDomain: "urlearning-6d76c.firebaseapp.com",
-    projectId: "urlearning-6d76c",
-    storageBucket: "urlearning-6d76c.appspot.com",
-    messagingSenderId: "360505523716",
-    appId: "1:360505523716:web:1eb90af98e17dd5f3aff51",
-    measurementId: "G-K10899DR07"
-  };
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_APP_API_KEY,
+
+  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
+
+  projectId: import.meta.env.VITE_APP_PROJECT_ID,
+
+  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
+
+  messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
+
+  appId: import.meta.env.VITE_APP_APP_ID,
+};
 
 
 // Initialize Firebase

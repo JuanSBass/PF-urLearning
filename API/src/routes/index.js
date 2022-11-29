@@ -28,11 +28,15 @@ const user = require("./user");
 const middleware = require("../middleware");
 const userCredencial = require("./userCredential");
 const administrator = require("./admin.js");
+const professor = require("./professorRole.js");
 const favouriteList = require("./favouriteList.js");
+const favouriteListNew = require("./favouriteListNew.js");
 const admin = require("../firebase/config");
+const { sendMailCreateCourse } = require("./sendemail");
+const professorNew = require("./professorRoleNew.js");
 const edit = require("./edit.js");
 const contactUs = require("./contactUs.js");
-const comments = require("./commets.js");
+const commets = require("./commets.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -40,9 +44,12 @@ router.use("/user", user);
 router.use("/admin", administrator);
 router.use("/userCredential", userCredencial);
 router.use("/favouriteList", favouriteList);
+router.use("/professor", professor);
+router.use("/professorNew", professorNew);
+router.use("/favouriteListNew", favouriteListNew);
 router.use("/edit", edit);
 router.use("/contactUs", contactUs);
-router.use("/comment", comments);
+router.use("/comment", commets);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
@@ -94,7 +101,8 @@ router.post("/course", async (req, res) => {
     level,
     name_prof,
     videos,
-  } = req.body;
+  } = req.body.dataCourse;
+  const { tokken } = req.body;
 
   //console.log(newCourse);
   const validTitle = await validateTitle(title);
@@ -104,6 +112,12 @@ router.post("/course", async (req, res) => {
   const validNameProf = await validateNameProf(name_prof);
 
   try {
+    //traemos datos de user para el email
+    const decodeValue = await admin.auth().verifyIdToken(tokken);
+    if (!decodeValue) return new Error("no se pudio");
+    const { name, email } = decodeValue;
+
+    //console.log(price.length, "dddddd");
     if (!validTitle || title === "") {
       res.status(404).send({ message: "Titulo invalido o inexistente" });
     } else if (category === "") {
@@ -136,7 +150,9 @@ router.post("/course", async (req, res) => {
         name_prof,
         videos,
       });
-      //console.log(newCourse);
+      // envia mail una vez creado
+      sendMailCreateCourse(name, email, title, image);
+
       res.status(200).send("Curso creado correctamente");
     }
   } catch (error) {
@@ -189,7 +205,6 @@ router.get("/course/:id", async (req, res) => {
 router.put("/course/:id", async (req, res) => {
   const { id } = req.params;
   const { rating } = req.body;
-  //console.log(rating);
   try {
     return res.send(await changeCourseById(id, rating));
   } catch (error) {

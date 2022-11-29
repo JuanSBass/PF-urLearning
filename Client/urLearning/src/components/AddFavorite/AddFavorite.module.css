@@ -18,33 +18,9 @@
   display: flex;
   align-items: center;
   padding-inline: 3rem;
+  padding-left: 4.65rem;
 }
 
-.active {
-  background-color: #504de1;
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 14.5rem;
-  border-radius: 10px;
-}
-
-.contCursos {
-  border-radius: 30px;
-  position: relative;
-  background-color: #fff;
-  height: 35rem;
-  width: 90rem;
-}
-
-.cursos {
-  display: flex;
-  align-items: center;
-  margin-top: 3rem;
-  padding-inline: 2rem;
-  gap: 2rem;
-}
 .hr {
   width: 40px;
   margin: 0;
@@ -62,6 +38,32 @@
   font-size: 2em;
   font-weight: 500;
   margin-left: 3rem;
+}
+
+.active {
+  background-color: #504de1;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16rem;
+  border-radius: 10px;
+}
+
+.contCursos {
+  border-radius: 30px;
+  position: relative;
+  background-color: #fff;
+  height: 35rem;
+  width: 90rem;
+}
+
+.cursos {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  padding-inline: 2rem;
+  gap: 2rem;
 }
 
 .curso {

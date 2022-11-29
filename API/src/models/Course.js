@@ -72,7 +72,6 @@ module.exports = (sequelize) => {
       videos: {
         type: DataTypes.JSON,
       },
-      // here would be the idProf reference and students
     },
     {
       paranoid: true,

@@ -10,7 +10,7 @@ import {
   TextInput,
   Textarea,
   Button,
-
+  Spinner
 } from "flowbite-react";
 import style from "../Form/Form.module.css";
 import {
@@ -20,6 +20,7 @@ import {
   getCourses,
 } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
+import { Toaster, toast } from 'react-hot-toast'
 
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
@@ -55,6 +56,7 @@ const Form = () => {
 
   const showModal = () => {
     setModal(!modal);
+    toast.success('Creation Success!')
   };
 
   const [input, setInput] = useState({
@@ -81,7 +83,8 @@ const Form = () => {
     input.level.length &&
     input.name_prof.length &&
     input.subCategory.length &&
-    input.language.length
+    input.language.length &&
+    input.videos?.linksVideos?.length === 2
   ) ||
     input.description.length > 200 ||
     input.description.length < 15
@@ -184,7 +187,6 @@ const Form = () => {
           const width = data.width;
           // console.log(fileURL);
 
-
           video.linksVideos.push({
             fileURL,
             height,
@@ -206,7 +208,7 @@ const Form = () => {
 
   }
 
-  // console.log(input);
+  console.log(input);
 
 
   return (
@@ -440,6 +442,7 @@ const Form = () => {
                 onDrop={handleDrop}
                 onChange={e => setImage(e.target.value)}
                 value={video}
+                disabled={input.videos.linksVideos?.length >= 2}
               >
 
                 {({ getRootProps, getInputProps }) => (
@@ -457,23 +460,37 @@ const Form = () => {
               </Dropzone>
               {loading ?
                 (
-                  <div className={style.loading}><h3>Cargando video...</h3></div>
+                  <Button color="gray">
+                    <Spinner aria-label="Alternate spinner button example" />
+                    <span className="pl-3">
+                      Cargando...
+                    </span>
+                  </Button>
                 ) :
                 (<></>
                 )}
               <div className={style.videos}>
                 {video.linksVideos.length <= 0
-                  ? "Aun no subes tu video..."
-                  : video.linksVideos.map(vid =>
-                    <video controls autoPlay key={vid} height={vid.height / 10} width={vid.width / 10}>
-                      <source src={vid.fileURL} type="video/mp4" />
-                    </video>
+                  ? "Aun no subes tus videos..."
+                  : video.linksVideos.map(vid => {
+                    if (vid.height > vid.width)
+                      return (<video controls autoPlay key={vid.fileURL} height="385" width="220">
+                        <source src={vid.fileURL} type="video/mp4" />
+                      </video>)
+                    if (vid.height < vid.width)
+                      return (<video controls autoPlay key={vid.fileURL} height="300" width="350">
+                        <source src={vid.fileURL} type="video/mp4" />
+                      </video>)
+                  }
+
                   )
                 }
               </div>
             </div>
 
-
+            <Toaster
+              position="bottom-right"
+            />
           </div>
         </form>
       </div>

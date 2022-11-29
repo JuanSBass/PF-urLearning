@@ -1,16 +1,33 @@
 import styles from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { Rating } from "flowbite-react";
+import corazonlleno from "../../img/IoIosHeart.svg"
+import corazonvacio from "../../img/IoIosHeartEmpty.svg"
+import { addRemoveFavorite } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
-const Card = ({ title, image, id, rating, name_prof }) => {
+const Card = ({ title, image, id, rating, name_prof, isFavorite, price }) => {
+  const dispatch = useDispatch()
+  const userTokken = window.localStorage.getItem("tokken");
+
+
+  const handleFav = (e) => {
+    dispatch(addRemoveFavorite(userTokken, e))
+
+  }
   return (
-    <Link to={`/course/${id}`} key={id} className={styles.contCard}>
+    <div className={styles.contCard}>
+
+      <button onClick={() => handleFav(id)}> {isFavorite ? <img src={corazonlleno} alt="fav" className={styles.corazones} /> : <img src={corazonvacio} alt="NOfav" className={styles.corazones} />}</button>
       <div className={styles.card}>
-        <div className={styles.imgcard}>
-          <img src={image} alt="miniatura" />
-        </div>
+        <Link to={`/course/${id}`} key={id}>
+          <div className={styles.imgcard}>
+            <img src={image} alt="miniatura" />
+          </div>
+        </Link>
         <h3>{title}</h3>
         <p>{name_prof}</p>
+        <h2>${price} USD</h2>
         <Rating>
           <Rating.Star filled={rating > 0} />
           <Rating.Star filled={rating > 1} />
@@ -22,7 +39,7 @@ const Card = ({ title, image, id, rating, name_prof }) => {
           </p>
         </Rating>
       </div>
-    </Link>
+    </div>
   );
 };
 
