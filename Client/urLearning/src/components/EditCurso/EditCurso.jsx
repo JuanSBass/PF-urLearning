@@ -40,9 +40,6 @@ function validate(input) {
         errors.description = "Debe tener entre 15 y 200 caracteres";
     }
 
-    if (!input.category) {
-        errors.category = "Debe ingresar una categoría";
-    }
 
 
     return errors;
@@ -51,8 +48,9 @@ function validate(input) {
 function EditCurso() {
     const category = useSelector((state) => state.category);
     const subCategories = useSelector((state) => state.subCategories);
-    const courseDetail = useSelector((state) => state.course);
+    const [courseDetail,setCourse] = useState({})
     const courses = useSelector((state) => state.courses);
+    const user = useSelector((state) => state.user);
 
 
     const [modal, setModal] = useState(false);
@@ -67,8 +65,6 @@ function EditCurso() {
     const [input, setInput] = useState({
         title: "",
         image: "",
-        category: "",
-        subCategory: "",
         duration: "",
         description: "",
         language: "",
@@ -82,20 +78,26 @@ function EditCurso() {
 
     let btnDisabled = !(
         input.title &&
-        input.category &&
+  
         input.description &&
         input.price &&
         input.level &&
         input.name_prof &&
-        input.subCategory &&
+
         input.language
     ) ||
         input.description.length > 200 ||
         input.description.length < 15
 
     useEffect(() => {
-        dispatch(getCategory());
-        dispatch(getDetail(id))
+        const axiosData = async () => {
+            let response = await axios.get(`edit/editCourse/${id}`);
+            response = await response.data;
+            setCourse(response);
+
+        }
+        axiosData();
+        
     }, [dispatch, id]);
 
     useEffect(() => {
@@ -106,7 +108,7 @@ function EditCurso() {
         }
     }, [dispatch, courseDetail]);
 
-    console.log(courseDetail.id)
+
 
 
 
@@ -160,21 +162,27 @@ function EditCurso() {
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
-        dispatch(postCourse(input));
-        setInput({
-            title: "",
-            image: "",
-            category: "",
-            subCategory: "",
-            duration: "",
-            description: "",
-            language: "",
-            price: "",
-            level: "",
-            name_prof: "",
-            videos: []
-        });
-        history.push("/");
+        const axiosData = async () => {
+            try {
+                let response = await axios.put(`edit/editCourse/${id}`,
+                {        
+                    title:input.title,
+                    image:input.image,
+                    name_prof:input.name_prof,
+                    description:input.description,
+                    duration:input.duration,
+                    price:input.price,});
+                
+            } catch (error) {
+                console.log(error.message);
+            }
+
+
+            
+          }
+       axiosData();
+
+       /*  history.push("/coursescreated"); */
         dispatch(getCourses());
     };
 
@@ -225,7 +233,21 @@ function EditCurso() {
         }).catch(error => console.log(error.response.data.error));
 
     }
+const handleDelete=()=>{
+    const axiosData = async () => {
+        try {
+            let response = await axios.delete(`admin/deleteCourse/${id}`)
 
+        } catch (error) {
+            console.log(error.message);
+        }
+
+
+        
+      }
+   axiosData();
+}
+console.log(courseDetail);
     return (
         <div className={style.contenedorGeneral}>
             <div className={style.contenedorFormulario}>
@@ -244,6 +266,7 @@ function EditCurso() {
                                     <TextInput
                                         id="title"
                                         type="text"
+                                        value={input.title}
                                         required={true}
                                         onChange={(e) => handleChange(e)}
                                         name="title"
@@ -261,6 +284,7 @@ function EditCurso() {
                                         id="name_prof"
                                         type="text"
                                         required={true}
+                                        value={input.name_prof}
                                         onChange={(e) => handleChange(e)}
                                         name="name_prof"
                                     />
@@ -269,60 +293,7 @@ function EditCurso() {
                                     )}
                                 </div>
                             </div>
-                            <div className={style.categoriasJuntas}>
-                                <div id="select" className={style.cate}>
-                                    <div className="mb-2 block">
-                                        <Label htmlFor="category" value="Select your category" />
-                                    </div>
 
-                                    <Select
-                                        id="category"
-                                        required={true}
-                                        onChange={handleSelect}
-                                        name="category"
-                                        defaultValue="title"
-                                    >
-                                        <option value="title" disabled name="Choose category">
-                                            Category
-                                        </option>
-                                        {category.map((c) => {
-                                            return (
-                                                <option value={c.id} key={c.id}>
-                                                    {c.name}
-                                                </option>
-                                            );
-                                        })}
-                                    </Select>
-                                    {errors.category && (
-                                        <div className={style.errores}>{errors.category}</div>
-                                    )}
-                                </div>
-
-
-
-                                <div id="select" className={style.cate}>
-                                    <div className="mb-2 block">
-                                        <Label htmlFor="subCategory" value="Subcategory" />
-                                    </div>
-                                    <Select
-                                        id="subCategory"
-                                        onChange={(e) => handleSelect(e)}
-                                        name="subCategory"
-                                        defaultValue="title"
-                                    >
-                                        <option value="title" disabled name="Choose category">
-                                            Subcategory
-                                        </option>
-                                        {subCategories?.map((c) => {
-                                            return (
-                                                <option value={c.name} key={c.id}>
-                                                    {c.name}
-                                                </option>
-                                            );
-                                        })}
-                                    </Select>
-                                </div>
-                            </div>
 
                             <div id="textarea" className={style.desc}>
                                 <div className="mb-2 block">
@@ -333,6 +304,7 @@ function EditCurso() {
                                     placeholder="Description..."
                                     required={true}
                                     rows={4}
+                                    value={input.description}
                                     onChange={(e) => handleChange(e)}
                                     name="description"
                                 />
@@ -340,6 +312,7 @@ function EditCurso() {
                                     <div className={style.errores}>{errors.description}</div>
                                 )}
                             </div>
+                            {user.admin&&(courseDetail.deletedAt? <Button onClick={handleDelete} color="failure">Eliminar Curso</Button>:<Button color="success">Habilitar curso</Button>)}
                         </div>
 
                         <div className={style.der}>
@@ -377,6 +350,7 @@ function EditCurso() {
                                         onChange={(e) => handleSelect(e)}
                                         name="level"
                                         defaultValue="title"
+                                
                                     >
                                         <option value="title" disabled name="Choose category">
                                             Level
@@ -401,6 +375,7 @@ function EditCurso() {
                                     type="text"
                                     onChange={(e) => handleChange(e)}
                                     name="image"
+                                    value={input.image}
                                 />
                             </div>
 
@@ -414,6 +389,7 @@ function EditCurso() {
                                     onChange={(e) => handleChange(e)}
                                     name="duration"
                                     addon="Horas"
+                                    value={input.duration}
                                     className={style.mitadInputs}
                                 />
                             </div>
@@ -428,6 +404,7 @@ function EditCurso() {
                                     required={true}
                                     addon="US$"
                                     className={style.mitadInputs}
+                                    value={input.price}
                                     name="price"
                                     onChange={(e) => handleChange(e)}
                                 />
@@ -441,14 +418,14 @@ function EditCurso() {
                                     disabled={btnDisabled}
                                     type="submit"
                                 >
-                                    Crear el curso
+                                    Editar el curso
                                 </Button>
 
 
                             </>
                         </div>
 
-
+{/* 
                         <div className={style.contenedorupload}>
                             <h1>Aqui subirás 2 videos. <br /> Tu <b>Video de introducción</b> y tu video de curso.</h1>
                             <p>El video de introducción debe durar máximo 1 minuto. Trata de resumir el contenido de tu curso en este video</p>
@@ -489,7 +466,7 @@ function EditCurso() {
                                 }
                             </div>
                         </div>
-
+ */}
 
                     </div>
                 </form>

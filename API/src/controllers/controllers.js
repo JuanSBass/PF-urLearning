@@ -100,6 +100,7 @@ const getCourseById = async (id) => {
       videos: coursejson.videos.linksVideos,
       ratingUserNumber: coursejson.ratingUserNumber,
       ratingHistory: coursejson.ratingHistory,
+      duration: coursejson.duration,
     };
   }
 };
