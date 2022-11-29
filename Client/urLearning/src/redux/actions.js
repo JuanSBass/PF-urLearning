@@ -183,9 +183,11 @@ export const logIn = (tokken) => {
         //y el resto se lo proporciona google
       });
     } catch (error) {
-      error.response.data === "Usuario ha sido deshabilitado por Admin"
-        ? alert(error.response.data)
-        : console.log(error, "error de la action");
+      // error.response.data === "Usuario ha sido deshabilitado por Admin"
+      //   ? alert(error.response.data)
+      //   : console.log(error, "error de la action", error.response.data.name);
+      if(error.response.data === "Usuario ha sido deshabilitado por Admin") alert(error.response.data)
+      else if(error.response.data.name === 'SequelizeUniqueConstraintError') alert("Usuario ha sido deshabilitado por Admin")
     }
   };
 };
