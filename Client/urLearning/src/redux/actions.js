@@ -36,6 +36,7 @@ export const DELETE_MESSAGES = "DELETE_MESSAGES";
 export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENT = "GET_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const PUT_RATING = "PUT_RATING";
 
 export const getCourses = () => {
   try {
@@ -478,6 +479,20 @@ export function deleteComment(id) {
       const response = await axios.delete(`/comment/${id}`);
       dispatch({
         type: DELETE_COMMENT,
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export function putRating(id, rating) {
+  try {
+    return async function (dispatch) {
+      const response = await axios.put(`/course/${id}`, rating);
+      dispatch({
+        type: PUT_RATING,
         payload: response.data,
       });
     };
