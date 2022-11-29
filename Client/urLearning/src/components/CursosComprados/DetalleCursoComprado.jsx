@@ -67,6 +67,7 @@ function DetalleCursoComprado() {
                     </div>
                 </div>
                 <div className={style.comentarios}>
+                    <div className={style.reseña}>Reseñas del curso</div>
                     {comentarios.map((comentario) => {
                         return (
                             <div className={style.comentario}>

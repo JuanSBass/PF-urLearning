@@ -42,7 +42,6 @@ function AddComment() {
                     <div className="mb-2 block">
                         <Label
                             htmlFor="comment"
-                            value="Reseñas"
                         />
                     </div>
                     <Textarea
