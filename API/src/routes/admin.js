@@ -100,14 +100,33 @@ router.put("/restoreUser", async (req, res) => {
 });
 
 router.delete("/deleteUserId", async (req, res) => {
-  const { deleteUserId } = req.body;
+  const id = req.headers.id;
   //console.log(deleteUserId);
   try {
-    let userToDelete = await User.findByPk(deleteUserId);
+    console.log(id);
+    let userToDelete = await User.findByPk(id);
     await userToDelete.destroy();
     res.status(200).send("Usuario eliminado");
   } catch (error) {
     res.status(401).send(error);
+  }
+});
+
+router.put("/changeUser", async (req, res) => {
+  try {
+    const { name, image, id } = req.body;
+    console.log(name, image, id);
+    let response = await User.update(
+      { name, image },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(401).send(error.message);
   }
 });
 
