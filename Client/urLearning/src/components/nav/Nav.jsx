@@ -61,7 +61,7 @@ export default function Nav() {
 								My Courses
 							</Link>
 						</Dropdown.Item>
-						{profe.length > 1 && <Dropdown.Item>
+						{profe.length >= 1 && <Dropdown.Item>
 							<Link to="/coursescreated">
 								Courses Created
 							</Link>

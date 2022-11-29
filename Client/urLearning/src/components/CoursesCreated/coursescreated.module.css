@@ -1,6 +1,7 @@
 .containercourses {
   margin: 7rem auto;
   width: 1280px;
+  height: 100vh;
 }
 
 .imgcard {
@@ -25,4 +26,9 @@
 
 #title {
   font-weight: 800;
+}
+
+.ratingcontainer {
+  display: flex;
+  flex-direction: column;
 }
