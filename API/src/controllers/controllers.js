@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { Op } = require("sequelize");
 const axios = require("axios");
-const { Course, User, Cart } = require("../db");
+const { Course, User, Cart, ContactUs, Comments } = require("../db");
 const admin = require("../firebase/config");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
@@ -41,7 +41,6 @@ const getDbInfo = async (email) => {
         },
       })
     : await User.findAll();
-  //console.log(userDb);
 
   const newUserDb = await userDb.map((e) => {
     return {
@@ -50,7 +49,6 @@ const getDbInfo = async (email) => {
       name: e.name,
     };
   });
-  //console.log(newUserDb);
   return newUserDb;
 };
 
@@ -106,6 +104,20 @@ const getCourseById = async (id) => {
   }
 };
 
+///////// Route Comment ID /////////
+
+const getCommentById = async (id) => {
+  console.log(id);
+  const coursejson = await Comments.findByPk(id);
+  console.log(coursejson);
+  return {
+    ID: coursejson.ID,
+    courseId: coursejson.idCourse,
+    userId: coursejson.userId,
+    comment: coursejson.comment,
+  };
+};
+
 ///////// Route Course Modify Rating by ID /////////
 
 const changeCourseById = async (id, rating) => {
@@ -115,16 +127,11 @@ const changeCourseById = async (id, rating) => {
     //traigo por BBDD
     let currentCourse = await Course.findOne({ where: { id: id } });
     let courseRatingNumber = currentCourse.ratingUserNumber;
-    //console.log(courseRatingNumber);
     await currentCourse.update({ ratingUserNumber: courseRatingNumber + 1 });
     changeRating.push(currentCourse);
-    //console.log(currentCourse.ratingUserNumber);
     let ratingNew = parseInt(currentCourse.rating) + parseInt(rating);
     await currentCourse.update({ rating: ratingNew });
-    //console.log(ratingNew);
-
     let promedio = currentCourse.rating / currentCourse.ratingUserNumber;
-    //console.log(promedio);
 
     let change = await Course.update(
       { ratingHistory: Math.floor(promedio) },
@@ -188,13 +195,75 @@ const getCartCourseDb = async (req) => {
 };
 
 const getPrueba = async (req) => {
-  // console.log(req.body);
   const token2 = req.headers.authorization.split(" ")[1];
-  // console.log(token2);
   const cartUserTokken2 = await admin.auth().verifyIdToken(token2);
   if (!cartUserTokken2) return new Error("no se pudio");
-  // console.log(cartUserTokken2);
   return cartUserTokken2;
+};
+
+///////// Route Get para el carrito de compras ////////
+const getCommentCourseDb = async (req) => {
+  const { id } = req.query;
+
+  const commentDb = id
+    ? await Comments.findAll({
+        where: {
+          idCourse: id,
+        },
+      })
+    : await Comments.findAll();
+
+  const newCommentDb = await commentDb.map((e) => {
+    return {
+      ID: e.ID,
+      idCourse: e.idCourse,
+      comment: e.comment,
+      userId: e.userId,
+    };
+  });
+  return newCommentDb;
+};
+
+//////////// Contact Us /////////////////
+const getContactUs = async (email) => {
+  //busco por email
+  const contactUsDb = email
+    ? await ContactUs.findAll({
+        where: {
+          email: { email },
+        },
+      })
+    : await ContactUs.findAll();
+
+  const newMessageDb = await contactUsDb.map((e) => {
+    return {
+      id: e.id,
+      email: e.email,
+      name: e.name,
+      message: e.message,
+    };
+  });
+  return newMessageDb;
+};
+
+//////////// Comment /////////////////
+const getCommentDb = async (comment) => {
+  //busco por email
+  const commentDb = comment
+    ? await Course.findAll({
+        where: {
+          comment: { comment },
+        },
+      })
+    : await Course.findAll();
+
+  const newCommentDb = await commentDb.map((e) => {
+    return {
+      id: e.id,
+      comment: e.comment,
+    };
+  });
+  return newCommentDb;
 };
 
 module.exports = {
@@ -206,4 +275,8 @@ module.exports = {
   addCartItem,
   getCartCourseDb,
   getPrueba,
+  getContactUs,
+  getCommentDb,
+  getCommentCourseDb,
+  getCommentById,
 };

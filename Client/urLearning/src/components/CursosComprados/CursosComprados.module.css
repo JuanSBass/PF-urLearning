@@ -20,6 +20,16 @@
   padding-inline: 3rem;
 }
 
+.active {
+  background-color: #504de1;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14.5rem;
+  border-radius: 10px;
+}
+
 .contCursos {
   border-radius: 30px;
   position: relative;

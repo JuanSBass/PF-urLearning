@@ -26,7 +26,7 @@ function AddFavorite() {
                         Mis Cursos
                     </Link>
                     <hr className={style.hr} />
-                    <Link to="/favourites" className={style.tab}>
+                    <Link to="/favourites" className={`${style.tab} ${style.active}`} >
                         Mis Favoritos
                     </Link>
                 </div>
@@ -34,7 +34,7 @@ function AddFavorite() {
                 <div className={style.cursos}>
                     {cursosFav.length ? (cursosFav.map((c) => {
                         return (
-                            <Link to={`/mycourses/${c.id}`} key={c.id}>
+                            <Link to={`/course/${c.id}`} key={c.id}>
                                 <div className={style.curso} key={c.id}>
                                     <img src={c.image} alt="imagen" />
                                     <div className={style.title}>{c.title}</div>

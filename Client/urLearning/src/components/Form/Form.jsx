@@ -21,6 +21,7 @@ import {
   getProfe,
 } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
+import { Toaster, toast } from 'react-hot-toast'
 
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
@@ -57,6 +58,7 @@ const Form = () => {
 
   const showModal = () => {
     setModal(!modal);
+    toast.success('Creation Success!')
   };
 
   const [input, setInput] = useState({
@@ -488,7 +490,9 @@ const Form = () => {
               </div>
             </div>
 
-
+            <Toaster
+              position="bottom-right"
+            />
           </div>
         </form>
       </div>

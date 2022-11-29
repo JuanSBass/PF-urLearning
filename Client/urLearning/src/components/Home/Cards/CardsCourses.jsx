@@ -16,6 +16,7 @@ const CardsCourses = () => {
     price: ""
   })
   const user = useSelector(state => state.user)
+  const cart = useSelector(state => state.carrito)
   // console.log(user);
   const navigate = useHistory();
 
@@ -24,12 +25,22 @@ const CardsCourses = () => {
 
   const dispatch = useDispatch()
 
+
   const favoritos = useSelector((state) => state.favorites);
   const cursosComprados = useSelector(state => state.userCourses)
 
-  const handleClick = (id) => {
+  const handleClick = (card) => {
     if (!user.name) return navigate.push("/register")
-    dispatch(postProductCart(id, userTokken))
+    const cardId = card?.id
+    const courseExits = cart.filter((e) => {
+      return (e?.id === cardId)
+    })?.length > 0
+    if (courseExits) {
+      toast.error('Course exits!')
+      return
+    }
+    dispatch(postProductCart(card, userTokken))
+    toast.success('Added Course!')
   }
 
   const handleFav = (e) => {
@@ -52,6 +63,8 @@ const CardsCourses = () => {
             </Link>
             <h3>{card.title}</h3>
             <p>{card.name_prof}</p>
+            <h2>${card.price} USD</h2>
+
             <Rating>
               <Rating.Star filled={card.rating > 0} />
               <Rating.Star filled={card.rating > 1} />
@@ -63,7 +76,7 @@ const CardsCourses = () => {
               </p>
             </Rating>
 
-            <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => toast.success('Added Course!') && handleClick(card)}>Add to Cart</button>
+            <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onClick={() => handleClick(card)} >Add to Cart</button>
             <Toaster
               position="bottom-right"
             />
@@ -74,5 +87,7 @@ const CardsCourses = () => {
     </section >
   );
 };
+
+
 
 export default CardsCourses;

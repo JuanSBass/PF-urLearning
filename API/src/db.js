@@ -68,6 +68,8 @@ const {
   Order,
   FavouriteList,
   ProfessorRole,
+  ContactUs,
+  Comments,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -82,6 +84,9 @@ SubCategory.belongsTo(Category);
 
 User.hasMany(Cart);
 Cart.belongsTo(User);
+
+// User.hasMany(ContactUs);
+// ContactUs.belongsTo(User);
 
 // Relacion user-order-MP
 User.hasMany(Order);

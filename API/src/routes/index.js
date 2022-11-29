@@ -8,6 +8,7 @@ const {
   getDbInfoCourses,
   getCartCourseDb,
   getPrueba,
+  getCommentDb,
 } = require("../controllers/controllers");
 const {
   validateEmail,
@@ -33,7 +34,9 @@ const favouriteListNew = require("./favouriteListNew.js");
 const admin = require("../firebase/config");
 const { sendMailCreateCourse } = require("./sendemail");
 const professorNew = require("./professorRoleNew.js");
-const edit = require("./edit.js")
+const edit = require("./edit.js");
+const contactUs = require("./contactUs.js");
+const commets = require("./commets.js");
 
 router.use("/category", cat);
 router.use("/api", apiPayment);
@@ -45,18 +48,16 @@ router.use("/professor", professor);
 router.use("/professorNew", professorNew);
 router.use("/favouriteListNew", favouriteListNew);
 router.use("/edit", edit);
+router.use("/contactUs", contactUs);
+router.use("/comment", commets);
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
 router.post("/user", async (req, res) => {
   const { email, name, id } = req.body;
   const validEmail = await validateEmail(email);
-  //const validPassword = await validatePassword(password);
-  console.log(email);
-  console.log(name);
 
   try {
     if (!validEmail || email === "") {
-      console.log(email);
       res.status(404).send({ message: "Email invalida o campo vacio" });
     } else {
       let newUser = await User.create({
@@ -150,7 +151,7 @@ router.post("/course", async (req, res) => {
         videos,
       });
       // envia mail una vez creado
-      // sendMailCreateCourse(name, email, title, image);
+       sendMailCreateCourse(name, email, title, image);
 
       let currentUser = await User.findByPk(uid);
       let currentProf = await currentUser.getProfessorRole();
@@ -169,7 +170,7 @@ router.post("/course", async (req, res) => {
 router.get("/course", async (req, res) => {
   const { info } = req.query;
   const tokken = req.headers;
-
+  console.log(info);
   let allCourses;
   try {
     info
@@ -215,8 +216,6 @@ router.put("/course/:id", async (req, res) => {
   }
 });
 
-///////// Route DELETE para Course -> ADMIN////////
-
 ///////// Route Course by category /////////
 
 router.get("/courseByCategory", async (req, res) => {
@@ -231,6 +230,20 @@ router.get("/courseByCategory", async (req, res) => {
     return res.status(200).send(respuesta);
   } catch (error) {
     console.log("error");
+  }
+});
+
+/////////////// GET a comment /////////////////
+router.get("/comment", async (req, res) => {
+  const { comment } = req.query;
+
+  try {
+    const allComments = await getCommentDb(comment);
+    return allComments
+      ? res.status(200).send(allComments)
+      : res.status(404).send("No existe el comentario buscado");
+  } catch (error) {
+    console.log(error + "error del get /comment");
   }
 });
 
@@ -249,6 +262,8 @@ router.get("/courseBySubCategory", async (req, res) => {
   }
 });
 
+////////////////////////// CART
+
 router.post("/cart", async (req, res) => {
   const { id, title, image, description, price, name_prof } = req.body[0];
   const token = req.body[1];
@@ -262,7 +277,6 @@ router.post("/cart", async (req, res) => {
 
   try {
     if (result.find((e) => e.id === id)) {
-      console.log("ya esta comprado");
       res.status(404).send("elemento ya comprado");
     } else {
       let newCartItem = await Cart.findOrCreate({

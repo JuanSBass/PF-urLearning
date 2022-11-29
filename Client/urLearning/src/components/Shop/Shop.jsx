@@ -13,6 +13,7 @@ export const Shop = () => {
     const handleDeleteAll = (e) => {
         e.preventDefault()
         dispatch(clearCart())
+        toast.error('Cart Cleaned!')
     }
 
     useEffect(() => {
@@ -24,6 +25,7 @@ export const Shop = () => {
     const handleDelete = (e) => {
         e.preventDefault()
         dispatch(removeItemCart(e.target.value))
+        toast.error('Deleted Course!')
     }
 
     return cart.length ? (
@@ -55,19 +57,20 @@ export const Shop = () => {
                             {cart?.map((card) => (
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="p-4 w-32">
-                                        <img src={card.image} alt="miniatura" />
+                                        <img src={card?.image} alt="miniatura" />
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {card.title}
+                                        {card?.title}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {card.price}
+                                        {card?.price}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {card.description}
+                                        {card?.description}
                                     </td>
                                     <td class="py-4 px-6">
-                                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={card.ID} onClick={(e) => toast.error('Deleted Course!') && handleDelete(e)}>Remove</button>
+                                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" value={card.ID} onClick={(e) => handleDelete(e)}>Remove</button>
+
                                     </td>
                                 </tr>
                             ))}
@@ -76,7 +79,7 @@ export const Shop = () => {
                 </div>
                 <br />
                 <div className={styles.buttonscontainer}>
-                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => toast.error('Cart Cleaned!') && handleDeleteAll(e)}>Clear Cart</button>
+                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => handleDeleteAll(e)}>Clear Cart</button>
                     <PruebaStripe />
                 </div>
                 <Toaster

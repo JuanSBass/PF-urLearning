@@ -5,21 +5,29 @@ import { Rating, Button, Avatar, Spinner } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail, cleanDetail, postProductCart } from "../../redux/actions";
-
+import { Toaster, toast } from 'react-hot-toast';
 
 
 const Detail = (props) => {
   const id = props.match.params.id;
   const dispatch = useDispatch();
   const course = useSelector((state) => state.course);
-
+  const cart = useSelector(state => state.carrito)
 
   const userTokken = window.localStorage.getItem("tokken");
-  console.log(userTokken);
+
 
   const handleClick = (e) => {
     e.preventDefault();
+    const existe = cart.filter((e) => {
+      return (e?.id === course.id)
+    })?.length > 0
+    if (existe) {
+      toast.error('Course exits!')
+      return
+    }
     dispatch(postProductCart(course, userTokken));
+    toast.success('Added Course!')
   }
 
   // let urlVideos = []
@@ -83,7 +91,9 @@ const Detail = (props) => {
 
                 <video controls autoPlay id={s.vid} height={course.videos[0].height / 2} width={course.videos[0].width / 2}>
                   <source src={course.videos[0].fileURL} type="video/mp4" />
+                  {/* pendiente para revisar con Juan */}
                 </video>
+                {console.log(course.videos)}
 
               </div>
 
@@ -107,7 +117,9 @@ const Detail = (props) => {
             </div>
           </div>
         </div>
-
+        <Toaster
+          position="bottom-right"
+        />
       </div>
     </div> : <div className={s.carga}>
       <Spinner
