@@ -182,8 +182,9 @@ export const logIn = (tokken) => {
         //y el resto se lo proporciona google
       });
     } catch (error) {
-      console.log(error);
-      alert(error.response.data);
+      error.response.data === "Usuario ha sido deshabilitado por Admin"
+        ? alert(error.response.data)
+        : console.log(error, "error de la action");
     }
   };
 };

@@ -56,7 +56,7 @@ router.post("/create", async (req, res) => {
   } catch (errors) {
     let mensajito;
     let errorcito;
-    if (errors.errors[0].message) {
+    if (errors.errors) {
       errorcito = errors.errors[0].message;
     }
 
