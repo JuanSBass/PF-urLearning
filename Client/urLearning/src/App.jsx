@@ -30,6 +30,7 @@ import AdminPagos from "./components/admin/AdminPagos/AdminPagos.jsx";
 import AddFavorite from "./components/AddFavorite/AddFavorite.jsx";
 import AdminUserDetail from "./components/admin/AdminUser/DetalleUser.jsx";
 import CoursesCreated from "./components/CoursesCreated/CoursesCreated.jsx";
+import CursoDetalle from "./components/admin/AdminCursos/CursoDetalle.jsx";
 
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
         <Route exact path="/admin/user/:id" component={AdminUserDetail} />
         <Route exact path="/coursescreated" component={CoursesCreated} />
         <Route exact path="/ContactUsd" component={ContactUsd} />
+        <Route exact path="/admin/cursos/:id" component={CursoDetalle}/>
 
         <Footer />
       </div>

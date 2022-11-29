@@ -37,10 +37,10 @@ router.get("/allDeletedCourses", async (req, res) => {
   }
 });
 
-router.delete("/deleteCourseId", async (req, res) => {
-  const { deleteCourseId } = req.body;
+router.delete("/deleteCourse/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    let courseToDelete = await Course.findByPk(deleteCourseId);
+    let courseToDelete = await Course.findByPk(id);
     if (!courseToDelete) {
       throw new Error("Curso no encontrado");
     } else {
@@ -52,11 +52,11 @@ router.delete("/deleteCourseId", async (req, res) => {
   }
 });
 
-router.put("/restoreCourse", async (req, res) => {
-  const { restoreCourseId } = req.body;
+router.put("/restoreCourse/:id", async (req, res) => {
+  const { id } = req.params;
   //console.log(restoreCourseId);
   try {
-    let courseToRestore = await Course.findByPk(restoreCourseId, {
+    let courseToRestore = await Course.findByPk(id, {
       paranoid: false,
     });
     await courseToRestore.restore();
@@ -124,6 +124,18 @@ router.get("/detail", async (req, res) => {
     console.log(error.message);
   }
 });
+router.get("/detailCurse/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const course = await Course.findByPk(id, { paranoid: false });
+    console.log(course);
+    res.status(200).send(course);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 //todos con sus cursos comprados
 router.get("/allUsersWithCourses", async (req, res) => {
   try {
