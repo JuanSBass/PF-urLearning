@@ -3,6 +3,7 @@ import logOuts from "../fireBase/fuctions/logOut";
 import loginUser from "../fireBase/fuctions/loginUser";
 import registerUser from "../fireBase/fuctions/registerUser";
 import loginWithGoogle from "../fireBase/fuctions/logGoogle";
+import swal from 'sweetalert';
 
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";

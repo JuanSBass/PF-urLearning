@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Button } from "flowbite-react";
 import { TextInput } from "flowbite-react";
 import { useHistory, useParams } from "react-router-dom";
+import swal from 'sweetalert';
 
 const AdminUserDetail = (props) => {
     const history = useHistory();
