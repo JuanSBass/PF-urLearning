@@ -1,5 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../credenciales";
+import swal from 'sweetalert';
 
 export default async function loginUser(email, password) {
   try {
