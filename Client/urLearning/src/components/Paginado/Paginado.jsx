@@ -17,7 +17,7 @@ const renderData = (data, favoritos) => {
         name_prof={p.name_prof}
         key={p.id}
         id={p.id}
-        rating={p.rating}
+        ratingHistory={p.ratingHistory}
         price={p.price}
         isFavorite={isFavorite}
       />

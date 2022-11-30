@@ -15,12 +15,12 @@ function DetalleCursoComprado() {
     const [userActivo, setUserActivo] = useState()
 
 
-
+    const comentariosCurso = comentarios.filter((c) => c.idCourse === id)
 
     const [detalle, setDetalle] = useState()
 
     useEffect(() => {
-        // dispatch(getComment())
+        dispatch(getComment())
         !cursosComprados.length && dispatch(getUserCourses())
         cursosComprados.length && setDetalle(cursosComprados.find(e => e.id === id))
         cursosComprados.length && setUserActivo((cursosComprados[0].userCourse.userId))
@@ -74,7 +74,7 @@ function DetalleCursoComprado() {
                 </div>
                 <div className={style.reseña}>Reseñas del curso</div>
                 <div className={style.comentarios}>
-                    {comentarios.map((comentario) => {
+                    {comentariosCurso.map((comentario) => {
                         return (
                             <div className={style.comentario}>
 

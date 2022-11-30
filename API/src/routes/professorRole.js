@@ -113,7 +113,15 @@ router.get("/fromUser", async (req, res) => {
     let currentList = await currentUser.getProfessorRole({
       include: {
         model: Course,
-        attributes: ["title", "id", "image", "name_prof", "rating", "price", "description"],
+        attributes: [
+          "title",
+          "id",
+          "image",
+          "name_prof",
+          "ratingHistory",
+          "price",
+          "description",
+        ],
         //en el arreglo de arriba se ponen los items que se quieren mostrar,
       },
     });
