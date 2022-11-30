@@ -30,6 +30,7 @@ import {
   POST_MESSAGES,
   GET_MESSAGES,
   DELETE_MESSAGES,
+  GET_COURSES_PROF,
 } from "./actions";
 
 const initialState = {
@@ -46,10 +47,10 @@ const initialState = {
   carrito: [],
   copyCarrito: [],
   userDetail: {},
-  cartNumber: 0,
   userCourses: [],
-  messages: [],
+  messages:[],
   favorites: [],
+  coursesCreated: [],
   comments: [],
 };
 
@@ -171,24 +172,28 @@ function rootReducer(state = initialState, action) {
           if (b.rating > a.rating) return -1;
           return 0;
         });
+        return state;
       } else if (action.payload === "rating-") {
         state.courses.sort((a, b) => {
           if (a.rating > b.rating) return -1;
           if (b.rating > a.rating) return 1;
           return 0;
         });
+        return state;
       } else if (action.payload === "price-") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return 1;
           if (b.price > a.price) return -1;
           return 0;
         });
+        return state;
       } else if (action.payload === "price+") {
         state.courses.sort((a, b) => {
           if (a.price > b.price) return -1;
           if (b.price > a.price) return 1;
           return 0;
         });
+        return state;
       }
 
     //////////////LOGIN //////////////////
@@ -207,7 +212,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: [...state.carrito, product],
-        cartNumber: (state.cartNumber += 1),
       };
     case ID_SESSION:
       return { ...state, idSession: action.payload };
@@ -223,14 +227,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: (state.cartNumber -= 1),
       };
 
     case CLEAR_CART:
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: 0,
       };
 
     case GET_USER_DETAIL:
@@ -248,18 +250,14 @@ function rootReducer(state = initialState, action) {
     //////////////Contact Us/////////////
     case GET_MESSAGES:
       return {
-        ...state,
-        messages: action.payload,
-      };
-    case POST_MESSAGES:
-      return {
-        ...state,
-      };
-    case DELETE_MESSAGES:
-      return {
-        ...state,
-        messages: action.payload,
-      };
+        ...state, 
+        messages: action.payload
+      }
+ case  DELETE_MESSAGES:
+  return {
+    ...state,
+    messages: action.payload
+  }
     case GET_FAVORITE:
       return {
         ...state,
@@ -270,6 +268,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         favorites: action.payload.courses,
+      };
+
+    case GET_COURSES_PROF:
+      return {
+        ...state,
+        coursesCreated: action.payload,
       };
 
     case GET_COMMENT:

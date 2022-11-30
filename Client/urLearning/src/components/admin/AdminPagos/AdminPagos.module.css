@@ -1,3 +1,8 @@
+
+.main {
+  height: calc(150vh - 149px);
+}
+
 .cardscontainer {
     display: flex;
     align-items: center;

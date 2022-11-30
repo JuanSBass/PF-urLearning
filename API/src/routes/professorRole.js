@@ -40,6 +40,7 @@ router.post("/new", async (req, res) => {
  */
 router.put("/addCourse", async (req, res) => {
   const { userId, courseId } = req.body;
+  console.log(req.body, "ruta relación");
   try {
     let currentUser = await User.findByPk(userId);
     let currentProfessorRole = await currentUser.getProfessorRole();
@@ -106,12 +107,13 @@ router.get("/all", async (req, res) => {
  */
 router.get("/fromUser", async (req, res) => {
   const { userId } = req.body;
+  console.log(req.body, "fromUser");
   try {
     let currentUser = await User.findByPk(userId);
     let currentList = await currentUser.getProfessorRole({
       include: {
         model: Course,
-        attributes: ["title", "id", "image", "name_prof"],
+        attributes: ["title", "id", "image", "name_prof", "rating", "price", "description"],
         //en el arreglo de arriba se ponen los items que se quieren mostrar,
       },
     });

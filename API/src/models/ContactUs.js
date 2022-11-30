@@ -23,10 +23,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
-    {
-      paranoid: true,
-      createdAt: false,
-    }
   );
   // here would be the idProf reference
 };

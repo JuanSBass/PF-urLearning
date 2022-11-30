@@ -3,6 +3,7 @@ import logOuts from "../fireBase/fuctions/logOut";
 import loginUser from "../fireBase/fuctions/loginUser";
 import registerUser from "../fireBase/fuctions/registerUser";
 import loginWithGoogle from "../fireBase/fuctions/logGoogle";
+import swal from "sweetalert";
 
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
@@ -37,6 +38,7 @@ export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENT = "GET_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 export const PUT_RATING = "PUT_RATING";
+export const GET_COURSES_PROF = "GET_COURSES_PROF";
 
 export const getCourses = () => {
   try {
@@ -54,7 +56,6 @@ export function postCourse(dataCourse) {
     //modifico para mandar token al back (para sendmail)
     try {
       const tokken = window.localStorage.getItem("tokken");
-      console.log(tokken);
       const json = await axios.post("/course", { dataCourse, tokken });
       return;
     } catch (error) {
@@ -166,21 +167,39 @@ export const getSubCategoriesName = (name) => {
 
 export const logIn = (tokken) => {
   return async function (dispatch) {
-    const oldUser = await axios.post("/user/create", {
-      authorization: "Bearer " + tokken,
-    });
-    const semiOldUser = oldUser.data;
-    dispatch({
-      type: LOGIN,
-      payload: {
-        image: semiOldUser[0].image,
-        email: semiOldUser[0].email,
-        name: semiOldUser[0].name,
-        admin: semiOldUser[0].admin,
-      },
-      //ojo que aca solo devuelve el nombre de la base de datos
-      //y el resto se lo proporciona google
-    });
+    try {
+      const oldUser = await axios.post("/user/create", {
+        authorization: "Bearer " + tokken,
+      });
+      const semiOldUser = oldUser.data;
+      dispatch({
+        type: LOGIN,
+        payload: {
+          image: semiOldUser[0].image,
+          email: semiOldUser[0].email,
+          name: semiOldUser[0].name,
+          admin: semiOldUser[0].admin,
+        },
+        //ojo que aca solo devuelve el nombre de la base de datos
+        //y el resto se lo proporciona google
+      });
+    } catch (error) {
+      // error.response.data === "Usuario ha sido deshabilitado por Admin"
+      //   ? alert(error.response.data)
+      //   : console.log(error, "error de la action", error.response.data.name);
+      if (error.response.data === "Usuario ha sido deshabilitado por Admin")
+        swal(
+          "Tu cuenta ha sido deshabilitada.",
+          "Ponte en contacto con nosotros",
+          "error"
+        );
+      else if (error.response.data.name === "SequelizeUniqueConstraintError")
+        swal(
+          "Tu cuenta ha sido deshabilitada.",
+          "Ponte en contacto con nosotros",
+          "error"
+        );
+    }
   };
 };
 
@@ -402,8 +421,15 @@ export function postMessages(payload) {
 
 export function deleteMessages(id) {
   try {
+    console.log(id);
     return async function (dispatch) {
-      const response = await axios.delete(`/ContactUs${id}`);
+      const response = await axios
+        .delete(`/admin/deleteContactUs/${id}`)
+        .then(async () => {
+          const messages = await axios.get("/contactUS");
+          return messages;
+        });
+      console.log(response.data);
       dispatch({
         type: DELETE_MESSAGES,
         payload: response.data,
@@ -438,6 +464,20 @@ export function addRemoveFavorite(tokken, courseId) {
     return dispatch({
       type: ADD_REMOVE_FAVORITE,
       payload: json.data,
+    });
+  };
+}
+
+export function getProfe(tokken) {
+  return async function (dispatch) {
+    const response = await axios.get("/professor/fromUser", {
+      headers: {
+        authorization: "Bearer " + tokken,
+      },
+    });
+    return dispatch({
+      type: GET_COURSES_PROF,
+      payload: response.data.courses,
     });
   };
 }

@@ -7,6 +7,8 @@ export default async function registerUser(email, password) {
     console.log(user);
     return user;
   } catch (error) {
-    console.log(error);
+    error.message === "Firebase: Error (auth/email-already-in-use)."
+      ? swal("El correo electrónico ya existe!", "Intenta con otra cuenta.", "info")
+      : console.log(error);
   }
 }

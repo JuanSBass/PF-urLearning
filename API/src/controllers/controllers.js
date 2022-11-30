@@ -5,11 +5,11 @@ const { Course, User, Cart, ContactUs, Comments } = require("../db");
 const admin = require("../firebase/config");
 
 /////////////////////////////////////////  USER   ////////////////////////////////////////////////////////////
-const getApiUsers = async (email) => {
+const getApiUsers = async (id) => {
   try {
     let users = [];
-    let urlApi = email
-      ? `https://jsonplaceholder.typicode.com/users&search=${email}`
+    let urlApi = id
+      ? `https://jsonplaceholder.typicode.com/users&search=${id}`
       : "https://jsonplaceholder.typicode.com/users";
 
     //http://localhost:3001/
@@ -18,7 +18,7 @@ const getApiUsers = async (email) => {
       const urlData = await axios.get(urlApi);
       const data = urlData.data.map(async (e) => {
         users.push({
-          email: e.email,
+          id: e.id,
         });
       });
       await Promise.all(data);
@@ -32,12 +32,12 @@ const getApiUsers = async (email) => {
   }
 };
 
-const getDbInfo = async (email) => {
-  //busco por email
-  const userDb = email
+const getDbInfo = async (id) => {
+  //busco por id
+  const userDb = id
     ? await User.findAll({
         where: {
-          email: { email },
+          id: { id },
         },
       })
     : await User.findAll();
@@ -45,16 +45,16 @@ const getDbInfo = async (email) => {
   const newUserDb = await userDb.map((e) => {
     return {
       id: e.id, //6fd944f0-6537-11ed-a8cd-f9b1813ejfkde
-      email: e.email,
+      id: e.id,
       name: e.name,
     };
   });
   return newUserDb;
 };
 
-const allInfo = async (email) => {
-  const apiInfo = await getApiUsers(email);
-  const dbInfo = await getDbInfo(email);
+const allInfo = async (id) => {
+  const apiInfo = await getApiUsers(id);
+  const dbInfo = await getDbInfo(id);
   const allInfo = dbInfo.concat(apiInfo);
   return allInfo;
 };
@@ -100,6 +100,7 @@ const getCourseById = async (id) => {
       videos: coursejson.videos.linksVideos,
       ratingUserNumber: coursejson.ratingUserNumber,
       ratingHistory: coursejson.ratingHistory,
+      duration: coursejson.duration,
     };
   }
 };
@@ -226,16 +227,14 @@ const getCommentCourseDb = async (req) => {
 };
 
 //////////// Contact Us /////////////////
-const getContactUs = async (email) => {
-  //busco por email
-  const contactUsDb = email
+const getContactUs = async (id) => {
+  const contactUsDb = id
     ? await ContactUs.findAll({
         where: {
-          email: { email },
+          id: id,
         },
       })
     : await ContactUs.findAll();
-
   const newMessageDb = await contactUsDb.map((e) => {
     return {
       id: e.id,
@@ -249,7 +248,7 @@ const getContactUs = async (email) => {
 
 //////////// Comment /////////////////
 const getCommentDb = async (comment) => {
-  //busco por email
+  //busco por id
   const commentDb = comment
     ? await Course.findAll({
         where: {

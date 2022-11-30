@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import { Button } from "flowbite-react";
 import { TextInput } from "flowbite-react";
 import { useHistory, useParams } from "react-router-dom";
+import swal from 'sweetalert';
 
 const AdminUserDetail = (props) => {
+    const history = useHistory();
     const [edit, setEdit] = useState(false);
     const [inputs, setInputs] = useState({
         name: "",
@@ -25,38 +27,95 @@ const AdminUserDetail = (props) => {
 
         const axiosData = async () => {
             let response = await axios.put('/admin/changeUser', { id: id, name: inputs.name, image: inputs.image });
-
-
-
-
         }
         setInputs({ name: "", image: "" });
         axiosData();
+        swal("¡Datos actualizados!", "Da click en OK para ver cambios", "success")
+            .then(update => {
+                const axiosData = async () => {
+                    let response = await axios.get('/admin/detail',
+                        {
+                            headers: {
+                                id: id,
+                            }
+                        });
+                    response = await response.data;
+                    setUser(response);
+                }
+                axiosData();
+            });
     }
     const handleDes = () => {
-        const axiosData = async () => {
-            let response = await axios.delete('/admin/deleteUserId', { headers: { id: id } });
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez deshabilitado, podrás habilitarlo de nuevo...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDes) => {
+                if (willDes) {
+                    const axiosData = async () => {
+                        let response = await axios.delete('/admin/deleteUserId', { headers: { id: id } });
+                    }
+                    axiosData();
+                    swal("¡Usuario deshabilitado!", {
+                        icon: "success",
+                    })
+                        .then(go => history.push("/admin"))
+                } else {
+                    swal("El usuario sigue habilitado.");
+                }
+            });
 
-
-        }
-        axiosData();
     }
     const handlehab = () => {
-        const axiosData = async () => {
-            let response = await axios.put('/admin/restoreUser', { restoreUserId: id });
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez habilitado, podrás deshabilitarlo de nuevo...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willHab) => {
+                if (willHab) {
+                    const axiosData = async () => {
+                        let response = await axios.put('/admin/restoreUser', { restoreUserId: id });
+                    }
+                    axiosData();
+                    swal("¡Usuario habilitado!", {
+                        icon: "success",
+                    })
+                        .then(go => history.push("/admin"))
+                } else {
+                    swal("El usuario sigue deshabilitado.");
+                }
+            });
 
-
-        }
-        axiosData();
     }
     const handleAdmin = () => {
-        const axiosData = async () => {
-            let response = await axios.put('/admin/makeAdmin', { userAdminId: id });
+        swal({
+            title: "¿Estás seguro?",
+            text: "Un gran poder conlleva una gran responsabilidad...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willAdmin) => {
+                if (willAdmin) {
+                    const axiosData = async () => {
+                        let response = await axios.put('/admin/makeAdmin', { userAdminId: id });
+                    }
+                    axiosData();
+                    swal(`¡Ahora ${user.name} es Admin!`, {
+                        icon: "success",
+                    })
+                        .then(go => history.push("/admin"))
+                } else {
+                    swal("El usuario aun no es admin.");
+                }
+            });
 
-
-
-        }
-        axiosData();
     }
     const handleChange = (e) => {
         e.preventDefault();
