@@ -57,6 +57,7 @@ function AddComment() {
         setcurrentValue({
             rating: ""
         })
+        swal("¡Excelente!", "Gracias por tu comentario", "success").then(() => { dispatch(getComment()) })
 
     };
 

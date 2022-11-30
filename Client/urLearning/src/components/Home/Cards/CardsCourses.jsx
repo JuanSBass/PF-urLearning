@@ -47,7 +47,6 @@ const CardsCourses = () => {
     dispatch(addRemoveFavorite(userTokken, e))
 
   }
-  console.log(courses)
   return (
     <section className={styles.cardscontainer}>
       {courses?.map((card) => {
