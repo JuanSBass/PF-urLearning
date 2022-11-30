@@ -17,7 +17,8 @@ router.post("/create", async (req, res) => {
       user_id === "p0d0BAlDcIaJD5JYnTrMO0mofoH2" ||
       user_id === "PsPEdPVdoEX2ufdRp7tmugEZW2b2" ||
       user_id === "GiiayYyFMwckAmLJAJGMcaqBwmp1" ||
-      user_id === 'exw8n5E7Ljb3QDja197WSalOK2h1'
+      user_id === "0Ji78Vnn0gaMUpM7m6611eO9oec2" ||
+      user_id === "exw8n5E7Ljb3QDja197WSalOK2h1";
 
     console.log();
     let name;
@@ -58,9 +59,8 @@ router.post("/create", async (req, res) => {
     let mensajito;
     let errorcito;
     if (errors.errors) {
-      if (errors.errors[0]){
-        if(errors.errors[0].message)
-        errorcito = errors.errors[0].message;
+      if (errors.errors[0]) {
+        if (errors.errors[0].message) errorcito = errors.errors[0].message;
       }
     }
 

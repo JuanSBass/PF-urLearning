@@ -41,11 +41,7 @@ function AdminPagos(props) {
                         <Table.HeadCell>
                             Payment status
                         </Table.HeadCell>
-                        <Table.HeadCell>
-                            <span className="sr-only">
-                                Edit
-                            </span>
-                        </Table.HeadCell>
+
                     </Table.Head>
 
                     <Table.Body className="divide-y">
@@ -64,15 +60,7 @@ function AdminPagos(props) {
                                 <Table.Cell>
                                     {orden.payment_status}
                                 </Table.Cell>
-                                <Table.Cell>
-                                    <a
-                                        // href="/tables"
-                                        className="font-medium text-blue-600 hover:underline dark:text-blue-500"
 
-                                    >
-                                        Edit
-                                    </a>
-                                </Table.Cell>
                             </Table.Row>)
                         }) : <Spinner
                             color="purple"

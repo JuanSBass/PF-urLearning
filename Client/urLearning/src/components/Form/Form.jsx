@@ -234,6 +234,7 @@ const Form = () => {
                     required={true}
                     onChange={(e) => handleChange(e)}
                     name="title"
+                    value={input.title}
                   />
                   {errors.title && (
                     <div className={style.errores}>{errors.title}</div>
@@ -250,6 +251,7 @@ const Form = () => {
                     required={true}
                     onChange={(e) => handleChange(e)}
                     name="name_prof"
+                    value={input.name_prof}
                   />
                   {errors.name_prof && (
                     <div className={style.errores}>{errors.name_prof}</div>
@@ -268,6 +270,7 @@ const Form = () => {
                     onChange={handleSelect}
                     name="category"
                     defaultValue="title"
+
                   >
                     <option value="title" disabled name="Choose category">
                       Category
@@ -322,6 +325,7 @@ const Form = () => {
                   rows={4}
                   onChange={(e) => handleChange(e)}
                   name="description"
+                  value={input.description}
                 />
                 {errors.description && (
                   <div className={style.errores}>{errors.description}</div>
@@ -388,6 +392,7 @@ const Form = () => {
                   type="text"
                   onChange={(e) => handleChange(e)}
                   name="image"
+                  value={input.image}
                 />
               </div>
 
@@ -402,6 +407,7 @@ const Form = () => {
                   name="duration"
                   addon="Horas"
                   className={style.mitadInputs}
+                  value={input.duration}
                 />
               </div>
 
@@ -417,6 +423,7 @@ const Form = () => {
                   className={style.mitadInputs}
                   name="price"
                   onChange={(e) => handleChange(e)}
+                  value={input.price}
                 />
               </div>
 

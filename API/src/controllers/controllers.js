@@ -220,6 +220,7 @@ const getCommentCourseDb = async (req) => {
       idCourse: e.idCourse,
       comment: e.comment,
       userId: e.userId,
+      name: e.name,
     };
   });
   return newCommentDb;
