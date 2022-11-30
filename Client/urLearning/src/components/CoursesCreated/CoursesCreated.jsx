@@ -42,7 +42,7 @@ export const CoursesCreated = () => {
         </Table.Head>
 
         {
-          coursesCreated?.map(({ title, image, name_prof, rating, price, id, description }) =>
+          coursesCreated?.map(({ title, image, name_prof, ratingHistory, price, id, description }) =>
             <Table.Body className="divide-y" key={title}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
@@ -70,19 +70,19 @@ export const CoursesCreated = () => {
                 <Table.Cell>
                   <div className={styles.ratingcontainer}>
                     <Rating>
-                      <Rating.Star filled={rating > 0} />
-                      <Rating.Star filled={rating > 1} />
-                      <Rating.Star filled={rating > 2} />
-                      <Rating.Star filled={rating > 3} />
-                      <Rating.Star filled={rating > 4} />
+                      <Rating.Star filled={ratingHistory > 0} />
+                      <Rating.Star filled={ratingHistory > 1} />
+                      <Rating.Star filled={ratingHistory > 2} />
+                      <Rating.Star filled={ratingHistory > 3} />
+                      <Rating.Star filled={ratingHistory > 4} />
                     </Rating>
-                      {
-                        rating === 0 ? (<p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                          Sin resaña
-                        </p>) : (<p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                          {rating} de 5
-                        </p>)
-                      }
+                    {
+                      ratingHistory === 0 ? (<p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Sin resaña
+                      </p>) : (<p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        {ratingHistory} de 5
+                      </p>)
+                    }
                   </div>
                 </Table.Cell>
                 <Table.Cell>

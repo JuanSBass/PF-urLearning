@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { deleteComment, getComment, getUserCourses } from '../../redux/actions'
 import AddComment from '../AddComment/AddComment'
-import AddRating from '../AddRating/AddRating'
+// import AddRating from '../AddRating/AddRating'
 import style from "../CursosComprados/DetalleCursoComprado.module.css"
-
 
 function DetalleCursoComprado() {
     const { id } = useParams()
@@ -16,7 +15,7 @@ function DetalleCursoComprado() {
     const [userActivo, setUserActivo] = useState()
 
 
-
+    const comentariosCurso = comentarios.filter((c) => c.idCourse === id)
 
     const [detalle, setDetalle] = useState()
 
@@ -26,7 +25,13 @@ function DetalleCursoComprado() {
         cursosComprados.length && setDetalle(cursosComprados.find(e => e.id === id))
         cursosComprados.length && setUserActivo((cursosComprados[0].userCourse.userId))
 
-    }, [dispatch, cursosComprados.length, comentarios.length]);
+
+
+    }, [dispatch, cursosComprados.length]);
+
+
+
+
 
 
     const handlerDelete = (id) => {
@@ -67,9 +72,9 @@ function DetalleCursoComprado() {
                         <div>{detalle.description}</div>
                     </div>
                 </div>
+                <div className={style.reseña}>Reseñas del curso</div>
                 <div className={style.comentarios}>
-                    <div className={style.reseña}>Reseñas del curso</div>
-                    {comentarios.map((comentario) => {
+                    {comentariosCurso.map((comentario) => {
                         return (
                             <div className={style.comentario}>
 
@@ -90,7 +95,6 @@ function DetalleCursoComprado() {
 
                 </div>
                 <AddComment></AddComment>
-                <AddRating></AddRating>
             </div>
 
             : "Cargando..."}</div>

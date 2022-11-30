@@ -48,7 +48,7 @@ const initialState = {
   copyCarrito: [],
   userDetail: {},
   userCourses: [],
-  messages:[],
+  messages: [],
   favorites: [],
   coursesCreated: [],
   comments: [],
@@ -135,48 +135,49 @@ function rootReducer(state = initialState, action) {
 
     case ORDER_BY_ANY:
       let allCourses2 = state.coursesForRating;
+      console.log(allCourses2);
       if (action.payload === "all") return state;
       if (action.payload === "1") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "1"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 1),
           currentPage: 1,
         };
       } else if (action.payload === "2") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "2"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 2),
           currentPage: 1,
         };
       } else if (action.payload === "3") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "3"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 3),
           currentPage: 1,
         };
       } else if (action.payload === "4") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "4"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 4),
           currentPage: 1,
         };
       } else if (action.payload === "5") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "5"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 5),
           currentPage: 1,
         };
       } else if (action.payload === "rating+") {
         state.courses.sort((a, b) => {
-          if (a.rating > b.rating) return 1;
-          if (b.rating > a.rating) return -1;
+          if (a.ratingHistory > b.ratingHistory) return 1;
+          if (b.ratingHistory > a.ratingHistory) return -1;
           return 0;
         });
         return state;
       } else if (action.payload === "rating-") {
         state.courses.sort((a, b) => {
-          if (a.rating > b.rating) return -1;
-          if (b.rating > a.rating) return 1;
+          if (a.ratingHistory > b.ratingHistory) return -1;
+          if (b.ratingHistory > a.ratingHistory) return 1;
           return 0;
         });
         return state;
@@ -250,14 +251,14 @@ function rootReducer(state = initialState, action) {
     //////////////Contact Us/////////////
     case GET_MESSAGES:
       return {
-        ...state, 
-        messages: action.payload
-      }
- case  DELETE_MESSAGES:
-  return {
-    ...state,
-    messages: action.payload
-  }
+        ...state,
+        messages: action.payload,
+      };
+    case DELETE_MESSAGES:
+      return {
+        ...state,
+        messages: action.payload,
+      };
     case GET_FAVORITE:
       return {
         ...state,

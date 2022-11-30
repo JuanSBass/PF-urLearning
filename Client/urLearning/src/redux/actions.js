@@ -3,7 +3,7 @@ import logOuts from "../fireBase/fuctions/logOut";
 import loginUser from "../fireBase/fuctions/loginUser";
 import registerUser from "../fireBase/fuctions/registerUser";
 import loginWithGoogle from "../fireBase/fuctions/logGoogle";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
@@ -37,8 +37,8 @@ export const DELETE_MESSAGES = "DELETE_MESSAGES";
 export const POST_COMMENT = "POST_COMMENT";
 export const GET_COMMENT = "GET_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const PUT_RATING = "PUT_RATING";
 export const GET_COURSES_PROF = "GET_COURSES_PROF";
-
 
 export const getCourses = () => {
   try {
@@ -187,12 +187,21 @@ export const logIn = (tokken) => {
       // error.response.data === "Usuario ha sido deshabilitado por Admin"
       //   ? alert(error.response.data)
       //   : console.log(error, "error de la action", error.response.data.name);
-      if(error.response.data === "Usuario ha sido deshabilitado por Admin") swal("Tu cuenta ha sido deshabilitada.", "Ponte en contacto con nosotros", "error");
-      else if(error.response.data.name === 'SequelizeUniqueConstraintError') swal("Tu cuenta ha sido deshabilitada.", "Ponte en contacto con nosotros", "error");
+      if (error.response.data === "Usuario ha sido deshabilitado por Admin")
+        swal(
+          "Tu cuenta ha sido deshabilitada.",
+          "Ponte en contacto con nosotros",
+          "error"
+        );
+      else if (error.response.data.name === "SequelizeUniqueConstraintError")
+        swal(
+          "Tu cuenta ha sido deshabilitada.",
+          "Ponte en contacto con nosotros",
+          "error"
+        );
     }
   };
 };
-
 
 export const logOut = () => {
   try {
@@ -386,11 +395,11 @@ export function getMessages() {
   try {
     return async function (dispatch) {
       const response = await axios.get("/contactUS");
-      dispatch({ 
-        type: GET_MESSAGES, 
-        payload: response.data 
+      dispatch({
+        type: GET_MESSAGES,
+        payload: response.data,
       });
-    }
+    };
   } catch (error) {
     console.log(error.message);
   }
@@ -412,26 +421,26 @@ export function postMessages(payload) {
 
 export function deleteMessages(id) {
   try {
-    console.log(id)
+    console.log(id);
     return async function (dispatch) {
-      const response = await axios.delete(`/admin/deleteContactUs/${id}`)  .then(async ()=>{
-        const messages = await axios.get("/contactUS");
-        return messages
-      }) 
-      console.log(response.data)
+      const response = await axios
+        .delete(`/admin/deleteContactUs/${id}`)
+        .then(async () => {
+          const messages = await axios.get("/contactUS");
+          return messages;
+        });
+      console.log(response.data);
       dispatch({
         type: DELETE_MESSAGES,
-        payload: response.data
-      })
-    }
-  } catch (error){
-    console.log(error.menssage)
-  } 
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.menssage);
+  }
 }
 
-
-
-//////////////FAVORTOS/////////////// 
+//////////////FAVORTOS///////////////
 export function getFavorite(tokken) {
   return async function (dispatch) {
     const json = await axios.get("/favouriteList/fromUser", {
@@ -459,8 +468,8 @@ export function addRemoveFavorite(tokken, courseId) {
   };
 }
 
-export function getProfe(tokken){
-  return async function (dispatch){
+export function getProfe(tokken) {
+  return async function (dispatch) {
     const response = await axios.get("/professor/fromUser", {
       headers: {
         authorization: "Bearer " + tokken,
@@ -468,9 +477,9 @@ export function getProfe(tokken){
     });
     return dispatch({
       type: GET_COURSES_PROF,
-      payload: response.data.courses
-    })
-  }
+      payload: response.data.courses,
+    });
+  };
 }
 
 export function postComment(id, comment) {
@@ -510,6 +519,23 @@ export function deleteComment(id) {
       const response = await axios.delete(`/comment/${id}`);
       dispatch({
         type: DELETE_COMMENT,
+        payload: response.data,
+      });
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export function putRating(id, rating) {
+  try {
+    return async function (dispatch) {
+      console.log(id, rating);
+      const response = await axios.put(`/course/${id}`, {
+        rating: rating,
+      });
+      dispatch({
+        type: PUT_RATING,
         payload: response.data,
       });
     };

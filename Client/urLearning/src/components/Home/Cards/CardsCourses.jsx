@@ -47,7 +47,6 @@ const CardsCourses = () => {
     dispatch(addRemoveFavorite(userTokken, e))
 
   }
-
   return (
     <section className={styles.cardscontainer}>
       {courses?.map((card) => {
@@ -66,13 +65,13 @@ const CardsCourses = () => {
             <h2>${card.price} USD</h2>
 
             <Rating>
-              <Rating.Star filled={card.rating > 0} />
-              <Rating.Star filled={card.rating > 1} />
-              <Rating.Star filled={card.rating > 2} />
-              <Rating.Star filled={card.rating > 3} />
-              <Rating.Star filled={card.rating > 4} />
+              <Rating.Star filled={card.ratingHistory > 0} />
+              <Rating.Star filled={card.ratingHistory > 1} />
+              <Rating.Star filled={card.ratingHistory > 2} />
+              <Rating.Star filled={card.ratingHistory > 3} />
+              <Rating.Star filled={card.ratingHistory > 4} />
               <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                {card.rating} out of 5
+                {card.ratingHistory} out of 5
               </p>
             </Rating>
 

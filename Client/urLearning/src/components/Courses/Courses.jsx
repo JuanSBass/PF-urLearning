@@ -167,8 +167,8 @@ const Courses = () => {
           <option value="">-</option>
           <option value="price+">Mayor precio</option>
           <option value="price-">Menor precio</option>
-          <option value="rating+">Mejores calificados</option>
-          <option value="rating-">Menor calificación</option>
+          <option value="rating-">Mejores calificados</option>
+          <option value="rating+">Menor calificación</option>
 
         </Select>
 

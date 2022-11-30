@@ -40,11 +40,10 @@
 .comentarios {
   overflow: auto;
   max-height: 30rem;
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 6px; */
   background-color: #f9fafc;
   border: 1px solid rgb(237, 237, 237);
-  padding: 3rem;
   border-radius: 10px;
+  padding-inline: 3rem;
 }
 
 .comentario {
@@ -65,6 +64,7 @@
   font-size: 26px;
   font-weight: 600;
   color: #6d6aee;
+  margin-top: 2rem;
 }
 
 .delete {
