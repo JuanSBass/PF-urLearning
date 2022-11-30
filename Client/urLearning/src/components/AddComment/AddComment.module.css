@@ -8,10 +8,17 @@
 
 .estrellas {
   display: flex;
-  font-size: 24px;
+  font-size: 26px;
   margin-block: 2rem;
 }
 
 .boton {
   margin-block: 2rem;
+}
+
+.reseña {
+  font-size: 26px;
+  font-weight: 600;
+  color: #6d6aee;
+  margin-top: 2rem;
 }

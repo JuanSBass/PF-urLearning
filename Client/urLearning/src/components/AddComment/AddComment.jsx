@@ -60,11 +60,14 @@ function AddComment() {
 
     };
 
-    console.log(currentValue)
-
+    let btndisabled = !(
+        currentValue &&
+        input.comment.length
+    )
 
     return (
         <div>
+            <div className={style.reseña}>¡Deja tu reseña!</div>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <div className={style.estrellas}>
                     {stars.map((_, index) => {
@@ -101,6 +104,7 @@ function AddComment() {
                     gradientDuoTone="purpleToBlue"
                     type="submit"
                     className={style.boton}
+                    disabled={btndisabled}
                 >
                     Comentar
                 </Button>
