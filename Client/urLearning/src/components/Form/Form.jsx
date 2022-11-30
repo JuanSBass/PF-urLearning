@@ -21,7 +21,8 @@ import {
   getProfe,
 } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
-import { Toaster, toast } from 'react-hot-toast'
+import { Toaster, toast } from 'react-hot-toast';
+import swal from 'sweetalert';
 
 const LANGUAGE = ["english", "spanish"];
 const LEVEL = ["easy", "medium", "advanced"];
@@ -160,8 +161,9 @@ const Form = () => {
       name_prof: "",
       videos: []
     });
-    history.push("/");
     dispatch(getCourses());
+    swal("¡Curso creado!", "Gracias por crear contenido en urLearning", "success")
+    .then(go => history.push("/"));
   };
 
 
