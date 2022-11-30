@@ -1,5 +1,6 @@
 import { auth } from "../credenciales";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import swal from 'sweetalert';
 
 export default async function registerUser(email, password) {
   try {
@@ -12,3 +13,5 @@ export default async function registerUser(email, password) {
       : console.log(error);
   }
 }
+
+
