@@ -1,23 +1,41 @@
+import { Button } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getUserCourses } from '../../redux/actions'
+import { deleteComment, getComment, getUserCourses } from '../../redux/actions'
+import AddComment from '../AddComment/AddComment'
+import AddRating from '../AddRating/AddRating'
 import style from "../CursosComprados/DetalleCursoComprado.module.css"
+
 
 function DetalleCursoComprado() {
     const { id } = useParams()
     const dispatch = useDispatch()
     const cursosComprados = useSelector((state) => state.userCourses);
+    const comentarios = useSelector((state) => state.comments);
+    const [userActivo, setUserActivo] = useState()
+
+
+
+
     const [detalle, setDetalle] = useState()
 
     useEffect(() => {
+        dispatch(getComment())
         !cursosComprados.length && dispatch(getUserCourses())
         cursosComprados.length && setDetalle(cursosComprados.find(e => e.id === id))
-    }, [dispatch, cursosComprados.length]);
+        cursosComprados.length && setUserActivo((cursosComprados[0].userCourse.userId))
+
+    }, [dispatch, cursosComprados.length, comentarios.length]);
+
+
+    const handlerDelete = (id) => {
+        dispatch(deleteComment(id))
+        dispatch(getComment())
+    }
 
     return (
         <div className={style.contenedorGeneral}>{detalle ?
-
 
             <div className={style.contVideo}>
                 <div className={style.contenedorArriba}>
@@ -49,6 +67,30 @@ function DetalleCursoComprado() {
                         <div>{detalle.description}</div>
                     </div>
                 </div>
+                <div className={style.comentarios}>
+                    <div className={style.reseña}>Reseñas del curso</div>
+                    {comentarios.map((comentario) => {
+                        return (
+                            <div className={style.comentario}>
+
+                                <div>
+                                    <div className={style.comentUser}>{comentario.name}</div>
+                                    <div>{comentario.comment}</div>
+                                </div>
+
+                                <div >
+                                    {comentario.userId === userActivo && <button onClick={() => handlerDelete(comentario.ID)} className={style.delete}>Eliminar comentario</button>}
+                                </div>
+                                <hr className={style.hr} />
+
+                            </div>
+                        )
+                    })}
+
+
+                </div>
+                <AddComment></AddComment>
+                <AddRating></AddRating>
             </div>
 
             : "Cargando..."}</div>

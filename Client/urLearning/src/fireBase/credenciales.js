@@ -6,7 +6,6 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_API_KEY,
 
@@ -20,7 +19,6 @@ const firebaseConfig = {
 
   appId: import.meta.env.VITE_APP_APP_ID,
 };
-
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);

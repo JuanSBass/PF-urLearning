@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 81px;
-  height: calc(300vh - 149px);
+  height: calc(600vh - 149px);
 }
 
 #video {
@@ -35,6 +35,44 @@
   margin-bottom: 3rem;
   margin-left: 2.5rem;
   margin-top: 1rem;
+}
+
+.comentarios {
+  overflow: auto;
+  max-height: 30rem;
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 6px; */
+  background-color: #f9fafc;
+  border: 1px solid rgb(237, 237, 237);
+  padding: 3rem;
+  border-radius: 10px;
+}
+
+.comentario {
+  height: 100px;
+  margin-block: 3rem;
+  color: #949298;
+}
+
+.comentUser {
+  font-weight: 600;
+}
+
+.hr {
+  margin-block: 2rem;
+}
+
+.reseña {
+  font-size: 26px;
+  font-weight: 600;
+  color: #6d6aee;
+}
+
+.delete {
+  font-style: italic;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 1.5rem;
+  color: #6d6aee;
 }
 
 .contenedorAbajo {

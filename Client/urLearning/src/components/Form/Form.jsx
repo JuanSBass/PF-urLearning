@@ -18,6 +18,7 @@ import {
   postCourse,
   getCategory,
   getCourses,
+  getProfe,
 } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import { Toaster, toast } from 'react-hot-toast'
@@ -53,6 +54,7 @@ const Form = () => {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const tokken = window.localStorage.getItem("tokken");
 
   const showModal = () => {
     setModal(!modal);
@@ -99,6 +101,7 @@ const Form = () => {
         ...input,
       })
     );
+    return () => dispatch(getProfe(tokken))
   }, [input]);
 
   const handleChange = (ev) => {
@@ -208,7 +211,6 @@ const Form = () => {
 
   }
 
-  console.log(input);
 
 
   return (
@@ -232,6 +234,7 @@ const Form = () => {
                     required={true}
                     onChange={(e) => handleChange(e)}
                     name="title"
+                    value={input.title}
                   />
                   {errors.title && (
                     <div className={style.errores}>{errors.title}</div>
@@ -248,6 +251,7 @@ const Form = () => {
                     required={true}
                     onChange={(e) => handleChange(e)}
                     name="name_prof"
+                    value={input.name_prof}
                   />
                   {errors.name_prof && (
                     <div className={style.errores}>{errors.name_prof}</div>
@@ -266,6 +270,7 @@ const Form = () => {
                     onChange={handleSelect}
                     name="category"
                     defaultValue="title"
+
                   >
                     <option value="title" disabled name="Choose category">
                       Category
@@ -320,6 +325,7 @@ const Form = () => {
                   rows={4}
                   onChange={(e) => handleChange(e)}
                   name="description"
+                  value={input.description}
                 />
                 {errors.description && (
                   <div className={style.errores}>{errors.description}</div>
@@ -386,6 +392,7 @@ const Form = () => {
                   type="text"
                   onChange={(e) => handleChange(e)}
                   name="image"
+                  value={input.image}
                 />
               </div>
 
@@ -400,6 +407,7 @@ const Form = () => {
                   name="duration"
                   addon="Horas"
                   className={style.mitadInputs}
+                  value={input.duration}
                 />
               </div>
 
@@ -415,6 +423,7 @@ const Form = () => {
                   className={style.mitadInputs}
                   name="price"
                   onChange={(e) => handleChange(e)}
+                  value={input.price}
                 />
               </div>
 
@@ -442,7 +451,7 @@ const Form = () => {
                 onDrop={handleDrop}
                 onChange={e => setImage(e.target.value)}
                 value={video}
-                disabled={input.videos.linksVideos?.length >= 2}
+                disabled={input.videos.linksVideos?.length >= 2 || loading}
               >
 
                 {({ getRootProps, getInputProps }) => (
@@ -453,7 +462,7 @@ const Form = () => {
                     >
                       <input {...getInputProps()} />
                       <span>📁</span>
-                      <p>Carga tu video aqui o click para seleccionar</p>
+                      <p>Carga tus 2 videos aqui o click para seleccionar</p>
                     </div>
                   </section>
                 )}

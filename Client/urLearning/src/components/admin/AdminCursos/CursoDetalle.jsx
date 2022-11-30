@@ -1,5 +1,5 @@
 import React from 'react'
-import style from "../EditCurso/EditCurso.module.css"
+import style from "./CursoDetalle.module.css"
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -19,7 +19,7 @@ import {
     getCategory,
     getCourses,
     getDetail,
-} from "../../redux/actions";
+} from "../../../redux/actions";
 import { useHistory, useParams } from "react-router-dom";
 
 
@@ -45,7 +45,7 @@ function validate(input) {
     return errors;
 }
 
-function EditCurso() {
+function CursoDetalle() {
     const category = useSelector((state) => state.category);
     const subCategories = useSelector((state) => state.subCategories);
     const [courseDetail,setCourse] = useState({})
@@ -91,7 +91,7 @@ function EditCurso() {
 
     useEffect(() => {
         const axiosData = async () => {
-            let response = await axios.get(`edit/editCourse/${id}`);
+            let response = await axios.get(`admin/detailCurse/${id}`);
             response = await response.data;
             setCourse(response);
 
@@ -186,6 +186,7 @@ function EditCurso() {
         dispatch(getCourses());
     };
 
+console.log(input)
 
 
     const [video, setVideo] = useState({ linksVideos: [] });
@@ -206,7 +207,7 @@ function EditCurso() {
                 })
                 .then(response => {
                     const data = response.data;
-                    console.log(data);
+                    
                     const fileURL = data.secure_url;
                     const height = data.height;
                     const width = data.width;
@@ -224,7 +225,7 @@ function EditCurso() {
                         ...input,
                         videos: newObj
                     })
-                    console.log(video);
+                   
                 })
 
         })
@@ -247,7 +248,20 @@ const handleDelete=()=>{
       }
    axiosData();
 }
-console.log(courseDetail);
+const handleRestore=()=>{
+    const axiosData = async () => {
+        try {
+            let response = await axios.put(`admin/restoreCourse/${id}`)
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+
+        
+      }
+   axiosData();
+}
     return (
         <div className={style.contenedorGeneral}>
             <div className={style.contenedorFormulario}>
@@ -312,7 +326,7 @@ console.log(courseDetail);
                                     <div className={style.errores}>{errors.description}</div>
                                 )}
                             </div>
-                            
+                            {courseDetail.deletedAt?<Button onClick={handleRestore} color="success">Habilitar curso</Button>: <Button onClick={handleDelete} color="failure">Eliminar Curso</Button>}
                         </div>
 
                         <div className={style.der}>
@@ -475,4 +489,4 @@ console.log(courseDetail);
     );
 }
 
-export default EditCurso
+export default CursoDetalle;

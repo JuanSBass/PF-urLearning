@@ -35,7 +35,7 @@ router.post("/checkoutcart", async (req, res) => {
     payment_method_types: ["card"],
     line_items: arrayProducts,
     mode: "payment",
-success_url: "https://pf-ur-learning.vercel.app/formpage/success",
+    success_url: "https://pf-ur-learning.vercel.app/formpage/success",
     cancel_url: "https://pf-ur-learning.vercel.app/formpage/failed",
   });
 

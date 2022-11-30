@@ -44,3 +44,4 @@ router.put("/editCourse/:id", async (req, res) => {
 });
 
 module.exports = router;
+

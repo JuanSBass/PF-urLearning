@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { where, Op } = require("sequelize");
+const { getContactUs } = require("../controllers/controllers");
 const router = Router();
 const {
   User,
@@ -37,10 +38,10 @@ router.get("/allDeletedCourses", async (req, res) => {
   }
 });
 
-router.delete("/deleteCourseId", async (req, res) => {
-  const { deleteCourseId } = req.body;
+router.delete("/deleteCourse/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    let courseToDelete = await Course.findByPk(deleteCourseId);
+    let courseToDelete = await Course.findByPk(id);
     if (!courseToDelete) {
       throw new Error("Curso no encontrado");
     } else {
@@ -52,11 +53,11 @@ router.delete("/deleteCourseId", async (req, res) => {
   }
 });
 
-router.put("/restoreCourse", async (req, res) => {
-  const { restoreCourseId } = req.body;
+router.put("/restoreCourse/:id", async (req, res) => {
+  const { id } = req.params;
   //console.log(restoreCourseId);
   try {
-    let courseToRestore = await Course.findByPk(restoreCourseId, {
+    let courseToRestore = await Course.findByPk(id, {
       paranoid: false,
     });
     await courseToRestore.restore();
@@ -89,17 +90,19 @@ router.delete("/comment", async (req, res) => {
   }
 });
 
-router.delete("/deleteContactUs", async (req, res) => {
-  const { messageId } = req.body;
-  console.log(messageId);
+router.delete("/deleteContactUs/:id", async (req, res) => {
+  const { id } = req.params;
+
   try {
-    console.log("vengo antes");
-    let messageToDelete = await ContactUs.findByPk(messageId);
-    console.log(messageToDelete, "aaaaaaaaaa");
-    await messageToDelete.destroy();
-    res.status(200).send("Message borrado");
+    await ContactUs.destroy({
+      where: {
+        id: id,
+      },
+    });
+    const result = await getContactUs(id);
+    res.status(200).send(result);
   } catch (error) {
-    res.status(401).send(error);
+    console.log(error + " error del delete /contactus");
   }
 });
 
@@ -124,6 +127,18 @@ router.get("/detail", async (req, res) => {
     console.log(error.message);
   }
 });
+router.get("/detailCurse/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const course = await Course.findByPk(id, { paranoid: false });
+    console.log(course);
+    res.status(200).send(course);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 //todos con sus cursos comprados
 router.get("/allUsersWithCourses", async (req, res) => {
   try {
@@ -175,12 +190,23 @@ router.delete("/deleteUserId", async (req, res) => {
   }
 });
 
-/**
- * 		"order_id": "cs_test_b1k3rTAsQ25xKSOcEawMVri7jkgrusGtwNAFqIil3i07O78ayWGqElcZoK",
-		"status": "open",
-		"payment_status": "paid",
-		"amount_total": "3000",
- */
+router.put("/changeUser", async (req, res) => {
+  try {
+    const { name, image, id } = req.body;
+    console.log(name, image, id);
+    let response = await User.update(
+      { name, image },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(401).send(error.message);
+  }
+});
 
 ///////////////////Orders///////////////////
 ///////////////////todas///////////////////

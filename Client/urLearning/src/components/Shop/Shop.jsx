@@ -17,7 +17,6 @@ export const Shop = () => {
     }
 
     useEffect(() => {
-        console.log({ cart })
         dispatch(getCart());
     }, [dispatch]);
 
