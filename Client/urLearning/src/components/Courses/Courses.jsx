@@ -164,7 +164,9 @@ const Courses = () => {
           onChange={ordering}
           name="orders"
         >
-          <option value="">-</option>
+          <option value="all" disabled name="Choose category">
+                      Ordenamiento
+                    </option>
           <option value="price+">Mayor precio</option>
           <option value="price-">Menor precio</option>
           <option value="rating-">Mejores calificados</option>
