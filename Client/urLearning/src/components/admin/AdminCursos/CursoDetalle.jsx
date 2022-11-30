@@ -48,7 +48,7 @@ function validate(input) {
 function CursoDetalle() {
     const category = useSelector((state) => state.category);
     const subCategories = useSelector((state) => state.subCategories);
-    const [courseDetail,setCourse] = useState({})
+    const [courseDetail, setCourse] = useState({})
     const courses = useSelector((state) => state.courses);
     const user = useSelector((state) => state.user);
 
@@ -59,6 +59,17 @@ function CursoDetalle() {
     const { id } = useParams()
 
     const showModal = () => {
+        swal("¡Curso editado!", "En breve verás los cambios", "success")
+        .then(go => {
+            const axiosData = async () => {
+            let response = await axios.get(`admin/detailCurse/${id}`);
+            response = await response.data;
+            setCourse(response);
+
+        }
+        axiosData();
+        })
+        .then(go => history.push("/admin"));
         setModal(!modal);
     };
 
@@ -78,7 +89,7 @@ function CursoDetalle() {
 
     let btnDisabled = !(
         input.title &&
-  
+
         input.description &&
         input.price &&
         input.level &&
@@ -97,7 +108,7 @@ function CursoDetalle() {
 
         }
         axiosData();
-        
+
     }, [dispatch, id]);
 
     useEffect(() => {
@@ -165,28 +176,29 @@ function CursoDetalle() {
         const axiosData = async () => {
             try {
                 let response = await axios.put(`edit/editCourse/${id}`,
-                {        
-                    title:input.title,
-                    image:input.image,
-                    name_prof:input.name_prof,
-                    description:input.description,
-                    duration:input.duration,
-                    price:input.price,});
-                
+                    {
+                        title: input.title,
+                        image: input.image,
+                        name_prof: input.name_prof,
+                        description: input.description,
+                        duration: input.duration,
+                        price: input.price,
+                    });
+
             } catch (error) {
                 console.log(error.message);
             }
 
 
-            
-          }
-       axiosData();
 
-       /*  history.push("/coursescreated"); */
+        }
+        axiosData();
+
+        /*  history.push("/coursescreated"); */
         dispatch(getCourses());
     };
 
-console.log(input)
+    console.log(input)
 
 
     const [video, setVideo] = useState({ linksVideos: [] });
@@ -207,7 +219,7 @@ console.log(input)
                 })
                 .then(response => {
                     const data = response.data;
-                    
+
                     const fileURL = data.secure_url;
                     const height = data.height;
                     const width = data.width;
@@ -225,7 +237,7 @@ console.log(input)
                         ...input,
                         videos: newObj
                     })
-                   
+
                 })
 
         })
@@ -234,34 +246,63 @@ console.log(input)
         }).catch(error => console.log(error.response.data.error));
 
     }
-const handleDelete=()=>{
-    const axiosData = async () => {
-        try {
-            let response = await axios.delete(`admin/deleteCourse/${id}`)
+    const handleDelete = () => {
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez deshabilitado, podrás habilitarlo de nuevo...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDes) => {
+                if (willDes) {
+                    const axiosData = async () => {
+                        try {
+                            let response = await axios.delete(`admin/deleteCourse/${id}`)
 
-        } catch (error) {
-            console.log(error.message);
-        }
+                        } catch (error) {
+                            console.log(error.message);
+                        }
+                    }
+                    axiosData();
+                    swal("¡Curso deshabilitado!", {
+                        icon: "success",
+                    })
+                        .then(go => history.push("/admin"))
+                } else {
+                    swal("El curso sigue habilitado.");
+                }
+            });
 
+    }
+    const handleRestore = () => {
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez habilitado, podrás deshabilitarlo de nuevo...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDes) => {
+                if (willDes) {
+                    const axiosData = async () => {
+                        try {
+                            let response = await axios.put(`admin/restoreCourse/${id}`)
+                        } catch (error) {
+                            console.log(error.message);
+                        }
+                    }
+                    axiosData();
+                    swal("¡Curso habilitado!", {
+                        icon: "success",
+                    })
+                        .then(go => history.push("/admin"))
+                } else {
+                    swal("El curso sigue deshabilitado.");
+                }
+            });
 
-        
-      }
-   axiosData();
-}
-const handleRestore=()=>{
-    const axiosData = async () => {
-        try {
-            let response = await axios.put(`admin/restoreCourse/${id}`)
-
-        } catch (error) {
-            console.log(error.message);
-        }
-
-
-        
-      }
-   axiosData();
-}
+    }
     return (
         <div className={style.contenedorGeneral}>
             <div className={style.contenedorFormulario}>
@@ -326,7 +367,7 @@ const handleRestore=()=>{
                                     <div className={style.errores}>{errors.description}</div>
                                 )}
                             </div>
-                            {courseDetail.deletedAt?<Button onClick={handleRestore} color="success">Habilitar curso</Button>: <Button onClick={handleDelete} color="failure">Eliminar Curso</Button>}
+                            {courseDetail.deletedAt ? <Button onClick={handleRestore} color="success">Habilitar curso</Button> : <Button onClick={handleDelete} color="failure">Deshabilitar Curso</Button>}
                         </div>
 
                         <div className={style.der}>
@@ -364,7 +405,7 @@ const handleRestore=()=>{
                                         onChange={(e) => handleSelect(e)}
                                         name="level"
                                         defaultValue="title"
-                                
+
                                     >
                                         <option value="title" disabled name="Choose category">
                                             Level
@@ -439,7 +480,7 @@ const handleRestore=()=>{
                             </>
                         </div>
 
-{/* 
+                        {/* 
                         <div className={style.contenedorupload}>
                             <h1>Aqui subirás 2 videos. <br /> Tu <b>Video de introducción</b> y tu video de curso.</h1>
                             <p>El video de introducción debe durar máximo 1 minuto. Trata de resumir el contenido de tu curso en este video</p>
