@@ -1,0 +1,17 @@
+.gris {
+  color: grey;
+}
+
+.amarillo {
+  color: #6d6aee;
+}
+
+.estrellas {
+  display: flex;
+  font-size: 24px;
+  margin-block: 2rem;
+}
+
+.boton {
+  margin-block: 2rem;
+}

@@ -530,7 +530,10 @@ export function deleteComment(id) {
 export function putRating(id, rating) {
   try {
     return async function (dispatch) {
-      const response = await axios.put(`/course/${id}`, rating);
+      console.log(id, rating);
+      const response = await axios.put(`/course/${id}`, {
+        rating: rating,
+      });
       dispatch({
         type: PUT_RATING,
         payload: response.data,

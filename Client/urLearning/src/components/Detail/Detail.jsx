@@ -4,9 +4,8 @@ import image from "../../images/register.png"
 import { Rating, Button, Avatar, Spinner } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail, cleanDetail, postProductCart, putRating } from "../../redux/actions";
+import { getDetail, cleanDetail, postProductCart } from "../../redux/actions";
 import { Toaster, toast } from 'react-hot-toast';
-import AddRating from "../AddRating/AddRating";
 
 
 const Detail = (props) => {
@@ -35,7 +34,6 @@ const Detail = (props) => {
   console.log(course.videos)
   useEffect(() => {
     dispatch(getDetail(id))
-    dispatch(putRating(id))
     return function () { dispatch(cleanDetail()) }
 
   }, [dispatch, id])
@@ -122,7 +120,6 @@ const Detail = (props) => {
         <Toaster
           position="bottom-right"
         />
-        <AddRating></AddRating>
       </div>
     </div> : <div className={s.carga}>
       <Spinner

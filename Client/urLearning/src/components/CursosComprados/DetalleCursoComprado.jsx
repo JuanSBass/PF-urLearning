@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { deleteComment, getComment, getUserCourses } from '../../redux/actions'
 import AddComment from '../AddComment/AddComment'
-import AddRating from '../AddRating/AddRating'
+// import AddRating from '../AddRating/AddRating'
 import style from "../CursosComprados/DetalleCursoComprado.module.css"
-
 
 function DetalleCursoComprado() {
     const { id } = useParams()
@@ -25,6 +24,8 @@ function DetalleCursoComprado() {
         !cursosComprados.length && dispatch(getUserCourses())
         cursosComprados.length && setDetalle(cursosComprados.find(e => e.id === id))
         cursosComprados.length && setUserActivo((cursosComprados[0].userCourse.userId))
+
+
 
     }, [dispatch, cursosComprados.length, comentarios.length]);
 
@@ -90,7 +91,7 @@ function DetalleCursoComprado() {
 
                 </div>
                 <AddComment></AddComment>
-                <AddRating></AddRating>
+                {/* <AddRating></AddRating> */}
             </div>
 
             : "Cargando..."}</div>
