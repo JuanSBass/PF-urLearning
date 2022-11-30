@@ -55,7 +55,7 @@ function AdminPagos(props) {
                                     {orden.courses.map(curso => curso.title + " - ")}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    US$ {orden.amount_total}
+                                    US$ {orden.amount_total / 100}
                                 </Table.Cell>
                                 <Table.Cell>
                                     {orden.payment_status}
