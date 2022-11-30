@@ -52,7 +52,7 @@
   .contenedorGeneral {
     display: flex;
     align-items: center;
-    margin-top: 81px;
+    margin-top: 83px;
     height: calc(100vh - 149px);
     text-align: center;
   }

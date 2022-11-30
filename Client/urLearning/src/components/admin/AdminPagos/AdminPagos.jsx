@@ -22,64 +22,68 @@ function AdminPagos(props) {
     }
 
     console.log(ordenes)
-    return (<div className={styles.cardscontainer}>
+    return (
 
-        <Table>
-            <Table.Head>
-                <Table.HeadCell>
-                    User
-                </Table.HeadCell>
-                <Table.HeadCell>
-                    Items
-                </Table.HeadCell>
-                <Table.HeadCell>
-                    Total amount
-                </Table.HeadCell>
-                <Table.HeadCell>
-                    Payment status
-                </Table.HeadCell>
-                <Table.HeadCell>
-                    <span className="sr-only">
-                        Edit
-                    </span>
-                </Table.HeadCell>
-            </Table.Head>
+        <div className={styles.main}>
+            <div className={styles.cardscontainer}>
 
-            <Table.Body className="divide-y">
-
-                {ordenes.length ? ordenes.map((orden) => {
-                    return (<Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            {orden.user.name}
-                        </Table.Cell>
-                        <Table.Cell>
-                            {orden.courses.map(curso => curso.title + " - ")}
-                        </Table.Cell>
-                        <Table.Cell>
-                            US$ {orden.amount_total}
-                        </Table.Cell>
-                        <Table.Cell>
-                            {orden.payment_status}
-                        </Table.Cell>
-                        <Table.Cell>
-                            <a
-                                // href="/tables"
-                                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-
-                            >
+                <Table>
+                    <Table.Head>
+                        <Table.HeadCell>
+                            User
+                        </Table.HeadCell>
+                        <Table.HeadCell>
+                            Items
+                        </Table.HeadCell>
+                        <Table.HeadCell>
+                            Total amount
+                        </Table.HeadCell>
+                        <Table.HeadCell>
+                            Payment status
+                        </Table.HeadCell>
+                        <Table.HeadCell>
+                            <span className="sr-only">
                                 Edit
-                            </a>
-                        </Table.Cell>
-                    </Table.Row>)
-                }) : <Spinner
-                    color="purple"
-                    aria-label="Purple spinner example"
-                />}
+                            </span>
+                        </Table.HeadCell>
+                    </Table.Head>
 
-            </Table.Body>
+                    <Table.Body className="divide-y">
 
-        </Table>
-    </div>)
+                        {ordenes.length ? ordenes.map((orden) => {
+                            return (<Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                    {orden.user.name}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {orden.courses.map(curso => curso.title + " - ")}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    US$ {orden.amount_total}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {orden.payment_status}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    <a
+                                        // href="/tables"
+                                        className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+
+                                    >
+                                        Edit
+                                    </a>
+                                </Table.Cell>
+                            </Table.Row>)
+                        }) : <Spinner
+                            color="purple"
+                            aria-label="Purple spinner example"
+                        />}
+
+                    </Table.Body>
+
+                </Table>
+            </div>
+        </div>)
 }
 
 export default AdminPagos;

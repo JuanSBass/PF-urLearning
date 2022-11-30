@@ -84,6 +84,7 @@ function App() {
         <Route exact path="/admin/usuarios" component={AdminUser} />
         <Route exact path="/admin/ordenes" component={AdminPagos} />
         <Route exact path="/admin/user/:id" component={AdminUserDetail} />
+        <Route exact path="/admin/ContactUsd" component={ContactUsd} />
         <Route exact path="/coursescreated" component={CoursesCreated} />
         <Route exact path="/ContactUsd" component={ContactUsd} />
         <Route exact path="/admin/cursos/:id" component={CursoDetalle}/>

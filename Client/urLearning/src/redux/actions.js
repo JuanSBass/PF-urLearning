@@ -384,11 +384,11 @@ export function getMessages() {
   try {
     return async function (dispatch) {
       const response = await axios.get("/contactUS");
-      dispatch({
-        type: GET_MESSAGES,
-        payload: response.data,
+      dispatch({ 
+        type: GET_MESSAGES, 
+        payload: response.data 
       });
-    };
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -410,19 +410,26 @@ export function postMessages(payload) {
 
 export function deleteMessages(id) {
   try {
+    console.log(id)
     return async function (dispatch) {
-      const response = await axios.delete(`/ContactUs${id}`);
+      const response = await axios.delete(`/admin/deleteContactUs/${id}`)  .then(async ()=>{
+        const messages = await axios.get("/contactUS");
+        return messages
+      }) 
+      console.log(response.data)
       dispatch({
         type: DELETE_MESSAGES,
-        payload: response.data,
-      });
-    };
-  } catch (error) {
-    console.log(error.menssage);
-  }
+        payload: response.data
+      })
+    }
+  } catch (error){
+    console.log(error.menssage)
+  } 
 }
 
-//////////////FAVORTOS///////////////
+
+
+//////////////FAVORTOS/////////////// 
 export function getFavorite(tokken) {
   return async function (dispatch) {
     const json = await axios.get("/favouriteList/fromUser", {
