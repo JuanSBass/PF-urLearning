@@ -3,6 +3,7 @@ import logOuts from "../fireBase/fuctions/logOut";
 import loginUser from "../fireBase/fuctions/loginUser";
 import registerUser from "../fireBase/fuctions/registerUser";
 import loginWithGoogle from "../fireBase/fuctions/logGoogle";
+import swal from 'sweetalert';
 
 export const GET_COURSES = "GET_COURSES";
 export const POST_COURSE = "POST_COURSE";
@@ -186,11 +187,12 @@ export const logIn = (tokken) => {
       // error.response.data === "Usuario ha sido deshabilitado por Admin"
       //   ? alert(error.response.data)
       //   : console.log(error, "error de la action", error.response.data.name);
-      if(error.response.data === "Usuario ha sido deshabilitado por Admin") alert(error.response.data)
-      else if(error.response.data.name === 'SequelizeUniqueConstraintError') alert("Usuario ha sido deshabilitado por Admin")
+      if(error.response.data === "Usuario ha sido deshabilitado por Admin") swal("Tu cuenta ha sido deshabilitada.", "Ponte en contacto con nosotros", "error");
+      else if(error.response.data.name === 'SequelizeUniqueConstraintError') swal("Tu cuenta ha sido deshabilitada.", "Ponte en contacto con nosotros", "error");
     }
   };
 };
+
 
 export const logOut = () => {
   try {
