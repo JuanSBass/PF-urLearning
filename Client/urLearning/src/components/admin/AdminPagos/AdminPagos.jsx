@@ -49,16 +49,16 @@ function AdminPagos(props) {
                         {ordenes.length ? ordenes.map((orden) => {
                             return (<Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    {orden.user.name}
+                                    {orden?.user.name}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {orden.courses.map(curso => curso.title + " - ")}
+                                    {orden.courses?.map(curso => curso.title + " - ")}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    US$ {orden.amount_total / 100}
+                                    US$ {orden?.amount_total / 100}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {orden.payment_status}
+                                    {orden?.payment_status}
                                 </Table.Cell>
 
                             </Table.Row>)
