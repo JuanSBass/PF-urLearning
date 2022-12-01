@@ -64,9 +64,6 @@ export default function Nav() {
 								Courses Created
 							</Link>
 						</Dropdown.Item>}
-						<Dropdown.Item>
-							Earnings
-						</Dropdown.Item>
 						{user.admin && <Link to="/admin">
 							<Dropdown.Item>
 								Admin
