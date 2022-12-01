@@ -49,7 +49,7 @@ function AdminPagos(props) {
                         {ordenes.length ? ordenes.map((orden) => {
                             return (<Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    {orden?.user.name}
+                                    {orden.user?.name}
                                 </Table.Cell>
                                 <Table.Cell>
                                     {orden.courses?.map(curso => curso.title + " - ")}
