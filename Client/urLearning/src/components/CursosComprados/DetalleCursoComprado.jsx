@@ -47,7 +47,7 @@ function DetalleCursoComprado() {
 
                     <div className={style.title}>{detalle.title}</div>
                     <video controls autoPlay id={style.video}>
-                        <source src={detalle.videos.linksVideos[0].fileURL} type="video/mp4" />
+                        <source src={detalle.videos.linksVideos[1].fileURL} type="video/mp4" />
                     </video>
                 </div>
 
