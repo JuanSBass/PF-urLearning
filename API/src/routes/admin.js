@@ -68,14 +68,16 @@ router.delete("/comment", async (req, res) => {
 
 router.delete("/deleteContactUs/:id", async (req, res) => {
   const messageId = req.params.id;
+  const id = messageId;
 
   try {
     await ContactUs.destroy({
       where: {
-        id: messageId,
+        id: id,
       },
     });
-    const result = await getContactUs(messageId);
+    const result = await getContactUs(id);
+    console.log(result, "soy el result");
     res.status(200).send(result);
   } catch (error) {
     console.log(error + " error del delete /contactus");

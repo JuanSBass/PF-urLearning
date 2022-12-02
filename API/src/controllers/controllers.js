@@ -233,6 +233,7 @@ const getContactUs = async (id) => {
         },
       })
     : await ContactUs.findAll();
+  console.log(contactUsDb);
   const newMessageDb = await contactUsDb.map((e) => {
     return {
       id: e.id,
@@ -241,6 +242,7 @@ const getContactUs = async (id) => {
       message: e.message,
     };
   });
+  console.log(newMessageDb, "soy el newmessage");
   return newMessageDb;
 };
 
