@@ -183,15 +183,15 @@ function rootReducer(state = initialState, action) {
         return state;
       } else if (action.payload === "price-") {
         state.courses.sort((a, b) => {
-          if (a.price > b.price) return 1;
-          if (b.price > a.price) return -1;
+          if (Number(a.price) > Number(b.price)) return 1;
+          if (Number(b.price) > Number(a.price)) return -1;
           return 0;
         });
         return state;
       } else if (action.payload === "price+") {
         state.courses.sort((a, b) => {
-          if (a.price > b.price) return -1;
-          if (b.price > a.price) return 1;
+          if (Number(a.price) > Number(b.price)) return -1;
+          if (Number(b.price) > Number(a.price)) return 1;
           return 0;
         });
         return state;
