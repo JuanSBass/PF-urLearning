@@ -397,4 +397,16 @@ router.put("/makeAdmin", async (req, res) => {
   } catch (error) {}
 });
 
+
+router.post("/bulk", async (req, res) => {
+  let { courses } = req.body;
+  try {
+    let Allcourses = await Course.bulkCreate(courses);
+    res.status(200).send(Allcourses);
+  } catch (error) {
+    console.log(error.message);
+    res.status(404).send(error.message);
+  }
+});
+
 module.exports = router;
