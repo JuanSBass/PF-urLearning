@@ -6,19 +6,19 @@
   "directories": {
     "test": "test"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -L",
-    "$schema": "https://railway.app/railway.schema.json",
-    "build": {
-      "builder": "NIXPACKS",
-      "buildCommand": "npm run build"
-    },
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm run build"
+  },
   "deploy": {
     "startCommand": "npm start",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -L"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "firebase-admin": "^11.2.1",
-  
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
@@ -46,5 +45,4 @@
     "sequelize": "^6.25.4",
     "stripe": "^10.17.0"
   }
-  
 }
