@@ -9,8 +9,6 @@ import { useDispatch } from "react-redux";
 const Card = ({ title, image, id, ratingHistory, name_prof, isFavorite, price }) => {
   const dispatch = useDispatch()
   const userTokken = window.localStorage.getItem("tokken");
-  if (price === "0") price = "GRATIS"
-
 
   const handleFav = (e) => {
     dispatch(addRemoveFavorite(userTokken, e))
@@ -28,7 +26,9 @@ const Card = ({ title, image, id, ratingHistory, name_prof, isFavorite, price })
         </Link>
         <h3>{title}</h3>
         <p>{name_prof}</p>
+        <>
         { price === "0" ? (<h2>GRATIS 🎁</h2>) : (<h2>${price} USD</h2> }
+        </>
         <Rating>
           <Rating.Star filled={ratingHistory > 0} />
           <Rating.Star filled={ratingHistory > 1} />
