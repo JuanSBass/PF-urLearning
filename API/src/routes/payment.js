@@ -9,52 +9,56 @@ const { sendMailPurchase } = require("./sendemail.js");
 const stripe = new Stripe(apiKeyPayment);
 
 router.post("/checkoutcart", async (req, res) => {
-  const { products, tuki, cart } = req.body;
+  try {
+    const { products, tuki, cart } = req.body;
 
-  const decodeValue = await admin.auth().verifyIdToken(tuki);
-  if (!decodeValue) return new Error("no se pudio");
-  const userId = decodeValue.uid;
+    const decodeValue = await admin.auth().verifyIdToken(tuki);
+    if (!decodeValue) return new Error("no se pudio");
+    const userId = decodeValue.uid;
 
-  let arrayProducts = [];
-  cart.forEach((product) => {
-    let lineProduct = {
-      price_data: {
-        currency: "USD",
-        product_data: {
-          name: product.title,
-          images: [product.image],
+    let arrayProducts = [];
+    cart.forEach((product) => {
+      let lineProduct = {
+        price_data: {
+          currency: "USD",
+          product_data: {
+            name: product.title,
+            images: [product.image],
+          },
+          unit_amount: product.price * 100,
         },
-        unit_amount: product.price * 100,
-      },
-      quantity: 1,
-    };
-    arrayProducts.push(lineProduct);
-  });
+        quantity: 1,
+      };
+      arrayProducts.push(lineProduct);
+    });
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: arrayProducts,
-    mode: "payment",
-    success_url: "https://pf-ur-learning.vercel.app/formpage/success",
-    cancel_url: "https://pf-ur-learning.vercel.app/formpage/failed",
-  });
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: arrayProducts,
+      mode: "payment",
+      success_url: "https://pf-ur-learning.vercel.app/formpage/success",
+      cancel_url: "https://pf-ur-learning.vercel.app/formpage/failed",
+    });
 
-  let comprobanteAsociado = await Order.create({
-    order_id: session.id,
-    status: session.status,
-    payment_status: session.payment_status,
-    amount_total: session.amount_total,
-    userId,
-    items: arrayProducts,
-  });
+    let comprobanteAsociado = await Order.create({
+      order_id: session.id,
+      status: session.status,
+      payment_status: session.payment_status,
+      amount_total: session.amount_total,
+      userId,
+      items: arrayProducts,
+    });
 
-  //asocio cada curso del carrito a la orden
-  cart.forEach(async (element) => {
-    let oneCurse = await Course.findByPk(element.idCourse);
-    let currentOrder = await Order.findByPk(session.id);
-    await currentOrder.addCourse(oneCurse);
-  });
-  res.json({ id: session.id });
+    //asocio cada curso del carrito a la orden
+    cart.forEach(async (element) => {
+      let oneCurse = await Course.findByPk(element.idCourse);
+      let currentOrder = await Order.findByPk(session.id);
+      await currentOrder.addCourse(oneCurse);
+    });
+    res.json({ id: session.id });
+  } catch (error) {
+    res.status(401).send(error);
+  }
 });
 
 router.get("/customer/:id", async (req, res) => {
