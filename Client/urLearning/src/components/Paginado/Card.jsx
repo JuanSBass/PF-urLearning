@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 const Card = ({ title, image, id, ratingHistory, name_prof, isFavorite, price }) => {
   const dispatch = useDispatch()
   const userTokken = window.localStorage.getItem("tokken");
+  if (price === 0) price = "GRATIS"
 
 
   const handleFav = (e) => {
