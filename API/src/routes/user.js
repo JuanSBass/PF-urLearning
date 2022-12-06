@@ -15,27 +15,25 @@ router.post("/create", async (req, res) => {
       user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3" ||
       user_id === "0Ji78Vnn0gaMUpM7m6611eO9oec2" ||
       user_id === "TuMMLvMbibOyv4zPOMTZP77MuR73" ||
+      user_id === "cDPMAjBMiGMOdK4vFV6iGBPUFyM2" ||
       user_id === "GiiayYyFMwckAmLJAJGMcaqBwmp1";
-    console.log();
     let name;
-
     if (decodeValue.name) name = decodeValue.name;
     else {
       name = email.split("@")[0]; // El nombre del usuario será el email sin @
       // name = "Usuario";
     }
-
     if (!decodeValue) return new Error("no se pudio");
-    let newUser = await User.findOrCreate({
+    let newUser = await User.findByPk(user_id);
+    /* let newUser2 = await User.findOrCreate({
       where: { id: user_id },
       defaults: {
         email,
         name,
         image: picture,
         admin: valid,
-      },
-    });
-
+      }), */
+    console.log(newUser, "este es el newUser");
     if (newUser[1]) {
       sendMailRegister(name, email);
       const currentUser = await User.findByPk(user_id);
@@ -52,7 +50,7 @@ router.post("/create", async (req, res) => {
 
     res.status(200).send(newUser);
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(404).send(error);
   }
 });
 
