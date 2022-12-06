@@ -26,9 +26,9 @@ const Card = ({ title, image, id, ratingHistory, name_prof, isFavorite, price })
         </Link>
         <h3>{title}</h3>
         <p>{name_prof}</p>
-        <>
-        { price === "0" ? (<h2>GRATIS 🎁</h2>) : (<h2>${price} USD</h2> }
-        </>
+
+        { price === "0" ? (<h2>GRATIS 🎁</h2>) : (<h2>${price} USD</h2>) }
+
         <Rating>
           <Rating.Star filled={ratingHistory > 0} />
           <Rating.Star filled={ratingHistory > 1} />
