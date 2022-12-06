@@ -56,7 +56,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Santiago Restrepo</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/poppersaurio" class="my-4 font-light"><GoMarkGithub /> poppersaurio </a>
+                            <a href="https://github.com/poppersaurio" class="my-4 font-light"><GoMarkGithub /> santiagor06 </a>
                             <br />
                         </div>
                     </figcaption>
