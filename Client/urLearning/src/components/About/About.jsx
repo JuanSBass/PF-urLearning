@@ -28,7 +28,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Juan Santillan</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/JuanSBass" class="my-4 font-light"><GoMarkGithub /> JuanSBass </a>
+                            <a href="https://github.com/JuanSBass" target="_blank" class="my-4 font-light"><GoMarkGithub /> JuanSBass </a>
                             <br />
                         </div>
                     </figcaption>
@@ -42,7 +42,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Lourdes López Pepa</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/lupilp" class="my-4 font-light"><GoMarkGithub /> lupilp </a>
+                            <a href="https://github.com/lupilp" target="_blank" class="my-4 font-light"><GoMarkGithub /> lupilp </a>
                             <br />
                         </div>
                     </figcaption>
@@ -56,7 +56,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Santiago Restrepo</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/poppersaurio" class="my-4 font-light"><GoMarkGithub /> santiagor06 </a>
+                            <a href="https://github.com/santiagor06" target="_blank" class="my-4 font-light"><GoMarkGithub /> santiagor06 </a>
                             <br />
                         </div>
                     </figcaption>
@@ -70,7 +70,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Gaston Alejandro Resoagli</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/GastonResoagli" class="my-4 font-light"><GoMarkGithub /> GastonResoagli </a>
+                            <a href="https://github.com/GastonResoagli" target="_blank" class="my-4 font-light"><GoMarkGithub /> GastonResoagli </a>
                             <br />
                         </div>
                     </figcaption>
@@ -86,7 +86,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Lucas Canaparo</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/LucasCanaparo" class="my-4 font-light"><GoMarkGithub /> LucasCanaparo </a>
+                            <a href="https://github.com/LucasCanaparo" target="_blank" class="my-4 font-light"><GoMarkGithub /> LucasCanaparo </a>
                             <br />
                         </div>
                     </figcaption>
@@ -100,7 +100,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Valen Lara</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/Valen-Lara" class="my-4 font-light"><GoMarkGithub /> Valen-Lara </a>
+                            <a href="https://github.com/Valen-Lara" target="_blank" class="my-4 font-light"><GoMarkGithub /> Valen-Lara </a>
                             <br />
                         </div>
                     </figcaption>
@@ -114,7 +114,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>Marco Giabbani</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/marcogiabbani" class="my-4 font-light"><GoMarkGithub /> marcogiabbani </a>
+                            <a href="https://github.com/marcogiabbani" target="_blank" class="my-4 font-light"><GoMarkGithub /> marcogiabbani </a>
                             <br />
                         </div>
                     </figcaption>
@@ -128,7 +128,7 @@ export default function About() {
                         <div class="space-y-0.5 font-medium dark:text-white text-left">
                             <div>César Restrepo</div>
                             <div class="text-sm font-light text-gray-500 dark:text-gray-400">Fullstack Developer</div>
-                            <a href="https://github.com/carc0813" class="my-4 font-light"><GoMarkGithub /> carc0813 </a>
+                            <a href="https://github.com/carc0813" target="_blank" class="my-4 font-light"><GoMarkGithub /> carc0813 </a>
                             <br />
                         </div>
                     </figcaption>
