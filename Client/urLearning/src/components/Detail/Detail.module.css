@@ -1,39 +1,48 @@
-.main {
+/* .landing {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  border: 1px solid red;
+  background: #fff;
+} */
+
+/* .main {
   background: white;
-}
+  height: calc(130vh - 149px);
+} */
 
 .landingLeft {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  height: 100%;
   width: 50%;
+  height: 100%;
 }
 .landingRight {
-  height: 100%;
-  min-height: 100vh;
-  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: white;
-}
-
-.landing {
-  display: flex;
-  flex-direction: row;
-  gap: 4rem;
+  width: 50%;
+  height: 100%;
 }
 
 .imagen {
-  height: 250px;
+  /* max-height: 250px;
   width: 450px;
-  border-radius: 10px;
+  border-radius: 10px; */
+  border-radius: 34px;
+  margin-bottom: 10px;
+  height: 8rem;
 }
-.conatinerf {
+
+.imgcard img {
+  width: 255px;
+  height: 129px;
+  /* object-fit: cover; */
+}
+/* .conatinerf {
   background: white;
   border-radius: 10px;
   max-width: 80vh;
@@ -58,7 +67,7 @@
   margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
+} */
 .sub {
   font-family: "Montserrat";
   font-weight: bold;
@@ -77,15 +86,6 @@
   align-items: center;
   justify-content: center;
   padding: 20px 20px 30px 20px;
-
-  border-radius: 10px;
-}
-.im {
-  padding: 15px;
-  background-color: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .rating {
@@ -98,73 +98,6 @@
   border-radius: 10px;
 }
 
-.head {
-  background-color: #e8e8e8;
-  border-radius: 10px;
-  font-family: "Montserrat";
-  font-weight: bold;
-  font-size: 30px;
-  padding-left: 15%;
-  padding-right: 15%;
-  padding-top: 2%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.name {
-  background-color: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Montserrat";
-  font-weight: bold;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.name2 {
-  background-color: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Montserrat";
-  font-weight: bold;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  color: #6d6aed;
-  border-radius: 10px;
-}
-.num {
-  background: #e8e8e8;
-  font-family: "Montserrat";
-  font-weight: bold;
-  font-size: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.add {
-  background: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 5px;
-  padding-bottom: 25px;
-  border-radius: 10px;
-}
-.addb {
-  font-family: "Montserrat";
-  font-weight: bold;
-  font-size: 25px;
-  width: 350px;
-}
-.price {
-  margin-top: 10px;
-  background: #e8e8e8;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
 .carga {
   background: white;
   height: 100vh;
@@ -174,5 +107,75 @@
 }
 
 #vid {
-  margin: 0 auto;
+  height: 250px;
+}
+
+.general {
+  height: calc(150vh - 149px);
+}
+
+.contenedorGeneral {
+  margin-top: 200px;
+  /* height: calc(100vh - 149px); */
+  display: flex;
+  justify-content: center;
+}
+
+.titulo {
+  padding: 1rem;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.precio {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.contenedorFormulario {
+  display: flex;
+  background-color: #fafafa;
+  width: 900px;
+  border-radius: 25px;
+  height: 600px;
+  padding: 3rem;
+  gap: 2rem;
+}
+
+.addb {
+  margin-block: 1rem;
+}
+
+.contComentario {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.comments {
+  overflow: auto;
+  max-height: 30rem;
+  background-color: #f9fafc;
+  border: 1px solid rgb(237, 237, 237);
+  border-radius: 25px;
+  padding-inline: 3rem;
+  width: 900px;
+}
+.reseña {
+  font-size: 26px;
+  font-weight: 600;
+  color: #6d6aee;
+  margin-bottom: 2rem;
+}
+
+.comment {
+  height: 100px;
+  margin-block: 3rem;
+  color: #949298;
+}
+
+.hr {
+  margin-block: 2rem;
 }

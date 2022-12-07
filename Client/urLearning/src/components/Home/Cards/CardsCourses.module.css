@@ -4,6 +4,7 @@
   width: 1200px;
   gap: 2rem;
   margin: 4rem auto;
+  object-fit: cover;
 }
 
 .card {
@@ -16,6 +17,7 @@
   padding: 1rem;
   position: relative;
   box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+  background-color: #fff;
 }
 
 .card h3 {
@@ -27,6 +29,13 @@
   border-radius: 34px;
   overflow: hidden;
   margin-bottom: 10px;
+  height: 8rem;
+}
+
+.imgcard img {
+  width: 255px;
+  height: 129px;
+  object-fit: cover;
 }
 
 .corazones {

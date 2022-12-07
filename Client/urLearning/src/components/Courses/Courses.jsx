@@ -25,6 +25,7 @@ const Courses = () => {
   const courses = useSelector((state) => state.courses);
   const favoritos = useSelector((state) => state.favorites);
   const tokken = window.localStorage.getItem("tokken");
+  const log = useSelector(state => state.log);
 
   const user = useSelector(state => state.user);
 
@@ -32,6 +33,7 @@ const Courses = () => {
     dispatch(getCourses());
     dispatch(getCategory());
     dispatch(getFavorite(tokken))
+
   }, [dispatch, tokken]);
 
   const filterCategos = (event) => {
@@ -162,20 +164,22 @@ const Courses = () => {
           onChange={ordering}
           name="orders"
         >
-          <option value="">-</option>
+          <option value="all" disabled name="Choose category">
+                      Ordenamiento
+                    </option>
           <option value="price+">Mayor precio</option>
           <option value="price-">Menor precio</option>
-          <option value="rating+">Mejores calificados</option>
-          <option value="rating-">Menor calificación</option>
+          <option value="rating-">Mejores calificados</option>
+          <option value="rating+">Menor calificación</option>
 
         </Select>
 
         <div id="containerbutontoast">
-          <Link to={user.name && "/form"}>
-            <Button gradientMonochrome="success" disabled={!user.name}
+          <Link to={log && "/form"}>
+            <Button gradientMonochrome="success" disabled={!log}
             >Crear curso</Button>
           </Link>
-          {!user.name && <Toast id={styles.toast}>
+          {!log && <Toast id={styles.toast}>
             <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
               <HiExclamation className="h-5 w-5" />
             </div>

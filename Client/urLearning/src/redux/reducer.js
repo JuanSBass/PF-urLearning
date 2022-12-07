@@ -14,6 +14,8 @@ import {
   GET_USER_COURSES,
   GET_FAVORITE,
   ADD_REMOVE_FAVORITE,
+  GET_COMMENT,
+  DELETE_COMMENT,
   /////login//////////
   LOGIN,
   LOGOUT,
@@ -28,7 +30,7 @@ import {
   POST_MESSAGES,
   GET_MESSAGES,
   DELETE_MESSAGES,
-  
+  GET_COURSES_PROF,
 } from "./actions";
 
 const initialState = {
@@ -45,10 +47,11 @@ const initialState = {
   carrito: [],
   copyCarrito: [],
   userDetail: {},
-  cartNumber : 0,
   userCourses: [],
-  messages:[],
+  messages: [],
   favorites: [],
+  coursesCreated: [],
+  comments: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -132,61 +135,66 @@ function rootReducer(state = initialState, action) {
 
     case ORDER_BY_ANY:
       let allCourses2 = state.coursesForRating;
+      console.log(allCourses2);
       if (action.payload === "all") return state;
       if (action.payload === "1") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "1"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 1),
           currentPage: 1,
         };
       } else if (action.payload === "2") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "2"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 2),
           currentPage: 1,
         };
       } else if (action.payload === "3") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "3"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 3),
           currentPage: 1,
         };
       } else if (action.payload === "4") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "4"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 4),
           currentPage: 1,
         };
       } else if (action.payload === "5") {
         return {
           ...state,
-          courses: allCourses2.filter((c) => c.rating === "5"),
+          courses: allCourses2.filter((c) => c.ratingHistory === 5),
           currentPage: 1,
         };
       } else if (action.payload === "rating+") {
         state.courses.sort((a, b) => {
-          if (a.rating > b.rating) return 1;
-          if (b.rating > a.rating) return -1;
+          if (a.ratingHistory > b.ratingHistory) return 1;
+          if (b.ratingHistory > a.ratingHistory) return -1;
           return 0;
         });
+        return state;
       } else if (action.payload === "rating-") {
         state.courses.sort((a, b) => {
-          if (a.rating > b.rating) return -1;
-          if (b.rating > a.rating) return 1;
+          if (a.ratingHistory > b.ratingHistory) return -1;
+          if (b.ratingHistory > a.ratingHistory) return 1;
           return 0;
         });
+        return state;
       } else if (action.payload === "price-") {
         state.courses.sort((a, b) => {
-          if (a.price > b.price) return 1;
-          if (b.price > a.price) return -1;
+          if (Number(a.price) > Number(b.price)) return 1;
+          if (Number(b.price) > Number(a.price)) return -1;
           return 0;
         });
+        return state;
       } else if (action.payload === "price+") {
         state.courses.sort((a, b) => {
-          if (a.price > b.price) return -1;
-          if (b.price > a.price) return 1;
+          if (Number(a.price) > Number(b.price)) return -1;
+          if (Number(b.price) > Number(a.price)) return 1;
           return 0;
         });
+        return state;
       }
 
     //////////////LOGIN //////////////////
@@ -196,20 +204,18 @@ function rootReducer(state = initialState, action) {
     case LOGOUT:
       return { ...state, user: {}, log: false };
 
-
-
     ////////////////CARRITO/////////////
     case ADD_TO_CART:
       const cursos = state.courses;
-      const product = cursos.find((cursoId) => cursoId.id === action.payload.id);
+      const product = cursos.find(
+        (cursoId) => cursoId.id === action.payload.id
+      );
       return {
         ...state,
         carrito: [...state.carrito, product],
-        cartNumber: (state.cartNumber += 1),
       };
     case ID_SESSION:
       return { ...state, idSession: action.payload };
-
 
     case GET_CART:
       return {
@@ -222,14 +228,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: state.cartNumber -= 1,
       };
 
     case CLEAR_CART:
       return {
         ...state,
         carrito: action.payload,
-        cartNumber: 0,
       };
 
     case GET_USER_DETAIL:
@@ -244,22 +248,17 @@ function rootReducer(state = initialState, action) {
         userCourses: action.payload[0].courses,
       };
 
-//////////////Contact Us/////////////
-case GET_MESSAGES:
-  return {
-    ...state,
-    messages: action.payload,
-  };
-  case POST_MESSAGES:
+    //////////////Contact Us/////////////
+    case GET_MESSAGES:
       return {
-        ...state, 
-      }
- case  DELETE_MESSAGES:
-  return {
-    ...state,
-    messages:action.payload
-    
-  }
+        ...state,
+        messages: action.payload,
+      };
+    case DELETE_MESSAGES:
+      return {
+        ...state,
+        messages: action.payload,
+      };
     case GET_FAVORITE:
       return {
         ...state,
@@ -270,6 +269,23 @@ case GET_MESSAGES:
       return {
         ...state,
         favorites: action.payload.courses,
+      };
+
+    case GET_COURSES_PROF:
+      return {
+        ...state,
+        coursesCreated: action.payload,
+      };
+
+    case GET_COMMENT:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+
+    case DELETE_COMMENT:
+      return {
+        ...state,
       };
 
     default:

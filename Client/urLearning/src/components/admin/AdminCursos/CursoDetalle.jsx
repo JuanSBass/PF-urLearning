@@ -1,5 +1,5 @@
 import React from 'react'
-import style from "../EditCurso/EditCurso.module.css"
+import style from "./CursoDetalle.module.css"
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -19,7 +19,7 @@ import {
     getCategory,
     getCourses,
     getDetail,
-} from "../../redux/actions";
+} from "../../../redux/actions";
 import { useHistory, useParams } from "react-router-dom";
 
 
@@ -45,10 +45,10 @@ function validate(input) {
     return errors;
 }
 
-function EditCurso() {
+function CursoDetalle() {
     const category = useSelector((state) => state.category);
     const subCategories = useSelector((state) => state.subCategories);
-    const [courseDetail,setCourse] = useState({})
+    const [courseDetail, setCourse] = useState({})
     const courses = useSelector((state) => state.courses);
     const user = useSelector((state) => state.user);
 
@@ -59,6 +59,17 @@ function EditCurso() {
     const { id } = useParams()
 
     const showModal = () => {
+        swal("¡Curso editado!", "En breve verás los cambios", "success")
+        .then(go => {
+            const axiosData = async () => {
+            let response = await axios.get(`admin/detailCurse/${id}`);
+            response = await response.data;
+            setCourse(response);
+
+        }
+        axiosData();
+        })
+        .then(go => history.push("/admin"));
         setModal(!modal);
     };
 
@@ -78,7 +89,7 @@ function EditCurso() {
 
     let btnDisabled = !(
         input.title &&
-  
+
         input.description &&
         input.price &&
         input.level &&
@@ -91,13 +102,13 @@ function EditCurso() {
 
     useEffect(() => {
         const axiosData = async () => {
-            let response = await axios.get(`edit/editCourse/${id}`);
+            let response = await axios.get(`admin/detailCurse/${id}`);
             response = await response.data;
             setCourse(response);
 
         }
         axiosData();
-        
+
     }, [dispatch, id]);
 
     useEffect(() => {
@@ -165,27 +176,29 @@ function EditCurso() {
         const axiosData = async () => {
             try {
                 let response = await axios.put(`edit/editCourse/${id}`,
-                {        
-                    title:input.title,
-                    image:input.image,
-                    name_prof:input.name_prof,
-                    description:input.description,
-                    duration:input.duration,
-                    price:input.price,});
-                
+                    {
+                        title: input.title,
+                        image: input.image,
+                        name_prof: input.name_prof,
+                        description: input.description,
+                        duration: input.duration,
+                        price: input.price,
+                    });
+
             } catch (error) {
                 console.log(error.message);
             }
 
 
-            
-          }
-       axiosData();
 
-       /*  history.push("/coursescreated"); */
+        }
+        axiosData();
+
+        /*  history.push("/coursescreated"); */
         dispatch(getCourses());
     };
 
+    console.log(input)
 
 
     const [video, setVideo] = useState({ linksVideos: [] });
@@ -206,7 +219,7 @@ function EditCurso() {
                 })
                 .then(response => {
                     const data = response.data;
-                    console.log(data);
+
                     const fileURL = data.secure_url;
                     const height = data.height;
                     const width = data.width;
@@ -224,7 +237,7 @@ function EditCurso() {
                         ...input,
                         videos: newObj
                     })
-                    console.log(video);
+
                 })
 
         })
@@ -233,21 +246,63 @@ function EditCurso() {
         }).catch(error => console.log(error.response.data.error));
 
     }
-const handleDelete=()=>{
-    const axiosData = async () => {
-        try {
-            let response = await axios.delete(`admin/deleteCourse/${id}`)
+    const handleDelete = () => {
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez deshabilitado, podrás habilitarlo de nuevo...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDes) => {
+                if (willDes) {
+                    const axiosData = async () => {
+                        try {
+                            let response = await axios.delete(`admin/deleteCourse/${id}`)
 
-        } catch (error) {
-            console.log(error.message);
-        }
+                        } catch (error) {
+                            console.log(error.message);
+                        }
+                    }
+                    axiosData();
+                    swal("¡Curso deshabilitado!", {
+                        icon: "success",
+                    })
+                        .then(go => history.push("/admin"))
+                } else {
+                    swal("El curso sigue habilitado.");
+                }
+            });
 
+    }
+    const handleRestore = () => {
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez habilitado, podrás deshabilitarlo de nuevo...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDes) => {
+                if (willDes) {
+                    const axiosData = async () => {
+                        try {
+                            let response = await axios.put(`admin/restoreCourse/${id}`)
+                        } catch (error) {
+                            console.log(error.message);
+                        }
+                    }
+                    axiosData();
+                    swal("¡Curso habilitado!", {
+                        icon: "success",
+                    })
+                        .then(go => history.push("/admin"))
+                } else {
+                    swal("El curso sigue deshabilitado.");
+                }
+            });
 
-        
-      }
-   axiosData();
-}
-console.log(courseDetail);
+    }
     return (
         <div className={style.contenedorGeneral}>
             <div className={style.contenedorFormulario}>
@@ -312,7 +367,7 @@ console.log(courseDetail);
                                     <div className={style.errores}>{errors.description}</div>
                                 )}
                             </div>
-                            
+                            {courseDetail.deletedAt ? <Button onClick={handleRestore} color="success">Habilitar curso</Button> : <Button onClick={handleDelete} color="failure">Deshabilitar Curso</Button>}
                         </div>
 
                         <div className={style.der}>
@@ -350,7 +405,7 @@ console.log(courseDetail);
                                         onChange={(e) => handleSelect(e)}
                                         name="level"
                                         defaultValue="title"
-                                
+
                                     >
                                         <option value="title" disabled name="Choose category">
                                             Level
@@ -425,7 +480,7 @@ console.log(courseDetail);
                             </>
                         </div>
 
-{/* 
+                        {/* 
                         <div className={style.contenedorupload}>
                             <h1>Aqui subirás 2 videos. <br /> Tu <b>Video de introducción</b> y tu video de curso.</h1>
                             <p>El video de introducción debe durar máximo 1 minuto. Trata de resumir el contenido de tu curso en este video</p>
@@ -475,4 +530,4 @@ console.log(courseDetail);
     );
 }
 
-export default EditCurso
+export default CursoDetalle;

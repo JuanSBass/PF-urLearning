@@ -58,7 +58,7 @@
 .main{
     margin-top: 5%;
    height: 80vh;
-
+   height: calc(120vh - 149px);
 
 
 

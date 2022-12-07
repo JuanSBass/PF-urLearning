@@ -6,14 +6,8 @@ import styles from "./ContacUsd.module.css"
 import { Toaster, toast } from 'react-hot-toast'
 
 export const ContactUsd = () => {
-    const mail = useSelector((state) => state.messages)
     const dispatch = useDispatch()
-
-    /*  const handleDeleteAll = (e) => {
-          e.preventDefault()
-          dispatch(clearCart())
-          toast.error('Cleaned!')
-      } */
+    const mail = useSelector((state) => state.messages)
 
     useEffect(() => {
         dispatch(getMessages());
@@ -25,6 +19,8 @@ export const ContactUsd = () => {
         dispatch(deleteMessages(e.target.value))
         toast.error('Deleted message!')
     }
+
+
 
     return mail.length ? (
         <div class={styles.contenedorGeneral}>
@@ -73,8 +69,6 @@ export const ContactUsd = () => {
                 </div>
                 <div className={styles.buttonscontainer}>
                     <br />
-                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={(e) => handleDeleteAll(e)}>Clear Mail</button>
-
                     <Toaster
                         position="bottom-right"
                     />
@@ -87,7 +81,7 @@ export const ContactUsd = () => {
                 <p class="text-3xl text-gray-900 dark:text-white">Your mail is empty..</p>
                 <br />
                 <div>
-                    <Link to="/home"><button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Home</button></Link>
+                    <Link to="/"><button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Home</button></Link>
                 </div>
             </div>
         </div>

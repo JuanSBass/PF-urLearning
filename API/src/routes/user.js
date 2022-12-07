@@ -1,3 +1,4 @@
+const e = require("express");
 const { Router } = require("express");
 const router = Router();
 const { User, Course, FavouriteList, ProfessorRole } = require("../db");
@@ -13,10 +14,13 @@ router.post("/create", async (req, res) => {
     const { email, user_id, picture } = decodeValue;
     const valid =
       user_id === "NMVFLA97vSh6LxcMLlbHXMwBsqJ3" ||
+      user_id === "p0d0BAlDcIaJD5JYnTrMO0mofoH2" ||
+      user_id === "PsPEdPVdoEX2ufdRp7tmugEZW2b2" ||
+      user_id === "GiiayYyFMwckAmLJAJGMcaqBwmp1" ||
       user_id === "0Ji78Vnn0gaMUpM7m6611eO9oec2" ||
       user_id === "TuMMLvMbibOyv4zPOMTZP77MuR73" ||
-      user_id === "cDPMAjBMiGMOdK4vFV6iGBPUFyM2" ||
       user_id === "GiiayYyFMwckAmLJAJGMcaqBwmp1";
+    console.log();
     let name;
     if (decodeValue.name) name = decodeValue.name;
     else {
@@ -50,7 +54,7 @@ router.post("/create", async (req, res) => {
 
     res.status(200).send(newUser);
   } catch (error) {
-    res.status(404).send(error);
+    res.status(404).send(error.message);
   }
 });
 

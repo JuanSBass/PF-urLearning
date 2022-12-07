@@ -4,23 +4,23 @@ const {
   getCommentById,
 } = require("../controllers/controllers");
 const router = Router();
-const { Comments } = require("../db");
+const { Comments, User } = require("../db");
 const admin = require("../firebase/config.js");
 
 /////////////// POST a comment /////////////////
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
   const { id, comment } = req.body;
-  const token = req.headers.authorization.split(" ")[1];
-  const userId = await admin.auth().verifyIdToken(token);
+  const tokken = req.body.headers.authorization.split(" ")[1];
+  const userId = await admin.auth().verifyIdToken(tokken);
   if (!userId) return new Error("no se pudio");
-  console.log(userId.uid);
   try {
+    let user = await User.findByPk(userId.uid);
     let newComment = await Comments.create({
       idCourse: id,
       comment,
       userId: userId.uid,
+      name: user.name,
     });
     res.status(200).send(newComment);
   } catch (error) {

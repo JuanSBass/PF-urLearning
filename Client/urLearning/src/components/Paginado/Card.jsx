@@ -6,10 +6,9 @@ import corazonvacio from "../../img/IoIosHeartEmpty.svg"
 import { addRemoveFavorite } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
-const Card = ({ title, image, id, rating, name_prof, isFavorite, price }) => {
+const Card = ({ title, image, id, ratingHistory, name_prof, isFavorite, price }) => {
   const dispatch = useDispatch()
   const userTokken = window.localStorage.getItem("tokken");
-
 
   const handleFav = (e) => {
     dispatch(addRemoveFavorite(userTokken, e))
@@ -27,15 +26,17 @@ const Card = ({ title, image, id, rating, name_prof, isFavorite, price }) => {
         </Link>
         <h3>{title}</h3>
         <p>{name_prof}</p>
-        <h2>${price} USD</h2>
+
+        { price === "0" ? (<h2>GRATIS 🎁</h2>) : (<h2>${price} USD</h2>) }
+
         <Rating>
-          <Rating.Star filled={rating > 0} />
-          <Rating.Star filled={rating > 1} />
-          <Rating.Star filled={rating > 2} />
-          <Rating.Star filled={rating > 3} />
-          <Rating.Star filled={rating > 4} />
+          <Rating.Star filled={ratingHistory > 0} />
+          <Rating.Star filled={ratingHistory > 1} />
+          <Rating.Star filled={ratingHistory > 2} />
+          <Rating.Star filled={ratingHistory > 3} />
+          <Rating.Star filled={ratingHistory > 4} />
           <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-            {rating} out of 5
+            {ratingHistory} out of 5
           </p>
         </Rating>
       </div>
